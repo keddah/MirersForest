@@ -42,7 +42,7 @@ int main()
 	// Make game objects here
 
 
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(renderer, NULL);
 
 	SDL_RenderPresent(renderer);
@@ -57,6 +57,7 @@ int main()
 		while (SDL_PollEvent(&e)) 
 		{
 			if (e.type == SDL_QUIT) quit = true;
+			if (e.key.keysym.scancode == SDL_SCANCODE_W); ///input detection ;
 		}
 
 	}
