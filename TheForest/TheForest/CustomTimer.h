@@ -13,10 +13,10 @@
 
 using namespace std::chrono;
 
-class Time 
+class Time
 {
 public:
-    static void Update() 
+    static void Update()
     {
         // The time between the last tick.......
         const duration<double, std::milli> elapsed_time = high_resolution_clock::now() - lastFrameTime;

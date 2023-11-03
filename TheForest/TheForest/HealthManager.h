@@ -2,7 +2,7 @@
 
 class HealthManager
 {
-public: 
+public:
     HealthManager();
     ~HealthManager();
 
@@ -12,5 +12,4 @@ public:
 private:
     const short maxLives = 3;
     short currentLives = maxLives;
-
 };

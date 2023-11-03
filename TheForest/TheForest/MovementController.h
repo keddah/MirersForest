@@ -1,12 +1,15 @@
 #pragma once
 
-class MovementController :: Physics
+#include "Physics.h"
+#include <cstddef>
+
+class MovementController :Physics
 {
-public: 
-    MovementController();    
+public:
+    MovementController();
     void Update();
 
-    enum EMovementState
+    enum EMovementState; 
 
 private:
     void Jump();
@@ -14,12 +17,12 @@ private:
     void Crouch();
     void Move();
 
-    byte currentMoveState
-    const float moveSpeed = 5; 
+    byte currentMoveState;
+    const float moveSpeed = 5;
 
-    const float mass = 100; 
-    const float jumpForce = 100; 
+    const float mass = 100;
+    const float jumpForce = 100;
     const float slideSpeed = 10;
- 
+
 
 };

@@ -10,8 +10,8 @@ protected:
     void ApplyGravity();
 
     static constexpr float Gravity = 10;
-    
-    bool grounded;    
+
+    bool grounded;
 
 };
 

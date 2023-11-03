@@ -1,13 +1,14 @@
 #pragma once
 
+#include "GameCharacter.h"
 
-class Player
+class Player : Character
 {
 public:
     Player();
     ~Player();
 
-    void GivePowerup();    
+    void GivePowerup();
 
     void Update();
     void Draw();

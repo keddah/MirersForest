@@ -143,8 +143,16 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomTimer.h" />
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="HealthManager.h" />
+    <ClInclude Include="MovementController.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="WeaponController.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />
