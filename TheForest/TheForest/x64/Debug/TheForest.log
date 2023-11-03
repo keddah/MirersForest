@@ -1,12 +1,72 @@
-﻿  MovementController.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(16,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(19,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(24,2): error C2661: 'Physics::AddForce': no overloaded function takes 0 arguments
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(24,2): message : while trying to match the argument list '()'
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(25,1): error C2143: syntax error: missing ';' before '}'
-  Physics.cpp
+﻿  Collider.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameCharacter.h(22,20): error C3646: 'renderer': unknown override specifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameCharacter.h(22,28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C3861: 'SpriteRenderer': identifier not found
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2955: 'std::vector': use of class template requires template argument list
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+  GameCharacter.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.h(9,16): error C2504: 'Character': base class undefined
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C3861: 'SpriteRenderer': identifier not found
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2955: 'std::vector': use of class template requires template argument list
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+  GameManager.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.cpp(56,47): warning C4390: ';': empty controlled statement found; is this the intent?
   Player.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(17,9): error C3646: 'player': unknown override specifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(17,15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C3861: 'SpriteRenderer': identifier not found
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2955: 'std::vector': use of class template requires template argument list
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+  PlayerController.cpp
+  SceneManager.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(33,15): error C3646: 'manager': unknown override specifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(33,23): error C2059: syntax error: '='
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(33,39): error C2238: unexpected token(s) preceding ';'
   SpriteRenderer.cpp
-  Vector2.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.cpp(72,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameCharacter.h(22,20): error C3646: 'renderer': unknown override specifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameCharacter.h(22,28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,14): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C3861: 'SpriteRenderer': identifier not found
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): error C2065: 'SpriteRenderer': undeclared identifier
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2923: 'std::vector': 'SpriteRenderer' is not a valid template type argument for parameter '_Ty'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,54): message : see declaration of 'SpriteRenderer'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2976: 'std::vector': too few template arguments
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SceneManager.h(18,47): error C2955: 'std::vector': use of class template requires template argument list
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : see declaration of 'std::vector'
+  TheForest.cpp
   Generating Code...

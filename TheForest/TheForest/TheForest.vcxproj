@@ -144,6 +144,8 @@
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -158,7 +160,9 @@
     <ClInclude Include="MovementController.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WeaponController.h" />

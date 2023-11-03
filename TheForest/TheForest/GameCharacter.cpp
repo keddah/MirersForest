@@ -10,14 +10,6 @@ Character::~Character()
 {
 }
 
-void Character::Update()
-{
-}
-
-void Character::Draw()
-{
-}
-
 void Character::GainHealth()
 {
 	health.GainHealth();

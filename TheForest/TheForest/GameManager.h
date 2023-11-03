@@ -5,6 +5,10 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 
+#include "SceneManager.h"
+#include "CustomTimer.h"
+
+
 class GameManager
 {
 public:
@@ -18,8 +22,6 @@ public:
 
 
 private:
-	void StartGame();
-	
 	bool running;
 	
 	const int screenWidth = 1920;
@@ -27,4 +29,6 @@ private:
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
+	SceneManager manager = SceneManager();
 };

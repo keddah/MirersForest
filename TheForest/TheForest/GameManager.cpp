@@ -2,8 +2,6 @@
 
 GameManager::GameManager()
 {
-	running = true;
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		std::cout << "could not initialize SDL2!" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
@@ -32,6 +30,7 @@ GameManager::GameManager()
 
 	SDL_RenderSetVSync(renderer, 1);
 
+	running = true;
 }
 
 GameManager::~GameManager()
@@ -44,6 +43,11 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
+	Time::Update();
+	const double deltaTime = Time::GetDeltaTime();
+
+	manager.Update(deltaTime);
+
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e))
@@ -62,7 +66,7 @@ void GameManager::Draw()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(renderer, nullptr);
 
-
+	manager.Draw();
 	/*
 	SDL_Rect source{ 0, 0, 16, 16 };
 	SDL_Rect dest{ x, 0, 50, 50 };

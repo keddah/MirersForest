@@ -9,9 +9,6 @@ public:
     Character();
     ~Character();
 
-    void Update();
-    void Draw();
-    
     void GainHealth();
     void TakeDamge(float intensity);
     void Death();
