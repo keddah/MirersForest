@@ -137,19 +137,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HealthManager.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="CustomTimer.h" />
+    <ClInclude Include="DeathBarrier.h" />
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthManager.h" />
     <ClInclude Include="MovementController.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WeaponController.h" />

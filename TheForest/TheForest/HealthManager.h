@@ -1,15 +1,22 @@
 #pragma once
 
+class Character;
+
 class HealthManager
 {
 public:
     HealthManager();
+    //HealthManager(Character _owner);
     ~HealthManager();
 
-    void TakeDamage();
+    void TakeDamage(float damageIntensity);
     void GainHealth();
 
 private:
-    const short maxLives = 3;
-    short currentLives = maxLives;
+    //Character Owner;
+
+    float damageResistance = 1;
+
+    const float maxLives = 3;
+    float currentLives = maxLives;
 };

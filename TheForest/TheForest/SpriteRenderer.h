@@ -5,9 +5,10 @@
 class SpriteRenderer
 {
 public:
+	SpriteRenderer();
 	SpriteRenderer(SDL_Rect source, SDL_Rect destination);
-	void ChangeSourceRect();
-	void ChangeDestRect();
+	void ChangeSourceRect(SDL_Rect newRect);
+	void ChangeDestRect(SDL_Rect newRect);
 
 
 	SDL_Rect sourceRect;

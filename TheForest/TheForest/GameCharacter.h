@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SpriteRenderer.h"
+#include "HealthManager.h"
 
 class Character
 {
@@ -12,13 +13,16 @@ public:
     void Draw();
     
     void GainHealth();
-    void TakeDamge();
+    void TakeDamge(float intensity);
     void Death();
+
+
+protected:
+    HealthManager health = HealthManager();
     
 private:
     SpriteRenderer renderer;
 
-    HealthManager health;
 
     SDL_Rect rect;
 };
