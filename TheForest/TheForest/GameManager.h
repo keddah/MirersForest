@@ -14,8 +14,13 @@ public:
 	void Update();
 	void Draw();
 
+	bool IsRunning();
+
+
 private:
 	void StartGame();
+	
+	bool running;
 	
 	const int screenWidth = 1920;
 	const int screenHeight = 1080;

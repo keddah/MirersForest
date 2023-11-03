@@ -5,10 +5,13 @@
 
 int main()
 {
-	print("sdfkhsf")
 	GameManager game;
-	game.Update();
-	game.Draw();
+	
+	while (game.IsRunning())
+	{
+		game.Update();
+		game.Draw();
+	}
 
 	return 0;
 }

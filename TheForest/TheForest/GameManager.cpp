@@ -2,6 +2,8 @@
 
 GameManager::GameManager()
 {
+	running = true;
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		std::cout << "could not initialize SDL2!" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
@@ -28,11 +30,8 @@ GameManager::GameManager()
 		return;
 	}
 
+	SDL_RenderSetVSync(renderer, 1);
 
-	// Make game objects here
-
-
-	
 }
 
 GameManager::~GameManager()
@@ -45,18 +44,14 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
-	bool quit = false;
-	while (!quit)
+	SDL_Event e;
+
+	while (SDL_PollEvent(&e))
 	{
-		SDL_Event e;
-
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT) quit = true;
-			if (e.key.keysym.scancode == SDL_SCANCODE_W); ///input detection ;
-		}
-
+		if (e.type == SDL_QUIT) running = false;
+		if (e.key.keysym.scancode == SDL_SCANCODE_W); ///input detection ;
 	}
+
 
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -68,12 +63,17 @@ void GameManager::Draw()
 	SDL_RenderFillRect(renderer, nullptr);
 
 
-/*
+	/*
 	SDL_Rect source{ 0, 0, 16, 16 };
 	SDL_Rect dest{ x, 0, 50, 50 };
 	SDL_RenderCopy(renderer, character, nullptr, &dest);
-*/
+	*/
 
 
 	SDL_RenderPresent(renderer);
+}
+
+bool GameManager::IsRunning()
+{
+	return running;
 }

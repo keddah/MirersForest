@@ -67,6 +67,11 @@ bool Vector2::Compare(const Vector2& other, const float tolerance) const
 	return  equal_x && equal_y;
 }
 
+float Vector2::Magnitude() const
+{
+	return sqrt((x * x) + (y * y));
+}
+
 // Used this to check collisions since it was more reliable
 float Vector2::Distance(const Vector2& other) const
 {

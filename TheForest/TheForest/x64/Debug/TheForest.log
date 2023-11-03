@@ -1,4 +1,12 @@
-﻿  GameCharacter.cpp
-  HealthManager.cpp
+﻿  MovementController.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(16,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(19,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(24,2): error C2661: 'Physics::AddForce': no overloaded function takes 0 arguments
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(24,2): message : while trying to match the argument list '()'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\MovementController.cpp(25,1): error C2143: syntax error: missing ';' before '}'
+  Physics.cpp
+  Player.cpp
+  SpriteRenderer.cpp
+  Vector2.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.cpp(72,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
   Generating Code...
-  TheForest.vcxproj -> C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\x64\Debug\TheForest.exe

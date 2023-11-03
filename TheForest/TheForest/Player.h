@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameCharacter.h"
+#include "MovementController.h"
 
 class Player : Character
 {
@@ -19,4 +20,5 @@ private:
     void TakeDamage();
     void Death();
 
+    MovementController moveController = MovementController();
 };

@@ -19,10 +19,10 @@ public:
 
 protected:
     HealthManager health = HealthManager();
+    SDL_Rect rect;
     
 private:
     SpriteRenderer renderer;
 
 
-    SDL_Rect rect;
 };

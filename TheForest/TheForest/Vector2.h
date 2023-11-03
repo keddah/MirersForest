@@ -78,7 +78,7 @@ public:
 	bool Compare(const Vector2& other, float tolerance = 0) const;
 
 
-
+	float Magnitude() const;
 
 	float Distance(const Vector2& other) const;
 };
