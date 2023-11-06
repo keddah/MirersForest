@@ -22,7 +22,6 @@ Vector2::Vector2(int X, int Y)
 	y = Y;
 }
 
-
 Vector2 Vector2::operator+=(const Vector2& other)
 {
 	x += other.x;

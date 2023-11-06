@@ -88,13 +88,44 @@ void Collision::SetRectangle(int x, int y, int width, int height)
 	rect.h = height;
 }
 
-
-bool Collision::Overlapping(Collision toCompare)
+// Collider overlaps another collider
+bool Collision::Overlapping(const Collision& toCompare) const
 {
-	return false;
+	const bool overlap =
+		// Compare to the horizontal line - if ths position is greater or equal to anywhere along 'this' line ... otherwise,
+		((toCompare.rect.x >= rect.x && toCompare.rect.x < rect.x + rect.w) ||
+			
+		// Is the line toCompare anywhere along the line of 'this' line 
+		((toCompare.rect.x + toCompare.rect.w >= rect.x) && (toCompare.rect.x + toCompare.rect.w <= rect.x + rect.w)) ||
+
+		// Compare to the vertical line - if ths position is greater or equal to anywhere along 'this' line....
+		(toCompare.rect.y >= rect.y && toCompare.rect.y < rect.y + rect.h) ||
+
+		// Compare to the vertical line
+		((toCompare.rect.y + toCompare.rect.h >= rect.y) && (toCompare.rect.y + toCompare.rect.h <= rect.y + rect.h)));
+		
+	return overlap;
 }
 
-bool Collision::Contains(Collision toCompare)
+// Box collision contains another box collider
+bool Collision::Contains(const Collision& toCompare) const
 {
-	return false;
+	const bool inside =
+		// Able to compare the position of the rectangle and check if it's inside 'this' rectangle
+		((toCompare.rect.x > rect.x) && (toCompare.rect.x < rect.x + rect.w) && 
+		((toCompare.rect.y > rect.y)) && (toCompare.rect.y < rect.y + rect.h) &&
+
+		// As long as the rectangle to compare is smaller than the 'this' rectangle and the position is inside
+		// the bounds of 'this' rectangle, the rectangle to compare would be in 'this' rectangle 
+		toCompare.rect.w < rect.w && toCompare.rect.h < rect.h);
+	
+	return inside;
+			
+}
+
+// Box collider contains Vector
+bool Collision::Contains(const Vector2 position) const
+{
+	return  ((position.x >= rect.x)) && (position.x <= rect.x + rect.w) && 
+            ((position.y >= rect.y)) && (position.y <= rect.y + rect.h);
 }

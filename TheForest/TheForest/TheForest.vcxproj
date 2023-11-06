@@ -149,6 +149,7 @@
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="WeaponController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h" />

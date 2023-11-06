@@ -29,7 +29,8 @@ GameManager::GameManager()
 	}
 
 	SDL_RenderSetVSync(renderer, 1);
-
+	
+	manager = new SceneManager();
 	running = true;
 }
 
@@ -46,7 +47,7 @@ void GameManager::Update()
 	Time::Update();
 	const double deltaTime = Time::GetDeltaTime();
 
-	manager.Update(deltaTime);
+	manager->Update(deltaTime);
 
 	SDL_Event e;
 
@@ -66,7 +67,7 @@ void GameManager::Draw()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(renderer, nullptr);
 
-	manager.Draw();
+	manager->Draw();
 	/*
 	SDL_Rect source{ 0, 0, 16, 16 };
 	SDL_Rect dest{ x, 0, 50, 50 };

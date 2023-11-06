@@ -3,7 +3,7 @@
 #include "Collider.h"
 
 
-class DeathBarrier : Collision
+class DeathBarrier : public Collision
 {
 
 };

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SpriteRenderer.h"
 #include "HealthManager.h"
+#include "SpriteRenderer.h"
 
 class Character
 {

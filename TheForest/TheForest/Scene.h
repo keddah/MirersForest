@@ -1,4 +1,5 @@
 #pragma once
+#include "SpriteRenderer.h"
 
 class Scene
 {
@@ -7,5 +8,6 @@ public:
 	~Scene();
 
 private:
-
+	SpriteRenderer bkgRenderer;
+	
 };

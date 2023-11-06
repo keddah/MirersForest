@@ -10,15 +10,15 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update(double DeltaTime)
 {
-	player.Update(DeltaTime);
+	if(player) player->Update(DeltaTime);
 	
 }
 
 void SceneManager::Draw()
 {
-	for (int i = 0; i < renderers.size(); i++)
+	for (auto& renderer : renderers)
 	{
-		renderers[i].Animate();
+		renderer.Animate();
 	}
 
 }

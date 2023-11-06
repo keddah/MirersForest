@@ -23,8 +23,9 @@ public:
 	void SetRectangle(int x, int y, Vector2 position);
 	void SetRectangle(int x, int y, int width, int height);
 
-	bool Overlapping(Collision toCompare);
-	bool Contains(Collision toCompare);
+	bool Overlapping(const Collision& toCompare) const;
+	bool Contains(const Collision& toCompare) const;
+	bool Contains(Vector2 position) const;
 
 private:
 	SDL_Rect rect;

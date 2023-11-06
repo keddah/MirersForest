@@ -8,11 +8,17 @@ public:
 	~PlayerController();
 
 	void Update();
-
-	bool* GetInputs();
+	
+	bool* GetMoveInputs();
+	bool IsLMB() const;
+	bool IsRMB() const;
 
 private:
+	bool lmb;
+	bool rmb;
 
+	void ClearInputs();
+	
 	// Up .. Down .. Left .. Right
 	bool moveInputs[4];
 	void ReadInputs();

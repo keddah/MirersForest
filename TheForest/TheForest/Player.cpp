@@ -12,12 +12,17 @@ void Player::GivePowerup()
 {
 }
 
+PlayerController Player::Controller()
+{
+	return controller;
+}
+
 void Player::Update(double deltaTime)
 {
 	moveController.Update(deltaTime);
 
-	rect.x = moveController.position.x;
-	rect.y = moveController.position.y;
+	rect.x = moveController.GetPosition().x;
+	rect.y = moveController.GetPosition().y;
 }
 
 void Player::GainHealth()

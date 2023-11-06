@@ -1,24 +1,40 @@
 #pragma once
 
 #include "Physics.h"
+#include "Player.h"
 
 class MovementController:Physics
 {
 public:
-    MovementController();
+    MovementController(Player*& plyr);
     void Update(double deltaTime);
 
-    enum EMovementState; 
-    Vector2 position = Vector2();
-
+    Vector2& GetPosition();
+    
+    enum EMovementState
+    {
+        Idle,
+        Moving,
+        Crouching,
+        Sliding
+    };
+    
 private:
     void CalculateVelocity(double deltaTime);
+    void CalculateDirection();
+    
     void Jump();
     void Slide();
     void Crouch();
     void Move();
 
-    short currentMoveState;
+    Player* player;
+
+    Vector2 position = Vector2();
+
+    bool canMove = true;
+    
+    short currentMoveState = Idle;
     const float moveSpeed = 5;
 
     const float mass = 100;
