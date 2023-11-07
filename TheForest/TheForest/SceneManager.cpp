@@ -6,6 +6,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
+	delete player;
 }
 
 void SceneManager::Update(double DeltaTime)

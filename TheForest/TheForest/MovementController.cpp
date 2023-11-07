@@ -1,11 +1,13 @@
 #include "MovementController.h"
 
-#define print(x){std::cout << (x) << std::endl;}
-
-
-MovementController::MovementController(Player*& plyr)
+MovementController::MovementController(Player* plyr)
 {
 	player = plyr;
+}
+
+MovementController::~MovementController()
+{
+	delete player;
 }
 
 void MovementController::Update(double deltaTime)
@@ -24,8 +26,8 @@ Vector2& MovementController::GetPosition()
 void MovementController::CalculateVelocity(double deltaTime)
 {
 	const float displacement = previousPos.Distance(Vector2(position.x, position.y));
-	const float dotProd = (position.x * previousPos.x) + (position.y * previousPos.y);
-	const float displacementAngle = dotProd / position.Magnitude() * previousPos.Magnitude();
+	const int dotProd = (position.x * previousPos.x) + (position.y * previousPos.y);
+	const float displacementAngle = dotProd / (position.Magnitude() * previousPos.Magnitude());
 
 	const float speed = displacement / deltaTime;
 
@@ -54,8 +56,8 @@ void MovementController::Move()
 	CalculateDirection();
 
 	velocity += direction * moveSpeed;
-	print(velocity.x);
-	print(velocity.y);
+	print(velocity.x)
+	print(velocity.y)
 }
 
 void MovementController::Jump()

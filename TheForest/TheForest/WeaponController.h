@@ -4,7 +4,11 @@
 class WeaponController
 {
 public:
-    WeaponController(Player*& plyr);
+    WeaponController(Player* plyr);
+    ~WeaponController();
+
+    void Update(double deltaTime);
+    
     
 private:
     Player* player;
@@ -21,4 +25,6 @@ private:
     
     // Projectile spawn position
     Vector2 spawnPos;
+
+    // std::vector<> projectiles = ;
 };

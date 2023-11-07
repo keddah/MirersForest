@@ -2,6 +2,8 @@
 
 Player::Player()
 {
+	moveController = MovementController(this);
+	weaponController = WeaponController(this);
 }
 
 Player::~Player()

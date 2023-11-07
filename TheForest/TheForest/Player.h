@@ -21,7 +21,7 @@ private:
     void TakeDamage(float damageIntensity);
     void Death();
 
-    PlayerController controller = PlayerController();
-    MovementController moveController = MovementController(this);
-    WeaponController weaponController = MovementController(this);
+    PlayerController controller;
+    MovementController moveController;
+    WeaponController weaponController;
 };

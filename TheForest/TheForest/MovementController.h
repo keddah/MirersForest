@@ -6,7 +6,9 @@
 class MovementController:Physics
 {
 public:
-    MovementController(Player*& plyr);
+    MovementController(Player* plyr);
+    ~MovementController();
+    
     void Update(double deltaTime);
 
     Vector2& GetPosition();
@@ -35,11 +37,11 @@ private:
     bool canMove = true;
     
     short currentMoveState = Idle;
-    const float moveSpeed = 5;
+    const int moveSpeed = 5;
 
     const float mass = 100;
-    const float jumpForce = 100;
-    const float slideSpeed = 10;
+    const int jumpForce = 100;
+    const int slideSpeed = 10;
 
     Vector2 direction = Vector2();
     Vector2 previousPos = Vector2();

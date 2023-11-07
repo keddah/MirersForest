@@ -54,7 +54,6 @@ void GameManager::Update()
 	while (SDL_PollEvent(&e))
 	{
 		if (e.type == SDL_QUIT) running = false;
-		if (e.key.keysym.scancode == SDL_SCANCODE_W); ///input detection ;
 	}
 
 
