@@ -21,14 +21,13 @@ GameManager::GameManager()
 		return;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if (!renderer) {
+	GameRenderer::SetRenderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED));
+	if (!GameRenderer::GetRenderer()) {
 		std::cout << "could not initialise window!" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
-
-	SDL_RenderSetVSync(renderer, 1);
+	SDL_RenderSetVSync(GameRenderer::GetRenderer(), 1);
 	
 	manager = new SceneManager();
 	running = true;

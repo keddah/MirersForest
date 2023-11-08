@@ -4,6 +4,7 @@
 // Initially set values.
 float Time::deltaTime = 0;
 high_resolution_clock::time_point Time::lastFrameTime = high_resolution_clock::now();
+SDL_Renderer* GameRenderer::renderer = nullptr;
 
 int main()
 {

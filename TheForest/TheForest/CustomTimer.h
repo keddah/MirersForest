@@ -10,7 +10,7 @@
 #pragma once
 
 #include <chrono>
-
+#include <SDL.h>
 using namespace std::chrono;
 
 class Time
@@ -31,5 +31,4 @@ private:
     static high_resolution_clock::time_point lastFrameTime;
     static float deltaTime;
 };
-
 

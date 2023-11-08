@@ -7,6 +7,7 @@
 
 #include "SceneManager.h"
 #include "CustomTimer.h"
+#include "RendererSingleton.h"
 
 #define DEBUGGING 1
 

@@ -16,10 +16,16 @@ public:
     void TakeDamge(float intensity);
     void Death();
 
+    void ConfigureRenderer(std::vector<const char*> paths, SDL_Rect source, SDL_Rect destination);
+
 
 protected:
     HealthManager health = HealthManager();
 
 private:
+    void ConfigureRenderer();
+
+
     SpriteRenderer renderer;
+
 };

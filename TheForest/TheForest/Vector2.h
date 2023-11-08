@@ -19,6 +19,8 @@ public:
 
 	int x, y;
 
+	void SetNew(int X, int Y) { x = X; y = Y; }
+
 	Vector2 operator+=(const Vector2& other);
 	Vector2 operator-=(const Vector2& other);
 	Vector2 operator*=(const Vector2& other);
