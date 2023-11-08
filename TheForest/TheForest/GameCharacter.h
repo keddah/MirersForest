@@ -1,11 +1,10 @@
 #pragma once
 
-#include "HealthManager.h" // final
-#include "SpriteRenderer.h" //ok
+#include "HealthManager.h" 
+#include "SpriteRenderer.h"
+#include "Collider.h"
 
-class SpriteRenderer;
-
-class Character
+class Character: public Collision
 {
 public:
     Character();
@@ -20,10 +19,7 @@ public:
 
 protected:
     HealthManager health = HealthManager();
-    SDL_Rect rect;
-    
+
 private:
     SpriteRenderer renderer;
-
-
 };

@@ -65,9 +65,6 @@
     <ClInclude Include="GameCharacter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovementController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,9 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WeaponController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HealthManager.h">
@@ -101,7 +95,7 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h">
+    <ClInclude Include="Controllers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">

@@ -2,11 +2,11 @@
 
 SceneManager::SceneManager()
 {
+	//player = Player();
 }
 
 SceneManager::~SceneManager()
 {
-	//delete player;
 }
 
 void SceneManager::Update(float DeltaTime)

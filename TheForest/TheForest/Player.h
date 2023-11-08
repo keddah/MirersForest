@@ -2,15 +2,14 @@
 
 #include "GameCharacter.h" //ok
 
-#include "WeaponController.h"
-#include "MovementController.h"
+#include "Controllers.h"
 
 class Player : public Character
 {
 public:
     Player();
     ~Player();
-    virtual void Update(float deltaTime);
+    void Update(float deltaTime);
     virtual void Draw();
 
     void GivePowerup();

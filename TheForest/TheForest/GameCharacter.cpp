@@ -1,8 +1,7 @@
 #include "GameCharacter.h"
 
-Character::Character()
+Character::Character() 
 {
-	rect = SDL_Rect();
 }
 
 
@@ -12,6 +11,7 @@ Character::~Character()
 
 void Character::Draw()
 {
+	renderer.Animate();
 }
 
 void Character::GainHealth()

@@ -1,6 +1,5 @@
-#include "PlayerController.h"
+#include "Controllers.h"
 #include <SDL.h>
-
 
 
 PlayerController::PlayerController()
@@ -41,9 +40,9 @@ void PlayerController::ClearInputs()
 
 void PlayerController::ReadInputs()
 {
-	ClearInputs();
-	
 	SDL_Event e;
+
+
 
 	///input detection
 	while (SDL_PollEvent(&e))
@@ -97,4 +96,5 @@ void PlayerController::ReadInputs()
 			break;
 		} 
 	}
+
 }

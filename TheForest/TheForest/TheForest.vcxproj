@@ -159,16 +159,14 @@
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthManager.h" />
-    <ClInclude Include="MovementController.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Controllers.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector2.h" />
-    <ClInclude Include="WeaponController.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />

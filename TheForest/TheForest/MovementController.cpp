@@ -1,5 +1,6 @@
-#include "MovementController.h"
-#include "PlayerController.h"
+#include "Controllers.h"
+
+#include<iostream>
 
 
 MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos) : controller(ctrl), playerPosition(plyrPos)
@@ -9,6 +10,8 @@ MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos)
 
 void MovementController::Update(float deltaTime)
 {
+	//controller.Update();
+
 	ApplyGravity();
 	CalculateVelocity(deltaTime);
 
@@ -32,20 +35,22 @@ void MovementController::CalculateDirection()
 	for(int i = 0; i < 4; i++)
 	{
 		// 0 = up, 1 = down, 2 = left, 3 = right
-		//const bool up = controller.GetMoveInputs()[0];
-		//const bool down =controller.GetMoveInputs()[1];
-		//const bool left = controller.GetMoveInputs()[2];
-		//const bool right = controller.GetMoveInputs()[3];
+		const bool up = controller.GetMoveInputs()[0];
+		const bool down = controller.GetMoveInputs()[1];
+		const bool left = controller.GetMoveInputs()[2];
+		const bool right = controller.GetMoveInputs()[3];
 
-		//direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
+		direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
+		print(direction.x << ", " << direction.y)
 	}
 }
 
 void MovementController::Move()
 {
+	CalculateDirection();
+	
 	if(!canMove) return;
 
-	CalculateDirection();
 
 	velocity += direction * moveSpeed;
 	playerPosition += velocity;

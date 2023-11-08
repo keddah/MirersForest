@@ -1,2 +1,4 @@
-﻿  Player.cpp
+﻿  GameManager.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(14,1): warning C4005: 'print': macro redefinition
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Controllers.h(5,1): message : see previous definition of 'print'
   TheForest.vcxproj -> C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\x64\Debug\TheForest.exe

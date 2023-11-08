@@ -57,8 +57,8 @@ void GameManager::Update()
 	}
 
 
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	//SDL_DestroyWindow(window);
+	//SDL_Quit();
 }
 
 void GameManager::Draw()
@@ -67,12 +67,6 @@ void GameManager::Draw()
 	SDL_RenderFillRect(renderer, nullptr);
 
 	manager->Draw();
-	/*
-	SDL_Rect source{ 0, 0, 16, 16 };
-	SDL_Rect dest{ x, 0, 50, 50 };
-	SDL_RenderCopy(renderer, character, nullptr, &dest);
-	*/
-
 
 	SDL_RenderPresent(renderer);
 }

@@ -1,6 +1,5 @@
 #include "Player.h"
-#include "MovementController.h"
-#include "WeaponController.h"
+#include "Controllers.h"
 
 Player::Player()
 {
@@ -26,10 +25,12 @@ PlayerController Player::Controller()
 
 void Player::Update(float deltaTime)
 {
-	moveController.Update(deltaTime);
+	controller.Update();
 
-	rect.x = position.x;
-	rect.y = position.y;
+	moveController.Update(deltaTime);
+	weaponController.Update(deltaTime);
+
+	SetPosition(position);
 }
 
 void Player::Draw()
