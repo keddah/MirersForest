@@ -1,17 +1,17 @@
 #pragma once
 
 #include "Physics.h"
-#include "Player.h"
+#include "PlayerController.h" 
 
 class MovementController:Physics
 {
 public:
-    MovementController(Player* plyr);
-    ~MovementController();
+    MovementController(PlayerController& ctrl, Vector2& plyrPos);
+    ~MovementController() {}
     
-    void Update(double deltaTime);
+    void Update(float deltaTime);
 
-    Vector2& GetPosition();
+    //Vector2& GetPosition() {}
     
     enum EMovementState
     {
@@ -22,17 +22,17 @@ public:
     };
     
 private:
-    void CalculateVelocity(double deltaTime);
+    void CalculateVelocity(float deltaTime);
     void CalculateDirection();
     
     void Jump();
     void Slide();
     void Crouch();
+    void Uncrouch();
     void Move();
 
-    Player* player;
-
-    Vector2 position = Vector2();
+    PlayerController& controller;
+    Vector2& playerPosition;
 
     bool canMove = true;
     
@@ -44,6 +44,8 @@ private:
     const int slideSpeed = 10;
 
     Vector2 direction = Vector2();
+
+    // Used to calculate velocity
     Vector2 previousPos = Vector2();
     Vector2 velocity = Vector2();
 };

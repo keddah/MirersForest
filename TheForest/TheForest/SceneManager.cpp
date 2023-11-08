@@ -6,12 +6,12 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	delete player;
+	//delete player;
 }
 
-void SceneManager::Update(double DeltaTime)
+void SceneManager::Update(float DeltaTime)
 {
-	if(player) player->Update(DeltaTime);
+	player.Update(DeltaTime);
 	
 }
 

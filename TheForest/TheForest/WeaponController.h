@@ -1,18 +1,20 @@
 #pragma once
-#include "Player.h"
+
+#include "Vector2.h"
+#include "PlayerController.h" 
 
 class WeaponController
 {
 public:
-    WeaponController(Player* plyr);
+    WeaponController(PlayerController& ctrl, Vector2& plyrPos);
     ~WeaponController();
 
-    void Update(double deltaTime);
+    void Update(float deltaTime);
     
     
 private:
-    Player* player;
-
+    PlayerController& controller;
+    
     enum WeaponType
     {
         Normal,
@@ -23,8 +25,9 @@ private:
 
     short currentWeapon = Normal;
     
+    Vector2& playerPosition;
     // Projectile spawn position
-    Vector2 spawnPos;
+    Vector2 spawnPos = Vector2();
 
     // std::vector<> projectiles = ;
 };

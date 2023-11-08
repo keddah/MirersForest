@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SpriteRenderer.h"
+#include "SpriteRenderer.h" //ok
 #include "Player.h"
 
 #include <vector>
@@ -11,12 +11,12 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void Update(double DeltaTime);
+	void Update(float DeltaTime);
 	void Draw();
 
 private:
 	void StartGame();
 
-	Player* player;
+	Player player;
 	std::vector<SpriteRenderer> renderers = std::vector<SpriteRenderer>();
 };

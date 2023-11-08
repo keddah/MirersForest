@@ -1,9 +1,9 @@
 #include "Player.h"
+#include "MovementController.h"
+#include "WeaponController.h"
 
 Player::Player()
 {
-	moveController = MovementController(this);
-	weaponController = WeaponController(this);
 }
 
 Player::~Player()
@@ -14,17 +14,27 @@ void Player::GivePowerup()
 {
 }
 
+Vector2& Player::GetPosition()
+{
+	return position;
+}
+
 PlayerController Player::Controller()
 {
 	return controller;
 }
 
-void Player::Update(double deltaTime)
+void Player::Update(float deltaTime)
 {
 	moveController.Update(deltaTime);
 
-	rect.x = moveController.GetPosition().x;
-	rect.y = moveController.GetPosition().y;
+	rect.x = position.x;
+	rect.y = position.y;
+}
+
+void Player::Draw()
+{
+	Character::Draw();
 }
 
 void Player::GainHealth()

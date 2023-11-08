@@ -1,13 +1,17 @@
 #pragma once
 
-#include "HealthManager.h"
-#include "SpriteRenderer.h"
+#include "HealthManager.h" // final
+#include "SpriteRenderer.h" //ok
+
+class SpriteRenderer;
 
 class Character
 {
 public:
     Character();
     ~Character();
+
+    void Draw();
 
     void GainHealth();
     void TakeDamge(float intensity);

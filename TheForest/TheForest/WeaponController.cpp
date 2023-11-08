@@ -1,16 +1,16 @@
 #include "WeaponController.h"
+#include "PlayerController.h"
 
-WeaponController::WeaponController(Player* plyr)
+WeaponController::WeaponController(PlayerController& ctrl, Vector2& plyrPos) : controller(ctrl), playerPosition(plyrPos)
 {
-    player = plyr;
 }
 
 WeaponController::~WeaponController()
 {
-    delete player;  
 }
 
-void WeaponController::Update(double deltaTime)
+void WeaponController::Update(float deltaTime)
 {
-    
+    static const Vector2 offset = Vector2(2,2);
+    spawnPos = playerPosition + offset;
 }

@@ -1,16 +1,13 @@
 #include "MovementController.h"
+#include "PlayerController.h"
 
-MovementController::MovementController(Player* plyr)
+
+MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos) : controller(ctrl), playerPosition(plyrPos)
 {
-	player = plyr;
 }
 
-MovementController::~MovementController()
-{
-	delete player;
-}
 
-void MovementController::Update(double deltaTime)
+void MovementController::Update(float deltaTime)
 {
 	ApplyGravity();
 	CalculateVelocity(deltaTime);
@@ -18,16 +15,11 @@ void MovementController::Update(double deltaTime)
 	Move();
 }
 
-Vector2& MovementController::GetPosition()
+void MovementController::CalculateVelocity(float deltaTime)
 {
-	return position;
-}
-
-void MovementController::CalculateVelocity(double deltaTime)
-{
-	const float displacement = previousPos.Distance(Vector2(position.x, position.y));
-	const int dotProd = (position.x * previousPos.x) + (position.y * previousPos.y);
-	const float displacementAngle = dotProd / (position.Magnitude() * previousPos.Magnitude());
+	const float displacement = previousPos.Distance(Vector2(playerPosition.x, playerPosition.y));
+	const int dotProd = (playerPosition.x * previousPos.x) + (playerPosition.y * previousPos.y);
+	const float displacementAngle = dotProd / (playerPosition.Magnitude() * previousPos.Magnitude());
 
 	const float speed = displacement / deltaTime;
 
@@ -40,12 +32,12 @@ void MovementController::CalculateDirection()
 	for(int i = 0; i < 4; i++)
 	{
 		// 0 = up, 1 = down, 2 = left, 3 = right
-		const bool up = player->Controller().GetMoveInputs()[0];
-		const bool down = player->Controller().GetMoveInputs()[1];
-		const bool left = player->Controller().GetMoveInputs()[2];
-		const bool right = player->Controller().GetMoveInputs()[3];
+		//const bool up = controller.GetMoveInputs()[0];
+		//const bool down =controller.GetMoveInputs()[1];
+		//const bool left = controller.GetMoveInputs()[2];
+		//const bool right = controller.GetMoveInputs()[3];
 
-		direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
+		//direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
 	}
 }
 
@@ -56,19 +48,27 @@ void MovementController::Move()
 	CalculateDirection();
 
 	velocity += direction * moveSpeed;
-	print(velocity.x)
-	print(velocity.y)
+	playerPosition += velocity;
+	/*print(velocity.x)
+	print(velocity.y)*/
 }
 
 void MovementController::Jump()
 {
-	velocity = AddForce(velocity + Vector2(0, 2), jumpForce);
+	velocity = AddForce(velocity + Vector2(0, 1), jumpForce);
 }
 
 void MovementController::Slide()
 {
+	Crouch();
+
 }
 
 void MovementController::Crouch()
 {
+}
+
+void MovementController::Uncrouch()
+{
+	
 }

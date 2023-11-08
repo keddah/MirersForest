@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameManager.h"
-
+//#include "GameManager.h"
+#include <SDL.h>
 class SpriteRenderer
 {
 public:

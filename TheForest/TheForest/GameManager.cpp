@@ -45,7 +45,7 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
 	Time::Update();
-	const double deltaTime = Time::GetDeltaTime();
+	const float deltaTime = Time::GetDeltaTime();
 
 	manager->Update(deltaTime);
 
