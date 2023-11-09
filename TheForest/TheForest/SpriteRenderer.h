@@ -11,12 +11,8 @@ public:
 	SpriteRenderer();
 	
 	// For animated things...
-	SpriteRenderer(std::vector<const char*> paths);
-	SpriteRenderer(std::vector<const char*> paths, SDL_Rect source, SDL_Rect destination);
-
-	// For basic things
-	SpriteRenderer(const char* path);
-	SpriteRenderer(const char* path, SDL_Rect source, SDL_Rect destination);
+	SpriteRenderer(const char* paths[]);
+	SpriteRenderer(const char* paths[], SDL_Rect source, SDL_Rect destination);
 
 	void AddTexture(const char* path);
 	
@@ -27,7 +23,6 @@ public:
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->rotation = other.rotation;
-		this->texturePath = other.texturePath;
 		this->spriteTextures = other.spriteTextures;
 		return *this;
 	}
@@ -36,13 +31,11 @@ public:
 	SDL_Rect destinationRect;
 
 private:
-	void Configure();
+	void Configure(const char* paths[], SDL_Rect source, SDL_Rect destination);
 
 
 	const float animSpeed = 1;
 	float rotation = 0;
-
-	char* texturePath;
 
 	std::vector<Texture> spriteTextures = std::vector<Texture>();
 };

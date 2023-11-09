@@ -38,7 +38,6 @@ private:
 	const int screenHeight = 1080;
 
 	SDL_Window* window;
-	SDL_Renderer* renderer;
 
-	SceneManager* manager;
+	SceneManager manager;
 };

@@ -41,7 +41,6 @@ void MovementController::CalculateDirection()
 		const bool right = controller.GetMoveInputs()[3];
 
 		direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
-		print(direction.x << ", " << direction.y)
 	}
 }
 
@@ -54,8 +53,6 @@ void MovementController::Move()
 
 	velocity += direction * moveSpeed;
 	playerPosition += velocity;
-	/*print(velocity.x)
-	print(velocity.y)*/
 }
 
 void MovementController::Jump()
@@ -66,7 +63,6 @@ void MovementController::Jump()
 void MovementController::Slide()
 {
 	Crouch();
-
 }
 
 void MovementController::Crouch()

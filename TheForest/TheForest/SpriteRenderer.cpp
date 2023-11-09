@@ -1,46 +1,31 @@
 #include "SpriteRenderer.h"
 #include "RendererSingleton.h"
-
+#include<iostream>
 
 SpriteRenderer::SpriteRenderer()
 {
 }
 
 
-SpriteRenderer::SpriteRenderer(std::vector<const char*> paths)
+SpriteRenderer::SpriteRenderer(const char* paths[])
 {
-	for (const char* path : paths) AddTexture(path);
+	for (int i = 0; i < sizeof(paths); i++) AddTexture(paths[i]);
 
 	sourceRect = SDL_Rect();
 	destinationRect = SDL_Rect();
 }
 
-SpriteRenderer::SpriteRenderer(std::vector<const char*> paths, SDL_Rect source, SDL_Rect destination)
+SpriteRenderer::SpriteRenderer(const char* paths[], SDL_Rect source, SDL_Rect destination)
 {
-	for (const char* path : paths) AddTexture(path);
+	for (int i = 0; i < sizeof(paths); i++) AddTexture(paths[i]);
 
-	sourceRect = source;
-	destinationRect = destination;
-}
-
-SpriteRenderer::SpriteRenderer(const char* path)
-{
-	AddTexture(path);
-
-	sourceRect = SDL_Rect();
-	destinationRect = SDL_Rect();
-}
-
-SpriteRenderer::SpriteRenderer(const char* path, SDL_Rect source, SDL_Rect destination)
-{
-	AddTexture(path);
-	
 	sourceRect = source;
 	destinationRect = destination;
 }
 
 void SpriteRenderer::Animate()
 {
+	SDL_RenderCopy(GameRenderer::GetRenderer(), spriteTextures[0].GetTexture(), NULL, NULL);
 }
 
 void SpriteRenderer::AddTexture(const char* path)
@@ -50,15 +35,26 @@ void SpriteRenderer::AddTexture(const char* path)
 
 void SpriteRenderer::ChangeSourceRect(SDL_Rect newRect)
 {
+	sourceRect = newRect;
 }
 
 void SpriteRenderer::ChangeDestRect(SDL_Rect newRect)
 {
+	destinationRect = newRect;
 }
 
-void SpriteRenderer::Configure(std::vector<const char*> paths, SDL_Rect source, SDL_Rect destination)
+void SpriteRenderer::Configure(const char* paths[], SDL_Rect source, SDL_Rect destination)
 {
-	texturePath = paths;
+	// Get rid of all of the existing textures
+	spriteTextures.clear();
+
+	for(int i = 0; i < sizeof(paths); i++)
+	{
+		AddTexture(paths[i]);
+	}
+	
+	sourceRect = source;
+	destinationRect = destination;
 }
 
 

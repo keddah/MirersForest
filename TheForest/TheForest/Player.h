@@ -14,7 +14,7 @@ public:
 
     void GivePowerup();
     Vector2& GetPosition();
-
+    SpriteRenderer& GetRenderer();
     PlayerController Controller();
     
 private:

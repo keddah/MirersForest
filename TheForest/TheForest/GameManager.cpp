@@ -29,14 +29,12 @@ GameManager::GameManager()
 	}
 	SDL_RenderSetVSync(GameRenderer::GetRenderer(), 1);
 	
-	manager = new SceneManager();
 	running = true;
 }
 
 GameManager::~GameManager()
 {
-	// SDL_DestroyTexture(character);
-	SDL_DestroyRenderer(renderer);
+	SDL_DestroyRenderer(GameRenderer::GetRenderer());
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
@@ -46,7 +44,7 @@ void GameManager::Update()
 	Time::Update();
 	const float deltaTime = Time::GetDeltaTime();
 
-	manager->Update(deltaTime);
+	manager.Update(deltaTime);
 
 	SDL_Event e;
 
@@ -62,12 +60,12 @@ void GameManager::Update()
 
 void GameManager::Draw()
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-	SDL_RenderFillRect(renderer, nullptr);
+	SDL_SetRenderDrawColor(GameRenderer::GetRenderer(), 0, 0, 0, 0);
+	SDL_RenderFillRect(GameRenderer::GetRenderer(), nullptr);
 
-	manager->Draw();
-
-	SDL_RenderPresent(renderer);
+	SDL_RenderClear(GameRenderer::GetRenderer());
+	manager.Draw();
+	SDL_RenderPresent(GameRenderer::GetRenderer());
 }
 
 bool GameManager::IsRunning()

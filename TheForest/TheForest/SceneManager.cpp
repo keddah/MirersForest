@@ -2,7 +2,7 @@
 
 SceneManager::SceneManager()
 {
-	//player = Player();
+	renderers.push_back(player.GetRenderer());
 }
 
 SceneManager::~SceneManager()
@@ -12,15 +12,11 @@ SceneManager::~SceneManager()
 void SceneManager::Update(float DeltaTime)
 {
 	player.Update(DeltaTime);
-	
 }
 
 void SceneManager::Draw()
 {
-	for (auto& renderer : renderers)
-	{
-		renderer.Animate();
-	}
+	for (auto& renderer : renderers) renderer.Animate();
 
 }
 
