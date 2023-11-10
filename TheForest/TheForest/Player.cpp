@@ -5,16 +5,17 @@ Player::Player()
 {
 	const char* runAnims[]
 	{
-		"/Images/run_right1.png",
-		"/Images/run_right2.png",
-		"/Images/run_right3.png",
-		"/Images/run_right4.png",
-		"/Images/run_left1.png",
-		"/Images/run_left2.png",
-		"/Images/run_left3.png",
-		"/Images/run_left4.png",
+		"Images/run_right1.png",
+		"Images/run_right2.png",
+		"Images/run_right3.png",
+		"Images/run_right4.png",
+		"Images/run_left1.png",
+		"Images/run_left2.png",
+		"Images/run_left3.png",
+		"Images/run_left4.png",
 	};
-	ConfigureRenderer(runAnims, SDL_Rect(), SDL_Rect());
+	ConfigureRenderer(runAnims);
+	renderer.ChangeDestRect(SDL_Rect{10,10,100,100});
 }
 
 Player::~Player()

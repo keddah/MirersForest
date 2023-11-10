@@ -19,7 +19,7 @@ public:
 
 
 protected:
-    void ConfigureRenderer(const char* paths[], SDL_Rect source, SDL_Rect destination);
+    void ConfigureRenderer(const char* paths[]);
     
     HealthManager health;
     SpriteRenderer renderer;

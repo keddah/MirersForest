@@ -2,6 +2,8 @@
 #include "RendererSingleton.h"
 #include<iostream>
 
+#include "Controllers.h"
+
 SpriteRenderer::SpriteRenderer()
 {
 }
@@ -10,37 +12,35 @@ SpriteRenderer::SpriteRenderer()
 SpriteRenderer::SpriteRenderer(const char* paths[])
 {
 	for (int i = 0; i < sizeof(paths); i++) AddTexture(paths[i]);
-
-	sourceRect = SDL_Rect();
-	destinationRect = SDL_Rect();
-}
-
-SpriteRenderer::SpriteRenderer(const char* paths[], SDL_Rect source, SDL_Rect destination)
-{
-	for (int i = 0; i < sizeof(paths); i++) AddTexture(paths[i]);
-
-	sourceRect = source;
-	destinationRect = destination;
+		
+	destinationRect = new SDL_Rect {0, 0, spriteTextures[0].GetImageSize().x, spriteTextures[0].GetImageSize().y};
+	sourceRect = new SDL_Rect();
 }
 
 void SpriteRenderer::Animate()
 {
-	SDL_RenderCopy(GameRenderer::GetRenderer(), spriteTextures[0].GetTexture(), NULL, NULL);
+	// Creating a local texture each frame using the textures that were created in the constructor 
+	Image tex = Image(spriteTextures[5].GetImagePath());
+	SDL_RenderCopy(GameRenderer::GetRenderer(), tex.GetTexture(), NULL, destinationRect);
 }
 
 void SpriteRenderer::AddTexture(const char* path)
 {
-	spriteTextures.push_back(Texture(path, GameRenderer::GetRenderer()));
+	spriteTextures.emplace_back(path);
 }
 
 void SpriteRenderer::ChangeSourceRect(SDL_Rect newRect)
 {
-	sourceRect = newRect;
+	delete sourceRect;
+	
+	sourceRect = new SDL_Rect(newRect);
 }
 
 void SpriteRenderer::ChangeDestRect(SDL_Rect newRect)
 {
-	destinationRect = newRect;
+	delete destinationRect;
+	
+	destinationRect = new SDL_Rect(newRect);
 }
 
 void SpriteRenderer::Configure(const char* paths[], SDL_Rect source, SDL_Rect destination)
@@ -52,9 +52,12 @@ void SpriteRenderer::Configure(const char* paths[], SDL_Rect source, SDL_Rect de
 	{
 		AddTexture(paths[i]);
 	}
+
+	delete sourceRect;
+	delete destinationRect;
 	
-	sourceRect = source;
-	destinationRect = destination;
+	sourceRect = new SDL_Rect(source);
+	destinationRect = new SDL_Rect(destination);
 }
 
 

@@ -34,6 +34,8 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	manager;
+	
 	SDL_DestroyRenderer(GameRenderer::GetRenderer());
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -53,14 +55,14 @@ void GameManager::Update()
 		if (e.type == SDL_QUIT) running = false;
 	}
 
-
-	//SDL_DestroyWindow(window);
-	//SDL_Quit();
+	if(running) return;
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 void GameManager::Draw()
 {
-	SDL_SetRenderDrawColor(GameRenderer::GetRenderer(), 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(GameRenderer::GetRenderer(), 125, 0, 125, 255);
 	SDL_RenderFillRect(GameRenderer::GetRenderer(), nullptr);
 
 	SDL_RenderClear(GameRenderer::GetRenderer());

@@ -28,7 +28,7 @@ void Character::Death()
 {
 }
 
-void Character::ConfigureRenderer(const char* paths[], SDL_Rect source, SDL_Rect destination)
+void Character::ConfigureRenderer(const char* paths[])
 {
-	renderer = SpriteRenderer(paths, source, destination);
+	renderer = SpriteRenderer(paths);
 }

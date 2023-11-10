@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 
+#include "RendererSingleton.h"
+
 SceneManager::SceneManager()
 {
 	renderers.push_back(player.GetRenderer());
@@ -17,7 +19,6 @@ void SceneManager::Update(float DeltaTime)
 void SceneManager::Draw()
 {
 	for (auto& renderer : renderers) renderer.Animate();
-
 }
 
 void SceneManager::StartGame()
