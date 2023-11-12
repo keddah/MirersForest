@@ -148,6 +148,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheForest.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WeaponController.cpp" />
@@ -162,11 +163,12 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Controllers.h" />
-    <ClInclude Include="RendererSingleton.h" />
+    <ClInclude Include="GameSingletons.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>

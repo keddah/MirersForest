@@ -2,6 +2,7 @@
 
 #include <SDL_Image.h>
 #include "Vector2.h"
+#include "SpriteSheet.h"
 
 class Image
 {
@@ -11,14 +12,18 @@ public:
 
 	~Image() { SDL_DestroyTexture(texture); }
 
+	SpriteSheet& GetSpriteSheet() { return spriteSheet; }
+	void SetSpriteCount(short count);
+
 	SDL_Texture* GetTexture() const { return texture; }
 	const char* GetImagePath() const { return imagePath; }
-	Vector2& GetImageSize() { return size; }
 	
 private:
-	SDL_Texture* texture;
 	const char* imagePath; 
-	Vector2 size = Vector2();
-
+	SDL_Texture* texture;
+	
+	SpriteSheet spriteSheet;
+	
+	Vector2 size;
 };
 

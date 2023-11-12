@@ -3,19 +3,14 @@
 
 Player::Player()
 {
-	const char* runAnims[]
+	const char* animations[]
 	{
-		"Sprites/run_right1.png",
-		"Sprites/run_right2.png",
-		"Sprites/run_right3.png",
-		"Sprites/run_right4.png",
+		"Sprites/testspritesheet.png",
 		"Sprites/run_left1.png",
-		"Sprites/run_left2.png",
-		"Sprites/run_left3.png",
-		"Sprites/run_left4.png",
 	};
-	ConfigureRenderer(runAnims);
-	renderer.ChangeDestRect(SDL_Rect{10,10,100,100});
+
+	ConfigureRenderer(animations, 4);
+	ChangeMoveState(MovementController::Idle);
 }
 
 Player::~Player()
@@ -33,28 +28,45 @@ Vector2& Player::GetPosition()
 
 SpriteRenderer& Player::GetRenderer()
 {
-	return renderer;
-	// TODO: insert return statement here
+	return Character::GetRenderer();
 }
 
-PlayerController Player::Controller()
+
+PlayerController& Player::Controller()
 {
 	return controller;
 }
 
 void Player::Update(float deltaTime)
 {
+	Character::Update(deltaTime);
+	
 	controller.Update();
 
 	moveController.Update(deltaTime);
 	weaponController.Update(deltaTime);
+	
 
 	SetPosition(position);
 }
 
-void Player::Draw()
+void Player::ChangeMoveState(MovementController::EMovementState state)
 {
-	Character::Draw();
+	switch (state)
+	{
+	case MovementController::Idle:
+		GetRenderer().SetFrameCount(4);
+		break;
+
+	case MovementController::Moving:
+		break;
+
+	case MovementController::Crouching:
+		break;
+
+	case MovementController::Sliding:
+		break;
+	}
 }
 
 void Player::GainHealth()

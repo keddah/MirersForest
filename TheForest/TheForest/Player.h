@@ -9,20 +9,19 @@ class Player : public Character
 public:
     Player();
     ~Player();
-    void Update(float deltaTime);
-    virtual void Draw();
+    void Update(float deltaTime) override;
 
+    void ChangeMoveState(MovementController::EMovementState state);
+    
     void GivePowerup();
     Vector2& GetPosition();
-    SpriteRenderer& GetRenderer();
-    PlayerController Controller();
+    PlayerController& Controller();
+    SpriteRenderer& GetRenderer() override;
     
 private:
     void GainHealth();
     void TakeDamage(float damageIntensity);
     void Death();
-
-    Vector2 position;
 
     PlayerController controller;
     MovementController moveController = MovementController(controller, position);

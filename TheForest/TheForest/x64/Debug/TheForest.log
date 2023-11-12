@@ -1,2 +1,14 @@
-﻿  SpriteRenderer.cpp
+﻿  Collider.cpp
+  GameCharacter.cpp
+  GameManager.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(15,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(5,1): message : see previous definition of 'print'
+  Player.cpp
+  SceneManager.cpp
+  SpriteRenderer.cpp
+  SpriteSheet.cpp
+  TheForest.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(15,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(5,1): message : see previous definition of 'print'
+  Generating Code...
   TheForest.vcxproj -> C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\x64\Debug\TheForest.exe

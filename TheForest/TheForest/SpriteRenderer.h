@@ -13,18 +13,22 @@ public:
 	// For animated things...
 	SpriteRenderer(const char* paths[]);
 
-	void AddTexture(const char* path);
-	
 	void Animate();
+	void SetSpritePosition(const Vector2& newPos);
+	
+	void AddSpriteSheet(const char* path);
+	void SetFrameCount(short frames);
 
-	SDL_Rect* GetSourceRectangle() { return sourceRect; }
-	SDL_Rect* GetDestinationRectangle() { return destinationRect; }
+	SDL_Rect& GetSourceRectangle() { return sourceRect; }
+	SDL_Rect& GetDestinationRectangle() { return destinationRect; }
 	void ChangeSourceRect(SDL_Rect newRect);
 	void ChangeDestRect(SDL_Rect newRect);
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->rotation = other.rotation;
-		this->spriteTextures = other.spriteTextures;
+		this->spriteImages = other.spriteImages;
+		this->sourceRect = other.sourceRect;
+		this->destinationRect = other.destinationRect;
 		return *this;
 	}
 
@@ -32,11 +36,21 @@ public:
 private:
 	void Configure(const char* paths[], SDL_Rect source, SDL_Rect destination);
 
-	SDL_Rect* sourceRect;
-	SDL_Rect* destinationRect;
+	// (x,y) = the top left corner of the area to crop .. (w,h) = the bottom right corner - the end of the crop.
+	SDL_Rect sourceRect;
 
-	const float animSpeed = 1;
+	// (x,y) = the position .. (w,h) = the size
+	SDL_Rect destinationRect;
+	Vector2 renderPos;
+
+	// The sprite sheet that's currently being rendered
+	short activeAnim = 0;
+	short currentFrame = 0;
+	double frameTimer = 0;
+	float animSpeed = 2;
 	float rotation = 0;
 
-	std::vector<Image> spriteTextures = std::vector<Image>();
+
+	std::vector<Image> spriteImages = std::vector<Image>();
 };
+

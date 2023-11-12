@@ -10,19 +10,23 @@ public:
     Character();
     ~Character();
 
-    void Draw();
+    virtual void Update(float deltaTime);
 
+    
     void GainHealth();
-    void TakeDamge(float intensity);
+    void TakeDamage(float intensity);
     void Death();
 
 
 
 protected:
-    void ConfigureRenderer(const char* paths[]);
+    void ConfigureRenderer(const char* paths[], short frameCount = 3);
+    virtual SpriteRenderer& GetRenderer() { return renderer; }
+
+    Vector2 position;
     
     HealthManager health;
-    SpriteRenderer renderer;
 
 private:
+    SpriteRenderer renderer;
 };

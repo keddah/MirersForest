@@ -20,8 +20,9 @@ void Physics::SetGravity(bool on)
 	gravityOn = on;
 }
 
-void Physics::ApplyGravity()
+Vector2 Physics::ApplyGravity()
 {
-	if(gravityOn) AddForce(Vector2(0, -1), Gravity);
-		
+	if(!gravityOn) return {0,0};
+	
+	return AddForce(Vector2(0, 1), Gravity);
 }

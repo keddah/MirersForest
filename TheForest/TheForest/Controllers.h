@@ -42,8 +42,6 @@ public:
 
     void Update(float deltaTime);
 
-    //Vector2& GetPosition() {}
-
     enum EMovementState
     {
         Idle,
@@ -66,7 +64,8 @@ private:
     Vector2& playerPosition;
 
     bool canMove = true;
-
+	bool moving = false;
+	
     short currentMoveState = Idle;
     const int moveSpeed = 5;
 

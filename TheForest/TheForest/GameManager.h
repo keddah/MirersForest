@@ -7,7 +7,7 @@
 
 #include "SceneManager.h"
 #include "CustomTimer.h"
-#include "RendererSingleton.h"
+#include "GameSingletons.h"
 
 #define DEBUGGING 1
 
@@ -28,7 +28,7 @@ public:
 	void Update();
 	void Draw();
 
-	bool IsRunning();
+	bool IsRunning() const;
 
 
 private:
@@ -36,8 +36,6 @@ private:
 	
 	const int screenWidth = 1920;
 	const int screenHeight = 1080;
-
-	SDL_Window* window;
 
 	SceneManager manager;
 };

@@ -14,7 +14,7 @@ private:
     bool gravityOn = true;
 
 protected:
-    void ApplyGravity();
+    Vector2 ApplyGravity();
 
     static constexpr float Gravity = 10;
 

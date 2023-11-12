@@ -1,7 +1,5 @@
 #include "SceneManager.h"
 
-#include "RendererSingleton.h"
-
 SceneManager::SceneManager()
 {
 	renderers.push_back(player.GetRenderer());

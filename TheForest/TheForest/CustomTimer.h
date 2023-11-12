@@ -13,10 +13,10 @@
 #include <SDL.h>
 using namespace std::chrono;
 
-class Time
+class Time 
 {
 public:
-    static void Update()
+    static void Update() 
     {
         // The time between the last tick.......
         const duration<float, std::milli> elapsed_time = high_resolution_clock::now() - lastFrameTime;
@@ -31,4 +31,3 @@ private:
     static high_resolution_clock::time_point lastFrameTime;
     static float deltaTime;
 };
-

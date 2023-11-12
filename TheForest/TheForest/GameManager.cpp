@@ -8,42 +8,40 @@ GameManager::GameManager()
 		return;
 	}
 
-	window = SDL_CreateWindow(
+	SDL_Window* window = SDL_CreateWindow(
 		"Mirer's Forest",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		screenWidth, screenHeight,
 		SDL_WINDOW_SHOWN
 	);
-
-	if (!window) {
+	GameWindow::SetWindow(window);
+	
+	if (!GameWindow::GetWindow()) {
 		std::cout << "could not initialise window!" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
 
-	GameRenderer::SetRenderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED));
-	if (!GameRenderer::GetRenderer()) {
+	GameWindow::SetRenderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED));
+	if (!GameWindow::GetRenderer()) {
 		std::cout << "could not initialise window!" << std::endl;
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
-	SDL_RenderSetVSync(GameRenderer::GetRenderer(), 1);
+	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 	
 	running = true;
 }
 
 GameManager::~GameManager()
 {
-	manager;
-	
-	SDL_DestroyRenderer(GameRenderer::GetRenderer());
-	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(GameWindow::GetRenderer());
+	SDL_DestroyWindow(GameWindow::GetWindow());
 	SDL_Quit();
 }
 
 void GameManager::Update()
 {
-	Time::Update();
 	const float deltaTime = Time::GetDeltaTime();
 
 	manager.Update(deltaTime);
@@ -54,23 +52,19 @@ void GameManager::Update()
 	{
 		if (e.type == SDL_QUIT) running = false;
 	}
-
-	if(running) return;
-	SDL_DestroyWindow(window);
-	SDL_Quit();
 }
 
 void GameManager::Draw()
 {
-	SDL_SetRenderDrawColor(GameRenderer::GetRenderer(), 125, 0, 125, 255);
-	SDL_RenderFillRect(GameRenderer::GetRenderer(), nullptr);
+	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), 125, 0, 125, 255);
+	SDL_RenderFillRect(GameWindow::GetRenderer(), nullptr);
 
-	SDL_RenderClear(GameRenderer::GetRenderer());
+	SDL_RenderClear(GameWindow::GetRenderer());
 	manager.Draw();
-	SDL_RenderPresent(GameRenderer::GetRenderer());
+	SDL_RenderPresent(GameWindow::GetRenderer());
 }
 
-bool GameManager::IsRunning()
+bool GameManager::IsRunning() const
 {
 	return running;
 }

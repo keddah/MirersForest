@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SpriteRenderer.h" //ok
+#include "SpriteRenderer.h"
 #include "Player.h"
 
 #include <vector>
