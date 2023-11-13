@@ -5,24 +5,23 @@ bool Physics::IsGrounded()
 	return false;
 }
 
-Vector2 Physics::AddForce(Vector2 Direction, float force)
+void Physics::AddForce(const Vector2 direction, const int force)
 {
-	return Direction * force;
+	velocity += Vector2(force * direction.x, force * direction.y);
+
+	// if(velocity.Magnitude() > terminalSpeed) velocity
 }
 
-Vector2 Physics::AddForce(int x, int y, float force)
+void Physics::AddForce(const int x, const int y, const int force)
 {
-	return Vector2(x, y) * force;
+	velocity += Vector2(force * x, force * y);
 }
 
-void Physics::SetGravity(bool on)
+void Physics::ApplyGravity()
 {
-	gravityOn = on;
-}
-
-Vector2 Physics::ApplyGravity()
-{
-	if(!gravityOn) return {0,0};
+	velocity = Vector2();
 	
-	return AddForce(Vector2(0, 1), Gravity);
+	if(!gravityOn) return;
+	
+	AddForce(Vector2(0, 1), gravity);
 }

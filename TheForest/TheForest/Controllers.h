@@ -34,7 +34,7 @@ private:
 /* ------------------ Movement ------------------ */
 #include "Physics.h"
 
-class MovementController :Physics
+class MovementController : public Physics
 {
 public:
     MovementController(PlayerController& ctrl, Vector2& plyrPos);
@@ -46,7 +46,8 @@ public:
     {
         Idle,
         Moving,
-        Crouching,
+        CrouchIdle,
+    	CrouchMoving,
         Sliding
     };
 
@@ -64,20 +65,18 @@ private:
     Vector2& playerPosition;
 
     bool canMove = true;
-	bool moving = false;
 	
     short currentMoveState = Idle;
-    const int moveSpeed = 2;
+    int moveSpeed = 1;
 
     const float mass = 100;
-    const int jumpForce = 100;
-    const int slideSpeed = 10;
+    int jumpForce = 100;
+    int slideSpeed = 10;
 
     Vector2 direction = Vector2(0, 1);
 
     // Used to calculate velocity
     Vector2 previousPos = Vector2();
-    Vector2 velocity = Vector2();
 };
 
 

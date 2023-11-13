@@ -13,6 +13,9 @@ public:
 	Collision(Vector2 position, Vector2 dimensions);
 	~Collision();
 
+	// Whether objects are able to go through it...
+	bool solid = true;
+	
 	void SetPosition(Vector2 position);
 	void SetPosition(int x, int y);
 
@@ -30,5 +33,6 @@ public:
 	bool Contains(Vector2 position) const;
 
 protected:
+	Collision& ReturnSelf() { return *this; }
 	SDL_Rect rect;
 };

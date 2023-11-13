@@ -38,3 +38,7 @@ void Character::ConfigureRenderer(const char* paths[], short frameCount)
 	renderer = SpriteRenderer(paths, position);
 	// renderer.Configure(paths, frameCount);
 }
+
+void Character::CheckCollisions()
+{
+}

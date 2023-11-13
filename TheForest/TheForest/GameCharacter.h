@@ -14,6 +14,7 @@ public:
 
     virtual void Update(float deltaTime);
 
+    virtual Collision& GetCollider() { return ReturnSelf(); }
     
     void GainHealth();
     void TakeDamage(float intensity);
@@ -30,5 +31,7 @@ protected:
     HealthManager health;
 
 private:
+    void CheckCollisions();
+    
     SpriteRenderer renderer = SpriteRenderer();
 };

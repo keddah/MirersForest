@@ -61,7 +61,10 @@ void Player::ChangeMoveState(MovementController::EMovementState state)
 	case MovementController::Moving:
 		break;
 
-	case MovementController::Crouching:
+	case MovementController::CrouchIdle:
+		break;
+
+	case MovementController::CrouchMoving:
 		break;
 
 	case MovementController::Sliding:

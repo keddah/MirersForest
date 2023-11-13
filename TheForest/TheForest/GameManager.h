@@ -9,15 +9,8 @@
 #include "CustomTimer.h"
 #include "GameSingletons.h"
 
-#define DEBUGGING 1
-
-#if DEBUGGING == 1
 #define print(x){std::cout << (x) << std::endl;}
 
-#elif DEBUGGING == 0
-#define print(x)
-
-#endif
 
 class GameManager
 {

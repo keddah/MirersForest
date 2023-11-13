@@ -19,4 +19,5 @@ private:
 
 	Player player;
 	std::vector<SpriteRenderer> renderers = std::vector<SpriteRenderer>();
+	std::vector<Collision> colliders = std::vector<Collision>();
 };

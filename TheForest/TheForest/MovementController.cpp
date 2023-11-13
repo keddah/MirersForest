@@ -10,14 +10,14 @@ MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos)
 
 void MovementController::Update(float deltaTime)
 {
-	//controller.Update();
-
-	velocity += ApplyGravity();
-	playerPosition += velocity;
+	print(grounded)
+	if(!grounded) ApplyGravity();
+	if(grounded && velocity.y > 0) velocity.y = 0;
 	
+	CalculateDirection();
 	CalculateVelocity(deltaTime);
-
 	Move();
+
 }
 
 void MovementController::CalculateVelocity(float deltaTime)
@@ -26,16 +26,19 @@ void MovementController::CalculateVelocity(float deltaTime)
 	const int dotProd = (playerPosition.x * previousPos.x) + (playerPosition.y * previousPos.y);
 	const float displacementAngle = dotProd / (playerPosition.Magnitude() * previousPos.Magnitude());
 	
-	const float speed = displacement / deltaTime;
+	const int speed = static_cast<int>(displacement / deltaTime);
+
+	print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
 	
 	velocity += direction * speed;
+	playerPosition += velocity;
 
-	print("velocity 1: (" << direction.x << ", " << direction.y << ")\n")
+	print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
 void MovementController::CalculateDirection()
 {
-	direction = 0;
+	direction = Vector2();
 	
 	// There are only 4 movement inputs
 	for(int i = 0; i < 4; i++)
@@ -55,26 +58,28 @@ void MovementController::CalculateDirection()
 
 void MovementController::Move()
 {
-	moving = controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3];
-	CalculateDirection();
-
 	if(!canMove) return;
 
-	velocity += direction * moveSpeed;
-	playerPosition += velocity;
+	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != CrouchIdle) currentMoveState = Moving;
 
-	// print("controller: (" << playerPosition.x << ", " << playerPosition.y << ")\n")
-	print("velocity 2: (" << direction.x << ", " << direction.y << ")\n")
+	velocity += Vector2(moveSpeed * direction.x,moveSpeed * direction.y);
+	playerPosition += velocity;
+	print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
+
+	print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
 void MovementController::Jump()
 {
-	velocity += AddForce(velocity + Vector2(0, 1), jumpForce);
+	if(!grounded) return;
+	
+	AddForce(velocity + Vector2(0, 1), jumpForce);
 }
 
 void MovementController::Slide()
 {
 	Crouch();
+	AddForce(velocity + direction, slideSpeed);
 }
 
 void MovementController::Crouch()
