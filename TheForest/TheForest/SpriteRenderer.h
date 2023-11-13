@@ -15,6 +15,7 @@ public:
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
+	Vector2 GetSpriteSize();
 	
 	void AddSpriteSheet(const char* path);
 	void SetFrameCount(short frames);

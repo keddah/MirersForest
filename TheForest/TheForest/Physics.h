@@ -9,7 +9,6 @@ public:
 
     void AddForce(Vector2 direction, int force);
     void AddForce(int x, int y, int force);
-    bool grounded;
 
 private:
     const int terminalSpeed = 200;
@@ -20,9 +19,9 @@ protected:
     
     void ApplyGravity();
     void SetGravity(const bool on) { gravityOn = on; }
+    static constexpr int gravity = 7;
     
-    static constexpr int gravity = 10;
-
-
+    void SetGrounded(bool isGrounded) { grounded = isGrounded; }
+    bool grounded = false;
 };
 

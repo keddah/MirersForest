@@ -10,14 +10,21 @@ MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos)
 
 void MovementController::Update(float deltaTime)
 {
-	print(grounded)
-	if(!grounded) ApplyGravity();
-	if(grounded && velocity.y > 0) velocity.y = 0;
+	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
+	velocity = Vector2();
+
+	// Since the position is the top left of the image... have to get the bottom.
+	if(playerPosition.y < 1080 - spriteSize.y) ApplyGravity();
 	
 	CalculateDirection();
 	CalculateVelocity(deltaTime);
 	Move();
 
+}
+
+void MovementController::ResetSpriteSize(const Vector2& newSize)
+{
+	spriteSize = newSize;
 }
 
 void MovementController::CalculateVelocity(float deltaTime)
@@ -28,12 +35,12 @@ void MovementController::CalculateVelocity(float deltaTime)
 	
 	const int speed = static_cast<int>(displacement / deltaTime);
 
-	print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
+	// print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
 	
 	velocity += direction * speed;
 	playerPosition += velocity;
 
-	print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
+	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
 void MovementController::CalculateDirection()
@@ -49,8 +56,9 @@ void MovementController::CalculateDirection()
 		const bool left = controller.GetMoveInputs()[2];
 		const bool right = controller.GetMoveInputs()[3];
 
-		if(up) direction = Vector2(direction.x,-1);
-		if(down) direction = Vector2(direction.x,1);
+		if(up) Jump();
+		if(down) Crouch();
+		
 		if(left) direction = Vector2(-1,direction.y);
 		if(right) direction = Vector2(1,direction.y);
 	}
@@ -64,9 +72,9 @@ void MovementController::Move()
 
 	velocity += Vector2(moveSpeed * direction.x,moveSpeed * direction.y);
 	playerPosition += velocity;
-	print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
+	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 
-	print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
+	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
 void MovementController::Jump()

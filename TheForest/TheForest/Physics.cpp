@@ -19,8 +19,6 @@ void Physics::AddForce(const int x, const int y, const int force)
 
 void Physics::ApplyGravity()
 {
-	velocity = Vector2();
-	
 	if(!gravityOn) return;
 	
 	AddForce(Vector2(0, 1), gravity);

@@ -26,16 +26,6 @@ Vector2& Player::GetPosition()
 	return position;
 }
 
-SpriteRenderer& Player::GetRenderer()
-{
-	return Character::GetRenderer();
-}
-
-
-PlayerController& Player::Controller()
-{
-	return controller;
-}
 
 void Player::Update(float deltaTime)
 {
@@ -45,9 +35,6 @@ void Player::Update(float deltaTime)
 
 	moveController.Update(deltaTime);
 	weaponController.Update(deltaTime);
-	
-
-	SetPosition(position);
 }
 
 void Player::ChangeMoveState(MovementController::EMovementState state)
@@ -56,6 +43,7 @@ void Player::ChangeMoveState(MovementController::EMovementState state)
 	{
 	case MovementController::Idle:
 		GetRenderer().SetFrameCount(4);
+		moveController.ResetSpriteSize(GetRenderer().GetSpriteSize());
 		break;
 
 	case MovementController::Moving:

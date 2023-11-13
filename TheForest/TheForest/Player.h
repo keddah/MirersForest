@@ -15,9 +15,9 @@ public:
     
     void GivePowerup();
     Vector2& GetPosition();
-    PlayerController& Controller();
-    SpriteRenderer& GetRenderer() override;
-    MovementController moveController = MovementController(controller, position);
+    PlayerController& Controller() { return controller; }
+    MovementController& GetMoveController() { return moveController; } 
+    SpriteRenderer& GetRenderer() override { return Character::GetRenderer(); }
     
 private:
     void GainHealth();
@@ -25,5 +25,6 @@ private:
     void Death();
 
     PlayerController controller;
+    MovementController moveController = MovementController(controller, position);
     WeaponController weaponController = WeaponController(controller, position);
 };

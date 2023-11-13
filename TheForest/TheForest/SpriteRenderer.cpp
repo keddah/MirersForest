@@ -11,7 +11,7 @@ SpriteRenderer::SpriteRenderer(const char* paths[], Vector2& pos) : renderPos(po
 	AddSpriteSheet(paths[0]);
 	// for (int i = 0; i < sizeof(paths); i++) AddSpriteSheet(paths[i]);
 
-	const Vector2 size = Vector2(spriteImages[activeAnim].GetSpriteSheet().Size().x/4, spriteImages[activeAnim].GetSpriteSheet().Size().y);
+	const Vector2 size = GetSpriteSize();
 
 	// Only setting the size of the destination rect since the position would be updated each frame...
 	destinationRect.w = size.x;
@@ -23,9 +23,7 @@ void SpriteRenderer::Animate()
 {
 	// Creating a local texture each frame using the textures that were created in the constructor 
 	const auto tex = Image(spriteImages[activeAnim].GetImagePath());
-
-	const short frameCount = spriteImages[activeAnim].GetSpriteSheet().FrameCount();
-	const Vector2 frameSize = Vector2(spriteImages[activeAnim].GetSpriteSheet().Size().x / frameCount, spriteImages[activeAnim].GetSpriteSheet().Size().y);
+	const Vector2 frameSize = GetSpriteSize();
 
 	// (x,y) the start position is the size of one of the frames * the frame number
 	sourceRect = SDL_Rect{ frameSize.x * currentFrame, 0, frameSize.x, frameSize.y };
@@ -54,6 +52,16 @@ void SpriteRenderer::SetSpritePosition(const Vector2& newPos)
 {
 	renderPos = newPos;
 	// print("renderPos: (" << renderPos.x << ", " << renderPos.y << ")\n")
+}
+
+Vector2 SpriteRenderer::GetSpriteSize()
+{
+	const Vector2 size = Vector2(
+		spriteImages[activeAnim].GetSpriteSheet().Size().x / spriteImages[activeAnim].GetSpriteSheet().FrameCount(),
+		spriteImages[activeAnim].GetSpriteSheet().Size().y
+		);
+	
+	return size;
 }
 
 void SpriteRenderer::AddSpriteSheet(const char* path)

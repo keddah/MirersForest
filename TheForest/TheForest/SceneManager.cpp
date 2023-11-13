@@ -5,7 +5,6 @@
 SceneManager::SceneManager()
 {
 	renderers.push_back(player.GetRenderer());
-
 	StartGame();
 }
 
@@ -17,9 +16,11 @@ void SceneManager::Update(float DeltaTime)
 {
 	player.Update(DeltaTime);
 
+	print(colliders[0].Overlapping(colliders[1]));
+	
 	for (const auto& collider : colliders)
 	{
-		if(player.Overlapping(collider)) player.moveController.grounded = true;
+		// player.GetCollider().obstructed = true;
 	}
 }
 
@@ -30,6 +31,8 @@ void SceneManager::Draw()
 
 void SceneManager::StartGame()
 {
-	Collision floor = Collision(SDL_Rect{1920,1080, 1920, 100});
+	const Collision floor = Collision(SDL_Rect{0,1080, 1920, 100});
 	colliders.push_back(floor);
+
+	colliders.push_back(player.GetCollider());	
 }

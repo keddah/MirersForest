@@ -38,7 +38,7 @@ class MovementController : public Physics
 {
 public:
     MovementController(PlayerController& ctrl, Vector2& plyrPos);
-    ~MovementController() {}
+    ~MovementController() = default;
 
     void Update(float deltaTime);
 
@@ -50,6 +50,8 @@ public:
     	CrouchMoving,
         Sliding
     };
+
+	void ResetSpriteSize(const Vector2& newSize);
 
 private:
     void CalculateVelocity(float deltaTime);
@@ -77,6 +79,7 @@ private:
 
     // Used to calculate velocity
     Vector2 previousPos = Vector2();
+	Vector2 spriteSize;
 };
 
 

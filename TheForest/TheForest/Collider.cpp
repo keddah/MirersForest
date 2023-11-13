@@ -103,7 +103,7 @@ bool Collision::Overlapping(const Collision& toCompare) const
 
 		// Compare to the vertical line
 		((toCompare.rect.y + toCompare.rect.h >= rect.y) && (toCompare.rect.y + toCompare.rect.h <= rect.y + rect.h)));
-		
+
 	return overlap;
 }
 

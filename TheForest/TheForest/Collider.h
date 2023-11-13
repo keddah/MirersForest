@@ -8,13 +8,16 @@ class Collision
 public:
 	Collision();
 	Collision(SDL_Rect rect);
-	Collision operator=(const SDL_Rect& other) { return Collision(other); }
+	Collision operator=(const SDL_Rect& other) const { return {other}; }
 
 	Collision(Vector2 position, Vector2 dimensions);
 	~Collision();
 
 	// Whether objects are able to go through it...
 	bool solid = true;
+
+	// Whether this SOLID collider is overlapping with another solid collider 
+	bool obstructed = false;
 	
 	void SetPosition(Vector2 position);
 	void SetPosition(int x, int y);
