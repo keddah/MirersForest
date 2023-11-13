@@ -25,6 +25,7 @@ public:
 
     static void SetLastFrameTime(high_resolution_clock::time_point newFrameTime) { lastFrameTime = newFrameTime; }
 
+    // Isn't accurate...
     static float GetDeltaTime() { return deltaTime; }
 
 private:

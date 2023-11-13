@@ -42,8 +42,6 @@ void PlayerController::ReadInputs()
 {
 	SDL_Event e;
 
-
-
 	///input detection
 	while (SDL_PollEvent(&e))
 	{
@@ -66,6 +64,26 @@ void PlayerController::ReadInputs()
 			break;
 
 		case SDL_SCANCODE_D:
+			// RIGHT
+			moveInputs[3] = true;
+			break;
+
+		case SDL_SCANCODE_UP:
+			// UP / JUMP
+			moveInputs[0] = true;
+			break;
+
+		case SDL_SCANCODE_DOWN:
+			// DOWN / CROUCH
+			moveInputs[1] = true;
+			break;
+
+		case SDL_SCANCODE_LEFT:
+			// LEFT
+			moveInputs[2] = true;
+			break;
+
+		case SDL_SCANCODE_RIGHT:
 			// RIGHT
 			moveInputs[3] = true;
 			break;

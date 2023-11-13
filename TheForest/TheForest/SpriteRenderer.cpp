@@ -5,12 +5,8 @@
 #include "Controllers.h"
 #include "CustomTimer.h"
 
-SpriteRenderer::SpriteRenderer()
-{
-}
 
-
-SpriteRenderer::SpriteRenderer(const char* paths[])
+SpriteRenderer::SpriteRenderer(const char* paths[], Vector2& pos) : renderPos(pos)
 {
 	AddSpriteSheet(paths[0]);
 	// for (int i = 0; i < sizeof(paths); i++) AddSpriteSheet(paths[i]);
@@ -36,8 +32,9 @@ void SpriteRenderer::Animate()
 	destinationRect.x = renderPos.x;
 	destinationRect.y = renderPos.y;
 	
-	print("destination rect: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
-	
+	// print("destination rect: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
+
+	// print("(" << renderPos.x << ", " << renderPos.y << ")\n")
 	
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopy(GameWindow::GetRenderer(), tex.GetTexture(), &sourceRect, &destinationRect);
@@ -56,7 +53,7 @@ void SpriteRenderer::Animate()
 void SpriteRenderer::SetSpritePosition(const Vector2& newPos)
 {
 	renderPos = newPos;
-	print("renderPos: (" << renderPos.x << ", " << renderPos.y << ")\n")
+	// print("renderPos: (" << renderPos.x << ", " << renderPos.y << ")\n")
 }
 
 void SpriteRenderer::AddSpriteSheet(const char* path)
@@ -80,7 +77,7 @@ void SpriteRenderer::ChangeDestRect(SDL_Rect newRect)
 	destinationRect = SDL_Rect(newRect);
 }
 
-void SpriteRenderer::Configure(const char* paths[], SDL_Rect source, SDL_Rect destination)
+void SpriteRenderer::Configure(const char* paths[], short frameCount)
 {
 	// Get rid of all of the existing textures
 	spriteImages.clear();
@@ -90,8 +87,8 @@ void SpriteRenderer::Configure(const char* paths[], SDL_Rect source, SDL_Rect de
 		AddSpriteSheet(paths[i]);
 	}
 
-	sourceRect = SDL_Rect(source);
-	destinationRect = SDL_Rect(destination);
+	SetFrameCount(frameCount);
 }
+
 
 

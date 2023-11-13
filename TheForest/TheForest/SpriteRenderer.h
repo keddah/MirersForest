@@ -8,10 +8,10 @@
 class SpriteRenderer
 {
 public:
-	SpriteRenderer();
+	SpriteRenderer() = default;
 	
 	// For animated things...
-	SpriteRenderer(const char* paths[]);
+	SpriteRenderer(const char* paths[], Vector2& pos);
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
@@ -31,17 +31,19 @@ public:
 		this->destinationRect = other.destinationRect;
 		return *this;
 	}
+	
+	void Configure(const char* paths[], short frameCount = 4);
 
 
 private:
-	void Configure(const char* paths[], SDL_Rect source, SDL_Rect destination);
-
 	// (x,y) = the top left corner of the area to crop .. (w,h) = the bottom right corner - the end of the crop.
-	SDL_Rect sourceRect;
+	SDL_Rect sourceRect = SDL_Rect();
 
 	// (x,y) = the position .. (w,h) = the size
-	SDL_Rect destinationRect;
-	Vector2 renderPos;
+	SDL_Rect destinationRect = SDL_Rect();
+	
+	Vector2 initReference;
+	Vector2& renderPos = initReference;
 
 	// The sprite sheet that's currently being rendered
 	short activeAnim = 0;
@@ -49,7 +51,6 @@ private:
 	double frameTimer = 0;
 	float animSpeed = 2;
 	float rotation = 0;
-
 
 	std::vector<Image> spriteImages = std::vector<Image>();
 };

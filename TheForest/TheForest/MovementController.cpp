@@ -13,6 +13,8 @@ void MovementController::Update(float deltaTime)
 	//controller.Update();
 
 	velocity += ApplyGravity();
+	playerPosition += velocity;
+	
 	CalculateVelocity(deltaTime);
 
 	Move();
@@ -26,11 +28,15 @@ void MovementController::CalculateVelocity(float deltaTime)
 	
 	const float speed = displacement / deltaTime;
 	
-	velocity = direction * speed;
+	velocity += direction * speed;
+
+	print("velocity 1: (" << direction.x << ", " << direction.y << ")\n")
 }
 
 void MovementController::CalculateDirection()
 {
+	direction = 0;
+	
 	// There are only 4 movement inputs
 	for(int i = 0; i < 4; i++)
 	{
@@ -40,32 +46,30 @@ void MovementController::CalculateDirection()
 		const bool left = controller.GetMoveInputs()[2];
 		const bool right = controller.GetMoveInputs()[3];
 
-		direction = Vector2(left? -1: (right? 1:0), up? -1: (down? 1:0));
+		if(up) direction = Vector2(direction.x,-1);
+		if(down) direction = Vector2(direction.x,1);
+		if(left) direction = Vector2(-1,direction.y);
+		if(right) direction = Vector2(1,direction.y);
 	}
 }
 
 void MovementController::Move()
 {
-	if(controller.GetMoveInputs()[0]) playerPosition.y -= moveSpeed;
-	if(controller.GetMoveInputs()[1]) playerPosition.y += moveSpeed;
-	if(controller.GetMoveInputs()[2]) playerPosition.x -= moveSpeed;
-	if(controller.GetMoveInputs()[3]) playerPosition.x += moveSpeed;
-		
-	print("controller: (" << playerPosition.x << ", " << playerPosition.y << ")\n")
 	moving = controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3];
 	CalculateDirection();
-	
+
 	if(!canMove) return;
 
 	velocity += direction * moveSpeed;
 	playerPosition += velocity;
 
-	// print("velocity: (" << velocity.x << ", " << velocity.y << ")\n")
+	// print("controller: (" << playerPosition.x << ", " << playerPosition.y << ")\n")
+	print("velocity 2: (" << direction.x << ", " << direction.y << ")\n")
 }
 
 void MovementController::Jump()
 {
-	velocity = AddForce(velocity + Vector2(0, 1), jumpForce);
+	velocity += AddForce(velocity + Vector2(0, 1), jumpForce);
 }
 
 void MovementController::Slide()

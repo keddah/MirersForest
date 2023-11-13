@@ -1,3 +1,5 @@
+#define print(x) { std::cout<< x << std::endl; }
+
 #pragma once
 
 #include "HealthManager.h" 
@@ -28,5 +30,5 @@ protected:
     HealthManager health;
 
 private:
-    SpriteRenderer renderer;
+    SpriteRenderer renderer = SpriteRenderer();
 };

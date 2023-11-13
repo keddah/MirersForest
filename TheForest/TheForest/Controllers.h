@@ -67,13 +67,13 @@ private:
 	bool moving = false;
 	
     short currentMoveState = Idle;
-    const int moveSpeed = 5;
+    const int moveSpeed = 2;
 
     const float mass = 100;
     const int jumpForce = 100;
     const int slideSpeed = 10;
 
-    Vector2 direction = Vector2();
+    Vector2 direction = Vector2(0, 1);
 
     // Used to calculate velocity
     Vector2 previousPos = Vector2();
