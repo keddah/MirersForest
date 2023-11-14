@@ -1,5 +1,8 @@
 #pragma once
 
+#define print(x) { std::cout<< x << std::endl; }
+
+#include <iostream>
 #include "Vector2.h"
 #include "SpriteRenderer.h"
 
@@ -7,8 +10,8 @@ class Collision
 {
 public:
 	Collision();
+	Collision(int x, int y, int w, int h);
 	Collision(SDL_Rect rect);
-	Collision operator=(const SDL_Rect& other) const { return {other}; }
 
 	Collision(Vector2 position, Vector2 dimensions);
 	~Collision();
@@ -38,4 +41,7 @@ public:
 protected:
 	Collision& ReturnSelf() { return *this; }
 	SDL_Rect rect;
+
+private:
+	SpriteRenderer debugRenderer;
 };

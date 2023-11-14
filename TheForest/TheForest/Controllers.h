@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "Vector2.h"
 
 #define print(x) { std::cout<< x << std::endl; }
 
@@ -13,12 +14,15 @@ public:
 	void Update();
 	
 	bool* GetMoveInputs();
+	Vector2& GetMousePosition() { return mousePos; }
 	bool IsLMB() const;
 	bool IsRMB() const;
 
+	
 private:
 	bool lmb;
 	bool rmb;
+	Vector2 mousePos;
 
 	void ClearInputs();
 	

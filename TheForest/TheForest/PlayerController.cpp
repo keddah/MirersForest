@@ -45,6 +45,10 @@ void PlayerController::ReadInputs()
 	///input detection
 	while (SDL_PollEvent(&e))
 	{
+		mousePos = Vector2(e.motion.x, e.motion.y);
+
+		ClearInputs();
+		
 		switch (e.key.keysym.scancode)
 		{
 		//// Movement
@@ -110,7 +114,6 @@ void PlayerController::ReadInputs()
 
 
 		default:
-			ClearInputs();
 			break;
 		} 
 	}

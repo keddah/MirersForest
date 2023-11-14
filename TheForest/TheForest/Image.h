@@ -7,7 +7,7 @@
 class Image
 {
 public:
-	Image();
+	Image() = default;
 	Image(const char* filePath);
 
 	~Image() { SDL_DestroyTexture(texture); }

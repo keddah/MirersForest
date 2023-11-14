@@ -16,7 +16,7 @@ void SceneManager::Update(float DeltaTime)
 {
 	player.Update(DeltaTime);
 
-	print(colliders[0].Overlapping(colliders[1]));
+	//print(colliders[0].Overlapping(colliders[1]));
 	
 	for (const auto& collider : colliders)
 	{
@@ -31,7 +31,7 @@ void SceneManager::Draw()
 
 void SceneManager::StartGame()
 {
-	const Collision floor = Collision(SDL_Rect{0,1080, 1920, 100});
+	const Collision floor = Collision(0,440,1920,100);
 	colliders.push_back(floor);
 
 	colliders.push_back(player.GetCollider());	

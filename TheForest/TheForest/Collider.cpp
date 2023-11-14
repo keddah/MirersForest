@@ -1,8 +1,15 @@
 #include "Collider.h"
 
+
+
 Collision::Collision()
 {
 	rect = SDL_Rect();
+}
+
+Collision::Collision(const int x, const int y, const int w, const int h)
+{
+	rect = SDL_Rect{x,y,w,h};
 }
 
 Collision::Collision(SDL_Rect _rect)

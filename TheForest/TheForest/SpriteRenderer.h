@@ -9,7 +9,7 @@ class SpriteRenderer
 {
 public:
 	SpriteRenderer() = default;
-	
+
 	// For animated things...
 	SpriteRenderer(const char* paths[], Vector2& pos);
 
@@ -30,11 +30,17 @@ public:
 		this->spriteImages = other.spriteImages;
 		this->sourceRect = other.sourceRect;
 		this->destinationRect = other.destinationRect;
+		this->fillOn = other.fillOn;
+		this->fillColour = other.fillColour;
 		return *this;
 	}
 	
 	void Configure(const char* paths[], short frameCount = 4);
 
+	// Primarily for debugging...
+	// The rectangle is filled with the inputted color
+	void FillRectangle(const int r, const int g, const int b, const int a);
+	void UnfillRectangle();
 
 private:
 	// (x,y) = the top left corner of the area to crop .. (w,h) = the bottom right corner - the end of the crop.
@@ -54,5 +60,8 @@ private:
 	float rotation = 0;
 
 	std::vector<Image> spriteImages = std::vector<Image>();
+
+	bool fillOn;
+	SDL_Rect fillColour;
 };
 
