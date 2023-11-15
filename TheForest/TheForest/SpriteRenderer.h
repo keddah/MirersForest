@@ -12,7 +12,7 @@ public:
 
 	// For animated things...
 	SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(SDL_Rect& rect);
+	SpriteRenderer(SDL_FRect& rect);
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
@@ -22,9 +22,9 @@ public:
 	void SetFrameCount(short frames);
 
 	SDL_Rect& GetSourceRectangle() { return sourceRect; }
-	SDL_Rect& GetDestinationRectangle() { return destinationRect; }
+	SDL_FRect& GetDestinationRectangle() { return destinationRect; }
 	void ChangeSourceRect(SDL_Rect newRect);
-	void ChangeDestRect(SDL_Rect newRect);
+	void ChangeDestRect(SDL_FRect newRect);
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->rotation = other.rotation;
@@ -49,7 +49,7 @@ private:
 	SDL_Rect sourceRect = SDL_Rect();
 
 	// (x,y) = the position .. (w,h) = the size
-	SDL_Rect destinationRect = SDL_Rect();
+	SDL_FRect destinationRect = SDL_FRect();
 	
 	Vector2 initReference;
 	Vector2& renderPos = initReference;

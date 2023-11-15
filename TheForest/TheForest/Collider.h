@@ -10,8 +10,8 @@ class Collision
 {
 public:
 	Collision();
-	Collision(int x, int y, int w, int h);
-	Collision(SDL_Rect rect);
+	Collision(float x, float y, float w, float h);
+	Collision(SDL_FRect rect);
 
 	Collision(Vector2 position, Vector2 dimensions);
 	~Collision();
@@ -23,16 +23,16 @@ public:
 	bool obstructed = false;
 	
 	void SetPosition(Vector2 position);
-	void SetPosition(int x, int y);
+	void SetPosition(float x, float y);
 
 	void SetWidthHeight(Vector2 xy);
-	void SetWidthHeight(int x, int y);
+	void SetWidthHeight(float x, float y);
 
-	void SetRectangle(SDL_Rect newRect);
+	void SetRectangle(SDL_FRect newRect);
 	void SetRectangle(Vector2 position, Vector2 dimensions);
-	void SetRectangle(Vector2 position, int width, int height);
-	void SetRectangle(int x, int y, Vector2 position);
-	void SetRectangle(int x, int y, int width, int height);
+	void SetRectangle(Vector2 position, float width, float height);
+	void SetRectangle(float x, float y, Vector2 position);
+	void SetRectangle(float x, float y, float width, float height);
 	
 	bool Overlapping(const Collision& toCompare) const;
 	bool Contains(const Collision& toCompare) const;
@@ -41,10 +41,10 @@ public:
 	bool IsDebugging() const { return debugging; }
 	void Debug();
 
-	const SDL_Rect& GetRect() { return rect; }
+	const SDL_FRect& GetRect() { return rect; }
 
 protected:
-	SDL_Rect rect;
+	SDL_FRect rect;
 	Collision& ReturnSelf() { return *this; }
 
 

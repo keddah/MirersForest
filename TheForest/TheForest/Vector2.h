@@ -15,11 +15,11 @@ class Vector2
 {
 public:
 	Vector2();
-	Vector2(int X, int Y);
+	Vector2(float X, float Y);
 
-	int x, y;
+	float x, y;
 
-	void SetNew(int X, int Y) { x = X; y = Y; }
+	void SetNew(float X, float Y) { x = X; y = Y; }
 
 	Vector2 operator+=(const Vector2& other);
 	Vector2 operator-=(const Vector2& other);
@@ -51,7 +51,7 @@ public:
 		return newValue;
 	}
 
-	Vector2 operator*(const int multiplier) const
+	Vector2 operator*(const float multiplier) const
 	{
 		Vector2 newValue;
 		newValue.x *= multiplier;
@@ -59,7 +59,7 @@ public:
 		return newValue;
 	}
 
-	Vector2 operator/(const int divider) const
+	Vector2 operator/(const float divider) const
 	{
 		Vector2 newValue;
 		newValue.x /= divider;

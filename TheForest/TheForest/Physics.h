@@ -7,11 +7,11 @@ class Physics
 public:
     bool IsGrounded();
 
-    void AddForce(Vector2 direction, int force);
-    void AddForce(int x, int y, int force);
+    void AddForce(Vector2 direction, float force);
+    void AddForce(float x, float y, float force);
 
 private:
-    const int terminalSpeed = 200;
+    const float terminalSpeed = 200;
     bool gravityOn = true;
 
 protected:
@@ -19,7 +19,7 @@ protected:
     
     void ApplyGravity();
     void SetGravity(const bool on) { gravityOn = on; }
-    static constexpr int gravity = 7;
+    static constexpr float gravity = 9.81;
     
     void SetGrounded(bool isGrounded) { grounded = isGrounded; }
     bool grounded = false;

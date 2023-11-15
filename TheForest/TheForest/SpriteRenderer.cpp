@@ -18,7 +18,7 @@ SpriteRenderer::SpriteRenderer(const char* paths[], Vector2& pos) : renderPos(po
 	destinationRect.h = size.y;
 }
 
-SpriteRenderer::SpriteRenderer(SDL_Rect& rect)
+SpriteRenderer::SpriteRenderer(SDL_FRect& rect)
 {
 	destinationRect = rect;
 }
@@ -30,7 +30,7 @@ void SpriteRenderer::Animate()
 	const Vector2 frameSize = GetSpriteSize();
 
 	// (x,y) the start position is the size of one of the frames * the frame number
-	sourceRect = SDL_Rect{ frameSize.x * currentFrame, 0, frameSize.x, frameSize.y };
+	sourceRect = SDL_Rect{ static_cast<int>(frameSize.x) * currentFrame, 0, static_cast<int>(frameSize.x), static_cast<int>(frameSize.y) };
 	destinationRect.x = renderPos.x;
 	destinationRect.y = renderPos.y;
 	
@@ -39,8 +39,8 @@ void SpriteRenderer::Animate()
 	// print("(" << renderPos.x << ", " << renderPos.y << ")\n")
 
 	// The destination rect's position is already being set from the MoveSprite function
-	SDL_RenderCopy(GameWindow::GetRenderer(), tex.GetTexture(), &sourceRect, &destinationRect);
-
+	SDL_RenderCopyF(GameWindow::GetRenderer(), tex.GetTexture(), &sourceRect, &destinationRect);
+	
 	
 	frameTimer += Time::GetDeltaTime() * 50;
 	if (frameTimer > animSpeed)
@@ -84,9 +84,9 @@ void SpriteRenderer::ChangeSourceRect(SDL_Rect newRect)
 	// sourceRect = SDL_Rect(newRect);
 }
 
-void SpriteRenderer::ChangeDestRect(SDL_Rect newRect)
+void SpriteRenderer::ChangeDestRect(SDL_FRect newRect)
 {
-	destinationRect = SDL_Rect(newRect);
+	destinationRect = SDL_FRect(newRect);
 }
 
 void SpriteRenderer::Configure(const char* paths[], short frameCount)
@@ -108,7 +108,7 @@ void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const 
 	fillColour = SDL_Rect{r,g,b,a};
 
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
-	SDL_RenderFillRect(GameWindow::GetRenderer(), &destinationRect);
+	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
 }
 
 void SpriteRenderer::FillRectangle(SDL_Rect& colour)
@@ -117,7 +117,7 @@ void SpriteRenderer::FillRectangle(SDL_Rect& colour)
 	fillColour = colour;
 
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
-	SDL_RenderFillRect(GameWindow::GetRenderer(), &destinationRect);
+	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
 }
 
 void SpriteRenderer::UnfillRectangle()

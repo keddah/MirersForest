@@ -1,2 +1,29 @@
-﻿  SceneManager.cpp
+﻿  GameManager.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(12,1): warning C4005: 'print': macro redefinition
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameCharacter.h(1,1): message : see previous definition of 'print'
+  Input.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  MovementController.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\MovementController.cpp(31,57): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\MovementController.cpp(31,20): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\MovementController.cpp(38,26): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+  Player.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  PlayerController.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\PlayerController.cpp(86,41): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\PlayerController.cpp(86,29): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
+  SceneManager.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  SpriteRenderer.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  TheForest.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(12,1): warning C4005: 'print': macro redefinition
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameCharacter.h(1,1): message : see previous definition of 'print'
+  WeaponController.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Generating Code...
   TheForest.vcxproj -> C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\x64\Debug\TheForest.exe

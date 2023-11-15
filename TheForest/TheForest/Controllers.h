@@ -104,11 +104,11 @@ private:
     bool canMove = true;
 	
     EMovementState currentMoveState = EMovementState::Idle;
-    int moveSpeed = 1;
+    float moveSpeed = 15;
 
     const float mass = 100;
-    int jumpForce = 100;
-    int slideSpeed = 10;
+    float jumpForce = 100;
+    float slideSpeed = 10;
 
     Vector2 direction = Vector2(0, 1);
 

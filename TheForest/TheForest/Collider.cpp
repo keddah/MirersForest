@@ -4,19 +4,19 @@
 
 Collision::Collision()
 {
-	rect = SDL_Rect();
+	rect = SDL_FRect();
 }
 
-Collision::Collision(const int x, const int y, const int w, const int h)
+Collision::Collision(const float x, const float y, const float w, const float h)
 {
-	rect = SDL_Rect{x,y,w,h};
+	rect = SDL_FRect{x,y,w,h};
 
 	debugging = true;
 	debugRenderer = SpriteRenderer(rect);
 	debugRenderer.FillRectangle(debugColour);
 }
 
-Collision::Collision(SDL_Rect _rect)
+Collision::Collision(SDL_FRect _rect)
 {
 	rect = _rect;
 
@@ -44,7 +44,7 @@ void Collision::SetPosition(Vector2 position)
 	rect.y = position.y;
 }
 
-void Collision::SetPosition(int x, int y)
+void Collision::SetPosition(float x, float y)
 {
 	rect.x = x;
 	rect.y = y;
@@ -56,13 +56,13 @@ void Collision::SetWidthHeight(Vector2 dimensions)
 	rect.h = dimensions.y;
 }
 
-void Collision::SetWidthHeight(int w, int h)
+void Collision::SetWidthHeight(float w, float h)
 {
 	rect.w = w;
 	rect.h = h;
 }
 
-void Collision::SetRectangle(SDL_Rect newRect)
+void Collision::SetRectangle(SDL_FRect newRect)
 {
 	rect = newRect;
 }
@@ -76,7 +76,7 @@ void Collision::SetRectangle(Vector2 position, Vector2 dimensions)
 	rect.h = dimensions.y;
 }
 
-void Collision::SetRectangle(Vector2 position, int width, int height)
+void Collision::SetRectangle(Vector2 position, float width, float height)
 {
 	rect.x = position.x;
 	rect.y = position.y;
@@ -85,7 +85,7 @@ void Collision::SetRectangle(Vector2 position, int width, int height)
 	rect.h = height;
 }
 
-void Collision::SetRectangle(int x, int y, Vector2 dimensions)
+void Collision::SetRectangle(float x, float y, Vector2 dimensions)
 {
 	rect.x = x;
 	rect.y = y;
@@ -94,7 +94,7 @@ void Collision::SetRectangle(int x, int y, Vector2 dimensions)
 	rect.h = dimensions.y;
 }
 
-void Collision::SetRectangle(int x, int y, int width, int height)
+void Collision::SetRectangle(float x, float y, float width, float height)
 {
 	rect.x = x;
 	rect.y = y;
@@ -106,7 +106,7 @@ void Collision::SetRectangle(int x, int y, int width, int height)
 // Collider overlaps another collider
 bool Collision::Overlapping(const Collision& toCompare) const
 {
-	return SDL_HasIntersection(&rect, &toCompare.rect);
+	return SDL_HasIntersectionF(&rect, &toCompare.rect);
 }
 
 // Box collision contains another box collider

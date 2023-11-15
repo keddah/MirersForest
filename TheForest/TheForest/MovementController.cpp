@@ -17,6 +17,7 @@ void MovementController::Update(float deltaTime)
 	CalculateVelocity(deltaTime);
 	Move();
 
+	playerPosition += velocity * deltaTime;
 }
 
 void MovementController::ResetSpriteSize(const Vector2& newSize)
@@ -35,7 +36,6 @@ void MovementController::CalculateVelocity(float deltaTime)
 	// print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
 	
 	velocity += direction * speed;
-	playerPosition += velocity;
 
 	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 }
@@ -68,7 +68,6 @@ void MovementController::Move()
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	velocity += Vector2(moveSpeed * direction.x,moveSpeed * direction.y);
-	playerPosition += velocity;
 	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 
 	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
