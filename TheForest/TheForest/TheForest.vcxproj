@@ -141,6 +141,7 @@
     <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthManager.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />

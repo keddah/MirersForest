@@ -10,11 +10,19 @@ Collision::Collision()
 Collision::Collision(const int x, const int y, const int w, const int h)
 {
 	rect = SDL_Rect{x,y,w,h};
+
+	debugging = true;
+	debugRenderer = SpriteRenderer(rect);
+	debugRenderer.FillRectangle(debugColour);
 }
 
 Collision::Collision(SDL_Rect _rect)
 {
 	rect = _rect;
+
+	debugging = true;
+	debugRenderer = SpriteRenderer(rect);
+	debugRenderer.FillRectangle(debugColour);
 }
 
 Collision::Collision(Vector2 position, Vector2 dimensions)
@@ -98,20 +106,7 @@ void Collision::SetRectangle(int x, int y, int width, int height)
 // Collider overlaps another collider
 bool Collision::Overlapping(const Collision& toCompare) const
 {
-	const bool overlap =
-		// Compare to the horizontal line - if ths position is greater or equal to anywhere along 'this' line ... otherwise,
-		((toCompare.rect.x >= rect.x && toCompare.rect.x < rect.x + rect.w) ||
-			
-		// Is the line toCompare anywhere along the line of 'this' line 
-		((toCompare.rect.x + toCompare.rect.w >= rect.x) && (toCompare.rect.x + toCompare.rect.w <= rect.x + rect.w)) ||
-
-		// Compare to the vertical line - if ths position is greater or equal to anywhere along 'this' line....
-		(toCompare.rect.y >= rect.y && toCompare.rect.y < rect.y + rect.h) ||
-
-		// Compare to the vertical line
-		((toCompare.rect.y + toCompare.rect.h >= rect.y) && (toCompare.rect.y + toCompare.rect.h <= rect.y + rect.h)));
-
-	return overlap;
+	return SDL_HasIntersection(&rect, &toCompare.rect);
 }
 
 // Box collision contains another box collider
@@ -133,6 +128,12 @@ bool Collision::Contains(const Collision& toCompare) const
 // Box collider contains Vector
 bool Collision::Contains(const Vector2 position) const
 {
-	return  ((position.x >= rect.x)) && (position.x <= rect.x + rect.w) && 
-            ((position.y >= rect.y)) && (position.y <= rect.y + rect.h);
+	return  ((position.x > rect.x)) && (position.x < rect.x + rect.w) && 
+            ((position.y > rect.y)) && (position.y < rect.y + rect.h);
 }
+
+void Collision::Debug()
+{
+	debugRenderer.FillRectangle(debugColour);
+}
+

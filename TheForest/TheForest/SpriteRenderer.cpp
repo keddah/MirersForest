@@ -18,6 +18,11 @@ SpriteRenderer::SpriteRenderer(const char* paths[], Vector2& pos) : renderPos(po
 	destinationRect.h = size.y;
 }
 
+SpriteRenderer::SpriteRenderer(SDL_Rect& rect)
+{
+	destinationRect = rect;
+}
+
 void SpriteRenderer::Animate()
 {
 	// Creating a local texture each frame using the textures that were created in the constructor 
@@ -33,13 +38,6 @@ void SpriteRenderer::Animate()
 
 	// print("(" << renderPos.x << ", " << renderPos.y << ")\n")
 
-	if(fillOn)
-	{
-		SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
-		SDL_RenderFillRect(GameWindow::GetRenderer(), &destinationRect);
-		print("inside")
-	}
-	
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopy(GameWindow::GetRenderer(), tex.GetTexture(), &sourceRect, &destinationRect);
 
@@ -108,6 +106,18 @@ void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const 
 {
 	fillOn = true;
 	fillColour = SDL_Rect{r,g,b,a};
+
+	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
+	SDL_RenderFillRect(GameWindow::GetRenderer(), &destinationRect);
+}
+
+void SpriteRenderer::FillRectangle(SDL_Rect& colour)
+{
+	fillOn = true;
+	fillColour = colour;
+
+	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
+	SDL_RenderFillRect(GameWindow::GetRenderer(), &destinationRect);
 }
 
 void SpriteRenderer::UnfillRectangle()

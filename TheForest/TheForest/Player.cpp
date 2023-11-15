@@ -10,7 +10,7 @@ Player::Player()
 	};
 
 	ConfigureRenderer(animations, 4);
-	ChangeMoveState(MovementController::Idle);
+	ChangeMoveState(MovementController::EMovementState::Idle);
 }
 
 Player::~Player()
@@ -44,21 +44,21 @@ void Player::ChangeMoveState(MovementController::EMovementState state)
 {
 	switch (state)
 	{
-	case MovementController::Idle:
+	case MovementController::EMovementState::Idle:
 		GetRenderer().SetFrameCount(4);
 		moveController.ResetSpriteSize(GetRenderer().GetSpriteSize());
 		break;
 
-	case MovementController::Moving:
+	case MovementController::EMovementState::Moving:
 		break;
 
-	case MovementController::CrouchIdle:
+	case MovementController::EMovementState::CrouchIdle:
 		break;
 
-	case MovementController::CrouchMoving:
+	case MovementController::EMovementState::CrouchMoving:
 		break;
 
-	case MovementController::Sliding:
+	case MovementController::EMovementState::Sliding:
 		break;
 	}
 }

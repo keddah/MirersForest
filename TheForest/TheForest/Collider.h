@@ -38,10 +38,19 @@ public:
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
+	bool IsDebugging() const { return debugging; }
+	void Debug();
+
+	const SDL_Rect& GetRect() { return rect; }
+
 protected:
-	Collision& ReturnSelf() { return *this; }
 	SDL_Rect rect;
+	Collision& ReturnSelf() { return *this; }
+
 
 private:
+	bool debugging;
+	
 	SpriteRenderer debugRenderer;
+	SDL_Rect debugColour = SDL_Rect{ 231, 23, 133, 1 };
 };

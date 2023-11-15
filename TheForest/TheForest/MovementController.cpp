@@ -1,8 +1,5 @@
 #include "Controllers.h"
 
-#include<iostream>
-
-
 MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos) : controller(ctrl), playerPosition(plyrPos)
 {
 }
@@ -68,7 +65,7 @@ void MovementController::Move()
 {
 	if(!canMove) return;
 
-	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != CrouchIdle) currentMoveState = Moving;
+	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	velocity += Vector2(moveSpeed * direction.x,moveSpeed * direction.y);
 	playerPosition += velocity;

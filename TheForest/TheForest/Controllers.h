@@ -1,9 +1,35 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include "Vector2.h"
+#include "SDL.h"
 
 #define print(x) { std::cout<< x << std::endl; }
+
+class Input
+{
+public:
+    Input(SDL_Scancode button);
+    Input(SDL_Scancode button1, SDL_Scancode button2);
+
+    void SetPressed(bool pressed) { isDown = pressed; }
+
+    bool IsKeyDown() const { return isDown; }
+
+    SDL_Scancode GetPrimaryKey() const;
+    SDL_Scancode GetSecondaryKey() const;
+
+private:
+    bool isDown;
+
+    SDL_Scancode primaryKey;
+    SDL_Scancode secondaryKey;
+};
+
+
+
+
 
 class PlayerController
 {
@@ -14,6 +40,7 @@ public:
 	void Update();
 	
 	bool* GetMoveInputs();
+
 	Vector2& GetMousePosition() { return mousePos; }
 	bool IsLMB() const;
 	bool IsRMB() const;
@@ -26,9 +53,13 @@ private:
 
 	void ClearInputs();
 	
+    std::vector<Input> inputs = std::vector<Input>();
+
 	// Up .. Down .. Left .. Right
 	bool moveInputs[4];
-	void ReadInputs();
+
+	void HandleInputs();
+	void ReadInputs(SDL_Event& e);
 };
 
 
@@ -46,7 +77,7 @@ public:
 
     void Update(float deltaTime);
 
-    enum EMovementState
+    enum class EMovementState
     {
         Idle,
         Moving,
@@ -72,7 +103,7 @@ private:
 
     bool canMove = true;
 	
-    short currentMoveState = Idle;
+    EMovementState currentMoveState = EMovementState::Idle;
     int moveSpeed = 1;
 
     const float mass = 100;

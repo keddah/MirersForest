@@ -60,6 +60,9 @@
     <ClCompile Include="SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -101,13 +104,13 @@
     <ClInclude Include="Controllers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RendererSingleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteSheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSingletons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

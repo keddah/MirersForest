@@ -1,9 +1,18 @@
 #include "Controllers.h"
-#include <SDL.h>
 
 
 PlayerController::PlayerController()
 {
+	Input up = Input(SDL_SCANCODE_W, SDL_SCANCODE_UP);
+	Input down = Input(SDL_SCANCODE_S, SDL_SCANCODE_DOWN);
+	Input left = Input(SDL_SCANCODE_A, SDL_SCANCODE_LEFT);
+	Input right = Input(SDL_SCANCODE_D, SDL_SCANCODE_RIGHT);
+
+	Input space = Input(SDL_SCANCODE_SPACE);
+	Input ctrl = Input(SDL_SCANCODE_LCTRL);
+
+	
+	inputs = { up, down, left, right, space, ctrl };
 }
 
 PlayerController::~PlayerController()
@@ -12,12 +21,45 @@ PlayerController::~PlayerController()
 
 void PlayerController::Update()
 {
-	ReadInputs();
+	HandleInputs();
 }
 
 bool* PlayerController::GetMoveInputs()
 {
 	return moveInputs;
+}
+
+void PlayerController::HandleInputs()
+{
+	SDL_Event e;
+	SDL_PollEvent(&e);
+	ClearInputs();
+
+	if (e.type == SDL_KEYUP)
+	{
+		ClearInputs();
+
+		for (auto& input : inputs)
+		{
+			if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(false);
+			else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(false);
+		}
+		//print("keyup")
+	}
+
+	if (e.type == SDL_KEYDOWN)
+	{
+		ClearInputs();
+
+		for (auto& input : inputs)
+		{
+			if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(true);
+			else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(true);
+		}
+		//print("keydown")
+	}
+
+	ReadInputs(e);
 }
 
 bool PlayerController::IsLMB() const
@@ -38,71 +80,21 @@ void PlayerController::ClearInputs()
 	for (bool& moveInput : moveInputs) moveInput = false;
 }
 
-void PlayerController::ReadInputs()
+void PlayerController::ReadInputs(SDL_Event& e)
 {
-	SDL_Event e;
-
 	///input detection
-	while (SDL_PollEvent(&e))
+	mousePos = Vector2(e.motion.x, e.motion.y);
+
+	moveInputs[0] = inputs[0].IsKeyDown();
+	moveInputs[1] = inputs[1].IsKeyDown();
+	moveInputs[2] = inputs[2].IsKeyDown();
+	moveInputs[3] = inputs[3].IsKeyDown();
+
+	moveInputs[0] = inputs[4].IsKeyDown();
+	moveInputs[1] = inputs[5].IsKeyDown();
+
+	switch (e.key.keysym.scancode)
 	{
-		mousePos = Vector2(e.motion.x, e.motion.y);
-
-		ClearInputs();
-		
-		switch (e.key.keysym.scancode)
-		{
-		//// Movement
-		case SDL_SCANCODE_W:
-			// UP / JUMP
-			moveInputs[0] = true;
-			break;
-
-		case SDL_SCANCODE_S:
-			// DOWN / CROUCH
-			moveInputs[1] = true;
-			break;
-
-		case SDL_SCANCODE_A:
-			// LEFT
-			moveInputs[2] = true;
-			break;
-
-		case SDL_SCANCODE_D:
-			// RIGHT
-			moveInputs[3] = true;
-			break;
-
-		case SDL_SCANCODE_UP:
-			// UP / JUMP
-			moveInputs[0] = true;
-			break;
-
-		case SDL_SCANCODE_DOWN:
-			// DOWN / CROUCH
-			moveInputs[1] = true;
-			break;
-
-		case SDL_SCANCODE_LEFT:
-			// LEFT
-			moveInputs[2] = true;
-			break;
-
-		case SDL_SCANCODE_RIGHT:
-			// RIGHT
-			moveInputs[3] = true;
-			break;
-
-		// Jump and Crouch are able to be inputted using W and S since the game is 2D. 
-		case SDL_SCANCODE_SPACE:
-			// JUMP / UP
-			moveInputs[0] = true;
-			break;
-
-		case SDL_SCANCODE_LCTRL:
-			// CROUCH / DOWN
-			moveInputs[1] = true;
-			break;
-
 		//// Actions			
 		case SDL_BUTTON_LEFT:
 			lmb = true;
@@ -115,7 +107,5 @@ void PlayerController::ReadInputs()
 
 		default:
 			break;
-		} 
-	}
-
+	} 
 }

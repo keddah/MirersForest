@@ -12,6 +12,7 @@ public:
 
 	// For animated things...
 	SpriteRenderer(const char* paths[], Vector2& pos);
+	SpriteRenderer(SDL_Rect& rect);
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
@@ -40,6 +41,7 @@ public:
 	// Primarily for debugging...
 	// The rectangle is filled with the inputted color
 	void FillRectangle(const int r, const int g, const int b, const int a);
+	void FillRectangle(SDL_Rect& colour);
 	void UnfillRectangle();
 
 private:
