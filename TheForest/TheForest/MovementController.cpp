@@ -17,7 +17,7 @@ void MovementController::Update(float deltaTime)
 	CalculateVelocity(deltaTime);
 	Move();
 
-	playerPosition += velocity * deltaTime;
+	playerPosition += velocity;
 }
 
 void MovementController::ResetSpriteSize(const Vector2& newSize)

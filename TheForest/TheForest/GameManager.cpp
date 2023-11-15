@@ -48,10 +48,10 @@ void GameManager::Update()
 
 	SDL_Event e;
 
-	while (SDL_PollEvent(&e))
-	{
-		if (e.type == SDL_QUIT) running = false;
-	}
+	//while (SDL_PollEvent(&e))
+	//{
+	//	if (e.type == SDL_QUIT) running = false;
+	//}
 }
 
 void GameManager::Draw()

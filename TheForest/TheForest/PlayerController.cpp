@@ -21,6 +21,13 @@ PlayerController::~PlayerController()
 
 void PlayerController::Update()
 {
+	
+	const Uint8* keyState = SDL_GetKeyboardState(0);
+	
+	if (keyState[SDL_SCANCODE_W]) {
+		std::cout << 'w' << std::endl;
+	}
+
 	HandleInputs();
 }
 
@@ -32,34 +39,36 @@ bool* PlayerController::GetMoveInputs()
 void PlayerController::HandleInputs()
 {
 	SDL_Event e;
-	SDL_PollEvent(&e);
-	ClearInputs();
 
-	if (e.type == SDL_KEYUP)
-	{
+	while (SDL_PollEvent(&e)) {
 		ClearInputs();
 
-		for (auto& input : inputs)
+		if (e.type == SDL_KEYUP)
 		{
-			if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(false);
-			else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(false);
+			//ClearInputs();
+
+			//for (auto& input : inputs)
+			//{
+			//	if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(false);
+			//	else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(false);
+			//}
+			//print("keyup")
 		}
-		//print("keyup")
-	}
 
-	if (e.type == SDL_KEYDOWN)
-	{
-		ClearInputs();
-
-		for (auto& input : inputs)
+		if (e.type == SDL_KEYDOWN)
 		{
-			if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(true);
-			else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(true);
-		}
-		//print("keydown")
-	}
+			//ClearInputs();
 
-	ReadInputs(e);
+			//for (auto& input : inputs)
+			//{
+			//	if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(true);
+			//	else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(true);
+			//}
+			//print("keydown")
+		}
+
+		ReadInputs(e);
+	}
 }
 
 bool PlayerController::IsLMB() const

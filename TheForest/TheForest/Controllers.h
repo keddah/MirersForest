@@ -104,7 +104,7 @@ private:
     bool canMove = true;
 	
     EMovementState currentMoveState = EMovementState::Idle;
-    float moveSpeed = 15;
+    float moveSpeed = 5;
 
     const float mass = 100;
     float jumpForce = 100;
