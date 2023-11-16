@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <tuple>
 #include <vector>
 #include "Vector2.h"
 #include "SDL.h"
@@ -52,14 +53,14 @@ private:
 	Vector2 mousePos;
 
 	void ClearInputs();
-	
+
     std::vector<Input> inputs = std::vector<Input>();
 
 	// Up .. Down .. Left .. Right
 	bool moveInputs[4];
 
 	void HandleInputs();
-	void ReadInputs(SDL_Event& e);
+	void CalcMousePosition(SDL_Event& e);
 };
 
 
@@ -96,7 +97,7 @@ private:
     void Slide();
     void Crouch();
     void Uncrouch();
-    void Move();
+    void Move(float deltaTime);
 
     PlayerController& controller;
     Vector2& playerPosition;
@@ -104,10 +105,10 @@ private:
     bool canMove = true;
 	
     EMovementState currentMoveState = EMovementState::Idle;
-    float moveSpeed = 5;
+    float moveSpeed = 10000;
 
-    const float mass = 100;
-    float jumpForce = 100;
+    const float mass = 1000;
+    float jumpForce = -12;
     float slideSpeed = 10;
 
     Vector2 direction = Vector2(0, 1);

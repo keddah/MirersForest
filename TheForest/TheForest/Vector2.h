@@ -19,54 +19,31 @@ public:
 
 	float x, y;
 
-	void SetNew(float X, float Y) { x = X; y = Y; }
-
 	Vector2 operator+=(const Vector2& other);
 	Vector2 operator-=(const Vector2& other);
-	Vector2 operator*=(const Vector2& other);
-	Vector2 operator/=(const Vector2& other);
+	Vector2 operator*=(const float multiplier);
+	Vector2 operator/=(const float divider);
 
 	Vector2 operator+(const Vector2& other) const
 	{
-		Vector2 newValue;
-		newValue.x = x + other.x;
-		newValue.y = y + other.y;
-		return newValue;
+		return {x + other.x, y + other.y};
 	}
-
 
 	Vector2 operator-(const Vector2& other) const
 	{
-		Vector2 newValue;
-		newValue.x = x + other.x;
-		newValue.y = y + other.y;
-		return newValue;
-	}
-
-	Vector2 operator-=(const Vector2& other) const
-	{
-		Vector2 newValue;
-		newValue.x = x + other.x;
-		newValue.y = y + other.y;
-		return newValue;
+		return {x + other.x, y + other.y};
 	}
 
 	Vector2 operator*(const float multiplier) const
 	{
-		Vector2 newValue;
-		newValue.x *= multiplier;
-		newValue.y *= multiplier;
-		return newValue;
+		
+		return {x * multiplier, y * multiplier};
 	}
-
 	Vector2 operator/(const float divider) const
 	{
-		Vector2 newValue;
-		newValue.x /= divider;
-		newValue.y /= divider;
-		return newValue;
+		return {x / divider, y / divider};
 	}
-
+	
 	bool operator==(const Vector2& other) const
 	{
 		return x == other.x && y == other.y;
@@ -77,7 +54,7 @@ public:
 		return x != other.x || y != other.y;
 	}
 
-	bool Compare(const Vector2& other, float tolerance = 0) const;
+	bool Compare(const Vector2& other, float tolerance) const;
 
 
 	float Magnitude() const;

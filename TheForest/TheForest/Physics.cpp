@@ -7,14 +7,13 @@ bool Physics::IsGrounded()
 
 void Physics::AddForce(const Vector2 direction, const float force)
 {
-	velocity += Vector2(force * direction.x, force * direction.y);
-
+	velocity += Vector2(direction.x * force, direction.y * force);
 	// if(velocity.Magnitude() > terminalSpeed) velocity
 }
 
 void Physics::AddForce(const float x, const float y, const float force)
 {
-	velocity += Vector2(force * x, force * y);
+	velocity += Vector2(x * force, y * force);
 }
 
 void Physics::ApplyGravity()

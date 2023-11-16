@@ -23,8 +23,8 @@ public:
 
 	SDL_Rect& GetSourceRectangle() { return sourceRect; }
 	SDL_FRect& GetDestinationRectangle() { return destinationRect; }
-	void ChangeSourceRect(SDL_Rect newRect);
-	void ChangeDestRect(SDL_FRect newRect);
+	void ChangeSourceRect(const SDL_Rect newRect);
+	void ChangeDestRect(const SDL_FRect newRect);
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->rotation = other.rotation;
@@ -41,7 +41,7 @@ public:
 	// Primarily for debugging...
 	// The rectangle is filled with the inputted color
 	void FillRectangle(const int r, const int g, const int b, const int a);
-	void FillRectangle(SDL_Rect& colour);
+	void FillRectangle(const SDL_Rect& colour);
 	void UnfillRectangle();
 
 private:

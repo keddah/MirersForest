@@ -79,12 +79,12 @@ void SpriteRenderer::SetFrameCount(short frames)
 	spriteImages[activeAnim].SetSpriteCount(frames);
 }
 
-void SpriteRenderer::ChangeSourceRect(SDL_Rect newRect)
+void SpriteRenderer::ChangeSourceRect(const SDL_Rect newRect)
 {
-	// sourceRect = SDL_Rect(newRect);
+	sourceRect = SDL_Rect(newRect);
 }
 
-void SpriteRenderer::ChangeDestRect(SDL_FRect newRect)
+void SpriteRenderer::ChangeDestRect(const SDL_FRect newRect)
 {
 	destinationRect = SDL_FRect(newRect);
 }
@@ -111,7 +111,7 @@ void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const 
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
 }
 
-void SpriteRenderer::FillRectangle(SDL_Rect& colour)
+void SpriteRenderer::FillRectangle(const SDL_Rect& colour)
 {
 	fillOn = true;
 	fillColour = colour;

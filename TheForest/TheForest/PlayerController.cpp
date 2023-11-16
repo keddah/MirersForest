@@ -21,13 +21,6 @@ PlayerController::~PlayerController()
 
 void PlayerController::Update()
 {
-	
-	const Uint8* keyState = SDL_GetKeyboardState(0);
-	
-	if (keyState[SDL_SCANCODE_W]) {
-		std::cout << 'w' << std::endl;
-	}
-
 	HandleInputs();
 }
 
@@ -38,37 +31,24 @@ bool* PlayerController::GetMoveInputs()
 
 void PlayerController::HandleInputs()
 {
+	const Uint8* keyState = SDL_GetKeyboardState(0);
+	inputs[0].SetPressed(keyState[SDL_SCANCODE_W]);
+	inputs[1].SetPressed(keyState[SDL_SCANCODE_S]);
+	inputs[2].SetPressed(keyState[SDL_SCANCODE_A]);
+	inputs[3].SetPressed(keyState[SDL_SCANCODE_D]);
+	inputs[4].SetPressed(keyState[SDL_SCANCODE_SPACE]);
+	inputs[5].SetPressed(keyState[SDL_SCANCODE_LCTRL]);
+
+	moveInputs[0] = inputs[0].IsKeyDown();
+	moveInputs[1] = inputs[1].IsKeyDown();
+	moveInputs[2] = inputs[2].IsKeyDown();
+	moveInputs[3] = inputs[3].IsKeyDown();
+
+	moveInputs[0] = inputs[4].IsKeyDown();
+	moveInputs[1] = inputs[5].IsKeyDown();
+	
 	SDL_Event e;
-
-	while (SDL_PollEvent(&e)) {
-		ClearInputs();
-
-		if (e.type == SDL_KEYUP)
-		{
-			//ClearInputs();
-
-			//for (auto& input : inputs)
-			//{
-			//	if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(false);
-			//	else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(false);
-			//}
-			//print("keyup")
-		}
-
-		if (e.type == SDL_KEYDOWN)
-		{
-			//ClearInputs();
-
-			//for (auto& input : inputs)
-			//{
-			//	if (e.key.keysym.scancode == input.GetSecondaryKey()) input.SetPressed(true);
-			//	else if (e.key.keysym.scancode == input.GetPrimaryKey()) input.SetPressed(true);
-			//}
-			//print("keydown")
-		}
-
-		ReadInputs(e);
-	}
+	while(SDL_PollEvent(&e)) CalcMousePosition(e);
 }
 
 bool PlayerController::IsLMB() const
@@ -89,32 +69,7 @@ void PlayerController::ClearInputs()
 	for (bool& moveInput : moveInputs) moveInput = false;
 }
 
-void PlayerController::ReadInputs(SDL_Event& e)
+void PlayerController::CalcMousePosition(SDL_Event& e)
 {
-	///input detection
 	mousePos = Vector2(e.motion.x, e.motion.y);
-
-	moveInputs[0] = inputs[0].IsKeyDown();
-	moveInputs[1] = inputs[1].IsKeyDown();
-	moveInputs[2] = inputs[2].IsKeyDown();
-	moveInputs[3] = inputs[3].IsKeyDown();
-
-	moveInputs[0] = inputs[4].IsKeyDown();
-	moveInputs[1] = inputs[5].IsKeyDown();
-
-	switch (e.key.keysym.scancode)
-	{
-		//// Actions			
-		case SDL_BUTTON_LEFT:
-			lmb = true;
-			break;
-
-		case SDL_BUTTON_RIGHT:
-			rmb = true;
-			break;
-
-
-		default:
-			break;
-	} 
 }

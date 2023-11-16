@@ -27,7 +27,7 @@ Vector2 Vector2::operator+=(const Vector2& other)
 	x += other.x;
 	y += other.y;
 
-	return { x,y };
+	return *this;
 }
 
 Vector2 Vector2::operator-=(const Vector2& other)
@@ -35,27 +35,26 @@ Vector2 Vector2::operator-=(const Vector2& other)
 	x -= other.x;
 	y -= other.y;
 
-	return { x,y };
+	return *this;
 }
 
-Vector2 Vector2::operator*=(const Vector2& other)
+Vector2 Vector2::operator*=(const float multiplier)
 {
-	x *= other.x;
-	y *= other.y;
+	x *= multiplier;
+	y *= multiplier;
 
-	return { x,y };
+	return *this;
 }
 
-Vector2 Vector2::operator/=(const Vector2& other)
+Vector2 Vector2::operator/=(const float divider)
 {
-	x /= other.x;
-	y /= other.y;
+	x /= divider;
+	y /= divider;
 
-	return { x,y };
+	return *this;
 }
 
-// Unused 
-bool Vector2::Compare(const Vector2& other, const float tolerance) const
+bool Vector2::Compare(const Vector2& other, const float tolerance = 1) const
 {
 	const bool equal_x = (x >= static_cast<float>(other.x) + tolerance || static_cast<float>(other.x) >= x + tolerance) ||
 		x >= static_cast<float>(other.x) - tolerance || static_cast<float>(other.x) >= x - tolerance;

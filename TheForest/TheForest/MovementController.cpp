@@ -11,11 +11,19 @@ void MovementController::Update(float deltaTime)
 	velocity = Vector2();
 
 	// Since the position is the top left of the image... have to get the bottom.
-	if(playerPosition.y < 1080 - spriteSize.y) ApplyGravity();
+	if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
 	
+	if(playerPosition.y + velocity.y > 1080) playerPosition.y = 0;
+	else if(playerPosition.y > 1080) playerPosition.y = 0;
+	
+	if(playerPosition.x + velocity.x > 1920) playerPosition.x = 0;
+	else if(playerPosition.x > 1920) playerPosition.x = 0;
+	// if(!grounded) ApplyGravity();
 	CalculateDirection();
 	CalculateVelocity(deltaTime);
-	Move();
+	Move(deltaTime);
+
+	print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 
 	playerPosition += velocity;
 }
@@ -35,8 +43,6 @@ void MovementController::CalculateVelocity(float deltaTime)
 
 	// print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
 	
-	velocity += direction * speed;
-
 	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
@@ -48,8 +54,8 @@ void MovementController::CalculateDirection()
 	for(int i = 0; i < 4; i++)
 	{
 		// 0 = up, 1 = down, 2 = left, 3 = right
-		const bool up = controller.GetMoveInputs()[0];
-		const bool down = controller.GetMoveInputs()[1];
+		const bool up = controller.GetMoveInputs()[0] || controller.GetMoveInputs()[4];
+		const bool down = controller.GetMoveInputs()[1] || controller.GetMoveInputs()[5];
 		const bool left = controller.GetMoveInputs()[2];
 		const bool right = controller.GetMoveInputs()[3];
 
@@ -61,13 +67,14 @@ void MovementController::CalculateDirection()
 	}
 }
 
-void MovementController::Move()
+void MovementController::Move(float deltaTime)
 {
 	if(!canMove) return;
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
-	velocity += Vector2(moveSpeed * direction.x,moveSpeed * direction.y);
+	// The delta time is inconsistent... the velocity spikes sometimes.....
+	velocity += Vector2(moveSpeed * direction.x, 0) * deltaTime;
 	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 
 	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
@@ -76,8 +83,8 @@ void MovementController::Move()
 void MovementController::Jump()
 {
 	if(!grounded) return;
-	
-	AddForce(velocity + Vector2(0, 1), jumpForce);
+
+	velocity.y += jumpForce;
 }
 
 void MovementController::Slide()

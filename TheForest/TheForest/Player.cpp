@@ -31,9 +31,6 @@ void Player::Update(float deltaTime)
 {
 	Character::Update(deltaTime);
 
-	if(Contains(controller.GetMousePosition())) GetRenderer().FillRectangle(0,100,50,1);
-	else GetRenderer().UnfillRectangle();
-	
 	controller.Update();
 
 	moveController.Update(deltaTime);

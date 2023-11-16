@@ -16,7 +16,7 @@ void SceneManager::Update(float DeltaTime)
 {
 	player.Update(DeltaTime);
 
-	print(colliders[0].Overlapping(colliders[1]));
+	// print(colliders[0].Overlapping(colliders[1]));
 	
 	for (const auto& collider : colliders)
 	{
