@@ -92,18 +92,42 @@ void Collision::SetRectangle(float x, float y, float width, float height)
 	rect.h = height;
 }
 
-bool Collision::Overlapping(const Collision& toCompare) const
+bool Collision::Overlapping(const Collision& toCompare)
 {
-	return SDL_HasIntersectionF(&toCompare.rect, &rect);
+	isOverlapping = SDL_HasIntersectionF(&toCompare.rect, &rect);
+
+	auto* intersectRect = new SDL_FRect();
+	SDL_IntersectFRect(&this->rect, &toCompare.rect, intersectRect);
+	
+	print("rect1: " << intersectRect->x<< ", " << intersectRect->y << ", " << intersectRect->w << ", " << intersectRect->h << ")\n")
+
+	// Checks which part of the rectangle is being obstructed
+	if(intersectRect->y >= toCompare.rect.y + toCompare.rect.h) currentObstruction = EObstructionDirection::UP;
+	else if(intersectRect->y + intersectRect->h <= toCompare.rect.y) currentObstruction = EObstructionDirection::DOWN;
+	
+	else if(intersectRect->x >= toCompare.rect.x + toCompare.rect.w) currentObstruction = EObstructionDirection::LEFT;
+	else if(intersectRect->x + intersectRect->w <= toCompare.rect.x) currentObstruction = EObstructionDirection::RIGHT;
+
+	return isOverlapping;
 }
 
 // Collider overlaps another collider
 bool Collision::Overlapping(const SDL_FRect& toCompare)
 {
-	print("rect1: " << rect.x<< ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
-	print("rect2: " << toCompare.x<< ", " << toCompare.y << ", " << toCompare.w << ", " << toCompare.h << ")\n")
 	
-	isOverlapping = SDL_HasIntersectionF(&toCompare, &this->rect);
+	isOverlapping = SDL_HasIntersectionF(&this->rect, &toCompare);
+
+	auto* intersectRect = new SDL_FRect();
+	SDL_IntersectFRect(&this->rect, &toCompare, intersectRect);
+	
+	print("rect1: " << intersectRect->x<< ", " << intersectRect->y << ", " << intersectRect->w << ", " << intersectRect->h << ")\n")
+	
+	if(intersectRect->y >= toCompare.y + toCompare.h) currentObstruction = EObstructionDirection::UP;
+	else if(intersectRect->y + intersectRect->h <= toCompare.y) currentObstruction = EObstructionDirection::DOWN;
+	
+	else if(intersectRect->x >= toCompare.x + toCompare.w) currentObstruction = EObstructionDirection::LEFT;
+	else if(intersectRect->x + intersectRect->w <= toCompare.x) currentObstruction = EObstructionDirection::RIGHT;
+	
 	return isOverlapping;
 }
 

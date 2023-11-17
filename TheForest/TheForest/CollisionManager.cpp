@@ -10,9 +10,9 @@ void CollisionManager::Update() const
 
             colliders[i]->Overlapping(colliders[j]->GetRect());
         }
-        print(i << ": " << colliders[i]->IsOverlapping())
     }
     
+        print(": " << colliders[0]->IsOverlapping())
 }
 
 

@@ -28,10 +28,9 @@ public:
 		DOWN,
 		LEFT,
 		RIGHT,
-		NONE
 	};
 
-	EObstructionDirection currentObstruction = EObstructionDirection::NONE;
+	EObstructionDirection currentObstruction;
 	
 	bool obstructedUp = false;
 	bool obstructedLeft = false;
@@ -48,10 +47,9 @@ public:
 	void SetRectangle(Vector2 position, float width, float height);
 	void SetRectangle(float x, float y, Vector2 dimensions);
 	void SetRectangle(float x, float y, float width, float height);
-	
-	bool Overlapping(const Collision& toCompare) const;
+
+	bool Overlapping(const Collision& toCompare);
 	bool Overlapping(const SDL_FRect& toCompare);
-	bool Overlapping(const SDL_FRect& toCompare) const;
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
@@ -60,7 +58,28 @@ public:
 	const SDL_FRect& GetRect() const { return rect; }
 	const SDL_FRect& GetContactRect(const Collision& toCompare) const;
 
-	bool IsOverlapping() const { return isOverlapping; }
+	bool IsOverlapping() const
+	{
+		switch (currentObstruction)
+		{
+		case EObstructionDirection::UP:
+			print("up")
+			break;
+
+		case EObstructionDirection::DOWN:
+			print("down")
+			break;
+
+		case EObstructionDirection::LEFT:
+			print("left")
+			break;
+
+		case EObstructionDirection::RIGHT:
+			print("right")
+			break;
+		}
+		return isOverlapping;
+	}
 	
 protected:
 	SDL_FRect rect;
