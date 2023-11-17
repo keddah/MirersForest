@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-Character::Character() 
-{
-}
+// Character::Character() 
+// {
+// }
 
 
-Character::~Character()
+Character::Character(std::vector<std::string> paths, SDL_FRect& newRect): renderer(paths, newRect), Collision(newRect)
 {
 }
 
@@ -31,9 +31,9 @@ void Character::Death()
 {
 }
 
-void Character::ConfigureRenderer(const char* paths[], short frameCount)
+void Character::ConfigureRenderer(std::vector<std::string> paths, short frameCount)
 {
-	renderer = SpriteRenderer(paths, position);
+	renderer = SpriteRenderer(std::move(paths), rect);
 }
 
 void Character::CheckCollisions()

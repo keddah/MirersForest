@@ -1,16 +1,12 @@
 #include "Player.h"
 #include "Controllers.h"
 
-Player::Player()
+Player::Player() : Character({"Sprites/testspritesheet.png"}, rect)
 {
-	const char* animations[]
-	{
-		"Sprites/testspritesheet.png",
-		"Sprites/run_left1.png",
-	};
-
-	ConfigureRenderer(animations, 4);
+	ConfigureRenderer({"Sprites/testspritesheet.png"}, 4);
 	ChangeMoveState(MovementController::EMovementState::Idle);
+
+	
 }
 
 Player::~Player()

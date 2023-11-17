@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <array>
+#include <string>
+
 #include "HealthManager.h" 
 #include "SpriteRenderer.h"
 #include "Collider.h"
@@ -9,13 +12,11 @@
 class Character: public Collision
 {
 public:
-    Character();
-    ~Character();
+    Character(std::vector<std::string> paths, SDL_FRect& newRect);
+    ~Character() = default;
 
     virtual void Update(float deltaTime);
 
-    virtual const Collision& GetCollider() { return ReturnSelf(); }
-    
     void GainHealth();
     void TakeDamage(float intensity);
     void Death();
@@ -23,15 +24,16 @@ public:
 
 
 protected:
-    void ConfigureRenderer(const char* paths[], short frameCount = 3);
+    void ConfigureRenderer(std::vector<std::string> paths, short frameCount = 3);
     virtual SpriteRenderer& GetRenderer() { return renderer; }
 
     Vector2 position;
+    
+    SpriteRenderer renderer;
     
     HealthManager health;
 
 private:
     void CheckCollisions();
     
-    SpriteRenderer renderer = SpriteRenderer();
 };

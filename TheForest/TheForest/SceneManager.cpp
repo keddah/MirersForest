@@ -15,8 +15,7 @@ SceneManager::~SceneManager()
 void SceneManager::Update(float deltaTime)
 {
 	player.Update(deltaTime);
-	collisionManager.Update(deltaTime);
-	// print("rect: (" << colliders[0].GetRect().x<< ", " << colliders[0].GetRect().y << ", " << colliders[0].GetRect().w << ", " << colliders[0].GetRect().h << ")\n")
+	collisionManager.Update();
 }
 
 void SceneManager::Draw()
@@ -25,13 +24,14 @@ void SceneManager::Draw()
 	{
 		renderer.Animate();
 	}
+
+	collisionManager.Debug();
 }
 
 void SceneManager::StartGame()
 {
-	const Collision& playerCollision = player.GetCollider();
-	collisionManager.AddCollider(playerCollision);	
-
-	floor = Collision(100,0,100,1100);
-	collisionManager.AddCollider(floor);	
+	collisionManager.AddCollider(player);	
+	
+	collisionManager.AddCollider(_floor1);	
+	
 }

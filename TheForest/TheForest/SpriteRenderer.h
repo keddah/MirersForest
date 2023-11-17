@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 #include <SDL.h>
@@ -11,7 +12,8 @@ public:
 	SpriteRenderer() = default;
 
 	// For animated things...
-	SpriteRenderer(const char* paths[], Vector2& pos);
+	// SpriteRenderer(const char* paths[], Vector2& pos);
+	SpriteRenderer(std::vector<std::string> paths, SDL_FRect& rect);
 	SpriteRenderer(SDL_FRect& rect);
 
 	void Animate();
@@ -49,7 +51,7 @@ private:
 	SDL_Rect sourceRect = SDL_Rect();
 
 	// (x,y) = the position .. (w,h) = the size
-	SDL_FRect destinationRect = SDL_FRect();
+	SDL_FRect& destinationRect;
 	
 	Vector2 initReference;
 	Vector2& renderPos = initReference;

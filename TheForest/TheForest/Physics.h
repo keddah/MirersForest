@@ -7,6 +7,8 @@ class Physics
 public:
     bool IsGrounded();
 
+    virtual const Vector2& GetVelocity() const { return velocity; }
+    
     void AddForce(Vector2 direction, float force);
     void AddForce(float x, float y, float force);
 

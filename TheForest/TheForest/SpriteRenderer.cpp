@@ -6,21 +6,18 @@
 #include "CustomTimer.h"
 
 
-SpriteRenderer::SpriteRenderer(const char* paths[], Vector2& pos) : renderPos(pos)
+SpriteRenderer::SpriteRenderer(std::vector<std::string> paths, SDL_FRect& rect): destinationRect(rect)
 {
-	AddSpriteSheet(paths[0]);
-	// for (int i = 0; i < sizeof(paths); i++) AddSpriteSheet(paths[i]);
+	AddSpriteSheet(paths[0].c_str());
+	// for (auto& path: paths) AddSpriteSheet(path.c_str());
 
 	const Vector2 size = GetSpriteSize();
-
-	// Only setting the size of the destination rect since the position would be updated each frame...
 	destinationRect.w = size.x;
 	destinationRect.h = size.y;
 }
 
-SpriteRenderer::SpriteRenderer(SDL_FRect& rect)
+SpriteRenderer::SpriteRenderer(SDL_FRect& rect) : destinationRect(rect)
 {
-	destinationRect = rect;
 }
 
 void SpriteRenderer::Animate()

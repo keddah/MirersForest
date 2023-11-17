@@ -27,4 +27,9 @@ private:
     PlayerController controller;
     MovementController moveController = MovementController(controller, position);
     WeaponController weaponController = WeaponController(controller, position);
+
+    std::vector<std::string> animations
+    {
+        "Sprites/testspritesheet.png",
+    };
 };

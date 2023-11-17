@@ -1,20 +1,28 @@
 #include "Collider.h"
 
-void CollisionManager::Update(float deltaTime)
+void CollisionManager::Update() const
 {
     for(int i = 0; i < colliders.size(); i++)
     {
-        colliders[i]->Debug();
-        colliders[i]->SetRectangle(colliders[i]->GetRect());
-        
-        if(i > 0) colliders[i]->Overlapping(colliders[i - 1]->GetRect());
-        else colliders[i]->Overlapping(colliders.back()->GetRect());
-    }
+        for(int j = 0; j < colliders.size(); j++)
+        {
+            if(i == j) continue;
 
-    print(colliders[1]->IsOverlapping())
+            colliders[i]->Overlapping(colliders[j]->GetRect());
+        }
+        print(i << ": " << colliders[i]->IsOverlapping())
+    }
+    
 }
 
-void CollisionManager::AddCollider(const Collision& toAdd)
+
+void CollisionManager::Debug() const
 {
-    colliders.push_back(toAdd);
+    for(const auto& collider:colliders) collider->Debug();
+}
+
+
+void CollisionManager::AddCollider(Collision& toAdd)
+{
+    colliders.push_back(&toAdd);
 }

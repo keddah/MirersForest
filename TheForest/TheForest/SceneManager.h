@@ -16,7 +16,7 @@ public:
 
 private:
 	void StartGame();
-	Collision floor;
+	Collision _floor1 = Collision(100,0,100,1100);
 	Player player;
 
 	CollisionManager collisionManager;

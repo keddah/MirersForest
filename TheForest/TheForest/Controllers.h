@@ -1,42 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include <tuple>
 #include <vector>
 #include "Vector2.h"
 #include "SDL.h"
 
 #define print(x) { std::cout<< x << std::endl; }
 
-class Input
-{
-public:
-    Input(SDL_Scancode button);
-    Input(SDL_Scancode button1, SDL_Scancode button2);
-
-    void SetPressed(bool pressed) { isDown = pressed; }
-
-    bool IsKeyDown() const { return isDown; }
-
-    SDL_Scancode GetPrimaryKey() const;
-    SDL_Scancode GetSecondaryKey() const;
-
-private:
-    bool isDown;
-
-    SDL_Scancode primaryKey;
-    SDL_Scancode secondaryKey;
-};
-
-
-
-
-
 class PlayerController
 {
 public:
-	PlayerController();
-	~PlayerController();
+	PlayerController() = default;
+	~PlayerController() = default;
 
 	void Update();
 	
@@ -53,8 +28,6 @@ private:
 	Vector2 mousePos;
 
 	void ClearInputs();
-
-    std::vector<Input> inputs = std::vector<Input>();
 
 	// Up .. Down .. Left .. Right
 	bool moveInputs[4];

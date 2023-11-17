@@ -142,7 +142,6 @@
     <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthManager.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -152,6 +151,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheForest.cpp" />
+    <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WeaponController.cpp" />
   </ItemGroup>
@@ -171,6 +171,7 @@
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="TileManager.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>

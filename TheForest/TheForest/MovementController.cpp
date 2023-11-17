@@ -82,7 +82,7 @@ void MovementController::Jump()
 {
 	if(!grounded) return;
 
-	velocity.y += jumpForce;
+	// velocity.y += jumpForce;
 }
 
 void MovementController::Slide()

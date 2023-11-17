@@ -1,36 +1,27 @@
 #include "Collider.h"
 
-Collision::Collision()
-{
-	rect = SDL_FRect();
-}
-
-Collision::Collision(const float x, const float y, const float w, const float h)
+Collision::Collision(const float x, const float y, const float w, const float h)  : debugRenderer(rect)
 {
 	rect = SDL_FRect{x,y,w,h};
 
-	debugging = true;
-	debugRenderer = SpriteRenderer(rect);
 	debugRenderer.FillRectangle(debugColour);
 }
 
-Collision::Collision(SDL_FRect _rect)
+Collision::Collision(SDL_FRect _rect) : debugRenderer(rect)
 {
 	rect = _rect;
 
-	debugging = true;
-	debugRenderer = SpriteRenderer(rect);
 	debugRenderer.FillRectangle(debugColour);
 }
 
-Collision::Collision(Vector2 position, Vector2 dimensions)
-{
-	rect.x = position.x;
-	rect.y = position.y;
-
-	rect.w = dimensions.x;
-	rect.h = dimensions.y;
-}
+// Collision::Collision(Vector2 position, Vector2 dimensions)
+// {
+// 	rect.x = position.x;
+// 	rect.y = position.y;
+//
+// 	rect.w = dimensions.x;
+// 	rect.h = dimensions.y;
+// }
 
 Collision::~Collision()
 {
@@ -101,20 +92,18 @@ void Collision::SetRectangle(float x, float y, float width, float height)
 	rect.h = height;
 }
 
-// Collider overlaps another collider
-bool Collision::Overlapping(const Collision& toCompare)
+bool Collision::Overlapping(const Collision& toCompare) const
 {
-	isOverlapping = SDL_HasIntersectionF(&toCompare.rect, &rect);
-	print("rect1: " << rect.x<< ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
-	print("rect2: " << toCompare.rect.x<< ", " << toCompare.rect.y << ", " << toCompare.rect.w << ", " << toCompare.rect.h << ")\n")
-	return isOverlapping;
+	return SDL_HasIntersectionF(&toCompare.rect, &rect);
 }
 
+// Collider overlaps another collider
 bool Collision::Overlapping(const SDL_FRect& toCompare)
 {
-	isOverlapping = SDL_HasIntersectionF(&toCompare, &rect);
 	print("rect1: " << rect.x<< ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
 	print("rect2: " << toCompare.x<< ", " << toCompare.y << ", " << toCompare.w << ", " << toCompare.h << ")\n")
+	
+	isOverlapping = SDL_HasIntersectionF(&toCompare, &this->rect);
 	return isOverlapping;
 }
 
