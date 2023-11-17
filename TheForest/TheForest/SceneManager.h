@@ -11,13 +11,15 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void Update(float DeltaTime);
+	void Update(float deltaTime);
 	void Draw();
 
 private:
 	void StartGame();
-
+	Collision floor;
 	Player player;
+
+	CollisionManager collisionManager;
+	
 	std::vector<SpriteRenderer> renderers = std::vector<SpriteRenderer>();
-	std::vector<Collision> colliders = std::vector<Collision>();
 };

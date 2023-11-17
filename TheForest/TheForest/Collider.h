@@ -22,35 +22,59 @@ public:
 	// Whether this SOLID collider is overlapping with another solid collider 
 	bool obstructed = false;
 	
+	const Vector2& GetPosition() { return {rect.x, rect.y }; }
 	void SetPosition(Vector2 position);
 	void SetPosition(float x, float y);
 
-	void SetWidthHeight(Vector2 xy);
-	void SetWidthHeight(float x, float y);
+	void SetWidthHeight(Vector2 dimensions);
+	void SetWidthHeight(float w, float h);
 
 	void SetRectangle(SDL_FRect newRect);
 	void SetRectangle(Vector2 position, Vector2 dimensions);
 	void SetRectangle(Vector2 position, float width, float height);
-	void SetRectangle(float x, float y, Vector2 position);
+	void SetRectangle(float x, float y, Vector2 dimensions);
 	void SetRectangle(float x, float y, float width, float height);
 	
-	bool Overlapping(const Collision& toCompare) const;
+	bool Overlapping(const Collision& toCompare);
+	bool Overlapping(const SDL_FRect& toCompare);
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
 	bool IsDebugging() const { return debugging; }
 	void Debug();
 
-	const SDL_FRect& GetRect() { return rect; }
+	const SDL_FRect& GetRect() const { return rect; }
+	const SDL_FRect& GetContactRect(const Collision& toCompare) const;
 
+	bool IsOverlapping() const { return isOverlapping; }
+	
 protected:
 	SDL_FRect rect;
-	Collision& ReturnSelf() { return *this; }
+	const Collision& ReturnSelf() { return *this; }
 
 
 private:
 	bool debugging;
+
+	bool isOverlapping;
 	
 	SpriteRenderer debugRenderer;
 	SDL_Rect debugColour = SDL_Rect{ 231, 23, 133, 1 };
+};
+
+
+
+
+
+class CollisionManager
+{
+public:
+	CollisionManager() = default;
+
+	void Update(float deltaTime);
+	void AddCollider(const Collision& toAdd);
+	
+private:
+	std::vector<Collision*> colliders = std::vector<Collision*>(); 	
+	
 };

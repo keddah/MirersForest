@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthManager.cpp" />

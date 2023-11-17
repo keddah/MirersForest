@@ -14,7 +14,7 @@ public:
 
     virtual void Update(float deltaTime);
 
-    virtual Collision& GetCollider() { return ReturnSelf(); }
+    virtual const Collision& GetCollider() { return ReturnSelf(); }
     
     void GainHealth();
     void TakeDamage(float intensity);

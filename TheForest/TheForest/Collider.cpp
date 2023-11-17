@@ -1,7 +1,5 @@
 #include "Collider.h"
 
-
-
 Collision::Collision()
 {
 	rect = SDL_FRect();
@@ -104,9 +102,20 @@ void Collision::SetRectangle(float x, float y, float width, float height)
 }
 
 // Collider overlaps another collider
-bool Collision::Overlapping(const Collision& toCompare) const
+bool Collision::Overlapping(const Collision& toCompare)
 {
-	return SDL_HasIntersectionF(&rect, &toCompare.rect);
+	isOverlapping = SDL_HasIntersectionF(&toCompare.rect, &rect);
+	print("rect1: " << rect.x<< ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
+	print("rect2: " << toCompare.rect.x<< ", " << toCompare.rect.y << ", " << toCompare.rect.w << ", " << toCompare.rect.h << ")\n")
+	return isOverlapping;
+}
+
+bool Collision::Overlapping(const SDL_FRect& toCompare)
+{
+	isOverlapping = SDL_HasIntersectionF(&toCompare, &rect);
+	print("rect1: " << rect.x<< ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
+	print("rect2: " << toCompare.x<< ", " << toCompare.y << ", " << toCompare.w << ", " << toCompare.h << ")\n")
+	return isOverlapping;
 }
 
 // Box collision contains another box collider
@@ -135,5 +144,13 @@ bool Collision::Contains(const Vector2 position) const
 void Collision::Debug()
 {
 	debugRenderer.FillRectangle(debugColour);
+}
+
+const SDL_FRect& Collision::GetContactRect(const Collision& toCompare) const
+{
+	auto* intersectRect = new SDL_FRect();
+	
+	SDL_IntersectFRect(&rect, &toCompare.rect, intersectRect);
+	return *intersectRect;
 }
 

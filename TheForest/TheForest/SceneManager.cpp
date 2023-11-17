@@ -12,16 +12,11 @@ SceneManager::~SceneManager()
 {
 }
 
-void SceneManager::Update(float DeltaTime)
+void SceneManager::Update(float deltaTime)
 {
-	player.Update(DeltaTime);
-
-	// print(colliders[0].Overlapping(colliders[1]));
-	
-	for (const auto& collider : colliders)
-	{
-		 player.GetCollider().obstructed = true;
-	}
+	player.Update(deltaTime);
+	collisionManager.Update(deltaTime);
+	// print("rect: (" << colliders[0].GetRect().x<< ", " << colliders[0].GetRect().y << ", " << colliders[0].GetRect().w << ", " << colliders[0].GetRect().h << ")\n")
 }
 
 void SceneManager::Draw()
@@ -30,17 +25,13 @@ void SceneManager::Draw()
 	{
 		renderer.Animate();
 	}
-
-	for (auto& collider : colliders)
-	{
-		if (collider.IsDebugging()) collider.Debug();
-	}
 }
 
 void SceneManager::StartGame()
 {
-	const Collision floor = Collision(100,0,100,1100);
-	colliders.push_back(floor);
+	const Collision& playerCollision = player.GetCollider();
+	collisionManager.AddCollider(playerCollision);	
 
-	colliders.push_back(player.GetCollider());	
+	floor = Collision(100,0,100,1100);
+	collisionManager.AddCollider(floor);	
 }

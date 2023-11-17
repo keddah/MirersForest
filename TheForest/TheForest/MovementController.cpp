@@ -23,8 +23,6 @@ void MovementController::Update(float deltaTime)
 	CalculateVelocity(deltaTime);
 	Move(deltaTime);
 
-	print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
-
 	playerPosition += velocity;
 }
 
@@ -74,7 +72,7 @@ void MovementController::Move(float deltaTime)
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	// The delta time is inconsistent... the velocity spikes sometimes.....
-	velocity += Vector2(moveSpeed * direction.x, 0) * deltaTime;
+	velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
 	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 
 	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
