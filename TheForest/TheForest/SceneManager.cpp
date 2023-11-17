@@ -31,7 +31,8 @@ void SceneManager::Draw()
 void SceneManager::StartGame()
 {
 	collisionManager.AddCollider(player);	
-	
+
+	_floor1.SetSolid(true);
 	collisionManager.AddCollider(_floor1);	
 	
 }
