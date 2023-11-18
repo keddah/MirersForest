@@ -1,15 +1,13 @@
 #include "SpriteRenderer.h"
-#include "GameSingletons.h"
-#include<iostream>
-
-#include "Controllers.h"
 #include "CustomTimer.h"
 
 
-SpriteRenderer::SpriteRenderer(std::vector<std::string> paths, SDL_FRect& rect): destinationRect(rect)
+
+SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, SDL_FRect& rect): destinationRect(rect)
 {
-	AddSpriteSheet(paths[0].c_str());
-	// for (auto& path: paths) AddSpriteSheet(path.c_str());
+	print(GameWindow::GetRenderer())
+	// Creates a new Image object and adds it to the list of images
+	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
 
 	const Vector2 size = GetSpriteSize();
 	destinationRect.w = size.x;
@@ -23,7 +21,6 @@ SpriteRenderer::SpriteRenderer(SDL_FRect& rect) : destinationRect(rect)
 void SpriteRenderer::Animate()
 {
 	// Creating a local texture each frame using the textures that were created in the constructor 
-	const auto tex = Image(spriteImages[activeAnim].GetImagePath());
 	const Vector2 frameSize = GetSpriteSize();
 
 	// (x,y) the start position is the size of one of the frames * the frame number
@@ -36,7 +33,7 @@ void SpriteRenderer::Animate()
 	// print("(" << renderPos.x << ", " << renderPos.y << ")\n")
 
 	// The destination rect's position is already being set from the MoveSprite function
-	SDL_RenderCopyF(GameWindow::GetRenderer(), tex.GetTexture(), &sourceRect, &destinationRect);
+	SDL_RenderCopyF(GameWindow::GetRenderer(), spriteImages[activeAnim].GetTexture(), &sourceRect, &destinationRect);
 	
 	
 	frameTimer += Time::GetDeltaTime() * 50;
@@ -65,38 +62,19 @@ Vector2 SpriteRenderer::GetSpriteSize()
 	return size;
 }
 
-void SpriteRenderer::AddSpriteSheet(const char* path)
-{
-	// Creates a new Image object and adds it to the list of images
-	spriteImages.emplace_back(path);
-}
-
 void SpriteRenderer::SetFrameCount(short frames)
 {
 	spriteImages[activeAnim].SetSpriteCount(frames);
 }
 
-void SpriteRenderer::ChangeSourceRect(const SDL_Rect newRect)
+void SpriteRenderer::SetSourceRect(const SDL_Rect newRect)
 {
 	sourceRect = SDL_Rect(newRect);
 }
 
-void SpriteRenderer::ChangeDestRect(const SDL_FRect newRect)
+void SpriteRenderer::SetDestinationRect(const SDL_FRect newRect)
 {
 	destinationRect = SDL_FRect(newRect);
-}
-
-void SpriteRenderer::Configure(const char* paths[], short frameCount)
-{
-	// Get rid of all of the existing textures
-	spriteImages.clear();
-
-	for(int i = 0; i < sizeof(paths); i++)
-	{
-		AddSpriteSheet(paths[i]);
-	}
-
-	SetFrameCount(frameCount);
 }
 
 void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const int a)

@@ -1,23 +1,25 @@
 #include "Image.h"
+#include <SDL_Image.h>
 
-#include <iostream>
-
-#include "GameSingletons.h"
 
 Image::Image(const char* filePath)
 {
 	imagePath = filePath;
+	
+	SDL_Surface* image = IMG_Load(filePath);
+	
+	texture = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image);
 
-	if(SDL_Surface* image = IMG_Load(imagePath))
-	{
-		texture = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image);
-		size = Vector2(image->w, image->h);
-		
-		SDL_FreeSurface(image);
+	if(!image) print("IMAGE INVALID")
+	if(!texture) print("TEXTURE INVALID")
+	if(!GameWindow::GetRenderer()) print("RENDERER INVALID")
 
-		spriteSheet.SetImageSize(size);
-	}
+	size = Vector2(image->w, image->h);
 
+	
+	SDL_FreeSurface(image);
+
+	spriteSheet.SetImageSize(size);
 }
 
 void Image::SetSpriteCount(short count)

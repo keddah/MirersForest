@@ -1,9 +1,10 @@
 #pragma once
 
+#include<iostream>
 #include <string>
 #include <vector>
-
 #include <SDL.h>
+
 #include "Image.h"
 
 class SpriteRenderer
@@ -13,33 +14,35 @@ public:
 
 	// For animated things...
 	// SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(std::vector<std::string> paths, SDL_FRect& rect);
+	SpriteRenderer(const std::vector<std::string>& paths, SDL_FRect& rect);
 	SpriteRenderer(SDL_FRect& rect);
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
 	Vector2 GetSpriteSize();
 	
-	void AddSpriteSheet(const char* path);
 	void SetFrameCount(short frames);
 
 	SDL_Rect& GetSourceRectangle() { return sourceRect; }
-	SDL_FRect& GetDestinationRectangle() { return destinationRect; }
-	void ChangeSourceRect(const SDL_Rect newRect);
-	void ChangeDestRect(const SDL_FRect newRect);
+	SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
+	void SetSourceRect(SDL_Rect newRect);
+	void SetDestinationRect(SDL_FRect newRect);
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
-		this->rotation = other.rotation;
 		this->spriteImages = other.spriteImages;
 		this->sourceRect = other.sourceRect;
 		this->destinationRect = other.destinationRect;
+
 		this->fillOn = other.fillOn;
 		this->fillColour = other.fillColour;
+
+		this->frameTimer = other.frameTimer;
+		this->currentFrame = other.currentFrame;
+		this->animSpeed = other.animSpeed;
+		this->activeAnim = other.activeAnim;
 		return *this;
 	}
 	
-	void Configure(const char* paths[], short frameCount = 4);
-
 	// Primarily for debugging...
 	// The rectangle is filled with the inputted color
 	void FillRectangle(const int r, const int g, const int b, const int a);
@@ -52,16 +55,15 @@ private:
 
 	// (x,y) = the position .. (w,h) = the size
 	SDL_FRect& destinationRect;
-	
+
 	Vector2 initReference;
 	Vector2& renderPos = initReference;
 
 	// The sprite sheet that's currently being rendered
 	short activeAnim = 0;
 	short currentFrame = 0;
-	double frameTimer = 0;
+	float frameTimer = 0;
 	float animSpeed = 2;
-	float rotation = 0;
 
 	std::vector<Image> spriteImages = std::vector<Image>();
 

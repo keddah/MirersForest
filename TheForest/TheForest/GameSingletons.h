@@ -1,5 +1,6 @@
 #pragma once
 #define print(x) { std::cout<< x << std::endl; }
+#include <SDL_render.h>
 
 class GameWindow
 {

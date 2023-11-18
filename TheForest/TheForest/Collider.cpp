@@ -84,21 +84,35 @@ bool Collision::Overlapping(const Collision& toCompare)
 {
 	isOverlapping = SDL_HasIntersectionF(&toCompare.rect, &rect);
 
+	// If there is an obstruction, use the value that was set.. otherwise there is none
+	currentObstruction = isOverlapping ? currentObstruction : EObstructionDirection::NONE;
+	
 	auto* intersectRect = new SDL_FRect();
 	SDL_IntersectFRect(&this->rect, &toCompare.rect, intersectRect);
+
+	if(toCompare.rect.y > rect.y + rect.h) up = intersectRect->y >= toCompare.rect.y + toCompare.rect.h;
+	if(toCompare.rect.y + toCompare.rect.h < rect.y) down = intersectRect->y + intersectRect->h <= toCompare.rect.y;
+
+	if(toCompare.rect.x > rect.x + rect.w) up = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
+	if(toCompare.rect.x + toCompare.rect.w < rect.x) down = intersectRect->x + intersectRect->w <= toCompare.rect.x;
 	
 	// Checks which part of the rectangle is being obstructed
-	if(intersectRect->y >= toCompare.rect.y + toCompare.rect.h) currentObstruction = EObstructionDirection::UP;
-	else if(intersectRect->y + intersectRect->h <= toCompare.rect.y) currentObstruction = EObstructionDirection::DOWN;
 	
-	else if(intersectRect->x >= toCompare.rect.x + toCompare.rect.w) currentObstruction = EObstructionDirection::LEFT;
-	else if(intersectRect->x + intersectRect->w <= toCompare.rect.x) currentObstruction = EObstructionDirection::RIGHT;
+	
+	left = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
+	right = intersectRect->x + intersectRect->w <= toCompare.rect.x;
+	unObstructed = !up && !down && !left && !right;
+
+
+	
+	if(intersectRect->y > toCompare.rect.y + toCompare.rect.h) currentObstruction = EObstructionDirection::UP;
+	else if(intersectRect->y + intersectRect->h < toCompare.rect.y) currentObstruction = EObstructionDirection::DOWN;
+	
+	else if(intersectRect->x > toCompare.rect.x + toCompare.rect.w) currentObstruction = EObstructionDirection::LEFT;
+	else if(intersectRect->x + intersectRect->w < toCompare.rect.x) currentObstruction = EObstructionDirection::RIGHT;
 
 	obstruction = std::make_tuple(isOverlapping && toCompare.solid && solid, currentObstruction);
 
-	// If there is an obstruction, use the value that was set.. otherwise there is none
-	currentObstruction = std::get<bool>(obstruction) ? currentObstruction : EObstructionDirection::NONE;
-		
 	return isOverlapping;
 }
 
@@ -128,7 +142,7 @@ bool Collision::IsOverlapping() const
 		break;
 	}
 	
-	print(isOverlapping)
+	print(isOverlapping << "\n")
 	return isOverlapping;
 }
 

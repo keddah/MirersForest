@@ -52,8 +52,8 @@ void MovementController::CalculateDirection()
 	for(int i = 0; i < 4; i++)
 	{
 		// 0 = up, 1 = down, 2 = left, 3 = right
-		const bool up = controller.GetMoveInputs()[0] || controller.GetMoveInputs()[4];
-		const bool down = controller.GetMoveInputs()[1] || controller.GetMoveInputs()[5];
+		const bool up = controller.GetMoveInputs()[0];
+		const bool down = controller.GetMoveInputs()[1];
 		const bool left = controller.GetMoveInputs()[2];
 		const bool right = controller.GetMoveInputs()[3];
 
@@ -65,6 +65,57 @@ void MovementController::CalculateDirection()
 	}
 }
 
+// void MovementController::BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction)
+// {
+// 	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
+//
+// 	blockedDirection = EBlockedDirection::NONE;
+// 	
+// 	// If there's no obstruction... don't do anything
+// 	if(!std::get<bool>(obstruction)) return;
+// 	
+// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::UP)
+// 	{
+// 		blockedDirection = EBlockedDirection::UP;
+// 	}
+//
+// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::DOWN)
+// 	{
+// 		blockedDirection = EBlockedDirection::DOWN;
+// 		grounded = true;
+// 	}
+//
+// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::LEFT)
+// 	{
+// 		blockedDirection = EBlockedDirection::LEFT;
+// 	}
+//
+// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::RIGHT)
+// 	{
+// 		blockedDirection = EBlockedDirection::RIGHT;
+// 	}
+//
+// 	// grounded = blockedDirection == EBlockedDirection::DOWN;
+// }
+
+void MovementController::BlockingCollisions(bool up, bool down, bool left, bool right)
+{
+	unObstructed = !up && !down && !left && !right;
+	
+	this->up = up;
+	this->down = down;
+	this->left = left;
+	this->right = right;
+
+	// if(up) print("up")
+	// if(down) print("down")
+	// if(left) print("left")
+	// if(right) print("right")
+	
+	
+	grounded = down;
+}
+
 void MovementController::Move(float deltaTime)
 {
 	if(!canMove) return;
@@ -72,7 +123,10 @@ void MovementController::Move(float deltaTime)
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	// The delta time is inconsistent... the velocity spikes sometimes.....
-	velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+	if(left && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+	if(right && direction.x > 0)velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+
+	
 	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 
 	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
@@ -82,7 +136,7 @@ void MovementController::Jump()
 {
 	if(!grounded) return;
 
-	// velocity.y += jumpForce;
+	velocity.y += jumpForce;
 }
 
 void MovementController::Slide()

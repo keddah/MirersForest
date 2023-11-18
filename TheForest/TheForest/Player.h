@@ -8,7 +8,7 @@ class Player : public Character
 {
 public:
     Player();
-    ~Player();
+    ~Player() = default;
     void Update(float deltaTime) override;
 
     void ChangeMoveState(MovementController::EMovementState state);

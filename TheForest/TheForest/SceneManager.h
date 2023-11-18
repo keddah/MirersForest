@@ -16,7 +16,8 @@ public:
 
 private:
 	void StartGame();
-	Collision _floor1 = Collision(300,400,100,300);
+	Collision _floor1 = Collision(200,900,100,100);
+	Collision _floor2 = Collision(700,0,100,1100);
 	Player player;
 
 	CollisionManager collisionManager;

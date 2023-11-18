@@ -7,7 +7,7 @@
 // }
 
 
-Character::Character(std::vector<std::string> paths, SDL_FRect& newRect): renderer(paths, newRect), Collision(newRect)
+Character::Character(std::vector<std::string> paths, SDL_FRect& newRect): Collision(newRect), renderer(paths, newRect)
 {
 }
 
@@ -31,9 +31,9 @@ void Character::Death()
 {
 }
 
-void Character::ConfigureRenderer(std::vector<std::string> paths, short frameCount)
+void Character::SetFrameCount(const short frameCount)
 {
-	renderer = SpriteRenderer(std::move(paths), rect);
+	renderer.SetFrameCount(frameCount);
 }
 
 void Character::CheckCollisions()

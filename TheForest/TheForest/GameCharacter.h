@@ -13,7 +13,7 @@ class Character: public Collision
 {
 public:
     Character(std::vector<std::string> paths, SDL_FRect& newRect);
-    ~Character() = default;
+    virtual ~Character() = default;
 
     virtual void Update(float deltaTime);
 
@@ -24,7 +24,7 @@ public:
 
 
 protected:
-    void ConfigureRenderer(std::vector<std::string> paths, short frameCount = 3);
+    void SetFrameCount(short frameCount = 3);
     virtual SpriteRenderer& GetRenderer() { return renderer; }
 
     Vector2 position;

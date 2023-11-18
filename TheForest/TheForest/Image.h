@@ -1,8 +1,10 @@
 #pragma once
+#include <iostream>
 
-#include <SDL_Image.h>
+#include "GameSingletons.h"
 #include "Vector2.h"
 #include "SpriteSheet.h"
+
 
 class Image
 {

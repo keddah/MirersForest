@@ -3,14 +3,8 @@
 
 Player::Player() : Character({"Sprites/testspritesheet.png"}, rect)
 {
-	ConfigureRenderer({"Sprites/testspritesheet.png"}, 4);
+	SetFrameCount(4);
 	ChangeMoveState(MovementController::EMovementState::Idle);
-
-	
-}
-
-Player::~Player()
-{
 }
 
 void Player::GivePowerup()
@@ -30,6 +24,9 @@ void Player::Update(float deltaTime)
 	controller.Update();
 
 	moveController.Update(deltaTime);
+	// moveController.BlockingCollisions(obstruction);
+	moveController.BlockingCollisions(up, down, left, right);
+
 	weaponController.Update(deltaTime);
 }
 

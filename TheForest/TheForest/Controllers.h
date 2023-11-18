@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 #include "Vector2.h"
 #include "SDL.h"
+
 
 #define print(x) { std::cout<< x << std::endl; }
 
@@ -61,11 +61,14 @@ public:
     };
 
 	void ResetSpriteSize(const Vector2& newSize);
+	// void BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction);
+	void BlockingCollisions(bool up, bool down, bool left, bool right);
 
 private:
     void CalculateVelocity(float deltaTime);
     void CalculateDirection();
 
+	
     void Jump();
     void Slide();
     void Crouch();
@@ -75,6 +78,22 @@ private:
     PlayerController& controller;
     Vector2& playerPosition;
 
+	enum class EBlockedDirection
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		NONE
+	};
+
+	EBlockedDirection blockedDirection;
+	bool up;
+	bool down;
+	bool left;
+	bool right;
+	bool unObstructed;
+	
     bool canMove = true;
 	
     EMovementState currentMoveState = EMovementState::Idle;

@@ -10,7 +10,6 @@
 #pragma once
 
 #include <chrono>
-#include <SDL.h>
 using namespace std::chrono;
 
 class Time 

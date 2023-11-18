@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include <cmath>
-
 class Vector2
 {
 public:

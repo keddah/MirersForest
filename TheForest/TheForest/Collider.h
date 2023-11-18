@@ -16,6 +16,13 @@ public:
 
 	~Collision() = default;
 
+	// The direction of contact
+	bool up;
+	bool down;
+	bool left;
+	bool right;
+	bool unObstructed;
+	
 	enum class EObstructionDirection
 	{
 		UP,
@@ -58,11 +65,11 @@ public:
 	
 protected:
 	SDL_FRect rect;
+	std::tuple<bool, EObstructionDirection> obstruction;
 
 private:
-	EObstructionDirection currentObstruction;
 
-	std::tuple<bool, EObstructionDirection> obstruction; //{false, EObstructionDirection::UP};
+	EObstructionDirection currentObstruction;
 	bool isOverlapping;
 
 	// Whether objects are able to go through it...
