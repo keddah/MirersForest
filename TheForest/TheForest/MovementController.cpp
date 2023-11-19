@@ -9,21 +9,26 @@ controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
 
 void MovementController::Update(float deltaTime)
 {
+	
 	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
 	velocity = Vector2();
 
+	CalculateDirection();
+	BlockingCollisions();
+	
 	// Since the position is the top left of the image... have to get the bottom.
-	// if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
+	if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
 	
 	if(playerPosition.y + velocity.y > 1080) playerPosition.y = 0;
 	else if(playerPosition.y > 1080) playerPosition.y = 0;
 	
 	if(playerPosition.x + velocity.x > 1920) playerPosition.x = 0;
 	else if(playerPosition.x > 1920) playerPosition.x = 0;
+	else if(playerPosition.x < 0) playerPosition.x = 1900;
 
 	// slightly reduce gravity if holding down the jump button
-	if(!grounded) ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
-	CalculateDirection();
+	// if(!grounded) ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
+
 	CalculateVelocity(deltaTime);
 	Move(deltaTime);
 
@@ -42,10 +47,6 @@ void MovementController::CalculateVelocity(float deltaTime)
 	const float displacementAngle = dotProd / (playerPosition.Magnitude() * previousPos.Magnitude());
 	
 	const int speed = static_cast<int>(displacement / deltaTime);
-
-	// print("direction 1: (" << direction.x << ", " << direction.y << ")\n")
-	
-	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
 }
 
 void MovementController::CalculateDirection()
@@ -64,22 +65,14 @@ void MovementController::CalculateDirection()
 		if(up) Jump();
 		if(down) Crouch();
 		
-		if(left) direction = Vector2(-1,direction.y);
-		if(right) direction = Vector2(1,direction.y);
+		if(left && !blockedDirections[2]) direction = Vector2(-1,direction.y);
+		if(right && !blockedDirections[3]) direction = Vector2(1,direction.y);
 	}
 }
 
 void MovementController::BlockingCollisions()
 {
-}
-
-void MovementController::Move(float deltaTime)
-{
 	grounded = blockedDirections[1];
-
-	if(!canMove) return;
-
-	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	const bool blockedLeft = direction.x < 0 && blockedDirections[2];
 	const bool blockedRight = direction.x > 0 && blockedDirections[3];
@@ -87,6 +80,13 @@ void MovementController::Move(float deltaTime)
 	// Counteracts the actual input if it's blocked
 	if(blockedLeft) velocity.x += moveSpeed;
 	if(blockedRight) velocity.x -= moveSpeed;
+}
+
+void MovementController::Move(float deltaTime)
+{
+	if(!canMove) return;
+
+	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
 	velocity.x += moveSpeed * direction.x;
 }
