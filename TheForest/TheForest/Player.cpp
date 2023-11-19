@@ -25,8 +25,7 @@ void Player::Update(float deltaTime)
 	controller.Update();
 
 	moveController.Update(deltaTime);
-	// moveController.BlockingCollisions(obstruction);
-	moveController.BlockingCollisions();
+	// moveController.BlockingCollisions();
 
 	weaponController.Update(deltaTime);
 }

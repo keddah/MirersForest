@@ -9,15 +9,22 @@ controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
 
 void MovementController::Update(float deltaTime)
 {
-	
 	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
 	velocity = Vector2();
 
 	CalculateDirection();
 	BlockingCollisions();
-	
-	// Since the position is the top left of the image... have to get the bottom.
+	Move(deltaTime);
+
 	if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
+	
+	// slightly reduce gravity if holding down the jump button // slightly increase gravity when holding crouch
+	// if(!grounded) ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
+
+
+	playerPosition += velocity;
+	CorrectCollisions();
+	// Since the position is the top left of the image... have to get the bottom.
 	
 	if(playerPosition.y + velocity.y > 1080) playerPosition.y = 0;
 	else if(playerPosition.y > 1080) playerPosition.y = 0;
@@ -26,13 +33,8 @@ void MovementController::Update(float deltaTime)
 	else if(playerPosition.x > 1920) playerPosition.x = 0;
 	else if(playerPosition.x < 0) playerPosition.x = 1900;
 
-	// slightly reduce gravity if holding down the jump button
-	// if(!grounded) ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
 
 	CalculateVelocity(deltaTime);
-	Move(deltaTime);
-
-	playerPosition += velocity;
 }
 
 void MovementController::ResetSpriteSize(const Vector2& newSize)
@@ -67,6 +69,30 @@ void MovementController::CalculateDirection()
 		
 		if(left && !blockedDirections[2]) direction = Vector2(-1,direction.y);
 		if(right && !blockedDirections[3]) direction = Vector2(1,direction.y);
+	}
+}
+
+void MovementController::CorrectCollisions() const
+{
+	for(short i = 0; i < 4; i++)
+	{
+		switch (i)
+		{
+		case 1:
+			if(blockedDirections[i]) playerPosition.y -= 1;
+			break;
+
+		case 2:
+			if(blockedDirections[i]) playerPosition.x += 1;
+			break;
+
+		case 3:
+			if(blockedDirections[i]) playerPosition.x -= 1;
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 

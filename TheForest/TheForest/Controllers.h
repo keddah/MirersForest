@@ -69,12 +69,12 @@ private:
     void CalculateVelocity(float deltaTime);
     void CalculateDirection();
 
-	
+	void CorrectCollisions() const;
+    void Move(float deltaTime);
     void Jump();
     void Slide();
     void Crouch();
     void Uncrouch();
-    void Move(float deltaTime);
 
     PlayerController& controller;
     Vector2& playerPosition;
