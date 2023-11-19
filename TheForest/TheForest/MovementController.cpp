@@ -3,6 +3,7 @@
 MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs) :
 controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
 {
+	
 }
 
 
@@ -12,14 +13,14 @@ void MovementController::Update(float deltaTime)
 	velocity = Vector2();
 
 	// Since the position is the top left of the image... have to get the bottom.
-	if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
+	// if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
 	
 	if(playerPosition.y + velocity.y > 1080) playerPosition.y = 0;
 	else if(playerPosition.y > 1080) playerPosition.y = 0;
 	
 	if(playerPosition.x + velocity.x > 1920) playerPosition.x = 0;
 	else if(playerPosition.x > 1920) playerPosition.x = 0;
-	// if(!grounded) ApplyGravity();
+	if(!grounded) ApplyGravity();
 	CalculateDirection();
 	CalculateVelocity(deltaTime);
 	Move(deltaTime);
@@ -66,56 +67,11 @@ void MovementController::CalculateDirection()
 	}
 }
 
-// void MovementController::BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction)
-// {
-// 	// print("velocity 1: (" << velocity.x << ", " << velocity.y << ")\n")
-//
-// 	blockedDirection = EBlockedDirection::NONE;
-// 	
-// 	// If there's no obstruction... don't do anything
-// 	if(!std::get<bool>(obstruction)) return;
-// 	
-// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::UP)
-// 	{
-// 		blockedDirection = EBlockedDirection::UP;
-// 	}
-//
-// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::DOWN)
-// 	{
-// 		blockedDirection = EBlockedDirection::DOWN;
-// 		grounded = true;
-// 	}
-//
-// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::LEFT)
-// 	{
-// 		blockedDirection = EBlockedDirection::LEFT;
-// 	}
-//
-// 	if(std::get<Collision::EObstructionDirection>(obstruction) == Collision::EObstructionDirection::RIGHT)
-// 	{
-// 		blockedDirection = EBlockedDirection::RIGHT;
-// 	}
-//
-// 	// grounded = blockedDirection == EBlockedDirection::DOWN;
-// }
-
 void MovementController::BlockingCollisions()
 {
 	obstructed = blockedDirections[0] || blockedDirections[1] || blockedDirections[2] || blockedDirections[3];
-	// unObstructed = !up && !down && !left && !right;
-	//
-	// blockingUp = up;
-	// blockingDown = down;
-	// blockingLeft = left;
-	// blockingRight = right;
-
-	// if(up) print("up")
-	// if(down) print("down")
-	// if(left) print("left")
-	// if(right) print("right")
 	
-	
-	// grounded = down;
+	grounded = blockedDirections[1];
 }
 
 void MovementController::Move(float deltaTime)
@@ -124,11 +80,16 @@ void MovementController::Move(float deltaTime)
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
+	if(blockedDirections[0]) print("up")
+	if(blockedDirections[1]) print("down")
+	if(blockedDirections[2]) print("left")
+	if(blockedDirections[3]) print("right")
+	
 	if(obstructed)
 	{
 		// The delta time is inconsistent... the velocity spikes sometimes.....
-		if(blockedDirections[2] && !blockedDirections[3] && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
-		if(blockedDirections[3] && !blockedDirections[2] && direction.x > 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+		if(blockedDirections[2] && !blockedDirections[3] && direction.x > 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+		if(blockedDirections[3] && !blockedDirections[2] && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
 	}
 
 	else velocity += Vector2(moveSpeed * direction.x, 0);
@@ -140,7 +101,7 @@ void MovementController::Move(float deltaTime)
 
 void MovementController::Jump()
 {
-	if(!grounded) return;
+	if(!grounded || blockedDirections[0]) return;
 
 	velocity.y += jumpForce;
 }

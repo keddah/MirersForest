@@ -89,18 +89,43 @@ bool Collision::Overlapping(const Collision& toCompare)
 	auto* intersectRect = new SDL_FRect();
 	SDL_IntersectFRect(&this->rect, &toCompare.rect, intersectRect);
 
-	if(toCompare.rect.y > rect.y + rect.h) blockingDirections[0] = intersectRect->y >= toCompare.rect.y + toCompare.rect.h;
-	if(toCompare.rect.y + toCompare.rect.h < rect.y) blockingDirections[1] = intersectRect->y + intersectRect->h <= toCompare.rect.y;
+	const float top = toCompare.rect.y; 
+	const float bottom = toCompare.rect.y + toCompare.rect.h; 
+	const float left = toCompare.rect.x; 
+	const float right = toCompare.rect.x + toCompare.rect.w;
 
-	if(toCompare.rect.x > rect.x + rect.w) blockingDirections[0] = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
-	if(toCompare.rect.x + toCompare.rect.w < rect.x) blockingDirections[1] = intersectRect->x + intersectRect->w <= toCompare.rect.x;
-	
+
+	print("top: " << blockingDirections[0]);
+	print("bottom: " << blockingDirections[1]);
+	print("intersect pos : " << intersectRect->y);
+	print("\n")
+
+	constexpr float tolerance = .1f;
+	// THE PLAYER = toCompare.rect
 	// Checks which part of the rectangle is being obstructed
-	
-	
-	blockingDirections[2] = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
-	blockingDirections[3] = intersectRect->x + intersectRect->w <= toCompare.rect.x;
 
+	// The left side
+	blockingDirections[2] = intersectRect->x > toCompare.rect.x && isOverlapping;
+
+	// The right side
+	blockingDirections[3] = intersectRect->x == toCompare.rect.x && isOverlapping;
+
+	// The top
+	blockingDirections[0] = intersectRect->y > toCompare.rect.y && isOverlapping;
+
+	// The bottom
+	blockingDirections[1] = intersectRect->y == toCompare.rect.y && isOverlapping;
+
+	// if(rect.x + rect.w < toCompare.rect.x) blockingDirections[3] = intersectRect->x + intersectRect->w < rect.x;
+	
+	if(toCompare.rect.y > rect.y + rect.h) blockingDirections[0] = intersectRect->y > toCompare.rect.y + toCompare.rect.h;
+	if(toCompare.rect.y + toCompare.rect.h < rect.y) blockingDirections[1] = intersectRect->y + intersectRect->h < toCompare.rect.y;
+
+	// if(toCompare.rect.x > rect.x + rect.w) blockingDirections[2] = intersectRect->x > toCompare.rect.x + toCompare.rect.w;
+	// if(toCompare.rect.x + toCompare.rect.w < rect.x) blockingDirections[3] = intersectRect->x + intersectRect->w < toCompare.rect.x;
+	
+	
+	
 	unObstructed = true;
 	for(const bool dir : blockingDirections) if(dir) unObstructed = false;
 

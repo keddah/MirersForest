@@ -80,10 +80,6 @@ private:
     Vector2& playerPosition;
 
 	const std::vector<bool>& blockedDirections;
-	bool blockingUp;
-	bool blockingDown;
-	bool blockingLeft;
-	bool blockingRight;
 	bool obstructed;
 	
     bool canMove = true;
@@ -92,7 +88,7 @@ private:
     float moveSpeed = 5;
 
     const float mass = 1000;
-    float jumpForce = -12;
+    float jumpForce = -25;
     float slideSpeed = 10;
 
     Vector2 direction = Vector2(0, 1);
