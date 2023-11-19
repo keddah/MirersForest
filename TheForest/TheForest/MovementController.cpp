@@ -20,7 +20,9 @@ void MovementController::Update(float deltaTime)
 	
 	if(playerPosition.x + velocity.x > 1920) playerPosition.x = 0;
 	else if(playerPosition.x > 1920) playerPosition.x = 0;
-	if(!grounded) ApplyGravity();
+
+	// slightly reduce gravity if holding down the jump button
+	if(!grounded) ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
 	CalculateDirection();
 	CalculateVelocity(deltaTime);
 	Move(deltaTime);
@@ -114,6 +116,7 @@ void MovementController::Slide()
 
 void MovementController::Crouch()
 {
+	
 }
 
 void MovementController::Uncrouch()

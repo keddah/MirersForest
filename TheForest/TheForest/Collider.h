@@ -50,6 +50,7 @@ public:
 protected:
 	SDL_FRect rect;
 	// The direction of contact
+	// Not using an enum since you could be blocked from several directions at once.
 	std::vector<bool> blockingDirections = std::vector<bool>(4);
 	bool unObstructed;
 

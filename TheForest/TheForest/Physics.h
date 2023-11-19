@@ -18,8 +18,9 @@ private:
 
 protected:
     Vector2 velocity;
-    
-    void ApplyGravity();
+
+    // Lowered = whether the gravity should be floatier
+    void ApplyGravity(bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
     static constexpr float gravity = 9.81;
     
