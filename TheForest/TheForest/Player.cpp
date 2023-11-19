@@ -3,6 +3,7 @@
 
 Player::Player() : Character({"Sprites/testspritesheet.png"}, rect)
 {
+	SetDebugColour(SDL_Rect{0,200,200,200});
 	SetFrameCount(4);
 	ChangeMoveState(MovementController::EMovementState::Idle);
 }

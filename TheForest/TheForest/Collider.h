@@ -11,8 +11,8 @@ class Collision
 {
 public:
 	// Collision();
-	Collision(float x, float y, float w, float h);
-	Collision(SDL_FRect rect);
+	Collision(float x, float y, float w, float h, bool isSolid = true);
+	Collision(SDL_FRect rect, bool isSolid = true);
 
 	~Collision() = default;
 
@@ -41,6 +41,7 @@ public:
 	// Returns a tuple that contains whether or not there is an obstruction and the direction of the obstruction.
 	// const std::tuple<bool, EObstructionDirection>& GetObstruction() { return obstruction; }
 	
+	void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
 	void Debug();
 
 	const SDL_FRect& GetRect() const { return rect; }

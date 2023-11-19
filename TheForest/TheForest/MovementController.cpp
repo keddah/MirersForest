@@ -3,7 +3,7 @@
 MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs) :
 controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
 {
-	
+	playerPosition.x += 900;
 }
 
 
@@ -81,23 +81,14 @@ void MovementController::Move(float deltaTime)
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
-	if(blockedDirections[0]) print("up")
-	if(blockedDirections[1]) print("down")
-	if(blockedDirections[2]) print("left")
-	if(blockedDirections[3]) print("right")
-	
-	if(obstructed)
-	{
-		// The delta time is inconsistent... the velocity spikes sometimes.....
-		if(blockedDirections[2] && !blockedDirections[3] && direction.x > 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
-		if(blockedDirections[3] && !blockedDirections[2] && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
-	}
+	const bool blockedLeft = direction.x < 0 && blockedDirections[2];
+	const bool blockedRight = direction.x > 0 && blockedDirections[3];
 
-	else velocity += Vector2(moveSpeed * direction.x, 0);
-	
-	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
+	// Counteracts the actual input if it's blocked
+	if(blockedLeft) velocity.x += moveSpeed;
+	if(blockedRight) velocity.x -= moveSpeed;
 
-	// print("velocity 2: (" << velocity.x << ", " << velocity.y << ")\n")
+	velocity.x += moveSpeed * direction.x;
 }
 
 void MovementController::Jump()
