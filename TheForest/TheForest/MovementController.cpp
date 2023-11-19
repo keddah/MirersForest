@@ -71,13 +71,12 @@ void MovementController::CalculateDirection()
 
 void MovementController::BlockingCollisions()
 {
-	obstructed = blockedDirections[0] || blockedDirections[1] || blockedDirections[2] || blockedDirections[3];
-	
-	grounded = blockedDirections[1];
 }
 
 void MovementController::Move(float deltaTime)
 {
+	grounded = blockedDirections[1];
+
 	if(!canMove) return;
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;

@@ -35,5 +35,6 @@ void SceneManager::StartGame()
 	_floor1.SetSolid(true);
 	collisionManager.AddCollider(_floor1);	
 	// collisionManager.AddCollider(_floor2);	
-	
+	// collisionManager.AddCollider(_floor3);	
+	//
 }

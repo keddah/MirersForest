@@ -52,7 +52,6 @@ protected:
 	// The direction of contact
 	// Not using an enum since you could be blocked from several directions at once.
 	std::vector<bool> blockingDirections = std::vector<bool>(4);
-	bool unObstructed;
 
 private:
 	bool isOverlapping;
@@ -65,6 +64,11 @@ private:
 	
 	SpriteRenderer debugRenderer;
 	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 100 };
+
+	bool FloatInRange(float x, float low, float high)
+	{
+		return  ((x-low) <= (high-low));
+	}
 };
 
 

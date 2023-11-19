@@ -99,14 +99,13 @@ bool Collision::Overlapping(const Collision& toCompare)
 	// THE PLAYER = toCompare.rect
 	// Checks which part of the rectangle is being obstructed
 
-	constexpr float tolerance = -40;
+	constexpr float tolerance = 4;
 
 	// The top
 	blockingDirections[0] = intersectRect->y > toCompare.rect.y && isOverlapping;
 
 	// The bottom
-	// blockingDirections[1] = intersectRect->y - tolerance >= toCompare.rect.y && isOverlapping;
-	blockingDirections[1] = intersectRect->y >= toCompare.rect.y && isOverlapping;
+	blockingDirections[1] = intersectRect->y == toCompare.rect.y && isOverlapping;
 
 	// The left side
 	blockingDirections[2] = intersectRect->x > toCompare.rect.x && isOverlapping;
@@ -114,9 +113,6 @@ bool Collision::Overlapping(const Collision& toCompare)
 	// The right side
 	blockingDirections[3] = intersectRect->x == toCompare.rect.x && isOverlapping;
 	
-	unObstructed = true;
-	for(const bool dir : blockingDirections) if(dir) unObstructed = false;
-
 	obstructed = isOverlapping && toCompare.solid && solid;
 
 	return isOverlapping;
