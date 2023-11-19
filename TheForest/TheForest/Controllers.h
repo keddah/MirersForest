@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Vector2.h"
+#include <vector>
 #include "SDL.h"
 
 
@@ -46,7 +47,7 @@ private:
 class MovementController : public Physics
 {
 public:
-    MovementController(PlayerController& ctrl, Vector2& plyrPos);
+    MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs);
     ~MovementController() = default;
 
     void Update(float deltaTime);
@@ -62,7 +63,7 @@ public:
 
 	void ResetSpriteSize(const Vector2& newSize);
 	// void BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction);
-	void BlockingCollisions(bool up, bool down, bool left, bool right);
+	void BlockingCollisions();
 
 private:
     void CalculateVelocity(float deltaTime);
@@ -78,21 +79,12 @@ private:
     PlayerController& controller;
     Vector2& playerPosition;
 
-	enum class EBlockedDirection
-	{
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT,
-		NONE
-	};
-
-	EBlockedDirection blockedDirection;
-	bool up;
-	bool down;
-	bool left;
-	bool right;
-	bool unObstructed;
+	const std::vector<bool>& blockedDirections;
+	bool blockingUp;
+	bool blockingDown;
+	bool blockingLeft;
+	bool blockingRight;
+	bool obstructed;
 	
     bool canMove = true;
 	

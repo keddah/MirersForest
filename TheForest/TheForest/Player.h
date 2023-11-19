@@ -25,7 +25,7 @@ private:
     void Death();
 
     PlayerController controller;
-    MovementController moveController = MovementController(controller, position);
+    MovementController moveController = MovementController(controller, position, blockingDirections);
     WeaponController weaponController = WeaponController(controller, position);
 
     std::vector<std::string> animations

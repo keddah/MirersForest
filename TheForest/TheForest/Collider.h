@@ -16,22 +16,6 @@ public:
 
 	~Collision() = default;
 
-	// The direction of contact
-	bool up;
-	bool down;
-	bool left;
-	bool right;
-	bool unObstructed;
-	
-	enum class EObstructionDirection
-	{
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT,
-		NONE
-	};
-
 	const Vector2& GetPosition() { return {rect.x, rect.y }; }
 	void SetPosition(Vector2 position);
 	void SetPosition(float x, float y);
@@ -55,7 +39,7 @@ public:
 	bool Contains(Vector2 position) const;
 
 	// Returns a tuple that contains whether or not there is an obstruction and the direction of the obstruction.
-	const std::tuple<bool, EObstructionDirection>& GetObstruction() { return obstruction; }
+	// const std::tuple<bool, EObstructionDirection>& GetObstruction() { return obstruction; }
 	
 	void Debug();
 
@@ -65,11 +49,11 @@ public:
 	
 protected:
 	SDL_FRect rect;
-	std::tuple<bool, EObstructionDirection> obstruction;
+	// The direction of contact
+	std::vector<bool> blockingDirections = std::vector<bool>(4);
+	bool unObstructed;
 
 private:
-
-	EObstructionDirection currentObstruction;
 	bool isOverlapping;
 
 	// Whether objects are able to go through it...

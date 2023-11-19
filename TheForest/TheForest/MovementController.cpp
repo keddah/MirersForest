@@ -1,6 +1,7 @@
 #include "Controllers.h"
 
-MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos) : controller(ctrl), playerPosition(plyrPos)
+MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs) :
+controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
 {
 }
 
@@ -98,14 +99,15 @@ void MovementController::CalculateDirection()
 // 	// grounded = blockedDirection == EBlockedDirection::DOWN;
 // }
 
-void MovementController::BlockingCollisions(bool up, bool down, bool left, bool right)
+void MovementController::BlockingCollisions()
 {
-	unObstructed = !up && !down && !left && !right;
-	
-	this->up = up;
-	this->down = down;
-	this->left = left;
-	this->right = right;
+	obstructed = blockedDirections[0] || blockedDirections[1] || blockedDirections[2] || blockedDirections[3];
+	// unObstructed = !up && !down && !left && !right;
+	//
+	// blockingUp = up;
+	// blockingDown = down;
+	// blockingLeft = left;
+	// blockingRight = right;
 
 	// if(up) print("up")
 	// if(down) print("down")
@@ -113,7 +115,7 @@ void MovementController::BlockingCollisions(bool up, bool down, bool left, bool 
 	// if(right) print("right")
 	
 	
-	grounded = down;
+	// grounded = down;
 }
 
 void MovementController::Move(float deltaTime)
@@ -122,10 +124,14 @@ void MovementController::Move(float deltaTime)
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 
-	// The delta time is inconsistent... the velocity spikes sometimes.....
-	if(left && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
-	if(right && direction.x > 0)velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+	if(obstructed)
+	{
+		// The delta time is inconsistent... the velocity spikes sometimes.....
+		if(blockedDirections[2] && !blockedDirections[3] && direction.x < 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+		if(blockedDirections[3] && !blockedDirections[2] && direction.x > 0) velocity += Vector2(moveSpeed * direction.x, 0);// * deltaTime;
+	}
 
+	else velocity += Vector2(moveSpeed * direction.x, 0);
 	
 	// print("direction 2: (" << direction.x << ", " << direction.y << ")\n")
 

@@ -85,33 +85,34 @@ bool Collision::Overlapping(const Collision& toCompare)
 	isOverlapping = SDL_HasIntersectionF(&toCompare.rect, &rect);
 
 	// If there is an obstruction, use the value that was set.. otherwise there is none
-	currentObstruction = isOverlapping ? currentObstruction : EObstructionDirection::NONE;
 	
 	auto* intersectRect = new SDL_FRect();
 	SDL_IntersectFRect(&this->rect, &toCompare.rect, intersectRect);
 
-	if(toCompare.rect.y > rect.y + rect.h) up = intersectRect->y >= toCompare.rect.y + toCompare.rect.h;
-	if(toCompare.rect.y + toCompare.rect.h < rect.y) down = intersectRect->y + intersectRect->h <= toCompare.rect.y;
+	if(toCompare.rect.y > rect.y + rect.h) blockingDirections[0] = intersectRect->y >= toCompare.rect.y + toCompare.rect.h;
+	if(toCompare.rect.y + toCompare.rect.h < rect.y) blockingDirections[1] = intersectRect->y + intersectRect->h <= toCompare.rect.y;
 
-	if(toCompare.rect.x > rect.x + rect.w) up = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
-	if(toCompare.rect.x + toCompare.rect.w < rect.x) down = intersectRect->x + intersectRect->w <= toCompare.rect.x;
+	if(toCompare.rect.x > rect.x + rect.w) blockingDirections[0] = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
+	if(toCompare.rect.x + toCompare.rect.w < rect.x) blockingDirections[1] = intersectRect->x + intersectRect->w <= toCompare.rect.x;
 	
 	// Checks which part of the rectangle is being obstructed
 	
 	
-	left = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
-	right = intersectRect->x + intersectRect->w <= toCompare.rect.x;
-	unObstructed = !up && !down && !left && !right;
+	blockingDirections[2] = intersectRect->x >= toCompare.rect.x + toCompare.rect.w;
+	blockingDirections[3] = intersectRect->x + intersectRect->w <= toCompare.rect.x;
+
+	unObstructed = true;
+	for(const bool dir : blockingDirections) if(dir) unObstructed = false;
 
 
 	
-	if(intersectRect->y > toCompare.rect.y + toCompare.rect.h) currentObstruction = EObstructionDirection::UP;
-	else if(intersectRect->y + intersectRect->h < toCompare.rect.y) currentObstruction = EObstructionDirection::DOWN;
-	
-	else if(intersectRect->x > toCompare.rect.x + toCompare.rect.w) currentObstruction = EObstructionDirection::LEFT;
-	else if(intersectRect->x + intersectRect->w < toCompare.rect.x) currentObstruction = EObstructionDirection::RIGHT;
+	// if(intersectRect->y > toCompare.rect.y + toCompare.rect.h) currentObstruction = EObstructionDirection::UP;
+	// else if(intersectRect->y + intersectRect->h < toCompare.rect.y) currentObstruction = EObstructionDirection::DOWN;
+	//
+	// else if(intersectRect->x > toCompare.rect.x + toCompare.rect.w) currentObstruction = EObstructionDirection::LEFT;
+	// else if(intersectRect->x + intersectRect->w < toCompare.rect.x) currentObstruction = EObstructionDirection::RIGHT;
 
-	obstruction = std::make_tuple(isOverlapping && toCompare.solid && solid, currentObstruction);
+	obstructed = isOverlapping && toCompare.solid && solid;
 
 	return isOverlapping;
 }
@@ -119,29 +120,6 @@ bool Collision::Overlapping(const Collision& toCompare)
 
 bool Collision::IsOverlapping() const
 {
-	switch (std::get<EObstructionDirection>(obstruction))
-	{
-	case EObstructionDirection::UP:
-		print("up")
-		break;
-
-	case EObstructionDirection::DOWN:
-		print("down")
-		break;
-
-	case EObstructionDirection::LEFT:
-		print("left")
-		break;
-
-	case EObstructionDirection::RIGHT:
-		print("right")
-		break;
-
-	default:
-		print("None")
-		break;
-	}
-	
 	print(isOverlapping << "\n")
 	return isOverlapping;
 }
