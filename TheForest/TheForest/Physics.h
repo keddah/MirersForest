@@ -22,7 +22,7 @@ protected:
     // Lowered = whether the gravity should be floatier
     void ApplyGravity(bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
-    static constexpr float gravity = 9.81;
+    static constexpr float gravity = 9.81f;
     
     void SetGrounded(bool isGrounded) { grounded = isGrounded; }
     bool grounded = true;

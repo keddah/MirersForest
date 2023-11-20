@@ -1,6 +1,7 @@
 #include "Collider.h"
 
-Collision::Collision(const float x, const float y, const float w, const float h, bool isSolid )  : debugRenderer(rect)
+Collision::Collision(const std::vector<Collision*>& otherColliders, const float x, const float y, const float w, const float h, bool isSolid ) :
+debugRenderer(rect), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = SDL_FRect{x,y,w,h};
@@ -8,12 +9,24 @@ Collision::Collision(const float x, const float y, const float w, const float h,
 	debugRenderer.FillRectangle(debugColour);
 }
 
-Collision::Collision(SDL_FRect _rect, bool isSolid ) : debugRenderer(rect)
+Collision::Collision(const std::vector<Collision*>& otherColliders, SDL_FRect _rect, bool isSolid ) :
+debugRenderer(rect), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = _rect;
 
 	debugRenderer.FillRectangle(debugColour);
+}
+
+void Collision::Update()
+{
+	for(const auto& collider2: colliders)
+	{
+		if(this == collider2) continue;
+
+		Overlapping(*collider2);
+		collider2->Overlapping(*this);
+	}
 }
 
 void Collision::SetPosition(Vector2 position)
@@ -89,14 +102,14 @@ bool Collision::Overlapping(const Collision& toCompare)
 	// If there is an obstruction, use the value that was set.. otherwise there is none
 	
 	auto* intersectRect = new SDL_FRect();
-	SDL_IntersectFRect(&this->rect, &toCompare.rect, intersectRect);
+	SDL_IntersectFRect(&rect, &toCompare.rect, intersectRect);
 	obstructed = isOverlapping && toCompare.solid && solid;
 	
-	print("player rect: (" << toCompare.rect.x << ", " << toCompare.rect.y << ", " << toCompare.rect.w << ", " << toCompare.rect.h << ")\n")
+	print("this rect: (" << toCompare.rect.x << ", " << toCompare.rect.y << ", " << toCompare.rect.w << ", " << toCompare.rect.h << ")")
+	print("other rect: (" << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << ")\n")
 	
-	print("top " << blockingDirections[0]);
-	print("bottom : " << blockingDirections[1]);
-	print("intersect pos : " << intersectRect->y);
+	print("intersect X: " << intersectRect->x);
+	print("intersect wdith : " << intersectRect->w);
 	print("\n")
 	
 	// THE PLAYER = toCompare.rect
@@ -111,10 +124,11 @@ bool Collision::Overlapping(const Collision& toCompare)
 	blockingDirections[1] = intersectRect->y == toCompare.rect.y && obstructed;
 	
 	// The left side
-	blockingDirections[2] = intersectRect->x > toCompare.rect.x && obstructed;
+	// blockingDirections[2] = FloatInRange(intersectRect->x + rect.w, toCompare.rect.x, toCompare.rect.x + tolerance);
+	blockingDirections[2] = (intersectRect->x + intersectRect->w > rect.w) && (toCompare.rect.x == rect.x + rect.w) && obstructed;
 	
 	// The right side
-	blockingDirections[3] = intersectRect->x == toCompare.rect.x && obstructed;
+	// blockingDirections[3] = intersectRect->x == toCompare.rect.x && !blockingDirections[2] && obstructed;
 
 	
 	delete intersectRect;

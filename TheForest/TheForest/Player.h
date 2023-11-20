@@ -7,7 +7,8 @@
 class Player : public Character
 {
 public:
-    Player();
+    Player() = default;
+    Player(const std::vector<Collision*>& otherColliders);
     ~Player() = default;
     void Update(float deltaTime) override;
 

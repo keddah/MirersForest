@@ -2,17 +2,7 @@
 
 void CollisionManager::Update() const
 {
-    for(const auto& collider1: colliders)
-    {
-        for(const auto& collider2: colliders)
-        {
-            if(collider1 == collider2) continue;
-
-            collider1->Overlapping(*collider2);
-        }
-    }
-        
-    // colliders[0]->IsOverlapping();
+    for(const auto& collider: colliders) collider->Update();
 }
 
 

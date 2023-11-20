@@ -7,7 +7,7 @@
 // }
 
 
-Character::Character(std::vector<std::string> paths, SDL_FRect& newRect): Collision(newRect), renderer(paths, newRect)
+Character::Character(std::vector<std::string> paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders): Collision(colliders, newRect), renderer(paths, newRect)
 {
 }
 

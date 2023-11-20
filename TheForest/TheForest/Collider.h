@@ -11,11 +11,13 @@ class Collision
 {
 public:
 	// Collision();
-	Collision(float x, float y, float w, float h, bool isSolid = true);
-	Collision(SDL_FRect rect, bool isSolid = true);
+	Collision(const std::vector<Collision*>& otherColliders, float x, float y, float w, float h, bool isSolid = true);
+	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect rect, bool isSolid = true);
 
 	~Collision() = default;
 
+	void Update();
+	
 	const Vector2& GetPosition() { return {rect.x, rect.y }; }
 	void SetPosition(Vector2 position);
 	void SetPosition(float x, float y);
@@ -38,6 +40,7 @@ public:
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
+	
 	// Returns a tuple that contains whether or not there is an obstruction and the direction of the obstruction.
 	// const std::tuple<bool, EObstructionDirection>& GetObstruction() { return obstruction; }
 	
@@ -55,7 +58,7 @@ protected:
 	std::vector<bool> blockingDirections = std::vector<bool>(4);
 
 private:
-	bool isOverlapping;
+	bool isOverlapping = false;
 
 	// Whether objects are able to go through it...
 	bool solid = true;
@@ -66,10 +69,13 @@ private:
 	SpriteRenderer debugRenderer;
 	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 100 };
 
-	bool FloatInRange(float x, float low, float high)
-	{
-		return  ((x-low) <= (high-low));
-	}
+	// All the colliders
+	const std::vector<Collision*>& colliders;
+
+	static bool FloatInRange(float x, float min, float max)          
+	{          
+		return (min <= x && x <= max);          
+	}    
 };
 
 
@@ -84,6 +90,7 @@ public:
 	void Debug() const;
 	void Update() const;
 	void AddCollider(Collision& toAdd);
+	const std::vector<Collision*>& GetColliders() const { return colliders; }
 	
 private:
 	std::vector<Collision*> colliders = std::vector<Collision*>(); 	

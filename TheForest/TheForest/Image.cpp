@@ -18,7 +18,7 @@ Image::Image(const char* filePath)
 
 	
 	SDL_FreeSurface(image);
-
+	
 	spriteSheet.SetImageSize(size);
 }
 
