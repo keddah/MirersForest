@@ -124,7 +124,7 @@ bool Collision::Overlapping(const Collision& toCompare)
 	
 	// The left side
 	// blockingDirections[2] = FloatInRange(intersectRect->x + rect.w, toCompare.rect.x, toCompare.rect.x + tolerance);
-	blockingDirections[2] = intersectRect->x > toCompare.rect.x && obstructed;
+	blockingDirections[2] = intersectRect->x > toCompare.rect.x && obstructed && !blockingDirections[1];
 	
 	// The right side
 	blockingDirections[3] = intersectRect->x == toCompare.rect.x && obstructed;
