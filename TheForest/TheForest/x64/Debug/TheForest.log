@@ -1,11 +1,2 @@
-﻿  GameManager.cpp
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(12,1): warning C4005: 'print': macro redefinition
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameCharacter.h(1,1): message : see previous definition of 'print'
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.cpp(49,12): warning C4101: 'e': unreferenced local variable
-  PlayerController.cpp
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.h(22,38): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\PlayerController.cpp(95,41): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\PlayerController.cpp(95,29): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  Generating Code...
+﻿  Collider.cpp
   TheForest.vcxproj -> C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\x64\Debug\TheForest.exe
