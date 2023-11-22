@@ -27,8 +27,6 @@ protected:
     void SetFrameCount(short frameCount = 3);
     virtual SpriteRenderer& GetRenderer() { return renderer; }
 
-    Vector2 position;
-    
     SpriteRenderer renderer;
     
     HealthManager health;

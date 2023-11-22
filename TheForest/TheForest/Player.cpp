@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Controllers.h"
 
-Player::Player(const std::vector<Collision*>& otherColliders) : Character({"Sprites/testspritesheet.png"}, rect, otherColliders)
+Player::Player(const std::vector<Collision*>& _otherColliders) : Character({"Sprites/testspritesheet.png"}, rect, _otherColliders), otherColliders(_otherColliders)
 {
 	SetDebugColour(SDL_Rect{0,200,200,200});
 	SetFrameCount(4);
@@ -12,22 +12,16 @@ void Player::GivePowerup()
 {
 }
 
-Vector2& Player::GetPosition()
-{
-	return position;
-}
-
-
 void Player::Update(float deltaTime)
 {
 	Character::Update(deltaTime);
 
 	controller.Update();
-
+	print("renderer " << renderer.GetDestinationRectangle().x << ", " << renderer.GetDestinationRectangle().y)
 	moveController.Update(deltaTime);
 	// moveController.BlockingCollisions();
 
-	weaponController.Update(deltaTime);
+	//weaponController.Update(deltaTime);
 }
 
 void Player::ChangeMoveState(MovementController::EMovementState state)

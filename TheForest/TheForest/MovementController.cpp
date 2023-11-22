@@ -1,9 +1,8 @@
 #include "Controllers.h"
 
-MovementController::MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs) :
-controller(ctrl), playerPosition(plyrPos), blockedDirections(blockingDirs)
+MovementController::MovementController(PlayerController& ctrl, Collision& _playerCollider, const std::vector<Collision*>& colliders) :
+controller(ctrl), playerCollider(_playerCollider), levelColliders(colliders)
 {
-	playerPosition.x += 900;
 }
 
 
@@ -11,9 +10,11 @@ void MovementController::Update(float deltaTime)
 {
 	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
 	velocity = Vector2();
+	playerCollider.SetPosition(50, 50);
+	print("controller " << playerCollider.GetRect().x << ", " << playerCollider.GetRect().y)
 
 	// ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
-	if(playerPosition.y <= 1080 - spriteSize.y) ApplyGravity();
+	if(playerCollider.GetPosition().y <= 1080 - spriteSize.y) ApplyGravity();
 	CalculateDirection();
 	BlockingCollisions();
 	Move(deltaTime);
@@ -22,16 +23,15 @@ void MovementController::Update(float deltaTime)
 	// slightly reduce gravity if holding down the jump button // slightly increase gravity when holding crouch
 
 
-	playerPosition += velocity;
+	playerCollider.SetPosition(playerCollider.GetPosition() + velocity);
 	// CorrectCollisions();
 	// Since the position is the top left of the image... have to get the bottom.
 	
-	if(playerPosition.y + velocity.y > 1080) playerPosition.y = 0;
-	else if(playerPosition.y > 1080) playerPosition.y = 0;
+	if(playerCollider.GetPosition().y + velocity.y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
+	else if(playerCollider.GetPosition().y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
 	
-	if(playerPosition.x + velocity.x > 1920) playerPosition.x = 0;
-	else if(playerPosition.x > 1920) playerPosition.x = 0;
-	else if(playerPosition.x < 0) playerPosition.x = 1900;
+	else if(playerCollider.GetPosition().x > 1920) playerCollider.SetPosition(0, playerCollider.GetPosition().y);
+	else if(playerCollider.GetPosition().x < 0) playerCollider.SetPosition(1900, playerCollider.GetPosition().y);
 
 
 	CalculateVelocity(deltaTime);
@@ -44,9 +44,9 @@ void MovementController::ResetSpriteSize(const Vector2& newSize)
 
 void MovementController::CalculateVelocity(float deltaTime)
 {
-	const float displacement = previousPos.Distance(Vector2(playerPosition.x, playerPosition.y));
-	const int dotProd = (playerPosition.x * previousPos.x) + (playerPosition.y * previousPos.y);
-	const float displacementAngle = dotProd / (playerPosition.Magnitude() * previousPos.Magnitude());
+	const float displacement = previousPos.Distance(Vector2(playerCollider.GetPosition().x, playerCollider.GetPosition().y));
+	const int dotProd = (playerCollider.GetPosition().x * previousPos.x) + (playerCollider.GetPosition().y * previousPos.y);
+	const float displacementAngle = dotProd / (Vector2(playerCollider.GetPosition().x , playerCollider.GetPosition().y).Magnitude() * previousPos.Magnitude());
 	
 	const int speed = static_cast<int>(displacement / deltaTime);
 }
@@ -66,46 +66,31 @@ void MovementController::CalculateDirection()
 
 		if(up) Jump();
 		if(down) Crouch();
-		
-		if(left && !blockedDirections[2]) direction = Vector2(-1,direction.y);
-		if(right && !blockedDirections[3]) direction = Vector2(1,direction.y);
-	}
-}
 
-void MovementController::CorrectCollisions() const
-{
-	for(short i = 0; i < 4; i++)
-	{
-		switch (i)
+		SDL_FRect rect = playerCollider.GetRect();
+		const float newX = rect.x + velocity.x;
+		const float newY = rect.y + velocity.y;
+
+
+		if (!playerCollider.Overlapping(SDL_FRect{ newX, newY, rect.w, rect.h }))
 		{
-		case 1:
-			if(blockedDirections[i]) playerPosition.y -= 1;
-			break;
-
-		case 2:
-			if(blockedDirections[i] && direction.x < 0) playerPosition.x += 1;
-			break;
-
-		case 3:
-			if(blockedDirections[i] && direction.x > 0) playerPosition.x -= 1;
-			break;
-
-		default:
-			break;
+			canMove = true;
+			if (left && obstructed) direction = Vector2(-1, direction.y);
+			if (right && obstructed) direction = Vector2(1, direction.y);
 		}
+		else canMove = false;
 	}
 }
+
 
 void MovementController::BlockingCollisions()
 {
-	grounded = blockedDirections[1];
-
-	const bool blockedLeft = direction.x < 0 && blockedDirections[2];
-	const bool blockedRight = direction.x > 0 && blockedDirections[3];
-
-	// Counteracts the actual input if it's blocked
-	if(blockedLeft) velocity.x += moveSpeed;
-	if(blockedRight) velocity.x -= moveSpeed;
+	//for (const auto& collider : levelColliders)
+	//{
+	//	if (&playerCollider == collider) continue;
+	//
+	//	playerCollider.Overlapping(*collider);
+	//}
 }
 
 void MovementController::Move(float deltaTime)
@@ -119,7 +104,7 @@ void MovementController::Move(float deltaTime)
 
 void MovementController::Jump()
 {
-	if(!grounded || blockedDirections[0]) return;
+	if(!grounded) return;
 
 	velocity.y += jumpForce;
 }

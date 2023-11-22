@@ -17,11 +17,11 @@ public:
 private:
 	void StartGame();
 	CollisionManager collisionManager;
-	Collision _floor1 = Collision(collisionManager.GetColliders(), 0,700,1600,100);
-	Collision _floor3 = Collision(collisionManager.GetColliders(), 900,980,100,100);
-	Collision _floor2 = Collision(collisionManager.GetColliders(), 900,980,100,100);
-	Collision _floor4 = Collision(collisionManager.GetColliders(), 1500,980,100,100);
 	Player player = Player(collisionManager.GetColliders());
+	Collision floor1 = Collision(collisionManager.GetColliders(), 0,700,1600,100);
+	Collision floor2 = Collision(collisionManager.GetColliders(), 900,600,100,100);
+	Collision floor3 = Collision(collisionManager.GetColliders(), 900,980,100,100);
+	Collision floor4 = Collision(collisionManager.GetColliders(), 1500,980,100,100);
 
 	
 	std::vector<SpriteRenderer> renderers = std::vector<SpriteRenderer>();

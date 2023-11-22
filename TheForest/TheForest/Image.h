@@ -12,7 +12,11 @@ public:
 	Image() = default;
 	Image(const char* filePath);
 
-	~Image() { SDL_DestroyTexture(texture); }
+	~Image() 
+	{ 
+		SDL_DestroyTexture(texture); 
+		delete imagePath;
+	}
 
 	SpriteSheet& GetSpriteSheet() { return spriteSheet; }
 	void SetSpriteCount(short count);

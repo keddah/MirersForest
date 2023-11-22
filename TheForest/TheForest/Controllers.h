@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include <vector>
 #include "SDL.h"
+#include "Collider.h"
 
 
 #define print(x) { std::cout<< x << std::endl; }
@@ -47,7 +48,7 @@ private:
 class MovementController : public Physics
 {
 public:
-    MovementController(PlayerController& ctrl, Vector2& plyrPos, const std::vector<bool>& blockingDirs);
+    MovementController(PlayerController& ctrl, Collision& playerCollider, const std::vector<Collision*>& colliders);
     ~MovementController() = default;
 
     void Update(float deltaTime);
@@ -69,18 +70,17 @@ private:
     void CalculateVelocity(float deltaTime);
     void CalculateDirection();
 
-	void CorrectCollisions() const;
     void Move(float deltaTime);
     void Jump();
     void Slide();
     void Crouch();
     void Uncrouch();
 
+    const std::vector<Collision*>& levelColliders;
+    Collision& playerCollider;
     PlayerController& controller;
-    Vector2& playerPosition;
 
-	const std::vector<bool>& blockedDirections;
-	bool obstructed;
+	bool& obstructed = playerCollider.IsObstructed();
 	
     bool canMove = true;
 	

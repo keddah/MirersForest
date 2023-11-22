@@ -1,2 +1,5 @@
-﻿  SceneManager.cpp
+﻿  MovementController.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\MovementController.cpp(48,71): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\MovementController.cpp(48,20): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Collider.h(20): warning C4172: returning address of local variable or temporary
   TheForest.vcxproj -> C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\x64\Debug\TheForest.exe

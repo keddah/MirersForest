@@ -14,8 +14,8 @@ public:
 
 	// For animated things...
 	// SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(const std::vector<std::string>& paths, SDL_FRect& rect);
-	SpriteRenderer(SDL_FRect& rect);
+	SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect);
+	SpriteRenderer(const SDL_FRect& rect);
 
 	void Animate();
 	void SetSpritePosition(const Vector2& newPos);
@@ -24,14 +24,12 @@ public:
 	void SetFrameCount(short frames);
 
 	SDL_Rect& GetSourceRectangle() { return sourceRect; }
-	SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
+	const SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
 	void SetSourceRect(SDL_Rect newRect);
-	void SetDestinationRect(SDL_FRect newRect);
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->spriteImages = other.spriteImages;
 		this->sourceRect = other.sourceRect;
-		this->destinationRect = other.destinationRect;
 
 		this->fillOn = other.fillOn;
 		this->fillColour = other.fillColour;
@@ -54,10 +52,7 @@ private:
 	SDL_Rect sourceRect = SDL_Rect();
 
 	// (x,y) = the position .. (w,h) = the size
-	SDL_FRect& destinationRect;
-
-	Vector2 initReference;
-	Vector2& renderPos = initReference;
+	const SDL_FRect& destinationRect;
 
 	// The sprite sheet that's currently being rendered
 	short activeAnim = 0;

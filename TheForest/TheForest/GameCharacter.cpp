@@ -7,14 +7,14 @@
 // }
 
 
-Character::Character(std::vector<std::string> paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders): Collision(colliders, newRect), renderer(paths, newRect)
+Character::Character(std::vector<std::string> paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders): Collision(colliders, newRect), renderer(paths, rect)
 {
+	SetRect(GetPosition(), renderer.GetSpriteSize());
 }
 
 void Character::Update(float deltaTime)
 {
-	SetPosition(position);
-	renderer.SetSpritePosition(position);
+	renderer.SetSpritePosition(Collision::GetPosition());
 }
 
 void Character::GainHealth()

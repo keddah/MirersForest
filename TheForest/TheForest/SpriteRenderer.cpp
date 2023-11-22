@@ -3,19 +3,15 @@
 
 
 
-SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, SDL_FRect& rect): destinationRect(rect)
+SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect): destinationRect(rect)
 {
-	print(GameWindow::GetRenderer())
 	// Creates a new Image object and adds it to the list of images
 	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
-
-	const Vector2 size = GetSpriteSize();
-	destinationRect.w = size.x;
-	destinationRect.h = size.y;
 }
 
-SpriteRenderer::SpriteRenderer(SDL_FRect& rect) : destinationRect(rect)
+SpriteRenderer::SpriteRenderer(const SDL_FRect& rect) : destinationRect(rect)
 {
+
 }
 
 void SpriteRenderer::Animate()
@@ -25,12 +21,8 @@ void SpriteRenderer::Animate()
 
 	// (x,y) the start position is the size of one of the frames * the frame number
 	sourceRect = SDL_Rect{ static_cast<int>(frameSize.x) * currentFrame, 0, static_cast<int>(frameSize.x), static_cast<int>(frameSize.y) };
-	destinationRect.x = renderPos.x;
-	destinationRect.y = renderPos.y;
 	
-	// print("destination rect: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
-
-	// print("(" << renderPos.x << ", " << renderPos.y << ")\n")
+	print("renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
 
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopyF(GameWindow::GetRenderer(), spriteImages[activeAnim].GetTexture(), &sourceRect, &destinationRect);
@@ -48,7 +40,7 @@ void SpriteRenderer::Animate()
 
 void SpriteRenderer::SetSpritePosition(const Vector2& newPos)
 {
-	renderPos = newPos;
+	//renderPos = newPos;
 	// print("renderPos: (" << renderPos.x << ", " << renderPos.y << ")\n")
 }
 
@@ -72,15 +64,13 @@ void SpriteRenderer::SetSourceRect(const SDL_Rect newRect)
 	sourceRect = SDL_Rect(newRect);
 }
 
-void SpriteRenderer::SetDestinationRect(const SDL_FRect newRect)
-{
-	destinationRect = SDL_FRect(newRect);
-}
-
 void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const int a)
 {
 	fillOn = true;
 	fillColour = SDL_Rect{r,g,b,a};
+
+	print("debug renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
+
 
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
@@ -90,6 +80,9 @@ void SpriteRenderer::FillRectangle(const SDL_Rect& colour)
 {
 	fillOn = true;
 	fillColour = colour;
+
+	print("debug renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
+
 
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);

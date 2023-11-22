@@ -4,7 +4,6 @@
 
 #include <tuple>
 #include <iostream>
-#include "Vector2.h"
 #include "SpriteRenderer.h"
 
 class Collision
@@ -12,7 +11,7 @@ class Collision
 public:
 	// Collision();
 	Collision(const std::vector<Collision*>& otherColliders, float x, float y, float w, float h, bool isSolid = true);
-	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect rect, bool isSolid = true);
+	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& rect, bool isSolid = true);
 
 	~Collision() = default;
 
@@ -25,48 +24,45 @@ public:
 	void SetWidthHeight(Vector2 dimensions);
 	void SetWidthHeight(float w, float h);
 
-	void SetRectangle(SDL_FRect newRect);
-	void SetRectangle(Vector2 position, Vector2 dimensions);
-	void SetRectangle(Vector2 position, float width, float height);
-	void SetRectangle(float x, float y, Vector2 dimensions);
-	void SetRectangle(float x, float y, float width, float height);
+	void SetRect(SDL_FRect newRect);
+	void SetRect(Vector2 position, Vector2 dimensions);
+	void SetRect(Vector2 position, float width, float height);
+	void SetRect(float x, float y, Vector2 dimensions);
+	void SetRect(float x, float y, float width, float height);
 
 	void SetSolid(bool isSolid) { solid = isSolid; }
 	bool GetSolid() const { return solid; }
 	
 	bool Overlapping(const Collision& toCompare);
+	bool Overlapping(const SDL_FRect& toCompare);
 	bool IsOverlapping() const;
 	
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
 	
-	// Returns a tuple that contains whether or not there is an obstruction and the direction of the obstruction.
-	// const std::tuple<bool, EObstructionDirection>& GetObstruction() { return obstruction; }
-	
 	void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
 	void Debug();
 
 	const SDL_FRect& GetRect() const { return rect; }
 	const SDL_FRect& GetContactRect(const Collision& toCompare) const;
+	bool& IsObstructed() { return obstructed; }
 
-	
 protected:
 	SDL_FRect rect;
-	// The direction of contact
-	// Not using an enum since you could be blocked from several directions at once.
-	std::vector<bool> blockingDirections = std::vector<bool>(4);
+	SDL_Rect _rect;
+
+	// Whether this SOLID collider is overlapping with another solid collider 
+	bool obstructed = false;
+
 
 private:
 	bool isOverlapping = false;
 
 	// Whether objects are able to go through it...
 	bool solid = true;
-
-	// Whether this SOLID collider is overlapping with another solid collider 
-	bool obstructed = false;
 	
-	SpriteRenderer debugRenderer;
+	SpriteRenderer debugRenderer = SpriteRenderer(rect);
 	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 100 };
 
 	// All the colliders
