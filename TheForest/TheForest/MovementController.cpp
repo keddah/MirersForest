@@ -10,31 +10,51 @@ void MovementController::Update(float deltaTime)
 {
 	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
 	velocity = Vector2();
-	playerCollider.SetPosition(50, 50);
-	print("controller " << playerCollider.GetRect().x << ", " << playerCollider.GetRect().y)
 
-	// ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
 	if(playerCollider.GetPosition().y <= 1080 - spriteSize.y) ApplyGravity();
-	CalculateDirection();
+	//CalculateDirection();
 	BlockingCollisions();
 	Move(deltaTime);
 
+	 //ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
 	
 	// slightly reduce gravity if holding down the jump button // slightly increase gravity when holding crouch
+	Vector2 predPos = playerCollider.GetPosition() + velocity;
 
+
+	SDL_FRect predRect = SDL_FRect{ predPos.x, predPos.y, playerCollider.GetRect().w, playerCollider.GetRect().h };
+
+	for (auto& collider : levelColliders)
+	{
+		if (&playerCollider == collider) {
+
+			continue;
+		}
+		if (SDL_HasIntersectionF(&predRect, &collider->GetRect()))
+		{
+			return;
+			canMove = true;
+			direction = Vector2(-1, direction.y);
+			direction = Vector2(1, direction.y);
+		}
+		else canMove = false;
+	}
+
+
+	print(velocity.x)
 
 	playerCollider.SetPosition(playerCollider.GetPosition() + velocity);
 	// CorrectCollisions();
 	// Since the position is the top left of the image... have to get the bottom.
 	
-	if(playerCollider.GetPosition().y + velocity.y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
-	else if(playerCollider.GetPosition().y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
-	
-	else if(playerCollider.GetPosition().x > 1920) playerCollider.SetPosition(0, playerCollider.GetPosition().y);
-	else if(playerCollider.GetPosition().x < 0) playerCollider.SetPosition(1900, playerCollider.GetPosition().y);
+	//if(playerCollider.GetPosition().y + velocity.y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
+	//else if(playerCollider.GetPosition().y > 1080) playerCollider.SetPosition(playerCollider.GetPosition().x, 0);
+	//
+	//else if(playerCollider.GetPosition().x > 1920) playerCollider.SetPosition(0, playerCollider.GetPosition().y);
+	//else if(playerCollider.GetPosition().x < 0) playerCollider.SetPosition(1900, playerCollider.GetPosition().y);
+	//
 
-
-	CalculateVelocity(deltaTime);
+	//CalculateVelocity(deltaTime);
 }
 
 void MovementController::ResetSpriteSize(const Vector2& newSize)
@@ -56,6 +76,8 @@ void MovementController::CalculateDirection()
 	direction = Vector2();
 	
 	// There are only 4 movement inputs
+	Vector2 predPos = playerCollider.GetPosition() + velocity;
+
 	for(int i = 0; i < 4; i++)
 	{
 		// 0 = up, 1 = down, 2 = left, 3 = right
@@ -71,14 +93,18 @@ void MovementController::CalculateDirection()
 		const float newX = rect.x + velocity.x;
 		const float newY = rect.y + velocity.y;
 
-
-		if (!playerCollider.Overlapping(SDL_FRect{ newX, newY, rect.w, rect.h }))
+		for (auto& collider : levelColliders)
 		{
-			canMove = true;
-			if (left && obstructed) direction = Vector2(-1, direction.y);
-			if (right && obstructed) direction = Vector2(1, direction.y);
+			SDL_FRect predRect = SDL_FRect{ predPos.x, predPos.y, playerCollider.GetRect().w, playerCollider.GetRect().h };
+			if (!SDL_HasIntersectionF(&predRect, &collider->GetRect()))
+			{
+				canMove = true;
+				direction = Vector2(-1, direction.y);
+				direction = Vector2(1, direction.y);
+			}
+			else canMove = false;
 		}
-		else canMove = false;
+
 	}
 }
 
@@ -95,7 +121,7 @@ void MovementController::BlockingCollisions()
 
 void MovementController::Move(float deltaTime)
 {
-	if(!canMove) return;
+	//if(!canMove) return;
 
 	if((controller.GetMoveInputs()[2] || controller.GetMoveInputs()[3]) && currentMoveState != EMovementState::CrouchIdle) currentMoveState = EMovementState::Moving;
 

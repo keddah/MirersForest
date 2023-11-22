@@ -69,9 +69,6 @@ void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const 
 	fillOn = true;
 	fillColour = SDL_Rect{r,g,b,a};
 
-	print("debug renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
-
-
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
 }
@@ -80,9 +77,6 @@ void SpriteRenderer::FillRectangle(const SDL_Rect& colour)
 {
 	fillOn = true;
 	fillColour = colour;
-
-	print("debug renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
-
 
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), fillColour.x, fillColour.y, fillColour.w, fillColour.h);
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);

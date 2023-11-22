@@ -17,7 +17,6 @@ void Player::Update(float deltaTime)
 	Character::Update(deltaTime);
 
 	controller.Update();
-	print("renderer " << renderer.GetDestinationRectangle().x << ", " << renderer.GetDestinationRectangle().y)
 	moveController.Update(deltaTime);
 	// moveController.BlockingCollisions();
 

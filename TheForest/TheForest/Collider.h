@@ -34,6 +34,7 @@ public:
 	bool GetSolid() const { return solid; }
 	
 	bool Overlapping(const Collision& toCompare);
+	static bool Overlapping(const SDL_FRect& collision1, const Collision& collision2);
 	bool Overlapping(const SDL_FRect& toCompare);
 	bool IsOverlapping() const;
 	
@@ -50,7 +51,6 @@ public:
 
 protected:
 	SDL_FRect rect;
-	SDL_Rect _rect;
 
 	// Whether this SOLID collider is overlapping with another solid collider 
 	bool obstructed = false;

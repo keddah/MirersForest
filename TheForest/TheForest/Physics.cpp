@@ -17,7 +17,7 @@ void Physics::AddForce(const float x, const float y, const float force)
 
 void Physics::ApplyGravity(bool lowered, bool accelerated)
 {
-	if(grounded) AddForce(Vector2(0, -1), gravity);
+	//if(grounded) AddForce(Vector2(0, -1), gravity);
 	
 	if(!gravityOn) return;
 

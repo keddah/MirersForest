@@ -45,6 +45,11 @@ bool Collision::Overlapping(const Collision& toCompare)
 	return isOverlapping;
 }
 
+bool Collision::Overlapping(const SDL_FRect& collision1, const Collision& collision2)
+{
+	return SDL_HasIntersectionF(&collision1, &collision2.rect);
+}
+
 bool Collision::Overlapping(const SDL_FRect& toCompare)
 {
 	isOverlapping = SDL_HasIntersectionF(&rect, &toCompare);
