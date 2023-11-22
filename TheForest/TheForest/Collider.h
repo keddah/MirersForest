@@ -10,8 +10,8 @@ class Collision
 {
 public:
 	// Collision();
-	Collision(const std::vector<Collision*>& otherColliders, float x, float y, float w, float h, bool isSolid = true);
-	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& rect, bool isSolid = true);
+	Collision(const std::vector<Collision*>& otherColliders, float x, float y, float w, float h, bool ground = true, bool isSolid = true);
+	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& rect, bool ground = true,  bool isSolid = true);
 
 	~Collision() = default;
 
@@ -44,7 +44,7 @@ public:
 	
 	void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
 	void Debug();
-
+	bool IsGround() { return isGround; }
 	const SDL_FRect& GetRect() const { return rect; }
 	const SDL_FRect& GetContactRect(const Collision& toCompare) const;
 	bool& IsObstructed() { return obstructed; }
@@ -58,7 +58,7 @@ protected:
 
 private:
 	bool isOverlapping = false;
-
+	bool isGround = true;
 	// Whether objects are able to go through it...
 	bool solid = true;
 	

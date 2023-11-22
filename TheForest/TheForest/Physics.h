@@ -25,6 +25,6 @@ protected:
     static constexpr float gravity = 9.81f;
     
     void SetGrounded(bool isGrounded) { grounded = isGrounded; }
-    bool grounded = true;
+    bool grounded = false;
 };
 

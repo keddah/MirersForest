@@ -64,11 +64,9 @@ public:
 
 	void ResetSpriteSize(const Vector2& newSize);
 	// void BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction);
-	void BlockingCollisions();
 
 private:
     void CalculateVelocity(float deltaTime);
-    void CalculateDirection();
 
     void Move(float deltaTime);
     void Jump();

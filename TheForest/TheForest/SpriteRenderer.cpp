@@ -7,7 +7,7 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, const SDL_
 {
 	// Creates a new Image object and adds it to the list of images
 	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
-}
+} 
 
 SpriteRenderer::SpriteRenderer(const SDL_FRect& rect) : destinationRect(rect)
 {
