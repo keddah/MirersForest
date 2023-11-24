@@ -15,33 +15,7 @@ void MovementController::Update(float deltaTime)
 
 	// slightly reduce gravity if holding down the jump button // slightly increase gravity when holding crouch
 	ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
-	
-	const Vector2 predPos = playerCollider.GetPosition() + velocity;
-	const SDL_FRect predRect = SDL_FRect{ predPos.x, predPos.y, playerCollider.GetRect().w, playerCollider.GetRect().h};
-
-
-	print(velocity.x << ", " << velocity.y)
-
-	for (auto& collider : levelColliders)
-	{
-		if (&playerCollider == collider) continue;
-	
-		bool collision = SDL_HasIntersectionF(&predRect, &collider->GetRect());
-
-		if(collision) grounded = collider->IsGround();
-
-		if (collision)
-		{
-			if(!grounded && SDL_HasIntersectionF(&predRect, &collider->GetRect()))
-			return;
-		}
-
-	}
-
-
-	print(velocity.y)
-
-	playerCollider.SetPosition(playerCollider.GetPosition() + velocity);
+	ApplyVelocity();
 	//playerCollider.SetPosition(playerCollider.GetPosition() + (falling? velocity : Vector2(velocity.x, 0)));
 
 	//CalculateVelocity(deltaTime);
@@ -59,6 +33,33 @@ void MovementController::CalculateVelocity(float deltaTime)
 	const float displacementAngle = dotProd / (Vector2(playerCollider.GetPosition().x , playerCollider.GetPosition().y).Magnitude() * previousPos.Magnitude());
 	
 	const int speed = static_cast<int>(displacement / deltaTime);
+}
+
+void MovementController::ApplyVelocity()
+{
+	const Vector2 predPos = playerCollider.GetPosition() + velocity;
+	const SDL_FRect predRect = SDL_FRect{ predPos.x, predPos.y, playerCollider.GetRect().w, playerCollider.GetRect().h};
+
+	bool collision = false; 
+
+	for (auto& collider : levelColliders)
+	{
+		if (&playerCollider == collider) continue;
+
+		// Using an if statement so that the value doesn't change after each iteration of the loop
+		if(SDL_HasIntersectionF(&predRect, &collider->GetRect())) collision = true;
+
+		grounded = collision;
+
+		if (collision)
+		{
+			if(SDL_HasIntersectionF(&predRect, &collider->GetRect())) return;
+		}
+
+	}
+
+
+	playerCollider.SetPosition(playerCollider.GetPosition() + velocity);
 }
 
 

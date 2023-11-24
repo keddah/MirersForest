@@ -22,8 +22,6 @@ void SpriteRenderer::Animate()
 	// (x,y) the start position is the size of one of the frames * the frame number
 	sourceRect = SDL_Rect{ static_cast<int>(frameSize.x) * currentFrame, 0, static_cast<int>(frameSize.x), static_cast<int>(frameSize.y) };
 	
-	print("renderer: (" << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h << ")\n")
-
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopyF(GameWindow::GetRenderer(), spriteImages[activeAnim].GetTexture(), &sourceRect, &destinationRect);
 	
