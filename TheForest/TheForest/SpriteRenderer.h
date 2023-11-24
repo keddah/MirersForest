@@ -1,9 +1,7 @@
 #pragma once
 
-#include<iostream>
 #include <string>
 #include <vector>
-#include <SDL.h>
 
 #include "Image.h"
 

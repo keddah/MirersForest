@@ -1,7 +1,7 @@
 #pragma once
-#include <iostream>
 
-#include "GameSingletons.h"
+#include <SDL_render.h>
+
 #include "Vector2.h"
 #include "SpriteSheet.h"
 

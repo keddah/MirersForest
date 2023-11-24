@@ -1,4 +1,5 @@
 #include "SpriteRenderer.h"
+#include "GameSingletons.h"
 #include "CustomTimer.h"
 
 

@@ -1,5 +1,6 @@
 #include "Image.h"
-#include <SDL_Image.h>
+#include <SDL_image.h>
+#include "GameSingletons.h"
 
 
 Image::Image(const char* filePath)
