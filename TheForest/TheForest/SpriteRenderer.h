@@ -12,16 +12,13 @@ public:
 
 	// For animated things...
 	// SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect);
 	SpriteRenderer(const SDL_FRect& rect);
 
 	void Animate();
-	void SetSpritePosition(const Vector2& newPos);
 	Vector2 GetSpriteSize();
 	
-	void SetFrameCount(short frames);
+	void SetFrameCount(short frames = 1);
 
-	SDL_Rect& GetSourceRectangle() { return sourceRect; }
 	const SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
 	void SetSourceRect(SDL_Rect newRect);
 
@@ -41,9 +38,20 @@ public:
 	
 	// Primarily for debugging...
 	// The rectangle is filled with the inputted color
+
+	// Deletes all of the elements in the spriteImages vector and emplace a new one using this path.
+	// (used when creating tiles)
+	void SetSprite(const std::string& path);
+	
+	void SetImage(const Image& newImage);
+
+	// Pass in an array of image paths. Done to set the animations to choose from.  
+	// (used when creating characters)
+	void SetSpriteSheets(const std::vector<std::string>& paths);
+	
 	void FillRectangle(const int r, const int g, const int b, const int a);
 	void FillRectangle(const SDL_Rect& colour);
-	void UnfillRectangle();
+	void UnFillRectangle();
 
 private:
 	// (x,y) = the top left corner of the area to crop .. (w,h) = the bottom right corner - the end of the crop.

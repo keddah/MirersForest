@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include "TileManager.h"
+
 class SceneManager
 {
 public:
@@ -17,6 +19,8 @@ public:
 private:
 	void StartGame();
 	CollisionManager collisionManager;
+	TileManager tileManager = TileManager(collisionManager.GetColliders());
+	
 	Player player = Player(collisionManager.GetColliders());
 	Collision floor1 = Collision(collisionManager.GetColliders(), 0,700,1600,100);
 	Collision floor2 = Collision(collisionManager.GetColliders(), 900,600,100,100, false);

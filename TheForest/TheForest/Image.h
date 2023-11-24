@@ -15,7 +15,6 @@ public:
 	~Image() 
 	{ 
 		SDL_DestroyTexture(texture); 
-		delete imagePath;
 	}
 
 	SpriteSheet& GetSpriteSheet() { return spriteSheet; }

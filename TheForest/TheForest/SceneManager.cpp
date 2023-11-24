@@ -4,8 +4,8 @@
 
 SceneManager::SceneManager()
 {
-	renderers.push_back(player.GetRenderer());
 	StartGame();
+	renderers.push_back(player.GetRenderer());
 }
 
 SceneManager::~SceneManager()
@@ -38,8 +38,9 @@ void SceneManager::StartGame()
 	floor4.SetDebugColour(SDL_Rect{80,80,80,80});
 	floor2.SetDebugColour(SDL_Rect{80,80,80,80});
 	floor3.SetDebugColour(SDL_Rect{80,80,80,80});
-
 	
-	collisionManager.AddCollider(player);	
+	collisionManager.AddCollider(player);
+	
+	for(auto& tile : tileManager.GetTiles()) collisionManager.AddCollider(tile.GetCollider());
 
 }

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include "Vector2.h"
-#include <vector>
 #include "SDL.h"
 #include "Collider.h"
 
@@ -87,10 +85,11 @@ private:
     float moveSpeed = 5;
 
     const float mass = 1000;
-    float jumpForce = 250;
+    float jumpForce = 150;
     float slideSpeed = 10;
 
-    Vector2 direction = Vector2(0, 1);
+	// Direction is a vector instead of a float/int so that applying forces can be done easily 
+    Vector2 direction = Vector2(0, 0);
 
     // Used to calculate velocity
     Vector2 previousPos = Vector2();
@@ -102,8 +101,6 @@ private:
 
 
 /* ------------------ Weapon ------------------ */
-#include "Vector2.h"
-#include <vector>
 
 class WeaponController
 {

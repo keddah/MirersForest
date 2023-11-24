@@ -6,7 +6,8 @@
 Image::Image(const char* filePath)
 {
 	imagePath = filePath;
-	
+
+	print("sdf " << filePath);
 	SDL_Surface* image = IMG_Load(filePath);
 	
 	texture = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image);

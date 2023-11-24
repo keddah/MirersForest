@@ -3,13 +3,6 @@
 #include "CustomTimer.h"
 
 
-
-SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect): destinationRect(rect)
-{
-	// Creates a new Image object and adds it to the list of images
-	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
-} 
-
 SpriteRenderer::SpriteRenderer(const SDL_FRect& rect) : destinationRect(rect)
 {
 
@@ -37,12 +30,6 @@ void SpriteRenderer::Animate()
 	if (currentFrame > spriteImages[activeAnim].GetSpriteSheet().FrameCount() - 1) currentFrame = 0;
 }
 
-void SpriteRenderer::SetSpritePosition(const Vector2& newPos)
-{
-	//renderPos = newPos;
-	// print("renderPos: (" << renderPos.x << ", " << renderPos.y << ")\n")
-}
-
 Vector2 SpriteRenderer::GetSpriteSize()
 {
 	const Vector2 size = Vector2(
@@ -55,12 +42,32 @@ Vector2 SpriteRenderer::GetSpriteSize()
 
 void SpriteRenderer::SetFrameCount(short frames)
 {
-	spriteImages[activeAnim].SetSpriteCount(frames);
+	if(spriteImages.size() > 0) spriteImages[activeAnim].SetSpriteCount(frames);
 }
 
 void SpriteRenderer::SetSourceRect(const SDL_Rect newRect)
 {
 	sourceRect = SDL_Rect(newRect);
+}
+
+void SpriteRenderer::SetSprite(const std::string& path)
+{
+	spriteImages.clear();
+	spriteImages.emplace_back(path.c_str());
+}
+
+void SpriteRenderer::SetImage(const Image& newImage)
+{
+	spriteImages.clear();
+
+	spriteImages[0] = newImage;
+}
+
+void SpriteRenderer::SetSpriteSheets(const std::vector<std::string>& paths)
+{
+	spriteImages.clear();
+
+	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
 }
 
 void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const int a)
@@ -81,7 +88,7 @@ void SpriteRenderer::FillRectangle(const SDL_Rect& colour)
 	SDL_RenderFillRectF(GameWindow::GetRenderer(), &destinationRect);
 }
 
-void SpriteRenderer::UnfillRectangle()
+void SpriteRenderer::UnFillRectangle()
 {
 	fillOn = false;
 	fillColour = SDL_Rect();

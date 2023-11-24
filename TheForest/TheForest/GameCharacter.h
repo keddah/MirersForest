@@ -2,17 +2,15 @@
 
 #pragma once
 
-#include <array>
 #include <string>
 
 #include "HealthManager.h" 
-#include "SpriteRenderer.h"
 #include "Collider.h"
 
 class Character: public Collision
 {
 public:
-    Character(std::vector<std::string> paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders);
+    Character(const std::vector<std::string>& paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders);
     virtual ~Character() = default;
 
     virtual void Update(float deltaTime);
@@ -25,10 +23,7 @@ public:
 
 protected:
     void SetFrameCount(short frameCount = 3);
-    virtual SpriteRenderer& GetRenderer() { return renderer; }
 
-    SpriteRenderer renderer;
-    
     HealthManager health;
 
 private:

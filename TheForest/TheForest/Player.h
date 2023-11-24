@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameCharacter.h" //ok
+#include "GameCharacter.h" 
 
 #include "Controllers.h"
 
@@ -18,7 +18,6 @@ public:
     Vector2& GetPosition();
     PlayerController& Controller() { return controller; }
     MovementController& GetMoveController() { return moveController; } 
-    SpriteRenderer& GetRenderer() override { return Character::GetRenderer(); }
     
 private:
     void GainHealth();

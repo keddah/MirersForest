@@ -2,7 +2,6 @@
 
 #define print(x) { std::cout<< x << std::endl; }
 
-#include <tuple>
 #include <iostream>
 #include "SpriteRenderer.h"
 
@@ -41,6 +40,7 @@ public:
 	bool Contains(const Collision& toCompare) const;
 	bool Contains(Vector2 position) const;
 
+	virtual SpriteRenderer& GetRenderer() { return renderer; }
 	
 	void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
 	void Debug();
@@ -51,6 +51,7 @@ public:
 
 protected:
 	SDL_FRect rect;
+	SpriteRenderer renderer = SpriteRenderer(rect);
 
 	// Whether this SOLID collider is overlapping with another solid collider 
 	bool obstructed = false;
@@ -62,7 +63,6 @@ private:
 	// Whether objects are able to go through it...
 	bool solid = true;
 	
-	SpriteRenderer debugRenderer = SpriteRenderer(rect);
 	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 100 };
 
 	// All the colliders

@@ -7,14 +7,17 @@
 // }
 
 
-Character::Character(std::vector<std::string> paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders): Collision(colliders, newRect), renderer(paths, rect)
+Character::Character(const std::vector<std::string>& paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders): Collision(colliders, newRect)
 {
+	// Sets the player's sprite sheets using their file paths.
+	renderer.SetSpriteSheets(paths);
+
+	// Once the images have been loaded from the paths, you can get its image size
 	SetRect(GetPosition(), renderer.GetSpriteSize());
 }
 
 void Character::Update(float deltaTime)
 {
-	renderer.SetSpritePosition(Collision::GetPosition());
 }
 
 void Character::GainHealth()

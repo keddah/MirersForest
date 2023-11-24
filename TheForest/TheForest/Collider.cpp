@@ -1,40 +1,40 @@
 #include "Collider.h"
 
 Collision::Collision(const std::vector<Collision*>& otherColliders, const float x, const float y, const float w, const float h, bool ground, bool isSolid ) :
-debugRenderer(rect), colliders(otherColliders)
+renderer(rect), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = SDL_FRect{x,y,w,h};
 
 	isGround = ground;
 
-	debugRenderer.FillRectangle(debugColour);
+	renderer.FillRectangle(debugColour);
 }
 
 Collision::Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& _rect, bool ground, bool isSolid ) :
-debugRenderer(rect), colliders(otherColliders)
+renderer(rect), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = _rect;
 
 	isGround = ground;
 
-	debugRenderer.FillRectangle(debugColour);
+	renderer.FillRectangle(debugColour);
 }
 
 void Collision::Update()
 {
-	for(auto& collider2: colliders)
-	{
-		if(this == collider2) continue;
-
-		Overlapping(*collider2);
-	}
+	// for(auto& collider2: colliders)
+	// {
+	// 	if(this == collider2) continue;
+	//
+	// 	Overlapping(*collider2);
+	// }
 }
 
 void Collision::Debug()
 {
-	debugRenderer.FillRectangle(debugColour);
+	renderer.FillRectangle(debugColour);
 }
 
 

@@ -151,6 +151,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheForest.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WeaponController.cpp" />
