@@ -87,7 +87,7 @@ private:
     float moveSpeed = 5;
 
     const float mass = 1000;
-    float jumpForce = -250;
+    float jumpForce = 250;
     float slideSpeed = 10;
 
     Vector2 direction = Vector2(0, 1);

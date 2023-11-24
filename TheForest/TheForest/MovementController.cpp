@@ -49,13 +49,10 @@ void MovementController::ApplyVelocity()
 		// Using an if statement so that the value doesn't change after each iteration of the loop
 		if(SDL_HasIntersectionF(&predRect, &collider->GetRect())) collision = true;
 
+		// Allows you to stick to walls (definitely a feature)
 		grounded = collision;
 
-		if (collision)
-		{
-			if(SDL_HasIntersectionF(&predRect, &collider->GetRect())) return;
-		}
-
+		if (collision) return;
 	}
 
 
@@ -84,7 +81,7 @@ void MovementController::Jump()
 {
 	if(!grounded) return;
 
-	velocity.y += jumpForce;
+	velocity.y -= jumpForce;
 }
 
 void MovementController::Slide()
