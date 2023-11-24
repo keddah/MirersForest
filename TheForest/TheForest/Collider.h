@@ -51,7 +51,7 @@ public:
 
 protected:
 	SDL_FRect rect;
-	SpriteRenderer renderer = SpriteRenderer(rect, 1);
+	SpriteRenderer renderer = SpriteRenderer({""}, rect);
 
 	// Whether this SOLID collider is overlapping with another solid collider 
 	bool obstructed = false;

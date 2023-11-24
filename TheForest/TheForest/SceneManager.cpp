@@ -20,12 +20,13 @@ void SceneManager::Update(float deltaTime)
 
 void SceneManager::Draw()
 {
+	collisionManager.Debug();
+	
 	for (auto& renderer : renderers)
 	{
 		renderer.Animate();
 	}
 
-	// collisionManager.Debug();
 }
 
 void SceneManager::StartGame()

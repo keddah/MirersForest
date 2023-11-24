@@ -11,7 +11,8 @@ public:
 	SpriteRenderer() = default;
 
 	// Frame count is for animated things...
-	SpriteRenderer(const SDL_FRect& rect, short frameCount);
+	SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect);
+	SpriteRenderer(const SDL_FRect& rect);
 
 	void Animate();
 	Vector2 GetSpriteSize();

@@ -2,7 +2,7 @@
 
 TileManager::TileManager(const std::vector<Collision*>& otherColliders)
 {
-    Image tileImg = Image(tilePath.c_str(), 1);
+    Image tileImg = Image(tilePath.c_str());
 
     for(int w = 0; w < levelWidth; w++)
     {
