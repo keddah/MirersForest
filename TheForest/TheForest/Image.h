@@ -29,6 +29,6 @@ private:
 	
 	SpriteSheet spriteSheet;
 	
-	Vector2 size;
+	Vector2 size = Vector2();
 };
 

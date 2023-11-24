@@ -17,6 +17,7 @@ int main()
 		Time::Update();
 		game.Update();
 		game.Draw();
+		Time::SetLastFrameTime(high_resolution_clock::now());
 	}
 
 	SDL_DestroyWindow(GameWindow::GetWindow());

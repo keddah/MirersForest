@@ -31,6 +31,9 @@ public:
     std::vector<Tile>& GetTiles() { return tiles; }
     
 private:
+    // Creating a matrix for the tilemap
+    short tileMap[100][6];
+    
     std::vector<Tile> tiles = std::vector<Tile>();
     std::vector<std::string> tilePaths {"Sprites/testTile.png"};
     enum ETileSheets

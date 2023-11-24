@@ -67,11 +67,6 @@ private:
 
 	// All the colliders
 	const std::vector<Collision*>& colliders;
-
-	static bool FloatInRange(float x, float min, float max)          
-	{          
-		return (min <= x && x <= max);          
-	}    
 };
 
 

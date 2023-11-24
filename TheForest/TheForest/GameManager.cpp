@@ -50,8 +50,6 @@ void GameManager::Update()
 	const float deltaTime = Time::GetDeltaTime();
 
 	manager.Update(deltaTime);
-
-	Time::SetLastFrameTime(high_resolution_clock::now());
 }
 
 void GameManager::Draw()

@@ -14,7 +14,7 @@ public:
 
 	void SetImageSize(const Vector2& size);
 	void SetImageSize(const int x, const int y);
-	Vector2& Size() { return imageSize; }
+	const Vector2& Size() const { return imageSize; }
 
 	
 private:

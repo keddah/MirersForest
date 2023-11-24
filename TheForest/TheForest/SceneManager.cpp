@@ -4,8 +4,8 @@
 
 SceneManager::SceneManager()
 {
-	StartGame();
 	renderers.push_back(player.GetRenderer());
+	StartGame();
 }
 
 SceneManager::~SceneManager()
@@ -30,6 +30,7 @@ void SceneManager::Draw()
 
 void SceneManager::StartGame()
 {
+	for(auto& tile : tileManager.GetTiles()) collisionManager.AddCollider(tile.GetCollider());
 	collisionManager.AddCollider(floor2);
 	collisionManager.AddCollider(floor4);
 	collisionManager.AddCollider(floor1);	
@@ -41,6 +42,5 @@ void SceneManager::StartGame()
 	
 	collisionManager.AddCollider(player);
 	
-	for(auto& tile : tileManager.GetTiles()) collisionManager.AddCollider(tile.GetCollider());
 
 }

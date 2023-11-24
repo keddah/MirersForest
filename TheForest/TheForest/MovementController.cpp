@@ -8,6 +8,10 @@ controller(ctrl), playerCollider(_playerCollider), levelColliders(colliders)
 
 void MovementController::Update(float deltaTime)
 {
+	if(playerCollider.GetRect().y > 1080) playerCollider.SetPosition(playerCollider.GetRect().x,0); 
+	if(playerCollider.GetRect().x > 1920) playerCollider.SetPosition(0,playerCollider.GetRect().y); 
+	if(playerCollider.GetRect().x < -64) playerCollider.SetPosition(1920,playerCollider.GetRect().y);
+	
 	// Reset the velocity at the start of each frame so that it isn't infinitely increased.
 	velocity = Vector2();
 
