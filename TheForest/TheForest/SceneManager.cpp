@@ -25,7 +25,7 @@ void SceneManager::Draw()
 		renderer.Animate();
 	}
 
-	collisionManager.Debug();
+	// collisionManager.Debug();
 }
 
 void SceneManager::StartGame()

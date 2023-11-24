@@ -36,10 +36,12 @@ GameManager::GameManager()
 	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 
 	running = true;
+	manager = new SceneManager();
 }
 
 GameManager::~GameManager()
 {
+	delete manager;
 	SDL_DestroyRenderer(GameWindow::GetRenderer());
 	SDL_DestroyWindow(GameWindow::GetWindow());
 	SDL_Quit();
@@ -49,7 +51,7 @@ void GameManager::Update()
 {
 	const float deltaTime = Time::GetDeltaTime();
 
-	manager.Update(deltaTime);
+	manager->Update(deltaTime);
 }
 
 void GameManager::Draw()
@@ -58,7 +60,7 @@ void GameManager::Draw()
 	SDL_RenderFillRect(GameWindow::GetRenderer(), nullptr);
 
 	SDL_RenderClear(GameWindow::GetRenderer());
-	manager.Draw();
+	manager->Draw();
 	SDL_RenderPresent(GameWindow::GetRenderer());
 }
 
