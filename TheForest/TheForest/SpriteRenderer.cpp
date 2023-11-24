@@ -3,9 +3,9 @@
 #include "CustomTimer.h"
 
 
-SpriteRenderer::SpriteRenderer(const SDL_FRect& rect) : destinationRect(rect)
+SpriteRenderer::SpriteRenderer(const SDL_FRect& rect, short frameCount) : destinationRect(rect)
 {
-
+	SetFrameCount(frameCount);
 }
 
 void SpriteRenderer::Animate()
@@ -53,7 +53,7 @@ void SpriteRenderer::SetSourceRect(const SDL_Rect newRect)
 void SpriteRenderer::SetSprite(const std::string& path)
 {
 	spriteImages.clear();
-	spriteImages.emplace_back(path.c_str());
+	spriteImages.emplace_back(path.c_str(), frameCount);
 }
 
 void SpriteRenderer::SetImage(const Image& newImage)
@@ -67,7 +67,7 @@ void SpriteRenderer::SetSpriteSheets(const std::vector<std::string>& paths)
 {
 	spriteImages.clear();
 
-	for (auto& path: paths) spriteImages.emplace_back((path.c_str()));
+	for (auto& path: paths) spriteImages.emplace_back(path.c_str(), frameCount);
 }
 
 void SpriteRenderer::FillRectangle(const int r, const int g, const int b, const int a)

@@ -2,16 +2,29 @@
 
 TileManager::TileManager(const std::vector<Collision*>& otherColliders)
 {
-    Image tileImg = Image(tilePaths[0].c_str());
-    
-    Vector2 position = Vector2(1920, 200);
-    for(int i = 0; i < 20; i++)
+    Image tileImg = Image(tilePath.c_str(), 1);
+
+    for(int w = 0; w < levelWidth; w++)
     {
-        tiles.emplace_back(tileImg, otherColliders);
-        tiles[i].SetPosition(position);
-        tiles[i].GetCollider().SetDebugColour(SDL_Rect{0,255,64,1});
-        tiles[i].GetCollider().GetRect();
-        
-        position.x -= Tile::tileSize + 5;
+        for(int h = 0; h < levelHeight; h++)
+        {
+            Tile tile = Tile(tileImg, otherColliders);
+            SDL_Rect sourceRect;
+            sourceRect.x = (tileMap[w][h] % 6) * tileSize;
+            sourceRect.y = (tileMap[w][h] / 6) * tileSize;
+            sourceRect.w = tileImg.GetSpriteSheet().Size().x;
+            sourceRect.h = tileImg.GetSpriteSheet().Size().y;
+
+            SDL_FRect destinationRect;
+            destinationRect.x = h * 512;
+            destinationRect.y = w * 512;
+            destinationRect.w = tileImg.GetSpriteSheet().Size().x;
+            destinationRect.h = tileImg.GetSpriteSheet().Size().y;
+            
+            tile.SetDestRect(destinationRect);
+            tile.SetSourceRect(sourceRect);
+            
+            tiles.push_back(tile);
+        }
     }
 }

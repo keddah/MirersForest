@@ -10,9 +10,8 @@ class SpriteRenderer
 public:
 	SpriteRenderer() = default;
 
-	// For animated things...
-	// SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(const SDL_FRect& rect);
+	// Frame count is for animated things...
+	SpriteRenderer(const SDL_FRect& rect, short frameCount);
 
 	void Animate();
 	Vector2 GetSpriteSize();
@@ -62,6 +61,7 @@ private:
 
 	// The sprite sheet that's currently being rendered
 	short activeAnim = 0;
+	short frameCount = 1;
 	short currentFrame = 0;
 	float frameTimer = 0;
 	float animSpeed = 2;

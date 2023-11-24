@@ -1,7 +1,7 @@
 #include "Collider.h"
 
 Collision::Collision(const std::vector<Collision*>& otherColliders, const float x, const float y, const float w, const float h, bool ground, bool isSolid ) :
-renderer(rect), colliders(otherColliders)
+renderer(rect, 1), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = SDL_FRect{x,y,w,h};
@@ -12,7 +12,7 @@ renderer(rect), colliders(otherColliders)
 }
 
 Collision::Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& _rect, bool ground, bool isSolid ) :
-renderer(rect), colliders(otherColliders)
+renderer(rect, 1), colliders(otherColliders)
 {
 	solid = isSolid;
 	rect = _rect;

@@ -10,11 +10,12 @@ class Image
 {
 public:
 	Image() = default;
-	Image(const char* filePath);
+	Image(const char* filePath, short frameCount);
 
 	~Image() 
 	{ 
-		SDL_DestroyTexture(texture); 
+		SDL_DestroyTexture(texture);
+		delete imagePath;
 	}
 
 	SpriteSheet& GetSpriteSheet() { return spriteSheet; }

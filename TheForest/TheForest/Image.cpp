@@ -3,8 +3,9 @@
 #include "GameSingletons.h"
 
 
-Image::Image(const char* filePath)
+Image::Image(const char* filePath, short frameCount)
 {
+	SetSpriteCount(frameCount);
 	imagePath = filePath;
 
 	print("sdf " << filePath);
