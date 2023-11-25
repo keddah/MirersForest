@@ -1,10 +1,7 @@
 #include "SceneManager.h"
 
-#include "GameSingletons.h"
-
 SceneManager::SceneManager()
 {
-	renderers.push_back(player.GetRenderer());
 	StartGame();
 }
 
@@ -22,25 +19,21 @@ void SceneManager::Draw()
 {
 	collisionManager.Debug();
 	
-	for (auto& renderer : renderers)
-	{
-		renderer.Animate();
-	}
-
+	for (auto& renderer : renderers) renderer.Draw();
 }
 
 void SceneManager::StartGame()
 {
-	collisionManager.AddCollider(floor2);
-	collisionManager.AddCollider(floor4);
-	collisionManager.AddCollider(floor1);	
-	collisionManager.AddCollider(floor3);	
+	// collisionManager.AddCollider(floor2);
+	// collisionManager.AddCollider(floor4);
+	// collisionManager.AddCollider(floor1);	
+	// collisionManager.AddCollider(floor3);	
 	
 	collisionManager.AddCollider(player);
 	
-	floor4.SetDebugColour(SDL_Rect{80,80,80,80});
-	floor2.SetDebugColour(SDL_Rect{80,80,80,80});
-	floor3.SetDebugColour(SDL_Rect{80,80,80,80});
+	floor4.SetDebugColour(SDL_Rect{80,80,80,255});
+	floor2.SetDebugColour(SDL_Rect{80,80,80,255});
+	floor3.SetDebugColour(SDL_Rect{80,80,80,255});
 
 	for(auto& tile : tileManager.GetTiles()) collisionManager.AddCollider(tile.GetCollider());
 
@@ -48,7 +41,7 @@ void SceneManager::StartGame()
 	for(auto& collider : collisionManager.GetColliders())
 	{
 		// Get the collider's renderer and add it to the vector of renderers
-		renderers.push_back(collider->GetRenderer());
+		renderers.push_back(collider.GetRenderer());
 	}
 
 }

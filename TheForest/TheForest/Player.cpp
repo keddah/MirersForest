@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Controllers.h"
 
-Player::Player(const std::vector<Collision*>& _otherColliders) : Character({"Sprites/testspritesheet.png"}, rect, _otherColliders), otherColliders(_otherColliders)
+Player::Player(const std::vector<Collision>& _otherColliders) : Character({"Sprites/testspritesheet.png"}, rect, _otherColliders), otherColliders(_otherColliders)
 {
 	SetDebugColour(SDL_Rect{0,200,200,200});
 	SetFrameCount(4);

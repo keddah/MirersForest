@@ -9,8 +9,8 @@ class Collision
 {
 public:
 	// Collision();
-	Collision(const std::vector<Collision*>& otherColliders, float x, float y, float w, float h, bool ground = true, bool isSolid = true);
-	Collision(const std::vector<Collision*>& otherColliders, SDL_FRect& rect, bool ground = true,  bool isSolid = true);
+	Collision(const std::vector<Collision>& otherColliders, float x, float y, float w, float h, bool ground = true, bool isSolid = true);
+	Collision(const std::vector<Collision>& otherColliders, SDL_FRect& rect, bool ground = true,  bool isSolid = true);
 
 	~Collision() = default;
 
@@ -44,14 +44,14 @@ public:
 	
 	void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
 	void Debug();
-	bool IsGround() { return isGround; }
+	bool IsGround() const { return isGround; }
 	const SDL_FRect& GetRect() const { return rect; }
 	const SDL_FRect& GetContactRect(const Collision& toCompare) const;
 	bool& IsObstructed() { return obstructed; }
 
 protected:
 	SDL_FRect rect;
-	SpriteRenderer renderer = SpriteRenderer({""}, rect);
+	SpriteRenderer renderer = SpriteRenderer(rect, false);
 
 	// Whether this SOLID collider is overlapping with another solid collider 
 	bool obstructed = false;
@@ -63,10 +63,10 @@ private:
 	// Whether objects are able to go through it...
 	bool solid = true;
 	
-	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 100 };
+	SDL_Rect debugColour = SDL_Rect{ 255, 0, 50, 255 };
 
 	// All the colliders
-	const std::vector<Collision*>& colliders;
+	const std::vector<Collision>& colliders;
 };
 
 
@@ -78,12 +78,12 @@ class CollisionManager
 public:
 	CollisionManager() = default;
 
-	void Debug() const;
-	void Update() const;
-	void AddCollider(Collision& toAdd);
-	const std::vector<Collision*>& GetColliders() const { return colliders; }
+	void Debug();
+	void Update();
+	void AddCollider(const Collision& toAdd);
+	std::vector<Collision>& GetColliders() { print(colliders.size()) return colliders; }
 	
 private:
-	std::vector<Collision*> colliders = std::vector<Collision*>(); 	
+	std::vector<Collision> colliders = std::vector<Collision>();
 	
 };

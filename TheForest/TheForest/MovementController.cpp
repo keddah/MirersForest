@@ -1,6 +1,6 @@
 #include "Controllers.h"
 
-MovementController::MovementController(PlayerController& ctrl, Collision& _playerCollider, const std::vector<Collision*>& colliders) :
+MovementController::MovementController(PlayerController& ctrl, Collision& _playerCollider, const std::vector<Collision>& colliders) :
 controller(ctrl), playerCollider(_playerCollider), levelColliders(colliders)
 {
 }
@@ -48,10 +48,10 @@ void MovementController::ApplyVelocity()
 
 	for (auto& collider : levelColliders)
 	{
-		if (&playerCollider == collider) continue;
+		if (&playerCollider == &collider) continue;
 
 		// Using an if statement so that the value doesn't change after each iteration of the loop
-		if(SDL_HasIntersectionF(&predRect, &collider->GetRect())) collision = true;
+		if(SDL_HasIntersectionF(&predRect, &collider.GetRect())) collision = true;
 
 		// Allows you to stick to walls (definitely a feature)
 		grounded = collision;

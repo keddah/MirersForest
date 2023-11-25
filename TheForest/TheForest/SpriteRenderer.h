@@ -11,10 +11,9 @@ public:
 	SpriteRenderer() = default;
 
 	// Frame count is for animated things...
-	SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect);
-	SpriteRenderer(const SDL_FRect& rect);
+	SpriteRenderer(const SDL_FRect& rect, bool animated);
 
-	void Animate();
+	void Draw();
 	Vector2 GetSpriteSize();
 	
 	void SetFrameCount(short frames = 1);
@@ -42,7 +41,7 @@ public:
 	// Deletes all of the elements in the spriteImages vector and emplace a new one using this path.
 	// (used when creating tiles)
 	void SetSprite(const std::string& path);
-	
+	void SetIsAnimated(const bool animated) { isAnimated = animated; }
 	void SetImage(const Image& newImage);
 
 	// Pass in an array of image paths. Done to set the animations to choose from.  
@@ -61,6 +60,7 @@ private:
 	const SDL_FRect& destinationRect;
 
 	// The sprite sheet that's currently being rendered
+	bool isAnimated;
 	short activeAnim = 0;
 	short frameCount = 1;
 	short currentFrame = 0;

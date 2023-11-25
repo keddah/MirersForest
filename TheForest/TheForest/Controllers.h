@@ -18,13 +18,16 @@ public:
 	bool* GetMoveInputs();
 
 	Vector2& GetMousePosition() { return mousePos; }
-	bool IsLMB() const;
-	bool IsRMB() const;
+	bool IsLMB() const { return lmb; }
+	bool IsRMB() const { return rmb; }
+	bool IsPaused() const { return paused; }
 
 	
 private:
 	bool lmb;
 	bool rmb;
+	bool paused;
+	
 	Vector2 mousePos;
 
 	void ClearInputs();
@@ -46,7 +49,7 @@ private:
 class MovementController : public Physics
 {
 public:
-    MovementController(PlayerController& ctrl, Collision& playerCollider, const std::vector<Collision*>& colliders);
+    MovementController(PlayerController& ctrl, Collision& playerCollider, const std::vector<Collision>& colliders);
     ~MovementController() = default;
 
     void Update(float deltaTime);
@@ -73,7 +76,7 @@ private:
     void Crouch();
     void Uncrouch();
 
-    const std::vector<Collision*>& levelColliders;
+    const std::vector<Collision>& levelColliders;
     Collision& playerCollider;
     PlayerController& controller;
 

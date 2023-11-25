@@ -8,7 +8,7 @@ class Player : public Character
 {
 public:
     Player() = default;
-    Player(const std::vector<Collision*>& _otherColliders);
+    Player(const std::vector<Collision>& _otherColliders);
     ~Player() = default;
     void Update(float deltaTime) override;
 
@@ -24,7 +24,7 @@ private:
     void TakeDamage(float damageIntensity);
     void Death();
         
-    const std::vector<Collision*>& otherColliders;
+    const std::vector<Collision>& otherColliders;
 
     PlayerController controller;
     MovementController moveController = MovementController(controller, *this, otherColliders);

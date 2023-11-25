@@ -3,18 +3,13 @@
 #include "CustomTimer.h"
 
 
-SpriteRenderer::SpriteRenderer(const std::vector<std::string>& paths, const SDL_FRect& rect) : destinationRect(rect)
+SpriteRenderer::SpriteRenderer(const SDL_FRect& rect, bool animated) : destinationRect(rect)
 {
-	spriteImages.emplace_back(paths[0].c_str());
+	isAnimated = animated;
 	SetFrameCount(frameCount);
 }
 
-SpriteRenderer::SpriteRenderer(const SDL_FRect& rect): destinationRect(rect)
-{
-	SetFrameCount();
-}
-
-void SpriteRenderer::Animate()
+void SpriteRenderer::Draw()
 {
 	// Creating a local texture each frame using the textures that were created in the constructor 
 	const Vector2 frameSize = GetSpriteSize();
@@ -24,7 +19,8 @@ void SpriteRenderer::Animate()
 	
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopyF(GameWindow::GetRenderer(), spriteImages[activeAnim].GetTexture(), &sourceRect, &destinationRect);
-	
+
+	if(!isAnimated) return;
 	
 	frameTimer += Time::GetDeltaTime() * 50;
 	if (frameTimer > animSpeed)
@@ -71,7 +67,7 @@ void SpriteRenderer::SetImage(const Image& newImage)
 
 void SpriteRenderer::SetSpriteSheets(const std::vector<std::string>& paths)
 {
-	spriteImages.clear();
+	if(!spriteImages.empty()) spriteImages.clear();
 
 	for (auto& path: paths) spriteImages.emplace_back(path.c_str());
 }

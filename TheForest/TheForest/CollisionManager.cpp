@@ -1,18 +1,18 @@
 #include "Collider.h"
 
-void CollisionManager::Update() const
+void CollisionManager::Update()
 {
-    for(const auto& collider: colliders) collider->Update();
+    for(auto& collider: colliders) collider.Update();
 }
 
 
-void CollisionManager::Debug() const
+void CollisionManager::Debug()
 {
-    for(const auto& collider:colliders) collider->Debug();
+    for(auto& collider:colliders) collider.Debug();
 }
 
 
-void CollisionManager::AddCollider(Collision& toAdd)
+void CollisionManager::AddCollider(const Collision& toAdd)
 {
-    colliders.push_back(&toAdd);
+    colliders.push_back(toAdd);
 }

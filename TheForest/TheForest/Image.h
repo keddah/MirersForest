@@ -18,7 +18,7 @@ public:
 	}
 
 	SpriteSheet& GetSpriteSheet() { return spriteSheet; }
-	void SetSpriteCount(short count);
+	void SetSpriteCount(short count = 1);
 
 	SDL_Texture* GetTexture() const { return texture; }
 	const char* GetImagePath() const { return imagePath; }

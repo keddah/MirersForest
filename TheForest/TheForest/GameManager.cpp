@@ -4,7 +4,7 @@ GameManager::GameManager()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		std::cout << "could not initialize SDL2!" << std::endl;
+		print("could not initialize SDL2!")
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
@@ -21,7 +21,7 @@ GameManager::GameManager()
 	);
 	if (!GameWindow::GetWindow())
 	{
-		std::cout << "could not initialise window!" << std::endl;
+		print("could not initialise window!")
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
@@ -29,7 +29,7 @@ GameManager::GameManager()
 	GameWindow::SetRenderer(SDL_CreateRenderer(GameWindow::GetWindow(), -1, SDL_RENDERER_ACCELERATED));
 	if (!GameWindow::GetRenderer())
 	{
-		std::cout << "could not initialise window!" << std::endl;
+		print("could not initialise window!")
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}

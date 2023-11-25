@@ -5,8 +5,8 @@ class Tile
 {
     public:
     Tile() = default;    
-    Tile(const std::string& path, const std::vector<Collision*>& _otherColliders);    
-    Tile(const Image& image, const std::vector<Collision*>& _otherColliders);    
+    Tile(const std::string& path, const std::vector<Collision>& _otherColliders);    
+    Tile(const Image& image, const std::vector<Collision>& _otherColliders);    
 
     Collision& GetCollider() { return collider; }
 
@@ -31,17 +31,14 @@ class Tile
     private:
     Collision collider = Collision(otherColliders, 0, 0, tileSize, tileSize);
 
-    const std::vector<Collision*>& otherColliders;
-
-    // Creating a reference so that its easier to get to (rather than calling GetRenderer each time)
-    SpriteRenderer& renderer;
+    const std::vector<Collision>& otherColliders;
 };
 
 
 class TileManager
 {
 public:
-    TileManager(const std::vector<Collision*>& _otherColliders);
+    TileManager(const std::vector<Collision>& _otherColliders);
 
     std::vector<Tile>& GetTiles() { return tiles; }
     

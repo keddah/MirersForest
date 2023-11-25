@@ -1,11 +1,8 @@
 #pragma once
 
 #include "SpriteRenderer.h"
-#include "Player.h"
-
-#include <vector>
-
 #include "TileManager.h"
+#include "Player.h"
 
 class SceneManager
 {

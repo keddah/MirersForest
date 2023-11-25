@@ -23,18 +23,10 @@ void PlayerController::HandleInputs()
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
+		if(e.type == SDL_QUIT) paused = true;
+		
 		CalcMousePosition(e);
 	}
-}
-
-bool PlayerController::IsLMB() const
-{
-	return lmb;
-}
-
-bool PlayerController::IsRMB() const
-{
-	return rmb;
 }
 
 void PlayerController::ClearInputs()
@@ -47,5 +39,5 @@ void PlayerController::ClearInputs()
 
 void PlayerController::CalcMousePosition(SDL_Event& e)
 {
-	mousePos = Vector2(e.motion.x, e.motion.y);
+	mousePos = Vector2(static_cast<float>(e.motion.x), static_cast<float>(e.motion.y));
 }

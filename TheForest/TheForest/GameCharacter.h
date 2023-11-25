@@ -10,7 +10,7 @@
 class Character: public Collision
 {
 public:
-    Character(const std::vector<std::string>& paths, SDL_FRect& newRect, const std::vector<Collision*>& colliders);
+    Character(const std::vector<std::string>& paths, SDL_FRect& newRect, const std::vector<Collision>& colliders);
     virtual ~Character() = default;
 
     virtual void Update(float deltaTime);
