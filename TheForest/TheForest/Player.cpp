@@ -1,5 +1,9 @@
 #include "Player.h"
 
+Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
+{
+}
+
 void Player::Update(float deltaTime)
 {
     controller.Update();
@@ -40,6 +44,22 @@ void Player::UpdateRectangle()
     rect.h = playerSize.y;
 
     // print("InPlayer: " << pos.x << ", " << pos.y << rect.w << ", " << rect.h)
+}
+
+void Player::Collisions()
+{
+    const Vector2 predictedPos = pos += velocity;
+    const auto predictedRect = SDL_Rect{predictedPos.x, predictedPos.x, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
+
+    bool collision = false;
+    
+    for(auto& tile: floor)
+    {
+        if(SDL_HasIntersection(&predictedRect, &tile.GetRenderer().GetDrawRect()))
+        {
+            collision = true;
+        }
+    }
 }
 
 void Player::Move()

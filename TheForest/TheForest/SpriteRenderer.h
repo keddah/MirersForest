@@ -16,8 +16,11 @@ public:
     
     void Draw();
 
-    Vector2 GetDrawSize() const { return size; }
+    const Vector2& GetDrawSize() const { return size; }
+    
+    const SDL_Rect& GetDrawRect() const { return drawRect; }
 
+    SDL_Surface* ResetSprite(const std::string& path);
 
     void SetFrameCount(const short count = 1) { frameCount = count; }
 

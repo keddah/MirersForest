@@ -144,6 +144,8 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,11 +155,14 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameSingletons.h" />
     <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileManager.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Sprites\" />
+    <Folder Include="TileSets\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
