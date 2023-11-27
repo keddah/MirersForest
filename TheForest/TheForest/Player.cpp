@@ -1,61 +1,35 @@
 #include "Player.h"
-#include "Controllers.h"
 
-Player::Player(const std::vector<Collision*>& _otherColliders) : Character({"Sprites/testspritesheet.png"}, rect, _otherColliders), otherColliders(_otherColliders)
-{
-	SetDebugColour(SDL_Rect{0,200,200,200});
-	SetFrameCount(4);
-	ChangeMoveState(MovementController::EMovementState::Idle);
-}
-
-void Player::GivePowerup()
+Player::Player()
 {
 }
 
 void Player::Update(float deltaTime)
 {
-	Character::Update(deltaTime);
-
-	controller.Update();
-	moveController.Update(deltaTime);
-	// moveController.BlockingCollisions();
-
-	//weaponController.Update(deltaTime);
+    renderer->UpdatePosition(pos);
+    UpdateRectangle();
 }
 
-void Player::ChangeMoveState(MovementController::EMovementState state)
+void Player::Init()
 {
-	switch (state)
-	{
-	case MovementController::EMovementState::Idle:
-		GetRenderer().SetFrameCount(4);
-		moveController.ResetSpriteSize(GetRenderer().GetSpriteSize());
-		break;
+    if(initialised) return;
 
-	case MovementController::EMovementState::Moving:
-		break;
-
-	case MovementController::EMovementState::CrouchIdle:
-		break;
-
-	case MovementController::EMovementState::CrouchMoving:
-		break;
-
-	case MovementController::EMovementState::Sliding:
-		break;
-	}
+    renderer = new SpriteRenderer(spritePath);
+    renderer->SetIsAnimated();
+    
+    initialised = true;
 }
 
-void Player::GainHealth()
+// The player is only responsible for setting the position.
+// The renderer is only responsible for setting the size.
+// Together, they make the rectangle.
+void Player::UpdateRectangle()
 {
-	health.GainHealth();
+    const Vector2 playerSize = renderer->GetDrawSize();
+
+    rect.x = pos.x;
+    rect.y = pos.y;
+    rect.w = playerSize.x;
+    rect.h = playerSize.y;
 }
 
-void Player::TakeDamage(float damageIntensity)
-{
-	health.TakeDamage(damageIntensity);
-}
-
-void Player::Death()
-{
-}

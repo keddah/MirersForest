@@ -1,37 +1,34 @@
 #pragma once
 
-#include "GameCharacter.h" 
+#include <vector>
 
 #include "Controllers.h"
+#include "SpriteRenderer.h"
 
-class Player : public Character
+class Player
 {
 public:
-    Player() = default;
-    Player(const std::vector<Collision*>& _otherColliders);
+    Player();
     ~Player() = default;
-    void Update(float deltaTime) override;
+    void Update(float deltaTime);
 
-    void ChangeMoveState(MovementController::EMovementState state);
+    void Init();
     
-    void GivePowerup();
-    Vector2& GetPosition();
+    const SpriteRenderer& GetRenderer() const { return *renderer; } 
+    
     PlayerController& Controller() { return controller; }
-    MovementController& GetMoveController() { return moveController; } 
     
 private:
-    void GainHealth();
-    void TakeDamage(float damageIntensity);
-    void Death();
-        
-    const std::vector<Collision*>& otherColliders;
-
+    void UpdateRectangle();
+    
+    const std::string spritePath = "Sprites/testspritesheet.png";
+    bool initialised = false;
+    
+    SpriteRenderer* renderer;
+    
     PlayerController controller;
-    MovementController moveController = MovementController(controller, *this, otherColliders);
-    //WeaponController weaponController = WeaponController(controller, position);
 
-    std::vector<std::string> animations
-    {
-        "Sprites/testspritesheet.png",
-    };
+    SDL_Rect rect;
+    Vector2 pos = Vector2();
+    
 };

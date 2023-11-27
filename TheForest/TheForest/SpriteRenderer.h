@@ -1,74 +1,40 @@
 #pragma once
+#include <iostream>
 
-#include <string>
-#include <vector>
+#include <SDL_rect.h>
+#include <SDL_render.h>
 
-#include "Image.h"
+#include "Vector2.h"
 
 class SpriteRenderer
 {
 public:
-	SpriteRenderer() = default;
+    SpriteRenderer(const std::string& spritePath);
+    ~SpriteRenderer() = default;
 
-	// For animated things...
-	// SpriteRenderer(const char* paths[], Vector2& pos);
-	SpriteRenderer(const SDL_FRect& rect);
+    void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
+    
+    void Draw();
+    void UpdatePosition(Vector2 pos) { drawRect.x = pos.x; drawRect.y = pos.y; }
 
-	void Animate();
-	Vector2 GetSpriteSize();
-	
-	void SetFrameCount(short frames = 1);
+    Vector2 GetDrawSize() const { return size; }
 
-	const SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
-	void SetSourceRect(SDL_Rect newRect);
 
-	SpriteRenderer& operator=(const SpriteRenderer& other) {
-		this->spriteImages = other.spriteImages;
-		this->sourceRect = other.sourceRect;
-
-		this->fillOn = other.fillOn;
-		this->fillColour = other.fillColour;
-
-		this->frameTimer = other.frameTimer;
-		this->currentFrame = other.currentFrame;
-		this->animSpeed = other.animSpeed;
-		this->activeAnim = other.activeAnim;
-		return *this;
-	}
-	
-	// Primarily for debugging...
-	// The rectangle is filled with the inputted color
-
-	// Deletes all of the elements in the spriteImages vector and emplace a new one using this path.
-	// (used when creating tiles)
-	void SetSprite(const std::string& path);
-	
-	void SetImage(const Image& newImage);
-
-	// Pass in an array of image paths. Done to set the animations to choose from.  
-	// (used when creating characters)
-	void SetSpriteSheets(const std::vector<std::string>& paths);
-	
-	void FillRectangle(const int r, const int g, const int b, const int a);
-	void FillRectangle(const SDL_Rect& colour);
-	void UnFillRectangle();
+    void SetFrameCount(const short count = 1) { frameCount = count; }
 
 private:
-	// (x,y) = the top left corner of the area to crop .. (w,h) = the bottom right corner - the end of the crop.
-	SDL_Rect sourceRect = SDL_Rect();
+    std::string imagePath;
+    void Animate();
 
-	// (x,y) = the position .. (w,h) = the size
-	const SDL_FRect& destinationRect;
+    SDL_Texture* toRender;
+    
+    Vector2 size;
+    SDL_Rect drawRect;
+    SDL_Rect sourceRect;
 
-	// The sprite sheet that's currently being rendered
-	short activeAnim = 0;
-	short currentFrame = 0;
-	float frameTimer = 0;
-	float animSpeed = 2;
 
-	std::vector<Image> spriteImages = std::vector<Image>();
-
-	bool fillOn;
-	SDL_Rect fillColour;
+    // Animations
+    short currentFrame;
+    short frameCount = 4;
+    bool isAnimated;
 };
-

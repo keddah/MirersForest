@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+// Initialise SDL in this constructer
 GameManager::GameManager()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -36,22 +37,22 @@ GameManager::GameManager()
 	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 
 	running = true;
-	manager = new SceneManager();
 }
 
 GameManager::~GameManager()
 {
-	delete manager;
 	SDL_DestroyRenderer(GameWindow::GetRenderer());
 	SDL_DestroyWindow(GameWindow::GetWindow());
 	SDL_Quit();
 }
 
+// Gets called in a while loop in the main function
 void GameManager::Update()
 {
 	const float deltaTime = Time::GetDeltaTime();
 
-	manager->Update(deltaTime);
+	// Update all the things that need to be updated for the current session.
+	session.Update();
 }
 
 void GameManager::Draw()
@@ -59,8 +60,13 @@ void GameManager::Draw()
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), 0, 15, 10, 255);
 	SDL_RenderFillRect(GameWindow::GetRenderer(), nullptr);
 
+	// Clear the screen before rendering something new
 	SDL_RenderClear(GameWindow::GetRenderer());
-	manager->Draw();
+
+	// Render everything that needs to be rendered in the current session
+	session.Draw();
+
+	// Actually display the new things
 	SDL_RenderPresent(GameWindow::GetRenderer());
 }
 

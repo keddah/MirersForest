@@ -17,7 +17,7 @@ Vector2::Vector2()
 	y = 0;
 }
 
-Vector2::Vector2(float X, float Y)
+Vector2::Vector2(int X, int Y)
 {
 	x = X;
 	y = Y;
@@ -39,7 +39,7 @@ Vector2 Vector2::operator-=(const Vector2& other)
 	return *this;
 }
 
-Vector2 Vector2::operator*=(const float multiplier)
+Vector2 Vector2::operator*=(const int multiplier)
 {
 	x *= multiplier;
 	y *= multiplier;
@@ -47,7 +47,7 @@ Vector2 Vector2::operator*=(const float multiplier)
 	return *this;
 }
 
-Vector2 Vector2::operator/=(const float divider)
+Vector2 Vector2::operator/=(const int divider)
 {
 	x /= divider;
 	y /= divider;

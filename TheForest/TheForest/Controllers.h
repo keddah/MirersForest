@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "SDL.h"
-#include "Collider.h"
+#include "Vector2.h"
 
 
 #define print(x) { std::cout<< x << std::endl; }
@@ -34,66 +34,6 @@ private:
 
 	void HandleInputs();
 	void CalcMousePosition(SDL_Event& e);
-};
-
-
-
-
-
-/* ------------------ Movement ------------------ */
-#include "Physics.h"
-
-class MovementController : public Physics
-{
-public:
-    MovementController(PlayerController& ctrl, Collision& playerCollider, const std::vector<Collision*>& colliders);
-    ~MovementController() = default;
-
-    void Update(float deltaTime);
-
-    enum class EMovementState
-    {
-        Idle,
-        Moving,
-        CrouchIdle,
-    	CrouchMoving,
-        Sliding
-    };
-
-	void ResetSpriteSize(const Vector2& newSize);
-	// void BlockingCollisions(const std::tuple<bool, Collision::EObstructionDirection>& obstruction);
-
-private:
-    void CalculateVelocity(float deltaTime);
-
-	void ApplyVelocity();
-    void Move(float deltaTime);
-    void Jump();
-    void Slide();
-    void Crouch();
-    void Uncrouch();
-
-    const std::vector<Collision*>& levelColliders;
-    Collision& playerCollider;
-    PlayerController& controller;
-
-	bool& obstructed = playerCollider.IsObstructed();
-	
-    bool canMove = true;
-	
-    EMovementState currentMoveState = EMovementState::Idle;
-    float moveSpeed = 5;
-
-    const float mass = 1000;
-    float jumpForce = 150;
-    float slideSpeed = 10;
-
-	// Direction is a vector instead of a float/int so that applying forces can be done easily 
-    Vector2 direction = Vector2(0, 0);
-
-    // Used to calculate velocity
-    Vector2 previousPos = Vector2();
-	Vector2 spriteSize;
 };
 
 

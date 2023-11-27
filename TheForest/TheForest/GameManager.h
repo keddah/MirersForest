@@ -6,8 +6,8 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 
-#include "SceneManager.h"
 #include "CustomTimer.h"
+#include "GameSession.h"
 #include "GameSingletons.h"
 
 #define print(x){std::cout << (x) << std::endl;}
@@ -26,9 +26,8 @@ public:
 
 private:
 	bool running;
+	GameSession session;
 	
 	const int screenWidth = 1920;
 	const int screenHeight = 1080;
-
-	SceneManager* manager;
 };
