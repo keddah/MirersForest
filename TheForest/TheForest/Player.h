@@ -34,7 +34,11 @@ private:
     
     PlayerController controller;
 
+
+    // Movement
     SDL_Rect rect;
     Vector2 pos = Vector2();
-    
+    short direction = 0;
+    short moveSpeed = 5;
+    short jumpForce = 20;
 };

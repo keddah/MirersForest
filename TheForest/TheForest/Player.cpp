@@ -2,11 +2,16 @@
 
 void Player::Update(float deltaTime)
 {
+    controller.Update();
+    
     // Reset velocity at the start of each frame so that it doesn't infinitely increase.
     velocity = Vector2();
-    
-    ApplyGravity();
 
+    // If the jump button is held... gravity is slightly less powerful
+    // if the crouch button is being held... gravity is slightly dmore powerful
+    ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
+    Move();
+    
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     pos += velocity;
@@ -34,18 +39,30 @@ void Player::UpdateRectangle()
     rect.w = playerSize.x;
     rect.h = playerSize.y;
 
-    print("InPlayer: " << pos.x << ", " << pos.y << rect.w << ", " << rect.h)
+    // print("InPlayer: " << pos.x << ", " << pos.y << rect.w << ", " << rect.h)
 }
 
 void Player::Move()
 {
-    // if(controller.GetMoveInputs()[0])
-    // if(controller.GetMoveInputs()[0])
-    // if(controller.GetMoveInputs()[0])
-    // if(controller.GetMoveInputs()[0])
+    if(controller.GetMoveInputs()[0]) Jump();
+    if(controller.GetMoveInputs()[1]) Crouch();
+
+    const bool left = controller.GetMoveInputs()[2];
+    const bool right = controller.GetMoveInputs()[3];
+
+    // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
+    direction = left? -1 : (right? 1: 0);
+
+    velocity.x += direction * moveSpeed;
 }
 
 void Player::Jump()
+{
+    
+    velocity.y -= jumpForce;
+}
+
+void Player::Crouch()
 {
 }
 
