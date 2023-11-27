@@ -1,13 +1,14 @@
 #include "SpriteRenderer.h"
 #include <SDL_image.h>
 
+#include "CustomTimer.h"
 #include "GameSingletons.h"
 
 
-SpriteRenderer::SpriteRenderer(const std::string& spritePath)
+SpriteRenderer::SpriteRenderer(const std::string& spritePath, bool animated)
 {
     imagePath = spritePath;
-    
+    isAnimated = animated;
 }
 
 void SpriteRenderer::Draw()
@@ -20,12 +21,21 @@ void SpriteRenderer::Draw()
         return;
     }
 
-    // It's position will be set by the owner of this object
-    drawRect.w = image->w;
-    drawRect.h = image->h;
+    if(isAnimated)
+    {
+        size.x = image->w / frameCount;
+        size.y = image->h;
+    }
 
-    size.x = drawRect.w;
-    size.y = drawRect.h;
+    else
+    {
+        size.x = drawRect.w;
+        size.y = drawRect.h;
+    }
+    
+    // It's position will be set by the owner of this object
+    drawRect.w = size.x;
+    drawRect.h = size.y;
 
     if(!GameWindow::GetRenderer()) print("COuldn't get renderer.")
     toRender = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image);
@@ -48,8 +58,17 @@ void SpriteRenderer::Animate()
 {
     if(!isAnimated) return;
 
-    sourceRect.x = currentFrame * (size.x / frameCount);
+    sourceRect.x = size.x * currentFrame;
     sourceRect.y = 0; 
-    sourceRect.w = size.x * frameCount;
-    sourceRect.h = size.y; 
+    sourceRect.w = size.x;
+    sourceRect.h = size.y;
+
+    frameTimer += Time::GetDeltaTime() * 50;
+    if (frameTimer > animSpeed)
+    {
+        currentFrame++;
+        frameTimer = 0;
+    }
+
+    if (currentFrame > frameCount - 1) currentFrame = 0;
 }

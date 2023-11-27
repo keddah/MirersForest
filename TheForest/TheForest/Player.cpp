@@ -14,7 +14,7 @@ void Player::Init()
 {
     if(initialised) return;
 
-    renderer = new SpriteRenderer(spritePath);
+    renderer = new SpriteRenderer(spritePath, true);
     renderer->SetIsAnimated();
     
     initialised = true;

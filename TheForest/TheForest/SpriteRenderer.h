@@ -9,7 +9,7 @@
 class SpriteRenderer
 {
 public:
-    SpriteRenderer(const std::string& spritePath);
+    SpriteRenderer(const std::string& spritePath, bool animated = false);
     ~SpriteRenderer() = default;
 
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
@@ -36,5 +36,7 @@ private:
     // Animations
     short currentFrame;
     short frameCount = 4;
+    float frameTimer;
+    float animSpeed = .4f;
     bool isAnimated;
 };
