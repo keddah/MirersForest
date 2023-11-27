@@ -8,8 +8,9 @@ GameSession::GameSession()
     renderers.push_back(player.GetRenderer());
 }
 
-void GameSession::Update()
+void GameSession::Update(float deltaTime)
 {
+    player.Update(deltaTime);
 }
 
 void GameSession::Draw()

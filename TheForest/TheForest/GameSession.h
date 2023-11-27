@@ -7,7 +7,7 @@ public:
     GameSession();
     ~GameSession() = default;
 
-    void Update();
+    void Update(float deltaTime);
     void Draw();
     
 private:

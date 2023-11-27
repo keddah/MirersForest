@@ -9,13 +9,12 @@
 class SpriteRenderer
 {
 public:
-    SpriteRenderer(const std::string& spritePath, bool animated = false);
+    SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false);
     ~SpriteRenderer() = default;
 
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
     
     void Draw();
-    void UpdatePosition(Vector2 pos) { drawRect.x = pos.x; drawRect.y = pos.y; }
 
     Vector2 GetDrawSize() const { return size; }
 
@@ -29,6 +28,8 @@ private:
     SDL_Texture* toRender;
     
     Vector2 size;
+    const Vector2& position;
+    
     SDL_Rect drawRect;
     SDL_Rect sourceRect;
 

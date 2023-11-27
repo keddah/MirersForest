@@ -5,7 +5,7 @@
 #include "GameSingletons.h"
 
 
-SpriteRenderer::SpriteRenderer(const std::string& spritePath, bool animated)
+SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated): position(pos)
 {
     imagePath = spritePath;
     isAnimated = animated;
@@ -47,6 +47,11 @@ void SpriteRenderer::Draw()
     }
     // Goes to the next frame 
     Animate();
+
+    drawRect.x = position.x;
+    drawRect.y = position.y;
+    
+    // print("InRenderer: " << drawRect.x << ", " << drawRect.y << drawRect.w << ", " << drawRect.h)
     
     // Responsible for drawing the texture 
     SDL_RenderCopy(GameWindow::GetRenderer(), toRender, &sourceRect, &drawRect);

@@ -52,7 +52,7 @@ void GameManager::Update()
 	const float deltaTime = Time::GetDeltaTime();
 
 	// Update all the things that need to be updated for the current session.
-	session.Update();
+	session.Update(deltaTime);
 }
 
 void GameManager::Draw()
