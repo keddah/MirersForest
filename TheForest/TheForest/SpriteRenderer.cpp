@@ -3,7 +3,7 @@
 #include "CustomTimer.h"
 
 
-SpriteRenderer::SpriteRenderer(const SDL_FRect& rect, bool animated) : destinationRect(rect)
+SpriteRenderer::SpriteRenderer(SDL_FRect& rect, bool animated) : destinationRect(rect)
 {
 	isAnimated = animated;
 	SetFrameCount(frameCount);
@@ -20,6 +20,8 @@ void SpriteRenderer::Draw()
 	// The destination rect's position is already being set from the MoveSprite function
 	SDL_RenderCopyF(GameWindow::GetRenderer(), spriteImages[activeAnim].GetTexture(), &sourceRect, &destinationRect);
 
+	print("Renderer: " << destinationRect.x << ", " << destinationRect.y << ", " << destinationRect.w << ", " << destinationRect.h)
+	
 	if(!isAnimated) return;
 	
 	frameTimer += Time::GetDeltaTime() * 50;
@@ -45,11 +47,6 @@ Vector2 SpriteRenderer::GetSpriteSize()
 void SpriteRenderer::SetFrameCount(short frames)
 {
 	if(spriteImages.size() > 0) spriteImages[activeAnim].SetSpriteCount(frames);
-}
-
-void SpriteRenderer::SetSourceRect(const SDL_Rect newRect)
-{
-	sourceRect = SDL_Rect(newRect);
 }
 
 void SpriteRenderer::SetSprite(const std::string& path)

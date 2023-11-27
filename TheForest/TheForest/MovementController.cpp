@@ -3,6 +3,7 @@
 MovementController::MovementController(PlayerController& ctrl, Collision& _playerCollider, const std::vector<Collision>& colliders) :
 controller(ctrl), playerCollider(_playerCollider), levelColliders(colliders)
 {
+	playerCollider.SetPosition(500,500);
 }
 
 

@@ -11,15 +11,16 @@ public:
 	SpriteRenderer() = default;
 
 	// Frame count is for animated things...
-	SpriteRenderer(const SDL_FRect& rect, bool animated);
+	SpriteRenderer(SDL_FRect& rect, bool animated);
 
 	void Draw();
 	Vector2 GetSpriteSize();
 	
 	void SetFrameCount(short frames = 1);
 
-	const SDL_FRect& GetDestinationRectangle() const { return destinationRect; }
-	void SetSourceRect(SDL_Rect newRect);
+	const SDL_FRect& GetDestRect() const { return destinationRect; }
+	void SetSourceRect(SDL_Rect newRect) { sourceRect = newRect; } 
+	void SetDestRect(SDL_FRect newRect) { destinationRect = newRect; }
 
 	SpriteRenderer& operator=(const SpriteRenderer& other) {
 		this->spriteImages = other.spriteImages;
@@ -57,7 +58,7 @@ private:
 	SDL_Rect sourceRect = SDL_Rect();
 
 	// (x,y) = the position .. (w,h) = the size
-	const SDL_FRect& destinationRect;
+	SDL_FRect& destinationRect;
 
 	// The sprite sheet that's currently being rendered
 	bool isAnimated;

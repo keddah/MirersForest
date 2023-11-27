@@ -24,6 +24,9 @@ renderer(rect, false), colliders(otherColliders)
 
 void Collision::Update()
 {
+	renderer.SetDestRect(rect);
+	print("Collider: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h)
+
 	// for(auto& collider2: colliders)
 	// {
 	// 	if(this == collider2) continue;

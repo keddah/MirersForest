@@ -5,8 +5,7 @@ class Tile
 {
     public:
     Tile() = default;    
-    Tile(const std::string& path, const std::vector<Collision>& _otherColliders);    
-    Tile(const Image& image, const std::vector<Collision>& _otherColliders);    
+    Tile(const Collision& _collider);    
 
     Collision& GetCollider() { return collider; }
 
@@ -26,12 +25,9 @@ class Tile
     void SetPosition(float x, float y) { collider.SetPosition(x,y); }
 
     // Doesn't have to be a vector since every tile will be a square.
-    static constexpr float tileSize = 20;
     
     private:
-    Collision collider = Collision(otherColliders, 0, 0, tileSize, tileSize);
-
-    const std::vector<Collision>& otherColliders;
+    Collision collider;
 };
 
 
@@ -47,10 +43,10 @@ private:
     static constexpr short levelWidth = 100;
     static constexpr short levelHeight = 10;
     short tileMap[levelWidth][levelHeight];
-    short tileSize = 16;
+    static constexpr short tileSize = 16;
     
     std::vector<Tile> tiles = std::vector<Tile>();
-    std::string tilePath {"TileSets/varietySet.png"};
+    std::string tilePath {"Sprites/test16-16.jpg"};
     enum ETileSheets
     {
         Empty = 0,

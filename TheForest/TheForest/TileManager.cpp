@@ -9,7 +9,6 @@ TileManager::TileManager(const std::vector<Collision>& otherColliders)
     {
         for(int h = 0; h < levelHeight; h++)
         {
-            Tile tile = Tile(tileImg, otherColliders);
 
             SDL_Rect sourceRect;
             sourceRect.x = (tileMap[w][h] % 6) * tileSize;
@@ -23,8 +22,12 @@ TileManager::TileManager(const std::vector<Collision>& otherColliders)
             destinationRect.w = tileImg.GetSpriteSheet().Size().x;
             destinationRect.h = tileImg.GetSpriteSheet().Size().y;
             
+            auto newCollision = Collision(otherColliders, 0,0,0,0);
+            newCollision.GetRenderer().SetImage(tileImg);
+            auto tile = Tile(newCollision);
+            
             tile.SetDestRect(destinationRect);
-            tile.SetSourceRect(sourceRect);
+            // tile.SetSourceRect(sourceRect);
             
             tiles.push_back(tile);
             print("h  " << h)

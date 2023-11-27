@@ -11,8 +11,8 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update(float deltaTime)
 {
-	player.Update(deltaTime);
 	collisionManager.Update();
+	player.Update(deltaTime);
 }
 
 void SceneManager::Draw()

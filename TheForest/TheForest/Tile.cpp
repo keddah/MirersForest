@@ -1,16 +1,11 @@
 #include "TileManager.h"
 
-Tile::Tile(const std::string& path, const std::vector<Collision>& _otherColliders): otherColliders(_otherColliders)
+Tile::Tile(const Collision& _collider): collider(_collider)
 {
-    collider.GetRenderer().SetSprite(path);
     collider.GetRenderer().SetFrameCount();
 }
 
-Tile::Tile(const Image& image, const std::vector<Collision>& _otherColliders): otherColliders(_otherColliders)
-{
-    collider.GetRenderer().SetImage(image);
-    collider.GetRenderer().SetFrameCount();
-}
+
 
 
 /////// Edit destination rectangle
