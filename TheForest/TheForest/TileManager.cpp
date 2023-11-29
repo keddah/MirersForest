@@ -10,7 +10,22 @@ TileManager::TileManager()
 
 void TileManager::MakeTiles()
 {
-        Vector2 startPos = Vector2(0, 400);
+    Vector2 startY = Vector2(500, 400);
+    for (int j = 0; j < 50; j++)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Tile newTile = Tile("TileSets/test16-16.jpg", startY);
+    
+            tiles.emplace_back(newTile);
+    
+            startY.x += tileSize;
+        }
+
+            startY.y -= tileSize;
+    }
+
+    Vector2 startPos = Vector2(0, 400);
     for (int h = 0; h < levelWidth; h++)
     {
         Tile newTile = Tile("TileSets/test16-16.jpg", startPos);
@@ -19,4 +34,5 @@ void TileManager::MakeTiles()
 
         startPos.x += tileSize;
     }
+
 }

@@ -44,7 +44,7 @@ void SpriteRenderer::Draw(bool overriden)
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     StaticRenderer::Draw(true);
     // Goes to the next frame 
-    print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+    //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
 
 
     Animate();

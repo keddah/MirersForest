@@ -16,6 +16,7 @@ public:
     virtual void Draw(bool overridden = false);
     virtual SDL_Surface* SetSprite(const std::string& path);
 
+    const SDL_Rect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
     const Vector2& GetDrawSize() const { return size; }
 
