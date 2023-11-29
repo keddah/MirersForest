@@ -41,10 +41,11 @@ private:
     // Movement
     bool canMove = true;
     Vector2 pos = Vector2();
-    bool blocked = false;
     short direction = 0;
     short moveSpeed = 5;
     short jumpForce = 250;
 
     std::vector<Tile>& floor;
+
+    Vector2 groundLevel;
 };

@@ -30,7 +30,7 @@ public:
 
 	Vector2 operator-(const Vector2& other) const
 	{
-		return {x + other.x, y + other.y};
+		return {x - other.x, y - other.y};
 	}
 
 	Vector2 operator*(const int multiplier) const

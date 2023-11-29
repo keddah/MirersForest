@@ -41,12 +41,14 @@ void SpriteRenderer::Draw(bool overriden)
     drawRect.x = posRef.x;
     drawRect.y = posRef.y;
 
+    // Need to debug before Drawing so that the box is behind the sprite.
+    Debug();
+
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     StaticRenderer::Draw(true);
-    // Goes to the next frame 
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
 
-
+    // Goes to the next frame 
     Animate();
 }
 
@@ -67,4 +69,10 @@ void SpriteRenderer::Animate()
     }
 
     if (currentFrame > frameCount - 1) currentFrame = 0;
+}
+
+void SpriteRenderer::Debug()
+{
+    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), debugColour.x, debugColour.y, debugColour.w, debugColour.h);
+    SDL_RenderFillRect(GameWindow::GetRenderer(), &drawRect);
 }

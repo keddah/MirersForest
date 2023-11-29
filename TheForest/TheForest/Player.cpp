@@ -14,6 +14,8 @@ void Player::Update(float deltaTime)
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly dmore powerful
     ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
+   
+    // Move has to be called first so that collisions can negate its newly added velocity.
     Move();
     Collisions();
     
@@ -43,31 +45,37 @@ void Player::UpdateRectangle()
     rect.y = pos.y;
     rect.w = playerSize.x;
     rect.h = playerSize.y;
-
-    // print("InPlayer: " << pos.x << ", " << pos.y << rect.w << ", " << rect.h)
 }
 
 void Player::Collisions()
 {
-    const Vector2 predictedPos = pos + Vector2(velocity.x - 1, velocity.y - 1);
-    const auto predictedRect = SDL_Rect{predictedPos.x, predictedPos.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
+    const Vector2 predictedPosX = pos + Vector2(velocity.x, 0);
+    const Vector2 predictedPosY = pos + Vector2(0, velocity.y);
+    const auto predictedRectX = SDL_Rect{ predictedPosX.x, predictedPosX.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y };
+    const auto predictedRectY = SDL_Rect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     grounded = false;
-    blocked = false;
 
     for (auto& tile : floor)
     {
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_Rect tileRect = SDL_Rect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
-        if (SDL_HasIntersection(&predictedRect, &tileRect))
+        
+        // Separate the axis collisions.
+        const bool predictedCollisionX = SDL_HasIntersection(&predictedRectX, &tileRect);
+        const bool predictedCollisionY = SDL_HasIntersection(&predictedRectY, &tileRect);
+
+        if (predictedCollisionX)
         {
-            velocity = Vector2();
-            continue;
+            velocity = Vector2(0, velocity.y);
+        }
+        if (predictedCollisionY)
+        {
+            velocity = Vector2(velocity.x, 0);
+            grounded = true;
         }
 
-        grounded = predictedRect.y + predictedRect.h + 10 >= tileRect.y;
     }
-    
     
 }
 
@@ -83,7 +91,7 @@ void Player::Move()
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = left? -1 : (right? 1: 0);
 
-    velocity.x += (blocked? 0 : direction) * moveSpeed;
+    velocity.x += direction * moveSpeed;
 }
 
 void Player::Jump()

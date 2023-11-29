@@ -52,6 +52,10 @@ public:
 
 private:
     void Animate();
+    void Debug();
+
+    // Using an Rect since it has 4 values...
+    SDL_Rect debugColour = SDL_Rect{0, 125, 125, 255};
 
     // Used for things that will constantly be updated (like characters)
     const Vector2& posRef;
