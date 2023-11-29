@@ -12,6 +12,7 @@ GameSession::GameSession()
 void GameSession::Update(float deltaTime)
 {
     player.Update(deltaTime);
+
 }
 
 void GameSession::Draw()

@@ -14,6 +14,7 @@ void Player::Update(float deltaTime)
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly dmore powerful
     ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
+    Collisions();
     Move();
     
     // Once all the movements have been done... add the velocity to the position
@@ -49,17 +50,27 @@ void Player::UpdateRectangle()
 void Player::Collisions()
 {
     const Vector2 predictedPos = pos += velocity;
-    const auto predictedRect = SDL_Rect{predictedPos.x, predictedPos.x, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
+
+    const auto predictedRect = SDL_Rect{predictedPos.x, predictedPos.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     bool collision = false;
     
     for(auto& tile: floor)
     {
-        if(SDL_HasIntersection(&predictedRect, &tile.GetRenderer().GetDrawRect()))
+        const SpriteRenderer& tileRndrr = tile.GetRenderer();
+        
+        // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
+        SDL_Rect tileRect = SDL_Rect{ tileRndrr.GetPosition().x, tileRndrr.GetPosition().y, tileRndrr.GetDrawSize().x, tileRndrr.GetDrawSize().y};
+        print("dest: " << predictedRect.x << ", " << predictedRect.y << ", " << predictedRect.w << ", " << predictedRect.h)
+
+        if(SDL_HasIntersection(&predictedRect, &tileRect))
         {
             collision = true;
         }
     }
+
+    //canMove = !collision; 
+    print(collision)
 }
 
 void Player::Move()

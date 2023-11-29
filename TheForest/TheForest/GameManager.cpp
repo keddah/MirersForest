@@ -36,6 +36,7 @@ GameManager::GameManager()
 	}
 	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 
+	session = new GameSession();
 	running = true;
 }
 
@@ -52,7 +53,7 @@ void GameManager::Update()
 	const float deltaTime = Time::GetDeltaTime();
 
 	// Update all the things that need to be updated for the current session.
-	session.Update(deltaTime);
+	session->Update(deltaTime);
 }
 
 void GameManager::Draw()
@@ -64,7 +65,7 @@ void GameManager::Draw()
 	SDL_RenderClear(GameWindow::GetRenderer());
 
 	// Render everything that needs to be rendered in the current session
-	session.Draw();
+	session->Draw();
 
 	// Actually display the new things
 	SDL_RenderPresent(GameWindow::GetRenderer());

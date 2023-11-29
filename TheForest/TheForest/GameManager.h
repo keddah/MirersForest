@@ -26,7 +26,7 @@ public:
 
 private:
 	bool running;
-	GameSession session;
+	GameSession* session;
 	
 	const int screenWidth = 1920;
 	const int screenHeight = 1080;

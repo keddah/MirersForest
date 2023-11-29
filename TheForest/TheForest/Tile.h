@@ -11,5 +11,5 @@ public:
     
 private:
     Vector2 pos;
-    SpriteRenderer renderer = SpriteRenderer("", pos);
+    SpriteRenderer renderer;
 };

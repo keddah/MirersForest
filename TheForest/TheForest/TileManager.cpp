@@ -2,9 +2,8 @@
 
 TileManager::TileManager()
 {
-    test.GetRenderer().SetFrameCount();
-    test.GetRenderer().SetIsAnimated(false);
     tiles.push_back(test);
+    test.GetRenderer().SetFrameCount();
 }
 
 void TileManager::MakeTiles()
