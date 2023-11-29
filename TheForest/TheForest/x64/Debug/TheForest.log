@@ -1,4 +1,16 @@
-﻿  Player.cpp
-  SpriteRenderer.cpp
+﻿  GameManager.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(13,1): warning C4005: 'print': macro redefinition
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Vector2.h(9,1): message : see previous definition of 'print'
+  GameSession.cpp
+  Physics.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.cpp(11,47): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.cpp(17,51): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Physics.cpp(26,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Player.cpp
+  ProjectileBase.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\ProjectileBase.cpp(10,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  TheForest.cpp
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\GameManager.h(13,1): warning C4005: 'print': macro redefinition
+C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\TheForest\Vector2.h(9,1): message : see previous definition of 'print'
   Generating Code...
   TheForest.vcxproj -> C:\Users\S22154781\Downloads\Git\MirersForest\TheForest\x64\Debug\TheForest.exe

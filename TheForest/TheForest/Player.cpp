@@ -9,7 +9,8 @@ void Player::Update(float deltaTime)
     controller.Update();
     
     // Reset velocity at the start of each frame so that it doesn't infinitely increase.
-    velocity = Vector2();
+    //velocity.x = velocity.x > maxSpeed ? maxSpeed: velocity.x;
+    //velocity.y = velocity.y > maxSpeed ? maxSpeed: velocity.y;
 
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly dmore powerful
@@ -22,6 +23,7 @@ void Player::Update(float deltaTime)
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     pos += velocity;
+    //velocity = Vector2();
     UpdateRectangle();
 }
 

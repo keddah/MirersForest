@@ -38,6 +38,9 @@ class SpriteRenderer: public StaticRenderer
 {
 public:
     SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false);
+
+    // Used for things that need to be renderer that don't have sprites (bullets)
+    SpriteRenderer(const Vector2& pos, Vector2 drawSize);
     ~SpriteRenderer() = default;
 
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
@@ -52,7 +55,7 @@ public:
 
 private:
     void Animate();
-    void Debug();
+    void DrawRectangle();
 
     // Using an Rect since it has 4 values...
     SDL_Rect debugColour = SDL_Rect{0, 125, 125, 255};

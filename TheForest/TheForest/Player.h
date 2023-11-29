@@ -39,6 +39,7 @@ private:
 
 
     // Movement
+    const int maxSpeed = 100;
     bool canMove = true;
     Vector2 pos = Vector2();
     short direction = 0;
