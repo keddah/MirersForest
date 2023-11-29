@@ -13,7 +13,8 @@ public:
     
 private:
     TileManager tileManager;
-    std::vector<SpriteRenderer> renderers = std::vector<SpriteRenderer>();
+    std::vector<SpriteRenderer> spriteRenderers = std::vector<SpriteRenderer>();
+    std::vector<StaticRenderer> staticRenderers = std::vector<StaticRenderer>();
     
     Player player = Player(tileManager.GetTiles());
 };

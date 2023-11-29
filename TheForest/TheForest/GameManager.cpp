@@ -36,7 +36,7 @@ GameManager::GameManager()
 	}
 	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 
-	session = new GameSession();
+	session = std::unique_ptr<GameSession>(new GameSession());
 	running = true;
 }
 

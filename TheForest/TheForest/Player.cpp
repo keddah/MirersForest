@@ -53,24 +53,30 @@ void Player::Collisions()
 
     const auto predictedRect = SDL_Rect{predictedPos.x, predictedPos.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
+    grounded = false;
     bool collision = false;
     
     for(auto& tile: floor)
     {
-        const SpriteRenderer& tileRndrr = tile.GetRenderer();
+        const StaticRenderer& tileRndrr = tile.GetRenderer();
         
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         SDL_Rect tileRect = SDL_Rect{ tileRndrr.GetPosition().x, tileRndrr.GetPosition().y, tileRndrr.GetDrawSize().x, tileRndrr.GetDrawSize().y};
-        print("dest: " << predictedRect.x << ", " << predictedRect.y << ", " << predictedRect.w << ", " << predictedRect.h)
 
         if(SDL_HasIntersection(&predictedRect, &tileRect))
         {
+            if (predictedRect.y < tileRect.y)
+            {
+                grounded = true;
+                continue;
+            }
+            
             collision = true;
         }
+
     }
 
     //canMove = !collision; 
-    print(collision)
 }
 
 void Player::Move()

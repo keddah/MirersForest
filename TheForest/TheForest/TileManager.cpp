@@ -2,18 +2,21 @@
 
 TileManager::TileManager()
 {
-    tiles.push_back(test);
-    test.GetRenderer().SetFrameCount();
+    //tiles.push_back(test);
+    //MakeTiles();
 }
+
+// Make a tile Renderer so that the position doesn't have to be a reference
 
 void TileManager::MakeTiles()
 {
-    for(int w = 0; w < 100; w++)
+        Vector2 startPos = Vector2(0, 400);
+    for (int h = 0; h < levelWidth; h++)
     {
-        for(int h = 0; h < 20; h++)
-        {
-            
-        }
-        
+        Tile newTile = Tile("TileSets/test16-16.jpg", startPos);
+
+        tiles.emplace_back(newTile);
+
+        startPos.x += tileSize;
     }
 }

@@ -7,9 +7,9 @@ class Tile
 public:
     Tile(const std::string& filePath, Vector2 position);
 
-    SpriteRenderer& GetRenderer() { return renderer; }
+    StaticRenderer& GetRenderer() { return renderer; }
     
 private:
     Vector2 pos;
-    SpriteRenderer renderer;
+    StaticRenderer renderer;
 };

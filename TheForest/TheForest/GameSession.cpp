@@ -5,20 +5,23 @@
 GameSession::GameSession()
 {
     player.Init();
-    renderers.push_back(player.GetRenderer());
-    renderers.push_back(tileManager.GetTiles()[0].GetRenderer());
+    spriteRenderers.push_back(player.GetRenderer());
+
+    tileManager.MakeTiles();
+
+    for (auto& tile : tileManager.GetTiles())
+    {
+        staticRenderers.push_back(tile.GetRenderer());
+    }
 }
 
 void GameSession::Update(float deltaTime)
 {
     player.Update(deltaTime);
-
 }
 
 void GameSession::Draw()
 {
-    for (auto& renderer : renderers)
-    {
-        renderer.Draw();
-    }
+    for (auto& renderer : staticRenderers) renderer.Draw(false);
+    for (auto& renderer : spriteRenderers) renderer.Draw(false);
 }

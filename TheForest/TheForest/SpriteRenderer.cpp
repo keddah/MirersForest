@@ -1,11 +1,10 @@
 #include "SpriteRenderer.h"
-#include <SDL_image.h>
 
 #include "CustomTimer.h"
 #include "GameSingletons.h"
 
 
-SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated): position(pos)
+SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated): posRef(pos)
 {
     imagePath = spritePath;
     isAnimated = animated;
@@ -21,64 +20,34 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
             return;
     }
 
-    if (!isAnimated)
-    {
-        size.x = image->w;
-        size.y = image->h;
-        sourceRect.x = 0;
-        sourceRect.y = 0;
-        sourceRect.w = size.x;
-        sourceRect.h = size.y;
-        print("notAnimated")
-    }
+    size.x = isAnimated? image->w / frameCount: image->w;
+    size.y = image->h;
 
-    SDL_FreeSurface(image);
-}
-
-void SpriteRenderer::Draw()
-{
-    // Goes to the next frame 
-    Animate();
-    
-    drawRect.x = position.x;
-    drawRect.y = position.y;
-    
-    //print("source: " << sourceRect.x << ", " << sourceRect.y << ", " << sourceRect.w << ", " << sourceRect.h)
-    //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
-    
-    // Responsible for drawing the texture 
-    SDL_RenderCopy(GameWindow::GetRenderer(), toRender, &sourceRect, &drawRect);
-}
-
-SDL_Surface* SpriteRenderer::SetSprite(const std::string& path)
-{
-    imagePath = path;
-    
-    SDL_Surface* image = IMG_Load(imagePath.c_str());
-
-    if(!image)
-    {
-        print("Couldn't load surface.")
-        return nullptr;
-    }
-
-    if(isAnimated)
-    {
-        size.x = image->w / frameCount;
-        size.y = image->h;
-    }
-
-    else
-    {
-        size.x = image->w;
-        size.y = image->h;
-    }
-    
     // It's position will be set by the owner of this object
     drawRect.w = size.x;
     drawRect.h = size.y;
 
-    return image;
+    sourceRect.x = 0;
+    sourceRect.y = 0;
+    sourceRect.w = size.x;
+    sourceRect.h = size.y;
+
+    SDL_FreeSurface(image);
+}
+
+
+void SpriteRenderer::Draw(bool overriden)
+{
+    drawRect.x = posRef.x;
+    drawRect.y = posRef.y;
+
+    // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
+    StaticRenderer::Draw(true);
+    // Goes to the next frame 
+    print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+
+
+    Animate();
 }
 
 void SpriteRenderer::Animate()
