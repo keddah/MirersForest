@@ -43,7 +43,7 @@ void StaticRenderer::Draw(bool overriden)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
 
     // Responsible for drawing the texture 
-    SDL_RenderCopy(GameWindow::GetRenderer(), toRender, &sourceRect, &drawRect);
+    SDL_RenderCopyF(GameWindow::GetRenderer(), toRender, &sourceRect, &drawRect);
 }
 
 

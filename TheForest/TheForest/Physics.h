@@ -9,8 +9,8 @@ public:
 
     virtual const Vector2& GetVelocity() const { return velocity; }
     
-    void AddForce(Vector2 direction, int force);
-    void AddForce(int x, int y, int force);
+    void AddForce(Vector2 direction, float force);
+    void AddForce(float x, float y, float force);
 
 private:
     bool gravityOn = true;
@@ -22,8 +22,8 @@ protected:
     // Lowered = whether the gravity should be floatier
     void ApplyGravity(bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
-    static constexpr int gravity = 10;
-    int currentGravity;
+    static constexpr float gravity = 9.81f;
+    float currentGravity = gravity;
     
     void SetGrounded(bool isGrounded) { grounded = isGrounded; }
     bool grounded = false;

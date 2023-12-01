@@ -90,5 +90,5 @@ void SpriteRenderer::Animate()
 void SpriteRenderer::DrawRectangle()
 {
     SDL_SetRenderDrawColor(GameWindow::GetRenderer(), debugColour.x, debugColour.y, debugColour.w, debugColour.h);
-    SDL_RenderFillRect(GameWindow::GetRenderer(), &drawRect);
+    SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
 }

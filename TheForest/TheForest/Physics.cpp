@@ -5,16 +5,16 @@ bool Physics::IsGrounded()
 	return false;
 }
 
-void Physics::AddForce(const Vector2 direction, const int force)
+void Physics::AddForce(const Vector2 direction, const float force)
 {
 	velocity += Vector2(direction.x * force, direction.y * force);
-	velocity -= direction * airFriction.Magnitude();
+	// velocity -= direction * airFriction.Magnitude();
 }
 
-void Physics::AddForce(const int x, const int y, const int force)
+void Physics::AddForce(const float x, const float y, const float force)
 {
 	velocity += Vector2(x * force, y * force);
-	velocity -= Vector2(x, y) * airFriction.Magnitude();
+	// velocity -= Vector2(x, y) * airFriction.Magnitude();
 }
 
 void Physics::ApplyGravity(bool lowered, bool accelerated)

@@ -16,7 +16,7 @@ public:
     virtual void Draw(bool overridden = false);
     virtual SDL_Surface* SetSprite(const std::string& path);
 
-    const SDL_Rect& GetRect() const { return drawRect; }
+    const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
     const Vector2& GetDrawSize() const { return size; }
 
@@ -25,7 +25,7 @@ protected:
     std::string imagePath;
     SDL_Texture* toRender;
     Vector2 size;
-    SDL_Rect drawRect = SDL_Rect();
+    SDL_FRect drawRect = SDL_FRect();
     SDL_Rect sourceRect = SDL_Rect();
 
 private:

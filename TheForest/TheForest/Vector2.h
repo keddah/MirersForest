@@ -14,14 +14,14 @@ class Vector2
 {
 public:
 	Vector2();
-	Vector2(int X, int Y);
+	Vector2(float X, float Y);
 
-	int x, y;
+	float x, y;
 
 	Vector2 operator+=(const Vector2& other);
 	Vector2 operator-=(const Vector2& other);
-	Vector2 operator*=(const int multiplier);
-	Vector2 operator/=(const int divider);
+	Vector2 operator*=(const float multiplier);
+	Vector2 operator/=(const float divider);
 
 	Vector2 operator+(const Vector2& other) const
 	{
@@ -33,12 +33,12 @@ public:
 		return {x - other.x, y - other.y};
 	}
 
-	Vector2 operator*(const int multiplier) const
+	Vector2 operator*(const float multiplier) const
 	{
 		
 		return {x * multiplier, y * multiplier};
 	}
-	Vector2 operator/(const int divider) const
+	Vector2 operator/(const float divider) const
 	{
 		return {x / divider, y / divider};
 	}
