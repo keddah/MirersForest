@@ -1,7 +1,11 @@
 #include "Player.h"
+#include <math.h>
 
 Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
 {
+    maxSpeed = 10;
+
+    maxFallSpeed = 50;
 }
 
 void Player::Update(float deltaTime)
@@ -17,14 +21,18 @@ void Player::Update(float deltaTime)
     ApplyGravity(controller.GetMoveInputs()[0], controller.GetMoveInputs()[1]);
    
     // Move has to be called first so that collisions can negate its newly added velocity.
-    Move();
+    // Move(deltaTime);
     Collisions();
     
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     pos += velocity;
-    velocity = Vector2();
     UpdateRectangle();
+}
+
+void Player::FixedUpdate(float deltaTime)
+{
+    Move(deltaTime);
 }
 
 void Player::Init()
@@ -81,11 +89,9 @@ void Player::Collisions()
     
 }
 
-void Player::Move()
+void Player::Move(float deltaTime)
 {
-    if(controller.GetMoveInputs()[0]) Jump();
-    if(controller.GetMoveInputs()[1]) Crouch();
-
+    Jump();
 
     const bool left = controller.GetMoveInputs()[2];
     const bool right = controller.GetMoveInputs()[3];
@@ -93,14 +99,54 @@ void Player::Move()
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = left? -1 : (right? 1: 0);
 
-    velocity.x += direction * moveSpeed;
+    // Adds initial velocity if the player isn't moving to being the acceleration.
+    if(direction != 0 && abs(velocity.x) < .01f) velocity.x += direction * .1f;
+
+    decelerating = direction == 0;
+    Deceleration(direction != 0, deltaTime);
+    
+    const float percentage = abs(velocity.x) / maxSpeed;
+    const float acceleration = percentage * accelerationRate;
+    
+    if(!decelerating) velocity.x += direction * acceleration * deltaTime;
+   
+    
+    if(velocity.x > maxSpeed) velocity.x = maxSpeed;
+    if(velocity.x < -maxSpeed) velocity.x = -maxSpeed;
+}
+
+void Player::Deceleration(bool turning, float deltaTime)
+{
+    if(turning) return;
+    // if the speed from the previous frame is the same as the speed in this frame... decelerate
+    if(decelerating && abs(velocity.x) > .01)
+    {
+        const float percentage = abs(velocity.x) / slowSpeed;
+        const float deceleration = turning? decelerationRate * 10: decelerationRate * percentage;
+        velocity.x -= abs(deceleration) * deltaTime;
+
+        if(abs(velocity.x) <= 0) velocity.x = 0;
+        print("deceleratingsdgfisf")
+    }
 }
 
 void Player::Jump()
 {
+    // Allowed to jump if the jump button is pressed or the jump buffer is active
+    jumping = controller.GetMoveInputs()[0] || jumpBuffer;
+
+    // Activate the jump buffer if you're in the air for .3 seconds and the jump button is pressed
+    if(GetAirTime() > .3f && !grounded && jumping) jumpBuffer = true; 
+    
     if (!grounded) return;
 
-    velocity.y -= jumpForce;
+    const float forceDifference = pos.y / (pos.y + jumpHeight);
+    const float thrust = forceDifference * jumpForce;
+
+    if(jumping) AddForce(0,1, -thrust);
+    
+    // if jump buffer was true... set it to false
+    jumpBuffer = jumpBuffer? false: jumpBuffer;
 }
 
 void Player::Crouch()

@@ -13,6 +13,7 @@ public:
     Player(std::vector<Tile>& floorRef);
     ~Player() = default;
     void Update(float deltaTime);
+    void FixedUpdate(float deltaTime);
 
     void Init();
     
@@ -24,7 +25,8 @@ private:
     void UpdateRectangle();
 
     void Collisions();
-    void Move();
+    void Move(float deltaTime);
+    void Deceleration(bool turning, float deltaTime);
     void Jump();
     void Crouch();
     void UnCrouch();
@@ -38,15 +40,24 @@ private:
     PlayerController controller;
 
 
-    // Movement
-    const int maxSpeed = 100;
+    //////////// Movement
     bool canMove = true;
-    Vector2 pos = Vector2();
     short direction = 0;
-    short moveSpeed = 5;
-    short jumpForce = 250;
-
+    
+    ////// Acceleration/Deceleration
+    const float accelerationRate = 85;
+    float moveSpeed = 5;
+    
+    // How fast the character should decelerate
+    float slowSpeed = 10;
+    const float decelerationRate = 150;
+    bool decelerating;
+    
+    ////// Jumping
+    bool jumping;
+    bool jumpBuffer;
+    const float jumpHeight = 5;
+    const float jumpForce = 25;
+    
     std::vector<Tile>& floor;
-
-    Vector2 groundLevel;
 };

@@ -19,6 +19,7 @@ public:
 	~GameManager();
 	
 	void Update();
+	void FixedUpdate();
 	void Draw();
 
 	bool IsRunning() const;

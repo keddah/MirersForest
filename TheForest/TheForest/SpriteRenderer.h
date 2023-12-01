@@ -49,13 +49,14 @@ public:
 
     const Vector2& GetPositionReference() const { return posRef; }
 
-
+    void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
+    
     void SetFrameCount(const short count = 1) { frameCount = count; }
 
 
 private:
     void Animate();
-    void DrawRectangle();
+    void DrawRectangle() const;
 
     // Using an Rect since it has 4 values...
     SDL_Rect debugColour = SDL_Rect{0, 125, 125, 255};

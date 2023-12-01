@@ -50,10 +50,13 @@ GameManager::~GameManager()
 // Gets called in a while loop in the main function
 void GameManager::Update()
 {
-	const float deltaTime = Time::GetDeltaTime();
-
 	// Update all the things that need to be updated for the current session.
-	session->Update(deltaTime);
+	session->Update(Time::GetDeltaTime());
+}
+
+void GameManager::FixedUpdate()
+{
+	session->FixedUpdate(Time::GetDeltaTime());
 }
 
 void GameManager::Draw()

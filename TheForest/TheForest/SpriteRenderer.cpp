@@ -77,7 +77,7 @@ void SpriteRenderer::Animate()
     sourceRect.w = size.x;
     sourceRect.h = size.y;
 
-    frameTimer += Time::GetDeltaTime() * 50;
+    frameTimer += Time::GetDeltaTime();
     if (frameTimer > animSpeed)
     {
         currentFrame++;
@@ -87,7 +87,7 @@ void SpriteRenderer::Animate()
     if (currentFrame > frameCount - 1) currentFrame = 0;
 }
 
-void SpriteRenderer::DrawRectangle()
+void SpriteRenderer::DrawRectangle() const
 {
     SDL_SetRenderDrawColor(GameWindow::GetRenderer(), debugColour.x, debugColour.y, debugColour.w, debugColour.h);
     SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);

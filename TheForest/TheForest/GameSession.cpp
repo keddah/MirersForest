@@ -20,6 +20,11 @@ void GameSession::Update(float deltaTime)
     player.Update(deltaTime);
 }
 
+void GameSession::FixedUpdate(float deltaTime)
+{
+    player.FixedUpdate(deltaTime);
+}
+
 void GameSession::Draw()
 {
     for (auto& renderer : staticRenderers) renderer.Draw(false);
