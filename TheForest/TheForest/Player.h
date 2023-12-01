@@ -45,17 +45,18 @@ private:
     short direction = 0;
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 85;
+    const float accelerationRate = 120;
     float moveSpeed = 5;
     
     // How fast the character should decelerate
     float slowSpeed = 10;
-    const float decelerationRate = 150;
+    const float decelerationRate = 175;
     bool decelerating;
     
     ////// Jumping
     bool jumping;
     bool jumpBuffer;
+    const float airControl = 7.5f;
     const float jumpHeight = 5;
     const float jumpForce = 25;
     

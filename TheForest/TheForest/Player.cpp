@@ -65,7 +65,6 @@ void Player::Collisions()
     const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     grounded = false;
-
     for (auto& tile : floor)
     {
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
@@ -104,9 +103,15 @@ void Player::Move(float deltaTime)
 
     decelerating = direction == 0;
     Deceleration(direction != 0, deltaTime);
-    
+
+    // Since the grounded bool will fluctuate (since it's set before this is run)
+    const bool falling = GetAirTime() > .1f;
+
+    // Interpolating to the max speed...
     const float percentage = abs(velocity.x) / maxSpeed;
-    const float acceleration = percentage * accelerationRate;
+
+    // If you're in the air use a multiplier to make controls more responsive (Get rewarded for being in the air)
+    const float acceleration = percentage * (falling? accelerationRate * airControl: accelerationRate);
     
     if(!decelerating) velocity.x += direction * acceleration * deltaTime;
    
@@ -117,16 +122,17 @@ void Player::Move(float deltaTime)
 
 void Player::Deceleration(bool turning, float deltaTime)
 {
-    if(turning) return;
+    // Don't decelerate if you're in the air or changing directions
+    if(turning || !grounded) return;
+    
     // if the speed from the previous frame is the same as the speed in this frame... decelerate
     if(decelerating && abs(velocity.x) > .01)
     {
-        const float percentage = abs(velocity.x) / slowSpeed;
+        const float percentage = velocity.x / slowSpeed;
         const float deceleration = turning? decelerationRate * 10: decelerationRate * percentage;
-        velocity.x -= abs(deceleration) * deltaTime;
+        velocity.x -= deceleration * deltaTime;
 
         if(abs(velocity.x) <= 0) velocity.x = 0;
-        print("deceleratingsdgfisf")
     }
 }
 
