@@ -13,6 +13,7 @@ public:
     StaticRenderer(const std::string& spritePath, Vector2 pos);
     ~StaticRenderer() = default;
 
+    // Overriden means use the position reference
     virtual void Draw(bool overridden = false);
     virtual SDL_Surface* SetSprite(const std::string& path);
 
@@ -27,32 +28,50 @@ protected:
     Vector2 size;
     SDL_FRect drawRect = SDL_FRect();
     SDL_Rect sourceRect = SDL_Rect();
+    Vector2 position;
 
 private:
     // The raw position that was assigned in the constructer
-    Vector2 position;
     
 };
 
 class SpriteRenderer: public StaticRenderer
 {
 public:
+    SpriteRenderer() :posRef(position) {}
     SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false);
 
     // Used for things that need to be renderer that don't have sprites (bullets)
     SpriteRenderer(const Vector2& pos, Vector2 drawSize);
     ~SpriteRenderer() = default;
 
-    void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
+
+    SpriteRenderer& operator=(const SpriteRenderer& other) {
+        sourceRect = other.sourceRect;
+
+        debugColour = other.debugColour;
+
+        isAnimated = other.isAnimated;
+        animSpeed = other.animSpeed;
+        frameTimer = other.frameTimer;
+        currentFrame = other.currentFrame;
+        frameCount = other.frameCount;
+        return *this;
+    }
+
     
-    void Draw(bool overriden) override;
+    void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
+
+    // Overriden means use the position reference
+    void Draw(bool overriden = true) override;
 
     const Vector2& GetPositionReference() const { return posRef; }
 
     void SetDebugColour(SDL_Rect colour) { debugColour = colour; }
-    
+
     void SetFrameCount(const short count = 1) { frameCount = count; }
 
+    
 
 private:
     void Animate();

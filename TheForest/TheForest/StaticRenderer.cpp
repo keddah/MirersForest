@@ -31,6 +31,7 @@ StaticRenderer::StaticRenderer(const std::string& spritePath, Vector2 pos) : pos
     sourceRect.h = size.y;
 }
 
+// Overriden means use the position reference
 void StaticRenderer::Draw(bool overriden)
 {
     if (!overriden)

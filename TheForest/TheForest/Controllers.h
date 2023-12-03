@@ -18,8 +18,13 @@ public:
 	bool* GetMoveInputs();
 
 	Vector2& GetMousePosition() { return mousePos; }
-	bool IsLMB() const;
-	bool IsRMB() const;
+	bool IsLMB() const { return lmb; }
+	bool IsRMB() const { return rmb; }
+	
+	bool JumpBtnDown() const { return moveInputs[0]; } 
+	bool CrouchBtnDown() const { return moveInputs[1]; } 
+	bool IsLeft() const { return moveInputs[2]; }
+	bool IsRight() const { return moveInputs[3]; }
 
 	
 private:

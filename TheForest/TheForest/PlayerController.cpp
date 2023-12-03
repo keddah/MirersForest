@@ -24,17 +24,15 @@ void PlayerController::HandleInputs()
 	while(SDL_PollEvent(&e))
 	{
 		CalcMousePosition(e);
+
+		switch (e.type)
+		{
+			case SDL_MOUSEBUTTONDOWN:
+				rmb = e.button.button == SDL_BUTTON_RIGHT;
+				lmb = e.button.button == SDL_BUTTON_LEFT;
+				break;
+		}
 	}
-}
-
-bool PlayerController::IsLMB() const
-{
-	return lmb;
-}
-
-bool PlayerController::IsRMB() const
-{
-	return rmb;
 }
 
 void PlayerController::ClearInputs()

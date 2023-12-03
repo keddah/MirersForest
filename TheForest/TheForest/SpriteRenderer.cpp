@@ -49,7 +49,7 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
     sourceRect.h = size.y;
 }
 
-
+// Overriden means use the position reference
 void SpriteRenderer::Draw(bool overriden)
 {
     drawRect.x = posRef.x;
@@ -62,7 +62,7 @@ void SpriteRenderer::Draw(bool overriden)
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).
     if(toRender) StaticRenderer::Draw(true);
 
-    //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+    //print("rendeerre: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
 
     // Goes to the next frame 
     Animate();

@@ -4,6 +4,7 @@
 
 #include "Controllers.h"
 #include "Physics.h"
+#include "Projectile.h"
 #include "SpriteRenderer.h"
 #include "Tile.h"
 
@@ -15,31 +16,40 @@ public:
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
 
-    void Init();
+    void UpdateBullets();
+    void DrawBullets();
     
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     
     PlayerController& Controller() { return controller; }
     
 private:
+    const std::string spritePath = "Sprites/testspritesheet.png";
+    SpriteRenderer renderer = SpriteRenderer(spritePath, _position, true);
     void UpdateRectangle();
 
     void Collisions();
     void Move(float deltaTime);
     void Deceleration(bool turning, float deltaTime);
     void Jump();
-    void Crouch();
-    void UnCrouch();
-        
-    const std::string spritePath = "Sprites/testspritesheet.png";
-    bool initialised = false;
+
+    void Shooting();
     
     SDL_Rect rect;
-    SpriteRenderer renderer = SpriteRenderer(spritePath, pos, true);
     
     PlayerController controller;
 
 
+    //////////// Weapons
+    const int projSpawnOffset = 40;
+    Vector2 projectileSpawn;
+
+    bool canShoot = true;
+    float shootTimer;
+    Projectile::EWeaponTypes selectedWeapon = Projectile::EWeaponTypes::Seed;
+
+    std::vector<Projectile> activeBullets = std::vector<Projectile>();
+    
     //////////// Movement
     bool canMove = true;
     short direction = 0;
@@ -48,9 +58,6 @@ private:
     const float accelerationRate = 120;
     float moveSpeed = 5;
     
-    // How fast the character should decelerate
-    float slowSpeed = 10;
-    const float decelerationRate = 175;
     bool decelerating;
     
     ////// Jumping

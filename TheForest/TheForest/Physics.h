@@ -5,7 +5,7 @@
 class Physics
 {
 public:
-    bool IsGrounded() { return grounded; }
+    bool IsGrounded() const { return grounded; }
 
     virtual const Vector2& GetVelocity() const { return velocity; }
     
@@ -17,17 +17,21 @@ private:
     float airTime;
 
 protected:
+    Vector2 _position{0,0};
     Vector2 velocity;
-    Vector2 pos;
+    
+    const float decelerationRate = 175;
+    float drag = 10;
 
-    float GetAirTime() { return airTime; }
+
+    float GetAirTime() const { return airTime; }
     
     float at_gravMultiplierHigh = 10;
     float at_gravMultiplierLow = .15f;
-    float maxSpeed;
-    float maxFallSpeed;
+    float maxSpeed = 20;
+    float maxFallSpeed = 50;
 
-    // Lowered = whether the gravity should be floatier
+    // Lowered = whether the gravity should be floatier - Accelerated = the opposite
     void ApplyGravity(bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
     static constexpr float Gravity = 9.81f;
