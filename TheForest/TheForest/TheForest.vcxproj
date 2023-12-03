@@ -144,7 +144,7 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="StaticRenderer.cpp" />
+    <ClCompile Include="ManualRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />

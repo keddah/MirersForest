@@ -74,8 +74,8 @@ float Vector2::Magnitude() const
 // Used this to check collisions since it was more reliable
 float Vector2::Distance(const Vector2& other) const
 {
-	const int difference_x = x - other.x;
-	const int difference_y = y - other.y;
+	const float difference_x = x - other.x;
+	const float difference_y = y - other.y;
 
 	// The magnitude of the difference = the distance between the 2 points
 	const float distance = Vector2(difference_x, difference_y).Magnitude();

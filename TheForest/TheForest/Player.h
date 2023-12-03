@@ -16,7 +16,6 @@ public:
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
 
-    void UpdateBullets();
     void DrawBullets();
     
     const SpriteRenderer& GetRenderer() const { return renderer; } 
@@ -25,12 +24,12 @@ public:
     
 private:
     const std::string spritePath = "Sprites/testspritesheet.png";
-    SpriteRenderer renderer = SpriteRenderer(spritePath, _position, true);
+    SpriteRenderer renderer = SpriteRenderer(spritePath, position, true);
     void UpdateRectangle();
 
     void Collisions();
     void Move(float deltaTime);
-    void Deceleration(bool turning, float deltaTime);
+    void Deceleration(float deltaTime);
     void Jump();
 
     void Shooting();
@@ -63,7 +62,7 @@ private:
     ////// Jumping
     bool jumping;
     bool jumpBuffer;
-    const float airControl = 7.5f;
+    const float airControl = 5.5f;
     const float jumpHeight = 5;
     const float jumpForce = 25;
     

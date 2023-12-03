@@ -17,7 +17,7 @@ private:
     float airTime;
 
 protected:
-    Vector2 _position{0,0};
+    Vector2 position;
     Vector2 velocity;
     
     const float decelerationRate = 175;
@@ -32,7 +32,7 @@ protected:
     float maxFallSpeed = 50;
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
-    void ApplyGravity(bool lowered = false, bool accelerated = false);
+    void ApplyGravity(bool isCharacter = false, bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
     static constexpr float Gravity = 9.81f;
     float currentGravity = Gravity;

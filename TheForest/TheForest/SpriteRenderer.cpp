@@ -35,6 +35,7 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
     SDL_FreeSurface(image);
 }
 
+// This constructor is used whenever the thing to render doesn't have a sprite.
 SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos)
 {
     size = drawSize;
@@ -56,13 +57,16 @@ void SpriteRenderer::Draw(bool overriden)
     drawRect.y = posRef.y;
 
     // Need to debug before Drawing so that the box is behind the sprite.
+    // if(!toRender) DrawRectangle();
+    // else ManualRenderer::Draw(true);
+
     DrawRectangle();
 
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).
-    if(toRender) StaticRenderer::Draw(true);
+    if(toRender) ManualRenderer::Draw(true);
 
-    //print("rendeerre: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+    //print("renderer: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
 
     // Goes to the next frame 
     Animate();
@@ -70,7 +74,7 @@ void SpriteRenderer::Draw(bool overriden)
 
 void SpriteRenderer::Animate()
 {
-    if(!isAnimated) return;
+    if(!isAnimated || !toRender) return;
 
     sourceRect.x = size.x * currentFrame;
     sourceRect.y = 0; 
@@ -89,6 +93,6 @@ void SpriteRenderer::Animate()
 
 void SpriteRenderer::DrawRectangle() const
 {
-    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), debugColour.x, debugColour.y, debugColour.w, debugColour.h);
+    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.x, drawColour.y, drawColour.w, drawColour.h);
     SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
 }

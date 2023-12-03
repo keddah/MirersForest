@@ -7,7 +7,6 @@ GameSession::GameSession()
     spriteRenderers.push_back(player.GetRenderer());
 
     tileManager.MakeTiles();
-
     for (auto& tile : tileManager.GetTiles())
     {
         staticRenderers.push_back(tile.GetRenderer());
@@ -17,7 +16,6 @@ GameSession::GameSession()
 void GameSession::Update(float deltaTime)
 {
     player.Update(deltaTime);
-    player.UpdateBullets();
 }
 
 void GameSession::FixedUpdate(float deltaTime)
