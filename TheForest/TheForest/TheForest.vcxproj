@@ -149,6 +149,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="WeaponController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="WeaponController.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />

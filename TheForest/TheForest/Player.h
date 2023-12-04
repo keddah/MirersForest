@@ -1,22 +1,19 @@
 #pragma once
 
-#include <vector>
-
-#include "Controllers.h"
 #include "Physics.h"
-#include "Projectile.h"
 #include "SpriteRenderer.h"
 #include "Tile.h"
+#include "WeaponController.h"
 
 class Player : public Physics
 {
 public:
     Player(std::vector<Tile>& floorRef);
     ~Player() = default;
+
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-
-    void DrawBullets();
+    void DrawBullets() { wc.DrawBullets(); } 
     
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     
@@ -32,22 +29,14 @@ private:
     void Deceleration(float deltaTime);
     void Jump();
 
-    void Shooting();
-    
-    SDL_Rect rect;
+    SDL_FRect rect;
     
     PlayerController controller;
 
 
     //////////// Weapons
-    const int projSpawnOffset = 40;
-    Vector2 projectileSpawn;
-
-    bool canShoot = true;
-    float shootTimer;
-    Projectile::EWeaponTypes selectedWeapon = Projectile::EWeaponTypes::Seed;
-
-    std::vector<Projectile> activeBullets = std::vector<Projectile>();
+    WeaponController wc = WeaponController(controller, rect);
+    
     
     //////////// Movement
     bool canMove = true;

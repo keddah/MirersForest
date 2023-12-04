@@ -13,7 +13,8 @@ Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
 void Player::Update(float deltaTime)
 {
     controller.Update();
-
+    wc.Update(deltaTime);
+    
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly more powerful
     ApplyGravity(true, controller.JumpBtnDown(), controller.CrouchBtnDown());
@@ -26,9 +27,6 @@ void Player::Update(float deltaTime)
     // and update everything that needs to know.
     position += velocity;
     UpdateRectangle();
-
-    Shooting();
-    for(auto& bullet : activeBullets) bullet.Update();
 }
 
 void Player::FixedUpdate(float deltaTime)
@@ -37,11 +35,6 @@ void Player::FixedUpdate(float deltaTime)
     Jump();
     
     Move(deltaTime);
-}
-
-void Player::DrawBullets()
-{
-    for(auto& bullet : activeBullets) bullet.Draw();
 }
 
 // The player is only responsible for setting the position.
@@ -149,31 +142,4 @@ void Player::Jump()
     
     // if jump buffer was true... set it to false
     jumpBuffer = jumpBuffer? false: jumpBuffer;
-}
-
-void Player::Shooting()
-{
-    // Update the projectile spawn position; 
-    projectileSpawn = Vector2(position.x + rect.w/2, position.y + rect.h/2) + Vector2(direction * projSpawnOffset, 0);
-    
-    if(!canShoot)
-    {
-        shootTimer += Time::GetDeltaTime();
-        if(shootTimer > activeBullets.back().GetShootDelay())
-        {
-            shootTimer = 0;
-            canShoot = true;
-        }
-        
-        return;
-    }
-
-
-    if(!(controller.IsLMB() || controller.IsRMB())) return;
-    
-    Projectile newBullet = Projectile(selectedWeapon, projectileSpawn, controller.IsRMB());
-    newBullet.Launch();
-    
-    activeBullets.emplace_back(newBullet);
-    canShoot = false;
 }

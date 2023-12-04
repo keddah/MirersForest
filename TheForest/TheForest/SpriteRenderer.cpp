@@ -66,7 +66,8 @@ void SpriteRenderer::Draw(bool overriden)
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).
     if(toRender) ManualRenderer::Draw(true);
 
-    //print("renderer: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+    // print("renderer: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
+    print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     // Goes to the next frame 
     Animate();

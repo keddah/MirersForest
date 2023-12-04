@@ -1,39 +1,28 @@
 #include "Projectile.h"
 
 
-Projectile::Projectile(const EWeaponTypes type, const Vector2 pos, bool isSpecial)
+Projectile::Projectile(SDL_FRect projectileRect, bool isSpecial)
 {
+	position = {projectileRect.x, projectileRect.y};
+	size = {projectileRect.w, projectileRect.h};
 	special = isSpecial;
-	projType = type;
-
-	position = pos;
 	
-	switch (projType)
-	{
-		// Tuple order = Type->Force->Size->Delay->ammo
-		case EWeaponTypes::Seed:
-			weapon = std::make_tuple(EWeaponTypes::Seed, (special? seedForce * 2 : seedForce), special? seedSize * 2 : seedSize, seedDelay, seedAmmo);
-			break;
-			
-		case EWeaponTypes::Petal:
-			weapon = std::make_tuple(EWeaponTypes::Petal, petalForce, petalSize, special? petalDelay * 5: petalDelay, petalAmmo);
-			break;
-			
-		case EWeaponTypes::Sun:
-			weapon = std::make_tuple(EWeaponTypes::Sun, special? 0 : sunForce, sunSize, sunDelay, sunAmmo);
-			break;
-			
-		case EWeaponTypes::Thorn:
-			weapon = std::make_tuple(EWeaponTypes::Thorn, thornForce, thornSize, thornDelay, thornAmmo);
-			break;
-	}
-
-	renderer = new SpriteRenderer(position, std::get<Vector2>(weapon));
+	// The renderer can't be made in the constructor because the size and position could be different each time an object is created 
+	renderer = new SpriteRenderer(position, size);
+	
+	AddForce(Vector2(1,0), force);
 }
 
-void Projectile::Launch()
+Projectile::Projectile(const Vector2 pos, const Vector2 _size, const bool isSpecial)
 {
-	AddForce(Vector2(1,0), std::get<1>(weapon));
+	position = pos;
+	size = _size;
+	special = isSpecial;
+	
+	// The renderer can't be made in the constructor because the size and position could be different each time an object is created 
+	renderer = new SpriteRenderer(position, size);
+	
+	AddForce(Vector2(1,0), force);
 }
 
 void Projectile::Update()
@@ -43,8 +32,7 @@ void Projectile::Update()
 
 	position += velocity;
 
-	// print("projectile: " << _position.x << ", " << _position.y)
-
+	print("projectile: " << position.x << ", " << position.y)
 }
 
 void Projectile::Draw()

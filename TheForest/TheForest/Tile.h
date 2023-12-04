@@ -1,6 +1,5 @@
 #pragma once
 #include "SpriteRenderer.h"
-#include "Vector2.h"
 
 class Tile
 {
