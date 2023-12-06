@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Vector2.h"
+#include <iostream>
 
 class Physics
 {
 public:
     bool IsGrounded() const { return grounded; }
 
-    void AddForce(Vector2 direction, float force);
-    void AddForce(float x, float y, float force);
+    void AddForce(Vector2 direction, float force, bool reset = false);
+    void AddForce(float x, float y, float force, bool reset = false);
     
     void SetVelocity(float x, float y) { velocity.x = x; velocity.y = y; }
     void SetVelocity(const Vector2 newValue) { velocity = newValue; }

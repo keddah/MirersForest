@@ -1,10 +1,9 @@
 #include "Physics.h"
 
-#include <iostream>
-
 #include "CustomTimer.h"
 
-void Physics::AddForce(const Vector2 direction, const float force)
+// Reset = whether or not to reset the air time
+void Physics::AddForce(const Vector2 direction, const float force, bool reset)
 {
 	velocity += Vector2(direction.x * force, direction.y * force);
 
@@ -20,9 +19,11 @@ void Physics::AddForce(const Vector2 direction, const float force)
 
 	if(velocity.y > maxFallSpeed) velocity.y = maxFallSpeed;
 	if(velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+
+	if(reset) airTime = 0;
 }
 
-void Physics::AddForce(const float x, const float y, const float force)
+void Physics::AddForce(const float x, const float y, const float force, bool reset)
 {
 	velocity += Vector2(x * force, y * force);
 
@@ -38,6 +39,8 @@ void Physics::AddForce(const float x, const float y, const float force)
 
 	if(velocity.y > maxFallSpeed) velocity.y = maxFallSpeed;
 	if(velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
+	
+	if(reset) airTime = 0;
 }
 
 void Physics::ApplyGravity(bool isCharacter, bool lowered, bool accelerated)

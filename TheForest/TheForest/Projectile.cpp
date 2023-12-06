@@ -22,7 +22,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, Vector2, float, sho
 
 	// Add the player's velocity onto the launch force.
 	SetVelocity(plyrVelocity);
-	AddForce(Vector2(cos(angle),sin(angle)), force);
+	AddForce(Vector2(cos(angle), sin(angle)), force);
 
 	repulsion = velocity * -1;
 	

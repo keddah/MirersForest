@@ -4,7 +4,7 @@
 
 Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
 {
-    maxSpeed = 12.5f;
+    maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
     
     position.x = 50;
@@ -84,7 +84,7 @@ void Player::Collisions()
 void Player::Propel(Vector2 dir, float force)
 {
     // Since grounded fluctuates too much to use.
-    if(GetAirTime() > .05f) AddForce(dir, force);
+    if(GetAirTime() > .05f) AddForce(dir, force, true);
 }
 
 void Player::Move(float deltaTime)

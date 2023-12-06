@@ -45,7 +45,7 @@ private:
 
         std::vector<Projectile> activeBullets = std::vector<Projectile>();
 
-        const int seedForce = 30;
+        const int seedForce = 15;
         const int petalForce = 30;
         const int sunForce = 8;
         const int thornForce = 8;
@@ -56,14 +56,14 @@ private:
         const float thornDelay = 1.2f;
 
         // Gravity Multipliers
-        const float seedGravity = .3f;
-        const float petalGravity = .5f;
+        const float seedGravity = .03f;
+        const float petalGravity = .05f;
         const float sunGravity = 0;
-        const float thornGravity = .1f ;
+        const float thornGravity = .01f ;
 
-        const float seedRepulsion = 75;
-        const float petalRepulsion = 20;
-        const float sunRepulsion = 200;
+        const float seedRepulsion = 5;
+        const float petalRepulsion = 1;
+        const float sunRepulsion = 20;
         const float thornRepulsion = 0 ;
 
 	
@@ -130,8 +130,9 @@ private:
     short direction = 0;
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 120;
-    float moveSpeed = 5;
+    const float accelerationRate = 100;
+    float moveSpeed = .9f;
+    const float maxMoveSpeed = 10;
     
     bool decelerating;
     
