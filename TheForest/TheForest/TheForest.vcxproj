@@ -162,7 +162,6 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="Vector2.h" />
-    <ClInclude Include="WeaponController.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\" />

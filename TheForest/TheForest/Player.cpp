@@ -7,7 +7,7 @@ Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
     maxSpeed = 12.5f;
     maxFallSpeed = 50;
     
-    renderer.SetIsAnimated();
+    position.x = 50;
 }
 
 void Player::Update(float deltaTime)
@@ -81,8 +81,16 @@ void Player::Collisions()
     
 }
 
+void Player::Propel(Vector2 dir, float force)
+{
+    // Since grounded fluctuates too much to use.
+    if(GetAirTime() > .05f) AddForce(dir, force);
+}
+
 void Player::Move(float deltaTime)
 {
+    if(abs(velocity.x) < .5f) renderer.ChangeAnimation(1);
+        
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = controller.IsLeft()? -1 : (controller.IsRight()? 1: 0);
 
@@ -102,8 +110,11 @@ void Player::Move(float deltaTime)
     // If you're in the air use a multiplier to make controls more responsive (Get rewarded for being in the air)
     const float acceleration = percentage * (falling? accelerationRate * airControl: accelerationRate);
     
-    if(!decelerating) velocity.x += direction * acceleration * deltaTime;
-   
+    if(!decelerating)
+    {
+        velocity.x += direction * acceleration * deltaTime;
+        if(abs(velocity.x) > .5f) renderer.ChangeAnimation(runAnimation);
+    }
     
     if(velocity.x > maxSpeed) velocity.x = maxSpeed;
     if(velocity.x < -maxSpeed) velocity.x = -maxSpeed;

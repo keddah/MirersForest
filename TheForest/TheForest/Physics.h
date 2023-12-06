@@ -7,10 +7,11 @@ class Physics
 public:
     bool IsGrounded() const { return grounded; }
 
-    virtual const Vector2& GetVelocity() const { return velocity; }
-    
     void AddForce(Vector2 direction, float force);
     void AddForce(float x, float y, float force);
+    
+    void SetVelocity(float x, float y) { velocity.x = x; velocity.y = y; }
+    void SetVelocity(const Vector2 newValue) { velocity = newValue; }
 
 private:
     bool gravityOn = true;
@@ -20,7 +21,7 @@ protected:
     Vector2 position;
     Vector2 velocity;
     
-    const float decelerationRate = 175;
+    float decelerationRate = 175;
     float drag = 10;
 
 

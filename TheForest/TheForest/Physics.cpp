@@ -9,12 +9,10 @@ void Physics::AddForce(const Vector2 direction, const float force)
 	velocity += Vector2(direction.x * force, direction.y * force);
 
 	constexpr short timeSteps = 100;
-	Vector2 projectedPos = velocity + position * timeSteps;
+	const Vector2 projectedPos = velocity + position * timeSteps;
 	
 	const float percentage = velocity.Magnitude() / projectedPos.Magnitude();
-	Vector2 decel = Vector2(1,1) * percentage;
-	const float deceleration = decelerationRate * percentage;
-	velocity -= decel;
+	velocity -= Vector2(1,1) * percentage;
 	
 	// Limiting the velocity
 	if(velocity.x > maxSpeed) velocity.x = maxSpeed;
@@ -32,9 +30,7 @@ void Physics::AddForce(const float x, const float y, const float force)
 	Vector2 projectedPos = velocity + position * timeSteps;
 	
 	const float percentage = velocity.Magnitude() / projectedPos.Magnitude();
-	Vector2 decel = Vector2(1,1) * percentage;
-	const float deceleration = decelerationRate * percentage;
-	velocity -= decel;
+	velocity -= Vector2(1,1) * percentage;
 	
 	// Limiting the velocity
 	if(velocity.x > maxSpeed) velocity.x = maxSpeed;

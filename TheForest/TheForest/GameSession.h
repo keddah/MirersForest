@@ -15,7 +15,9 @@ public:
 private:
     TileManager tileManager;
     std::vector<SpriteRenderer> spriteRenderers = std::vector<SpriteRenderer>();
-    std::vector<ManualRenderer> staticRenderers = std::vector<ManualRenderer>();
+    std::vector<ManualRenderer> manualRenderers = std::vector<ManualRenderer>();
+
+    ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
     
     Player player = Player(tileManager.GetTiles());
 };

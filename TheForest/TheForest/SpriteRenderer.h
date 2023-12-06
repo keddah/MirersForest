@@ -3,6 +3,7 @@
 
 #include <SDL_rect.h>
 #include <SDL_render.h>
+#include <vector>
 
 #include "Vector2.h"
 
@@ -25,12 +26,13 @@ public:
     
     void SetPosition(const Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position.x = x; position.y = y; }
-    void SetDrawSize(Vector2 newSize) { size = newSize; }
-
+    void SetDrawSize(const Vector2 newSize) { size = newSize; }
+    void FromTileSheet(const SDL_Rect sourceRectangle, int tileSize);    
 
 protected:
     std::string imagePath;
-    SDL_Texture* toRender;
+    std::vector<SDL_Texture*> thingsToRender = std::vector<SDL_Texture*>();
+    short renderIndex = 0;
     Vector2 size;
     SDL_FRect drawRect = SDL_FRect();
     SDL_Rect sourceRect = SDL_Rect();
@@ -45,11 +47,11 @@ class SpriteRenderer: public ManualRenderer
 {
 public:
     SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false);
+    SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos);
 
     // Used for things that need to be renderer that don't have sprites (bullets)
     SpriteRenderer(const Vector2& pos, Vector2 drawSize);
     ~SpriteRenderer() = default;
-
 
     SpriteRenderer& operator=(const SpriteRenderer& other) {
         sourceRect = other.sourceRect;
@@ -71,7 +73,8 @@ private:
 
 public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
-
+    void ChangeAnimation(short index);
+    
     // Overriden means use the position reference
     void Draw(bool overriden = true) override;
 
@@ -93,6 +96,6 @@ private:
     short currentFrame;
     short frameCount = 4;
     float frameTimer;
-    float animSpeed = .4f;
+    float animSpeed = .35f;
     bool isAnimated;
 };

@@ -17,7 +17,7 @@ public:
 	
 	bool* GetMoveInputs();
 
-	Vector2& GetMousePosition() { return mousePos; }
+	const Vector2& GetMousePosition() const { return mousePos; }
 	bool IsLMB() const { return lmb; }
 	bool IsRMB() const { return rmb; }
 	

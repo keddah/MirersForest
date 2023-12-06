@@ -10,34 +10,43 @@ TileManager::TileManager()
 
 void TileManager::MakeTiles()
 {
-    Vector2 pillar1 = Vector2(0, 400);
-    for (int i = 0; i < 5; i++)
+    Vector2 grassPos = Vector2(-100, 800);
+    for (int i = 0; i < 60; i++)
     {
-        Tile newTile = Tile("TileSets/test16-16.jpg", pillar1);
+        Tile newTile = Tile(tileSheet, grassPos, wood, tileSize);
 
         tiles.emplace_back(newTile);
 
-        pillar1.y -= tileSize;
+        grassPos.x += tileSize;
     }
 
-    Vector2 pillar2 = Vector2(1900, 400);
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 60; i++)
     {
-        Tile newTile = Tile("TileSets/test16-16.jpg", pillar2);
+        Tile newTile = Tile(tileSheet, {grassPos.x, grassPos.y + tileSize}, leaves2, tileSize);
 
         tiles.emplace_back(newTile);
 
-        pillar2.y -= tileSize;
+        grassPos.x += tileSize;
     }
 
-    Vector2 startPos = Vector2(0, 400);
-    for (int h = 0; h < levelWidth + 50; h++)
-    {
-        Tile newTile = Tile("TileSets/test16-16.jpg", startPos);
+    // Vector2 pillar2 = Vector2(1900, 400);
+    // for (int i = 0; i < 5; i++)
+    // {
+    //     Tile newTile = Tile("TileSets/test16-16.jpg", pillar2);
+    //
+    //     tiles.emplace_back(newTile);
+    //
+    //     pillar2.y -= tileSize;
+    // }
 
-        tiles.emplace_back(newTile);
-
-        startPos.x += tileSize;
-    }
+    // Vector2 startPos = Vector2(0, 400);
+    // for (int h = 0; h < levelWidth + 50; h++)
+    // {
+    //     Tile newTile = Tile("TileSets/test16-16.jpg", startPos);
+    //
+    //     tiles.emplace_back(newTile);
+    //
+    //     startPos.x += tileSize;
+    // }
 
 }

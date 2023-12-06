@@ -8,11 +8,20 @@
 class Projectile : public Physics
 {
 public:
-	Projectile(SDL_FRect projectileRect, bool isSpecial);
-
-	Projectile(Vector2 pos, Vector2 _size, bool isSpecial);
+	enum class EWeaponTypes
+	{
+		Seed,
+		Petal,
+		Sun,
+		Thorn,
+	};
+	
+	Projectile(const std::tuple<EWeaponTypes, float, Vector2, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial);
+	
 	virtual void Update();
 	virtual void Draw();
+
+	const Vector2& GetRepulsion() const { return repulsion; }
 	
 private:
 	SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
@@ -31,4 +40,7 @@ private:
 	float gravityMultiplier = 1;
 
 	const short blastRadius = 15;
+	bool initialised = false;
+
+	Vector2 repulsion;
 };

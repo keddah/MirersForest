@@ -11,9 +11,9 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
     SDL_Surface* image = SetSprite(imagePath);
 
     if (!GameWindow::GetRenderer()) print("COuldn't get renderer.")
-        toRender = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image);
+        thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
 
-    if (!toRender)
+    if (!thingsToRender[renderIndex])
     {
         print("nothing to render.")
             return;
@@ -60,8 +60,8 @@ void ManualRenderer::Draw(bool overriden)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
-    // Responsible for drawing the texture 
-    SDL_RenderCopyF(GameWindow::GetRenderer(), toRender, &sourceRect, &drawRect);
+    // Responsible for drawing the texture
+    SDL_RenderCopyF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect);
 }
 
 
@@ -87,4 +87,12 @@ SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
     drawRect.h = size.y;
 
     return image;
+}
+
+void ManualRenderer::FromTileSheet(const SDL_Rect sourceRectangle, int tileSize)
+{
+    sourceRect = sourceRectangle;
+    size = Vector2(tileSize, tileSize);
+    drawRect.w = tileSize;
+    drawRect.h = tileSize;
 }

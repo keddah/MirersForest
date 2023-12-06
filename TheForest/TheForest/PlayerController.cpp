@@ -2,6 +2,7 @@
 
 void PlayerController::Update()
 {
+	ClearInputs();
 	HandleInputs();
 }
 
