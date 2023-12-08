@@ -23,9 +23,9 @@ public:
 	virtual void Draw();
 
 
-	Projectile& operator=(const Projectile& other) {
+	Projectile& operator=(const Projectile& other)
+	{
 		    lifeTimer = other.lifeTimer;
-		
 		    dead = other.dead;
 		
 		    typePath = other.typePath;
@@ -38,10 +38,14 @@ public:
 		    renderPivot = other.renderPivot;
 		    repulsion = other.repulsion;
 		    return *this;
-		}
+	}
 	
+	void Expire(float time)
+	{
+		lifeTimer += time;
+		dead = lifeTimer > lifeSpan;
+	}
 	
-	void Expire(float time) { lifeTimer += time; dead = lifeTimer > lifeSpan; }
 	bool IsDead() const { return dead; }
 	
 	const Vector2& GetRepulsion() const { return repulsion; }

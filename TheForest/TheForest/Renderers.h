@@ -30,13 +30,13 @@ public:
     void SetPosition(const Vector2 pos) { position = pos; }
 
     void SetRenderAngle(const float angle) { renderAngle = angle; }
-    void SetAnglePivot(const float x, const float y)
+    void SetSpritePivot(const float x, const float y)
     {
         spritePivot = { x, y };
         customPivot = true;
     }
 
-    void SetAnglePivot(const Vector2 pivot)
+    void SetSpritePivot(const Vector2 pivot)
     {
         spritePivot = pivot;
         customPivot = true;

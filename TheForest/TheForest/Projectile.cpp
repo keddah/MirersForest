@@ -55,10 +55,14 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 void Projectile::Update()
 {
+	// When using the thorn weapon... it stretches in order to move... (need to get the previous size before deleting)
+	const Vector2 drawSize = {renderer->GetRect().w, renderer->GetRect().h};
+	
 	// The renderer's position reference doesn't work correctly.
 	// Makes a new renderer before a position update....
 	delete renderer;
 
+	
 	// The renderer doesn't work when it's made in the constructor
 	renderer = new SpriteRenderer(typePath, position);
 	
@@ -71,8 +75,13 @@ void Projectile::Update()
 	
 	else
 	{
-		constexpr float stretchRate = 3.5f;
-		renderer->SetDrawSize({renderer->GetRect().w + stretchRate, renderer->GetRect().h});
+		constexpr float stretchRate = 17.5f;
+
+		// Changing the pivot so that the base of the projectile stays close to the player
+		renderer->SetSpritePivot(renderer->GetRect().w, renderer->GetRect().h / 2);
+		
+		// Clamp the height of the drawSize
+		renderer->SetDrawSize({drawSize.x + stretchRate, drawSize.y > .1f? drawSize.y - .05f : drawSize.y});
 	}
 }
 

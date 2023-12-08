@@ -4,7 +4,7 @@
 
 Player::WeaponController::WeaponController(Player* plyr) : thisPlayer(*plyr)
 {
-    arrow.SetAnglePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
+    arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
 void Player::WeaponController::Update(float deltaTime)
@@ -17,11 +17,14 @@ void Player::WeaponController::Update(float deltaTime)
     ConfigureWeapon();
     Shooting();
 
+    print(activeBullets.size())
+    
     for(int i = 0; i < activeBullets.size(); i++)
     {
-        activeBullets[i].Expire(deltaTime);
         activeBullets[i].Update();
+
         
+        activeBullets[i].Expire(deltaTime);
         if(activeBullets[i].IsDead()) activeBullets.erase(activeBullets.begin());
     }
 }
