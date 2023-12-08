@@ -84,6 +84,12 @@ void Player::WeaponController::ConfigureWeapon()
     }
 }
 
+
+/////////////////// BUGS
+/// projectiles are deleted too early (their lifespan)
+/// shotgun doesn'w work properly once the mouse goes past a certain angle
+
+
 void Player::WeaponController::Shooting()
 {
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
@@ -115,13 +121,13 @@ void Player::WeaponController::Shooting()
     }
 
 
-    if(thisPlayer.controller.IsRMB())
+    if(thisPlayer.controller.IsRMB() && selectedWeapon == Projectile::EWeaponTypes::Petal)
     {
-        SpecialShoot();
+        Shotgun();
         return;
     }
     
-    if(!thisPlayer.controller.IsLMB()) return;
+    if(!(thisPlayer.controller.IsLMB() || thisPlayer.controller.IsRMB())) return;
 
     Projectile newBullet = Projectile(weapon, spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB());
     activeBullets.emplace_back(newBullet);
@@ -131,43 +137,24 @@ void Player::WeaponController::Shooting()
     thisPlayer.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
 }
 
-void Player::WeaponController::SpecialShoot()
+void Player::WeaponController::Shotgun()
 {
-    switch (selectedWeapon)
+    for(int i = 0; i < 9; i++)
     {
-        case Projectile::EWeaponTypes::Seed:
-            // Projectile seed = Projectile(weapon, spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB());
-            // activeBullets.emplace_back(seed);
-            // canShoot = false;
-            // thisPlayer.Propel(seed.GetRepulsion(), std::get<5>(weapon));
-            break;
-        
-        case Projectile::EWeaponTypes::Petal:
-            for(int i = 0; i < 9; i++)
-            {
-                constexpr float pelletSpread = .1f;
-                const float shootAngle = GetShootAngle() - (GetShootAngle() > 180? i : GetShootAngle() < 0? -i: i) * pelletSpread;
+        constexpr float pelletSpread = .1f;
+        const float shootAngle = GetShootAngle() - (GetShootAngle() < 0? i  : -i) * pelletSpread;
 
-                // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
-                weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
-                
-                Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB());
-                activeBullets.emplace_back(petal);
+        // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
+        weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
+        
+        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB());
+        activeBullets.emplace_back(petal);
 
-                // The player is launched using x times more to simulate each petal giving its own additional force
-                thisPlayer.Propel(petal.GetRepulsion(), std::get<5>(weapon) * 9);
-            }
-        
-            canShoot = false;
-            break;
-        
-        case Projectile::EWeaponTypes::Sun:
-            
-            break;
-        case Projectile::EWeaponTypes::Thorn:
-            
-            break;
+        // The player is launched using x times more to simulate each petal giving its own additional force
+        thisPlayer.Propel(petal.GetRepulsion(), std::get<5>(weapon) * 9);
     }
+
+    canShoot = false;
 }
 
 float Player::WeaponController::GetShootAngle() const

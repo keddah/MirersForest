@@ -27,7 +27,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 	switch (std::get<0>(weapon))
 	{
 		case EWeaponTypes::Seed:
-			typePath = seedPath; 
+			typePath = special? bigSeedPath : seedPath; 
 			break;
 			
 		case EWeaponTypes::Petal:
@@ -75,7 +75,7 @@ void Projectile::Update()
 	
 	else
 	{
-		constexpr float stretchRate = 17.5f;
+		const float stretchRate = special? 15 * 7.5f: 15;
 
 		// Changing the pivot so that the base of the projectile stays close to the player
 		renderer->SetSpritePivot(renderer->GetRect().w, renderer->GetRect().h / 2);

@@ -37,7 +37,7 @@ private:
         void WeaponSelection();
         void ConfigureWeapon();
         void Shooting();
-        void SpecialShoot();
+        void Shotgun();
         float GetShootAngle() const;
 
         void NextWeapon();
