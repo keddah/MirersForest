@@ -5,7 +5,8 @@
 Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, const Vector2 pos, const float angle, const Vector2 plyrVelocity,  const bool isSpecial)
 {
 	position = pos;
-	
+
+	type = std::get<0>(weapon);
 	force = std::get<1>(weapon);
 	gravityMultiplier = std::get<4>(weapon);
 	decelerationRate = 10;
@@ -66,7 +67,13 @@ void Projectile::Update()
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
-	position += velocity;
+	if(type != EWeaponTypes::Thorn) position += velocity;
+	
+	else
+	{
+		constexpr float stretchRate = 3.5f;
+		renderer->SetDrawSize({renderer->GetRect().w + stretchRate, renderer->GetRect().h});
+	}
 }
 
 void Projectile::Draw()

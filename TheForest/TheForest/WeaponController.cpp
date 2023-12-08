@@ -16,8 +16,14 @@ void Player::WeaponController::Update(float deltaTime)
     // Weapon selection needs to be ran before shooting.
     ConfigureWeapon();
     Shooting();
-    
-    for(auto& bullet : activeBullets) bullet.Update();
+
+    for(int i = 0; i < activeBullets.size(); i++)
+    {
+        activeBullets[i].Expire(deltaTime);
+        activeBullets[i].Update();
+        
+        if(activeBullets[i].IsDead()) activeBullets.erase(activeBullets.begin());
+    }
 }
 
 void Player::WeaponController::WeaponSelection()
@@ -82,7 +88,16 @@ void Player::WeaponController::Shooting()
     
     // Update the projectile spawn position;
     const SDL_FRect& spawnRect = arrow.GetRect();
-    spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
+    
+    // The offsets are different for straight-moving projectiles 
+    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Thorn ||std::get<0>(weapon) == Projectile::EWeaponTypes::Sun)
+    {
+        spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
+    }
+    else
+    {
+        spawnPos = {thisPlayer.rect.x  +thisPlayer.rect.w / 2, thisPlayer.rect.y + thisPlayer.rect.h / 2 };
+    }
     
     if(!canShoot)
     {
@@ -128,7 +143,7 @@ void Player::WeaponController::SpecialShoot()
             for(int i = 0; i < 9; i++)
             {
                 constexpr float pelletSpread = .1f;
-                const float shootAngle = GetShootAngle() - i * pelletSpread;
+                const float shootAngle = GetShootAngle() - (GetShootAngle() > 180? i : GetShootAngle() < 0? -i: i) * pelletSpread;
 
                 // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
                 weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
@@ -167,23 +182,19 @@ void Player::WeaponController::NextWeapon()
     {
         case Projectile::EWeaponTypes::Seed:
             selectedWeapon = Projectile::EWeaponTypes::Petal;
-        print("petal")
             break;
 
         case Projectile::EWeaponTypes::Petal:
             selectedWeapon = Projectile::EWeaponTypes::Sun;
-                    print("sun")
-break;
+            break;
 
         case Projectile::EWeaponTypes::Sun:
             selectedWeapon = Projectile::EWeaponTypes::Thorn;
-                    print("thoen")
-break;
+            break;
 
         case Projectile::EWeaponTypes::Thorn:
             selectedWeapon = Projectile::EWeaponTypes::Seed;
-                    print("seed")
-break;
+            break;
     }
 }
 
@@ -193,23 +204,19 @@ void Player::WeaponController::PreviousWeapon()
     {
     case Projectile::EWeaponTypes::Seed:
         selectedWeapon = Projectile::EWeaponTypes::Thorn;
-                print("thorn")
-break;
+        break;
 
     case Projectile::EWeaponTypes::Petal:
         selectedWeapon = Projectile::EWeaponTypes::Seed;
-                print("seed")
-break;
+        break;
 
     case Projectile::EWeaponTypes::Sun:
         selectedWeapon = Projectile::EWeaponTypes::Petal;
-                print("petal")
-break;
+        break;
 
     case Projectile::EWeaponTypes::Thorn:
         selectedWeapon = Projectile::EWeaponTypes::Sun;
-               print("sun")
- break;
+        break;
     }
 }
 

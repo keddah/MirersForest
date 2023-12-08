@@ -55,7 +55,11 @@ void ManualRenderer::Draw(bool overriden)
         drawRect.x = position.x;
         drawRect.y = position.y;
     }
+    drawRect.w = size.x;
+    drawRect.h = size.y;
 
+    const SDL_FRect draw = {drawRect.x, drawRect.y, size.x, size.y};
+    
     //print("source: " << sourceRect.x << ", " << sourceRect.y << ", " << sourceRect.w << ", " << sourceRect.h)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
@@ -64,7 +68,7 @@ void ManualRenderer::Draw(bool overriden)
     
     const SDL_FPoint center {spritePivot.x, spritePivot.y};
     // Responsible for drawing the texture
-    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &draw, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
 

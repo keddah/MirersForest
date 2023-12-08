@@ -19,7 +19,6 @@ public:
 
     // Overriden means use the position reference
     virtual void Draw(bool overridden = false);
-    virtual SDL_Surface* SetSprite(const std::string& path);
 
     const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
@@ -45,10 +44,12 @@ public:
     
     
     void SetPosition(const float x, const float y) { position.x = x; position.y = y; }
-    void SetDrawSize(const Vector2 newSize) { size = newSize; }
+    virtual void SetDrawSize(const Vector2 newSize) { size = newSize; }
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
 
 protected:
+    virtual SDL_Surface* SetSprite(const std::string& path);
+    
     std::string imagePath;
     std::vector<SDL_Texture*> thingsToRender = std::vector<SDL_Texture*>();
     short renderIndex = 0;
@@ -76,19 +77,6 @@ public:
     // Used for things that need to be renderer that don't have sprites (bullets)
     SpriteRenderer(const Vector2& pos, Vector2 drawSize);
     ~SpriteRenderer() = default;
-
-    SpriteRenderer& operator=(const SpriteRenderer& other) {
-        sourceRect = other.sourceRect;
-
-        drawColour = other.drawColour;
-
-        isAnimated = other.isAnimated;
-        animSpeed = other.animSpeed;
-        frameTimer = other.frameTimer;
-        currentFrame = other.currentFrame;
-        frameCount = other.frameCount;
-        return *this;
-    }
 
 
 private:
