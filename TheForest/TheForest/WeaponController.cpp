@@ -4,40 +4,73 @@
 
 Player::WeaponController::WeaponController(Player* plyr) : thisPlayer(*plyr)
 {
+    arrow.SetAnglePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
 void Player::WeaponController::Update(float deltaTime)
 {
-    GetShootAngle();
+    arrowPos = {(thisPlayer.rect.x + thisPlayer.rect.w / 2) - arrow.GetRect().w / 2, thisPlayer.rect.y - thisPlayer.rect.h };
+
+    WeaponSelection();
     
     // Weapon selection needs to be ran before shooting.
-    WeaponSelection();
+    ConfigureWeapon();
     Shooting();
     
     for(auto& bullet : activeBullets) bullet.Update();
 }
 
-// Gets called just before projectiles are spawned...
 void Player::WeaponController::WeaponSelection()
+{
+    if(thisPlayer.controller.WheelUp()) PreviousWeapon();
+    else if(thisPlayer.controller.WheelDown()) NextWeapon();
+
+    else if(thisPlayer.controller.OnePressed()) selectedWeapon = Projectile::EWeaponTypes::Seed;
+    else if(thisPlayer.controller.TwoPressed()) selectedWeapon = Projectile::EWeaponTypes::Petal;
+    else if(thisPlayer.controller.ThreePressed()) selectedWeapon = Projectile::EWeaponTypes::Sun;
+    else if(thisPlayer.controller.FourPressed()) selectedWeapon = Projectile::EWeaponTypes::Thorn;
+
+    switch (selectedWeapon)
+    {
+        case Projectile::EWeaponTypes::Seed:
+            arrow.ChangeSpriteSheet(0);
+            break;
+
+        case Projectile::EWeaponTypes::Petal:
+            arrow.ChangeSpriteSheet(1);
+            break;
+
+        case Projectile::EWeaponTypes::Sun:
+            arrow.ChangeSpriteSheet(2);
+            break;
+
+        case Projectile::EWeaponTypes::Thorn:
+            arrow.ChangeSpriteSheet(3);
+            break;
+    }
+}
+
+// Gets called just before projectiles are spawned...
+void Player::WeaponController::ConfigureWeapon()
 {
     const bool special = thisPlayer.controller.IsRMB();
     switch (selectedWeapon)
     {
         // Tuple order = Type->Force->Size->Delay->ammo->gravity
         case Projectile::EWeaponTypes::Seed:
-            weapon = std::make_tuple(selectedWeapon, (special? seedForce * 2 : seedForce), special? seedSize * 2 : seedSize, seedDelay, seedAmmo, seedGravity, seedRepulsion);
+            weapon = std::make_tuple(selectedWeapon, (special? seedForce * .8f : seedForce), seedDelay, seedAmmo, seedGravity, seedRepulsion);
         break;
 			
         case Projectile::EWeaponTypes::Petal:
-            weapon = std::make_tuple(selectedWeapon, petalForce, petalSize, special? petalDelay * 5: petalDelay, petalAmmo, petalGravity, petalRepulsion);
+            weapon = std::make_tuple(selectedWeapon, petalForce, special? petalDelay * 5: petalDelay, petalAmmo, petalGravity, petalRepulsion);
             break;
 			    
         case Projectile::EWeaponTypes::Sun:
-            weapon = std::make_tuple(selectedWeapon, special? 0 : sunForce, sunSize, sunDelay, sunAmmo, sunGravity, sunRepulsion);
+            weapon = std::make_tuple(selectedWeapon, special? 0 : sunForce, sunDelay, sunAmmo, sunGravity, sunRepulsion);
             break;
 			    
         case Projectile::EWeaponTypes::Thorn:
-            weapon = std::make_tuple(selectedWeapon, thornForce, thornSize, thornDelay, thornAmmo, thornGravity, thornRepulsion);
+            weapon = std::make_tuple(selectedWeapon, thornForce, thornDelay, thornAmmo, thornGravity, thornRepulsion);
             break;
     }
 }
@@ -48,13 +81,13 @@ void Player::WeaponController::Shooting()
     direction = thisPlayer.controller.IsLeft()? -1 : (thisPlayer.controller.IsRight()? 1: 0);
     
     // Update the projectile spawn position;
-    const SDL_FRect& playerRect = thisPlayer.rect;
-    spawnPos = Vector2(playerRect.x + playerRect.w/2, playerRect.y + playerRect.h/2) + Vector2(direction * projSpawnOffset, 0);
+    const SDL_FRect& spawnRect = arrow.GetRect();
+    spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
     
     if(!canShoot)
     {
         shootTimer += Time::GetDeltaTime();
-        if(shootTimer > std::get<3>(weapon))
+        if(shootTimer > std::get<2>(weapon))
         {
             shootTimer = 0;
             canShoot = true;
@@ -64,14 +97,59 @@ void Player::WeaponController::Shooting()
     }
 
 
-    if(!(thisPlayer.controller.IsLMB() || thisPlayer.controller.IsRMB())) return;
+    if(thisPlayer.controller.IsRMB())
+    {
+        SpecialShoot();
+        return;
+    }
     
+    if(!thisPlayer.controller.IsLMB()) return;
+
     Projectile newBullet = Projectile(weapon, spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB());
     activeBullets.emplace_back(newBullet);
     
     canShoot = false;
 
-    thisPlayer.Propel(newBullet.GetRepulsion(), std::get<6>(weapon));
+    thisPlayer.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
+}
+
+void Player::WeaponController::SpecialShoot()
+{
+    switch (selectedWeapon)
+    {
+        case Projectile::EWeaponTypes::Seed:
+            // Projectile seed = Projectile(weapon, spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB());
+            // activeBullets.emplace_back(seed);
+            // canShoot = false;
+            // thisPlayer.Propel(seed.GetRepulsion(), std::get<5>(weapon));
+            break;
+        
+        case Projectile::EWeaponTypes::Petal:
+            for(int i = 0; i < 9; i++)
+            {
+                constexpr float pelletSpread = .1f;
+                const float shootAngle = GetShootAngle() - i * pelletSpread;
+
+                // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
+                weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
+                
+                Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB());
+                activeBullets.emplace_back(petal);
+
+                // The player is launched using x times more to simulate each petal giving its own additional force
+                thisPlayer.Propel(petal.GetRepulsion(), std::get<5>(weapon) * 9);
+            }
+        
+            canShoot = false;
+            break;
+        
+        case Projectile::EWeaponTypes::Sun:
+            
+            break;
+        case Projectile::EWeaponTypes::Thorn:
+            
+            break;
+    }
 }
 
 float Player::WeaponController::GetShootAngle() const
@@ -83,8 +161,63 @@ float Player::WeaponController::GetShootAngle() const
     return rot;
 }
 
-
-void Player::WeaponController::DrawBullets()
+void Player::WeaponController::NextWeapon()
 {
+    switch (selectedWeapon)
+    {
+        case Projectile::EWeaponTypes::Seed:
+            selectedWeapon = Projectile::EWeaponTypes::Petal;
+        print("petal")
+            break;
+
+        case Projectile::EWeaponTypes::Petal:
+            selectedWeapon = Projectile::EWeaponTypes::Sun;
+                    print("sun")
+break;
+
+        case Projectile::EWeaponTypes::Sun:
+            selectedWeapon = Projectile::EWeaponTypes::Thorn;
+                    print("thoen")
+break;
+
+        case Projectile::EWeaponTypes::Thorn:
+            selectedWeapon = Projectile::EWeaponTypes::Seed;
+                    print("seed")
+break;
+    }
+}
+
+void Player::WeaponController::PreviousWeapon()
+{
+    switch (selectedWeapon)
+    {
+    case Projectile::EWeaponTypes::Seed:
+        selectedWeapon = Projectile::EWeaponTypes::Thorn;
+                print("thorn")
+break;
+
+    case Projectile::EWeaponTypes::Petal:
+        selectedWeapon = Projectile::EWeaponTypes::Seed;
+                print("seed")
+break;
+
+    case Projectile::EWeaponTypes::Sun:
+        selectedWeapon = Projectile::EWeaponTypes::Petal;
+                print("petal")
+break;
+
+    case Projectile::EWeaponTypes::Thorn:
+        selectedWeapon = Projectile::EWeaponTypes::Sun;
+               print("sun")
+ break;
+    }
+}
+
+
+void Player::WeaponController::Draw()
+{
+    // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
+    arrow.SetRenderAngle((GetShootAngle() * 180/std::_Pi) + arrowOffset);
+    arrow.Draw();
     for(auto& bullet : activeBullets) bullet.Draw();
 }

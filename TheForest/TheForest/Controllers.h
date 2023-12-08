@@ -15,28 +15,50 @@ public:
 
 	void Update();
 	
-	bool* GetMoveInputs();
 
+	// Weapons
 	const Vector2& GetMousePosition() const { return mousePos; }
 	bool IsLMB() const { return lmb; }
 	bool IsRMB() const { return rmb; }
+
 	
+	// Movement
+	bool* GetMoveInputs();
 	bool JumpBtnDown() const { return moveInputs[0]; } 
 	bool CrouchBtnDown() const { return moveInputs[1]; } 
 	bool IsLeft() const { return moveInputs[2]; }
 	bool IsRight() const { return moveInputs[3]; }
 
+
+	// Weapon Selection
+	bool WheelUp() const { return wheelUp; }
+	bool WheelDown() const { return wheelDown; }
+	
+	bool OnePressed() const { return num1; }
+	bool TwoPressed() const { return num2; }
+	bool ThreePressed() const { return num3; }
+	bool FourPressed() const { return num4; }
+	
+
 	
 private:
-	bool lmb;
-	bool rmb;
-	Vector2 mousePos;
-
-	void ClearInputs();
-
 	// Up .. Down .. Left .. Right
 	bool moveInputs[4];
+	
+	bool lmb;
+	bool rmb;
 
+	bool num1;
+	bool num2;
+	bool num3;
+	bool num4;
+	
+	Vector2 mousePos;
+	bool wheelUp;
+	bool wheelDown;
+	
+
+
+	void ClearInputs();
 	void HandleInputs();
-	void CalcMousePosition(SDL_Event& e);
 };

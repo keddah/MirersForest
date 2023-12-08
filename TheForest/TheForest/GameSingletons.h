@@ -1,5 +1,6 @@
 #pragma once
 #define print(x) { std::cout<< x << std::endl; }
+#include <SDL.h>
 
 class GameWindow
 {
@@ -14,6 +15,13 @@ public:
         window = w;
     }
 
+    static void CloseGame()
+    {
+        SDL_DestroyRenderer(GameWindow::GetRenderer());
+        SDL_DestroyWindow(GameWindow::GetWindow());
+        SDL_Quit();
+    }
+    
     static SDL_Renderer* GetRenderer() { return renderer; }
     static SDL_Window* GetWindow() { return window; }
 

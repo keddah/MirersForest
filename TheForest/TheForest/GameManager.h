@@ -4,7 +4,6 @@
 
 
 #define SDL_MAIN_HANDLED
-#include <SDL.h>
 
 #include "CustomTimer.h"
 #include "GameSession.h"

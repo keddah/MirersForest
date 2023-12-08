@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+
 // Initialise SDL in this constructer
 GameManager::GameManager()
 {
@@ -42,9 +43,7 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-	SDL_DestroyRenderer(GameWindow::GetRenderer());
-	SDL_DestroyWindow(GameWindow::GetWindow());
-	SDL_Quit();
+	GameWindow::CloseGame();
 }
 
 // Gets called in a while loop in the main function

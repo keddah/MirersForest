@@ -3,7 +3,7 @@
 #include <tuple>
 
 #include "Physics.h"
-#include "SpriteRenderer.h"
+#include "Renderers.h"
 
 class Projectile : public Physics
 {
@@ -16,7 +16,7 @@ public:
 		Thorn,
 	};
 	
-	Projectile(const std::tuple<EWeaponTypes, float, Vector2, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial);
+	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial);
 	
 	virtual void Update();
 	virtual void Draw();
@@ -24,6 +24,12 @@ public:
 	const Vector2& GetRepulsion() const { return repulsion; }
 	
 private:
+	std::string typePath;
+	const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
+	const std::string bigSeedPath {"Sprites/Projectiles/Projectile_seedBig.png"};
+	const std::string petalPath {"Sprites/Projectiles/Projectile_petal.png"};
+	const std::string sunPath {"Sprites/Projectiles/Projectile_sun.png"};
+	const std::string thornPath {"Sprites/Projectiles/Projectile_thorn.png"};
 	SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
 
 	// Is the alternative weapon type (each weapon has 2 types)
@@ -35,12 +41,12 @@ private:
 
 	float force = 8;
 
-	Vector2 size {12,12};
-
+	float renderRot;
+	Vector2 renderPivot;
+	
 	float gravityMultiplier = 1;
 
 	const short blastRadius = 15;
-	bool initialised = false;
 
 	Vector2 repulsion;
 };

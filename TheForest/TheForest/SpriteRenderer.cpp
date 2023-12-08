@@ -1,4 +1,4 @@
-#include "SpriteRenderer.h"
+#include "Renderers.h"
 
 #include "CustomTimer.h"
 #include "GameSingletons.h"
@@ -36,10 +36,10 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 }
 
 // This constructor is used for animated things
-SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos): posRef(pos)
+SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos, bool animated): posRef(pos)
 {
     imagePath = spritePaths[0];
-    isAnimated = true;
+    isAnimated = animated;
 
     for (const auto& path : spritePaths)
     {
@@ -85,7 +85,7 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
     sourceRect.h = size.y;
 }
 
-void SpriteRenderer::ChangeAnimation(short index)
+void SpriteRenderer::ChangeSpriteSheet(short index)
 {
     renderIndex = index;
 
@@ -154,6 +154,7 @@ void SpriteRenderer::Animate()
 
 void SpriteRenderer::DrawRectangle() const
 {
-    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.x, drawColour.y, drawColour.w, drawColour.h);
+    SDL_SetRenderDrawBlendMode(GameWindow::GetRenderer(), SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.r, drawColour.g, drawColour.b, drawColour.a);
     SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
 }

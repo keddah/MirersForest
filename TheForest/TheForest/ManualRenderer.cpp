@@ -1,4 +1,4 @@
-#include "SpriteRenderer.h"
+#include "Renderers.h"
 #include "GameSingletons.h"
 
 #include <SDL_image.h>
@@ -60,8 +60,11 @@ void ManualRenderer::Draw(bool overriden)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
+    if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
+    
+    const SDL_FPoint center {spritePivot.x, spritePivot.y};
     // Responsible for drawing the texture
-    SDL_RenderCopyF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect);
+    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
 

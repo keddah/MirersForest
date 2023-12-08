@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Physics.h"
-#include "SpriteRenderer.h"
+#include "Renderers.h"
 #include "Tile.h"
 #include "Controllers.h"
 #include "Projectile.h"
@@ -15,7 +15,7 @@ public:
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-    void DrawBullets() { wc.DrawBullets(); } 
+    void DrawWeapons() { wc.Draw(); } 
 
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     
@@ -29,14 +29,19 @@ private:
         ~WeaponController() = default;
 
         void Update(float deltaTime);
-        void DrawBullets();
+        void Draw();
 
     private:
         Player& thisPlayer;
 
         void WeaponSelection();
+        void ConfigureWeapon();
         void Shooting();
+        void SpecialShoot();
         float GetShootAngle() const;
+
+        void NextWeapon();
+        void PreviousWeapon();
         
         bool canShoot = true;
         float shootTimer;
@@ -45,8 +50,18 @@ private:
 
         std::vector<Projectile> activeBullets = std::vector<Projectile>();
 
+        Vector2 arrowPos;
+        float arrowOffset = 86.5f;
+        SpriteRenderer arrow = SpriteRenderer(
+{
+            "Sprites/Arrows/seed_arrow.png",
+            "Sprites/Arrows/petal_arrow.png",
+            "Sprites/Arrows/sun_arrow.png",
+            "Sprites/Arrows/thorn_arrow.png"
+            },  arrowPos, false);
+        
         const int seedForce = 15;
-        const int petalForce = 30;
+        const int petalForce = 13;
         const int sunForce = 8;
         const int thornForce = 8;
 
@@ -61,18 +76,11 @@ private:
         const float sunGravity = 0;
         const float thornGravity = .01f ;
 
-        const float seedRepulsion = 5;
-        const float petalRepulsion = 1;
+        const float seedRepulsion = 2.5f;
+        const float petalRepulsion = .875f;
         const float sunRepulsion = 20;
         const float thornRepulsion = 0 ;
 
-	
-        const Vector2 seedSize {12,12};
-        const Vector2 petalSize {6,6};
-        const Vector2 sunSize {400,24};
-        const Vector2 thornSize {250,10};
-
-    
         // Special uses 2
         const short seedAmmo = 3;
 
@@ -88,13 +96,13 @@ private:
 	
         // Projectile spawn position
         Vector2 spawnPos;
-        const int projSpawnOffset = 40;
+        const Vector2 spawnOffset = {-90, 75};
         short direction;
 
         // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
         // When Getting :
-        // Type = 0 .. Force = 1 .. Size = 2 .. Delay = 3 .. Ammo = 4 .. Gravity = 5 .. Repulsion = 6
-        std::tuple<Projectile::EWeaponTypes, float, Vector2, float, short, float, float> weapon;
+        // Type = 0 .. Force = 1 .. .. Delay = 2 .. Ammo = 3 .. Gravity = 4 .. Repulsion = 5
+        std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png"};

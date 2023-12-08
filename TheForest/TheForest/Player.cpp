@@ -89,11 +89,13 @@ void Player::Propel(Vector2 dir, float force)
 
 void Player::Move(float deltaTime)
 {
-    if(abs(velocity.x) < .5f) renderer.ChangeAnimation(1);
+    if(abs(velocity.x) < .5f) renderer.ChangeSpriteSheet(1);
         
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = controller.IsLeft()? -1 : (controller.IsRight()? 1: 0);
 
+    renderer.SetFlip(direction < 0);    
+    
     // Adds initial velocity if the player isn't moving to being the acceleration.
     if(direction != 0 && abs(velocity.x) < .01f) velocity.x += direction * .1f;
 
@@ -113,7 +115,7 @@ void Player::Move(float deltaTime)
     if(!decelerating)
     {
         velocity.x += direction * acceleration * deltaTime;
-        if(abs(velocity.x) > .5f) renderer.ChangeAnimation(runAnimation);
+        if(abs(velocity.x) > .5f) renderer.ChangeSpriteSheet(runAnimation);
     }
     
     if(velocity.x > maxSpeed) velocity.x = maxSpeed;

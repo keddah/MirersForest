@@ -32,6 +32,8 @@ void GameSession::FixedUpdate(float deltaTime)
 void GameSession::Draw()
 {
     for (auto& renderer : manualRenderers) renderer.Draw(false);
+
+    // Draw weapons before drawing the rest of the sprite renderers (THE PLAYER) so that the arrow is behind the player
+    player.DrawWeapons();
     for (auto& renderer : spriteRenderers) renderer.Draw(false);
-    player.DrawBullets();
 }

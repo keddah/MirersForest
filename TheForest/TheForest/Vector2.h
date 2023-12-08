@@ -5,8 +5,7 @@
 *
 * Created by Dean Atkinson-Walker 2023
 ***************************************************************************************************************/
-
-#define print(x) { std::cout<< x << std::endl; }
+#define print(x){std::cout << (x) << std::endl;}
 
 #pragma once
 

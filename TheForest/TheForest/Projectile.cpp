@@ -2,31 +2,54 @@
 
 #include "Player.h"
 
-Projectile::Projectile(const std::tuple<EWeaponTypes, float, Vector2, float, short, float, float>& weapon, const Vector2 pos, const float angle, const Vector2 plyrVelocity,  const bool isSpecial)
+Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, const Vector2 pos, const float angle, const Vector2 plyrVelocity,  const bool isSpecial)
 {
 	position = pos;
 	
-	size = std::get<2>(weapon);
 	force = std::get<1>(weapon);
-	gravityMultiplier = std::get<5>(weapon);
+	gravityMultiplier = std::get<4>(weapon);
 	decelerationRate = 10;
-	
-	special = isSpecial;
 
+	special = isSpecial;
+	
 	maxSpeed = 1000;
 	maxFallSpeed = 20;
-
-	// The renderer can't be made in the constructor because the size and position could be different each time an object is created 
-	renderer = new SpriteRenderer(position, size);
-	initialised = true;
 
 	// Add the player's velocity onto the launch force.
 	SetVelocity(plyrVelocity);
 	AddForce(Vector2(cos(angle), sin(angle)), force);
 
+	// The repulsion is just the opposite direction the projectile is going
 	repulsion = velocity * -1;
 	
-	print(velocity.x);
+
+	switch (std::get<0>(weapon))
+	{
+		case EWeaponTypes::Seed:
+			typePath = seedPath; 
+			break;
+			
+		case EWeaponTypes::Petal:
+			typePath = petalPath; 
+			break;
+		
+		case EWeaponTypes::Sun:
+			typePath = sunPath;
+			break;
+			
+		case EWeaponTypes::Thorn:
+			typePath = thornPath;
+			break;
+	}
+
+	renderer = new SpriteRenderer(typePath, position);
+	if(typePath == thornPath || typePath == sunPath) renderPivot = {0, renderer->GetRect().y + renderer->GetRect().h / 2};
+
+	
+	const Vector2 posVel = position + velocity;
+	const Vector2 difference = posVel - position;
+	renderRot = (atan2(difference.y, difference.x)) * 180 / std::_Pi;
+	renderer->SetRenderAngle(renderRot);
 }
 
 void Projectile::Update()
@@ -34,7 +57,11 @@ void Projectile::Update()
 	// The renderer's position reference doesn't work correctly.
 	// Makes a new renderer before a position update....
 	delete renderer;
-	renderer = new SpriteRenderer(position, size);
+
+	// The renderer doesn't work when it's made in the constructor
+	renderer = new SpriteRenderer(typePath, position);
+	
+	renderer->SetRenderAngle(renderRot);
 	
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
@@ -44,6 +71,5 @@ void Projectile::Update()
 
 void Projectile::Draw()
 {
-	if(initialised) renderer->Draw(false);
+	if(renderer) renderer->Draw(false);
 }
-
