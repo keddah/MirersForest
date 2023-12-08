@@ -85,33 +85,6 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
     sourceRect.h = size.y;
 }
 
-void SpriteRenderer::ChangeSpriteSheet(short index)
-{
-    renderIndex = index;
-
-    switch (index)
-    {
-        // Idle
-        case 0:
-            animSpeed = .35f;
-            break;
-
-        // Run
-        case 1:
-            animSpeed = .05f;
-            break;
-
-        // Falling
-        case 2:
-            animSpeed = .35f;
-            break;
-
-        default:
-            animSpeed = .35f;
-            break;
-    }
-}
-
 // Overriden means use the position reference
 void SpriteRenderer::Draw(bool overriden)
 {

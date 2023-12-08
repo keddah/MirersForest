@@ -16,12 +16,13 @@ GameSession::GameSession()
     }
     
     spriteRenderers.push_back(player.GetRenderer());
-
+    spriteRenderers.push_back(test.GetRenderer());
 }
 
 void GameSession::Update(float deltaTime)
 {
     player.Update(deltaTime);
+    test.Update(deltaTime);
 }
 
 void GameSession::FixedUpdate(float deltaTime)

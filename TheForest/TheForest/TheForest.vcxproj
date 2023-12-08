@@ -143,6 +143,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Slime.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="ManualRenderer.cpp" />
     <ClCompile Include="TheForest.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="GameSingletons.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Renderers.h" />
+    <ClInclude Include="Slime.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="Vector2.h" />

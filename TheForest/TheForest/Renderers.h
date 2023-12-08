@@ -44,7 +44,7 @@ public:
     
     
     void SetPosition(const float x, const float y) { position.x = x; position.y = y; }
-    virtual void SetDrawSize(const Vector2 newSize) { size = newSize; }
+    virtual void SetDrawSize(const Vector2 newSize);
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
 
 protected:
@@ -85,7 +85,7 @@ private:
 
 public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
-    void ChangeSpriteSheet(short index);
+    void ChangeSpriteSheet(short index) { renderIndex = index; }
     
     // Overriden means use the position reference
     void Draw(bool overriden = true) override;
@@ -95,6 +95,7 @@ public:
     void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
 
     void SetFrameCount(const short count = 1) { frameCount = count; }
+    void SetAnimSpeed(const float speed) { animSpeed = speed; }
     
 
 private:

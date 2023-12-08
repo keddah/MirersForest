@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Slime.h"
 #include "TileManager.h"
 
 class GameSession
@@ -20,4 +21,5 @@ private:
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
     
     Player player = Player(tileManager.GetTiles());
+    Slime test = Slime(player, tileManager.GetTiles());
 };
