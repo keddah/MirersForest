@@ -11,7 +11,7 @@ public:
     void AddForce(Vector2 direction, float force, bool reset = false);
     void AddForce(float x, float y, float force, bool reset = false);
     
-    void SetVelocity(float x, float y) { velocity.x = x; velocity.y = y; }
+    void SetVelocity(float x = 0, float y = 0) { velocity = {x, y}; }
     void SetVelocity(const Vector2 newValue) { velocity = newValue; }
 
 private:

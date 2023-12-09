@@ -15,7 +15,9 @@ public:
     ManualRenderer(const std::string& spritePath, Vector2 pos);
     ManualRenderer(const Vector2& pos, Vector2 drawSize);
 
-    ~ManualRenderer() = default;
+    // Delete all the textures then empty the vector.
+    virtual ~ManualRenderer() = default;
+        // for(const auto& thing: thingsToRender) delete &thing;
 
     // Overriden means use the position reference
     virtual void Draw(bool overridden = false);
@@ -43,7 +45,7 @@ public:
     }
     
     
-    void SetPosition(const float x, const float y) { position.x = x; position.y = y; }
+    void SetPosition(const float x, const float y) { position = {x, y}; }
     virtual void SetDrawSize(const Vector2 newSize);
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
 
@@ -62,7 +64,7 @@ protected:
     bool flip;
     
 private:
-    // The raw position that was assigned in the constructer
+    // The raw position that was assigned in the constructor
     Vector2 position;
     bool customPivot;
     
@@ -76,8 +78,6 @@ public:
 
     // Used for things that need to be renderer that don't have sprites (bullets)
     SpriteRenderer(const Vector2& pos, Vector2 drawSize);
-    ~SpriteRenderer() = default;
-
 
 private:
     // Used for things that will constantly be updated (like characters)

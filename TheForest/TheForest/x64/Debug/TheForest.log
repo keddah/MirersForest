@@ -1,63 +1,18 @@
-﻿  GameManager.cpp
+﻿  WeaponController.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(12,1): warning C4005: 'print': macro redefinition
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(8,1): message : see previous definition of 'print'
-  GameSession.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-  ManualRenderer.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(30,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(31,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(45,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(46,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(85,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(86,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(98,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(98,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(99,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\ManualRenderer.cpp(100,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Physics.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  Player.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  PlayerController.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\PlayerController.cpp(31,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\PlayerController.cpp(32,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Projectile.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-  SpriteRenderer.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(23,14): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(24,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(32,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(33,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(57,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(58,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(66,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(67,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(84,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(85,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(140,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(142,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(143,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  TheForest.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(12,1): warning C4005: 'print': macro redefinition
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(8,1): message : see previous definition of 'print'
-  Tile.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-  TileManager.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-  Vector2.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-  WeaponController.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(9,1): error C2007: #define syntax
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponController.cpp(86,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponController.cpp(215,59): warning C4244: 'argument': conversion from 'long double' to 'const float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\tuple(640,76): warning C4244: '=': conversion from '_Ty' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+          and
+          [
+              _Ty=float
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\tuple(641,23): message : see reference to function template instantiation 'std::tuple<float,float,short,float,float> &std::tuple<float,float,short,float,float>::operator =<int,float,short,float,float,0>(std::tuple<int,float,short,float,float> &&) noexcept' being compiled
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponController.cpp(72,20): message : see reference to function template instantiation 'std::tuple<Projectile::EWeaponTypes,float,float,short,float,float> &std::tuple<Projectile::EWeaponTypes,float,float,short,float,float>::operator =<Projectile::EWeaponTypes,int,float,short,float,float,0>(std::tuple<Projectile::EWeaponTypes,int,float,short,float,float> &&) noexcept' being compiled
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponController.cpp(72,20): message : see the first reference to 'std::tuple<Projectile::EWeaponTypes,float,float,short,float,float>::operator =' in 'Player::WeaponController::ConfigureWeapon'
+  TheForest.vcxproj -> C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\x64\Debug\TheForest.exe

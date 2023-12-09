@@ -15,8 +15,13 @@ public:
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-    void DrawWeapons() { wc.Draw(); } 
 
+    void DrawWeapons() { wc.Draw(); }
+
+    void Float();
+    
+    std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
+    
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     
     PlayerController& Controller() { return controller; }
@@ -30,14 +35,18 @@ private:
 
         void Update(float deltaTime);
         void Draw();
+        std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
 
     private:
         Player& thisPlayer;
-
+        
         void WeaponSelection();
         void ConfigureWeapon();
         void Shooting();
+
+        //Variants
         void Shotgun();
+        
         float GetShootAngle() const;
 
         void NextWeapon();
@@ -62,7 +71,7 @@ private:
         
         const int seedForce = 15;
         const int petalForce = 13;
-        const int sunForce = 8;
+        const int sunForce = 20;
         const int thornForce = 8;
 
         const float seedDelay = .8f;
@@ -97,13 +106,14 @@ private:
         // Projectile spawn position
         Vector2 spawnPos;
         const Vector2 spawnOffset = {-90, 75};
-        short direction;
 
         // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
         // When Getting :
         // Type = 0 .. Force = 1 .. .. Delay = 2 .. Ammo = 3 .. Gravity = 4 .. Repulsion = 5
         std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
+
+    std::vector<Tile>& floor;
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png"};
     SpriteRenderer renderer = SpriteRenderer(spritePaths, position);
@@ -136,6 +146,11 @@ private:
     //////////// Movement
     bool canMove = true;
     short direction = 0;
+
+    bool setFloatTimer;
+    const float floatDuration = .5f;
+    float floatTimer;
+    
     
     ////// Acceleration/Deceleration
     const float accelerationRate = 100;
@@ -150,6 +165,4 @@ private:
     const float airControl = 5.5f;
     const float jumpHeight = 5;
     const float jumpForce = 25;
-    
-    std::vector<Tile>& floor;
 };

@@ -33,6 +33,9 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
     sourceRect.h = size.y;
 
     SDL_FreeSurface(image);
+
+    // Start on a random frame so that the animations aren't synced up
+    if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
 }
 
 // This constructor is used for animated things
@@ -67,6 +70,9 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         sourceRect.h = size.y;
 
         SDL_FreeSurface(image);
+
+        // Start on a random frame so that the animations aren't synced up
+        if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
     }
 }
 

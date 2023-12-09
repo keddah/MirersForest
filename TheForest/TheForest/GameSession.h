@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include "Slime.h"
+#include "SlimeManager.h"
 #include "TileManager.h"
 
 class GameSession
@@ -15,11 +15,12 @@ public:
     
 private:
     TileManager tileManager;
+    Player player = Player(tileManager.GetTiles());
+    
     std::vector<SpriteRenderer> spriteRenderers = std::vector<SpriteRenderer>();
     std::vector<ManualRenderer> manualRenderers = std::vector<ManualRenderer>();
 
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
     
-    Player player = Player(tileManager.GetTiles());
-    Slime test = Slime(player, tileManager.GetTiles());
+    SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
 };

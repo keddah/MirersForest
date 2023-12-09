@@ -17,15 +17,18 @@ void Player::WeaponController::Update(float deltaTime)
     ConfigureWeapon();
     Shooting();
 
-    print(activeBullets.size())
+    // print(activeBullets.size())
     
     for(int i = 0; i < activeBullets.size(); i++)
     {
-        activeBullets[i].Update();
-
-        
+        activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
-        if(activeBullets[i].IsDead()) activeBullets.erase(activeBullets.begin());
+        
+        if(activeBullets[i].IsDead())
+        {
+            // activeBullets[i].Kill();
+            activeBullets.erase(activeBullets.begin() + i);
+        }
     }
 }
 
@@ -74,8 +77,8 @@ void Player::WeaponController::ConfigureWeapon()
             weapon = std::make_tuple(selectedWeapon, petalForce, special? petalDelay * 5: petalDelay, petalAmmo, petalGravity, petalRepulsion);
             break;
 			    
-        case Projectile::EWeaponTypes::Sun:
-            weapon = std::make_tuple(selectedWeapon, special? 0 : sunForce, sunDelay, sunAmmo, sunGravity, sunRepulsion);
+    case Projectile::EWeaponTypes::Sun:
+            weapon = std::make_tuple(selectedWeapon, sunForce, sunDelay, sunAmmo, sunGravity, special? 0 : sunRepulsion);
             break;
 			    
         case Projectile::EWeaponTypes::Thorn:
@@ -92,14 +95,11 @@ void Player::WeaponController::ConfigureWeapon()
 
 void Player::WeaponController::Shooting()
 {
-    // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
-    direction = thisPlayer.controller.IsLeft()? -1 : (thisPlayer.controller.IsRight()? 1: 0);
-    
     // Update the projectile spawn position;
     const SDL_FRect& spawnRect = arrow.GetRect();
     
     // The offsets are different for straight-moving projectiles 
-    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Thorn ||std::get<0>(weapon) == Projectile::EWeaponTypes::Sun)
+    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Thorn || std::get<0>(weapon) == Projectile::EWeaponTypes::Sun)
     {
         spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
     }
@@ -120,7 +120,6 @@ void Player::WeaponController::Shooting()
         return;
     }
 
-
     if(thisPlayer.controller.IsRMB() && selectedWeapon == Projectile::EWeaponTypes::Petal)
     {
         Shotgun();
@@ -129,12 +128,17 @@ void Player::WeaponController::Shooting()
     
     if(!(thisPlayer.controller.IsLMB() || thisPlayer.controller.IsRMB())) return;
 
-    Projectile newBullet = Projectile(weapon, spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB());
-    activeBullets.emplace_back(newBullet);
+    // Since the projectile is so big it spawns in the ground and instantly blows up.
+    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && thisPlayer.controller.IsRMB();
+
+    // Spawn the projectile higher if it's the big seed.
+    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB(), thisPlayer.floor);
+    activeBullets.push_back(newBullet);
     
     canShoot = false;
 
     thisPlayer.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
+    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && thisPlayer.controller.IsRMB()) thisPlayer.Float();
 }
 
 void Player::WeaponController::Shotgun()
@@ -147,7 +151,7 @@ void Player::WeaponController::Shotgun()
         // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
         weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
         
-        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB());
+        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB(),thisPlayer.floor);
         activeBullets.emplace_back(petal);
 
         // The player is launched using x times more to simulate each petal giving its own additional force

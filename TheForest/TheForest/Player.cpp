@@ -18,9 +18,18 @@ void Player::Update(float deltaTime)
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly more powerful
     ApplyGravity(true, controller.JumpBtnDown(), controller.CrouchBtnDown());
-   
-    // Move has to be called first so that collisions can negate its newly added velocity.
-    // Move(deltaTime);
+    if(setFloatTimer)
+    {
+        floatTimer += deltaTime;
+        if(floatTimer > floatDuration)
+        {
+            SetGravity(true);
+            setFloatTimer = false;
+            floatTimer = 0;
+        }
+    }
+    
+    // Collisions before applying position
     Collisions();
     
     // Once all the movements have been done... add the velocity to the position
@@ -35,6 +44,13 @@ void Player::FixedUpdate(float deltaTime)
     Jump();
     
     Move(deltaTime);
+}
+
+void Player::Float()
+{
+    SetVelocity(0,0);
+    SetGravity(false);
+    setFloatTimer = true;
 }
 
 // The player is only responsible for setting the position.

@@ -5,14 +5,14 @@ Slime::Slime(Player& plyr, std::vector<Tile>& floorRef): tiles(floorRef), player
     maxSpeed = 20;
     maxFallSpeed = 50;
     
-    position.x = 100;
-
     renderer.SetFrameCount(6);
     renderer.SetAnimSpeed(.225f);
 }
 
 void Slime::Update(float deltaTime)
 {
+    if(dead) return;
+    
     ApplyGravity(true);
     Collisions();
 
@@ -20,8 +20,10 @@ void Slime::Update(float deltaTime)
     // and update everything that needs to know.
     position += velocity;
     UpdateRectangle();
+    
+    Death();
 
-    Patrol(deltaTime);
+    // Patrol(deltaTime);
 }
 
 void Slime::Collisions()
@@ -79,6 +81,25 @@ void Slime::NextPoint()
 {
     patrolIndex++;
     if(patrolIndex > sizeof(patrolPoints)) patrolIndex = 0;
+}
+
+void Slime::Death()
+{
+    bool collision = false;
+    for(auto& bullet: player.GetActiveBullets())
+    {
+        // Since the renderer is created/destroyed each frame..... 
+        if(!bullet.IsDead())
+        {
+            const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
+            collision = SDL_HasIntersectionF(&rect, &bulletRect);
+        }
+
+        
+        if(collision && bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
+    }
+
+    dead = collision;
 }
 
 void Slime::UpdateRectangle()

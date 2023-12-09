@@ -8,15 +8,15 @@ public:
     ~Slime() = default;
 
     void Update(float deltaTime);
+    void Draw() { if(!dead) renderer.Draw(); } 
 
-    void Collisions();
-    void MoveTimer();
-    void Patrol(float deltaTime);
-    void NextPoint();
-
-    void Death();
+    const Vector2& GetPosition() { return position; }
+    void SetPosition(Vector2 pos) { position = pos; }
+    void SetPosition(float x, float y) { position = {x, y}; }
     
-    const SpriteRenderer& GetRenderer() { return renderer; }
+    bool IsDead() const { return dead; }
+    
+    const SpriteRenderer& GetRenderer() const { return renderer; }
 
 private:
     const std::vector<std::string> slimeSheets {"Sprites/Slimes/SlimeSheet.png", "Sprites/Slimes/movingSlime.png"};
@@ -25,6 +25,7 @@ private:
     std::vector<Tile>& tiles; 
     Player& player;
 
+    bool dead = false;
     SDL_FRect rect;
     
     bool canMove;
@@ -34,6 +35,13 @@ private:
     float patrolTimer = 0;
     Vector2 patrolPoints[2] {Vector2(900, 700), Vector2(100, 800)};
     short patrolIndex;
+
+    void Collisions();
+    void MoveTimer();
+    void Patrol(float deltaTime);
+    void NextPoint();
+
+    void Death();
     
     void HitPlayer();
     void UpdateRectangle();
