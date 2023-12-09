@@ -83,7 +83,7 @@ void Projectile::Update(float deltaTime)
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
-	FaceVelocity();
+	if(type != EWeaponTypes::Thorn) FaceVelocity();
 	
 	// Collisions before applying position
 	Collisions();

@@ -11,6 +11,8 @@ TileManager::TileManager()
 void TileManager::MakeTiles()
 {
     Vector2 grassPos = Vector2(-100, 800);
+    Vector2 platform = Vector2(800, 500);
+
     for (int i = 0; i < 60; i++)
     {
         Tile newTile = Tile(tileSheet, grassPos, wood, tileSize);
@@ -28,7 +30,15 @@ void TileManager::MakeTiles()
 
         grassPos.x += tileSize;
     }
+    
+    for (int i = 0; i < 15; i++)
+    {
+        Tile newTile = Tile(tileSheet, {platform.x, platform.y + tileSize}, stone1, tileSize);
 
+        tiles.emplace_back(newTile);
+
+        platform.x += tileSize;
+    }
     // Vector2 pillar2 = Vector2(1900, 400);
     // for (int i = 0; i < 5; i++)
     // {
