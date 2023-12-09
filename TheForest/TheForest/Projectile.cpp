@@ -19,7 +19,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 	// Add the player's velocity onto the launch force.
 	SetVelocity(plyrVelocity);
-	if(type != EWeaponTypes::Sun) AddForce(Vector2(cos(angle), sin(angle)), force);
+	if(!(type == EWeaponTypes::Sun && special)) AddForce(Vector2(cos(angle), sin(angle)), force);
 
 	// The repulsion is just the opposite direction the projectile is going
 	repulsion = velocity * -1;
