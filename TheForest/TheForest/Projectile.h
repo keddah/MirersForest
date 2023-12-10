@@ -13,8 +13,9 @@ public:
 	{
 		Seed,
 		Petal,
-		Sun,
-		Thorn,
+		Sun
+		// Getting rid of Thorn since SDL_Rects can't be rotated 
+		//Thorn,
 	};
 	
 	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial, std::vector<Tile>& floorRef);
@@ -47,6 +48,9 @@ public:
 	
 	bool IsDead() const { return dead; }
 	void Kill() { dead = true;}
+
+	bool IsPulling() const { return pulling; }
+	const Vector2& GetPullPos() const { return pullPos; }
 	
 	const Vector2& GetRepulsion() const { return repulsion; }
 
@@ -60,15 +64,20 @@ private:
 	const std::vector<Tile>& tiles;
 
 	void FaceVelocity();
+	void UpdateRect();
 	
 	void Collisions();
 	
 	void Explode();
 	void Beam(float deltaTime);
+
+	void Pull(Vector2  pullFrom);
 	
-	float lifeSpan = 8;
+	const float lifeSpan = 8;
 	float lifeTimer;
 	bool dead = false;
+
+	SDL_FRect rect;
 	
 	std::string typePath;
 	const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
@@ -82,6 +91,8 @@ private:
 	
 	// Is the alternative weapon type (each weapon has 2 types)
 	bool special;
+	bool pulling;
+	Vector2  pullPos;
 	float flipTimer;
 	
 	float delay = .8f;

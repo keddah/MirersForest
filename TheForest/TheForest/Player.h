@@ -34,6 +34,7 @@ private:
         ~WeaponController() = default;
 
         void Update(float deltaTime);
+        void UpdateBullets(float deltaTime);
         void Draw();
         std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
 
@@ -72,23 +73,23 @@ private:
         const int seedForce = 15;
         const int petalForce = 13;
         const int sunForce = 20;
-        const int thornForce = 8;
+        // const int thornForce = 8;
 
         const float seedDelay = .8f;
         const float petalDelay = .125f;
         const float sunDelay = 2;
-        const float thornDelay = 1.2f;
+        // const float thornDelay = 1.2f;
 
         // Gravity Multipliers
         const float seedGravity = .03f;
         const float petalGravity = .05f;
         const float sunGravity = 0;
-        const float thornGravity = .01f ;
+        // const float thornGravity = .01f ;
 
         const float seedRepulsion = 2.5f;
         const float petalRepulsion = .875f;
         const float sunRepulsion = 20;
-        const float thornRepulsion = 0 ;
+        // const float thornRepulsion = 0 ;
 
         // Special uses 2
         const short seedAmmo = 3;
@@ -100,7 +101,7 @@ private:
         const short sunAmmo = 6;
 
         // Always uses 1
-        const short thornAmmo = 5;
+        // const short thornAmmo = 5;
     
 	
         // Projectile spawn position

@@ -39,10 +39,10 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 			typePath = sunPath;
 			break;
 			
-		case EWeaponTypes::Thorn:
-			typePath = thornPath;
-			lifeSpan = 2.5f; 
-			break;
+		// case EWeaponTypes::Thorn:
+		// 	typePath = thornPath;
+		// 	lifeSpan = 2.5f; 
+		// 	break;
 	}
 
 	renderer = new SpriteRenderer(typePath, position);
@@ -83,23 +83,13 @@ void Projectile::Update(float deltaTime)
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
-	if(type != EWeaponTypes::Thorn) FaceVelocity();
+	FaceVelocity();
 	
 	// Collisions before applying position
 	Collisions();
 
-	if(type != EWeaponTypes::Thorn) position += velocity;
-	
-	else
-	{
-		const float stretchRate = special? 15 * 7.5f: 15;
-
-		// Changing the pivot so that the base of the projectile stays close to the player
-		renderer->SetSpritePivot(renderer->GetRect().w, renderer->GetRect().h / 2);
-		
-		// Clamp the height of the drawSize
-		renderer->SetDrawSize({drawSize.x + stretchRate, drawSize.y > .1f? drawSize.y - .05f : drawSize.y});
-	}
+	position += velocity;
+	UpdateRect();
 }
 
 void Projectile::Draw() const
@@ -118,18 +108,30 @@ void Projectile::FaceVelocity()
 	renderer->SetRenderAngle(renderRot);
 }
 
+void Projectile::UpdateRect()
+{
+	const Vector2 size = renderer->GetDrawSize();
+
+	rect.x = position.x;
+	rect.y = position.y;
+	rect.w = size.x;
+	rect.h = size.y;
+}
+
 void Projectile::Collisions()
 {
-	const Vector2 predictedPos = position + velocity;
-	const auto predictedRect = SDL_FRect{ predictedPos.x, predictedPos.y, renderer->GetDrawSize().x, renderer->GetDrawSize().y };
-
+	
 	bool collision = false;
 	for (auto& tile : tiles)
 	{
 		// Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separately.
 		const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
 
-		if(SDL_HasIntersectionF(&tileRect, &predictedRect)) collision = true;
+		if(SDL_HasIntersectionF(&tileRect, &rect))
+		{
+			collision = true;
+		}
+		
 	}
 
 	switch (type)
@@ -145,9 +147,11 @@ void Projectile::Collisions()
 			
 		case EWeaponTypes::Sun:
 			break;
-			
-		case EWeaponTypes::Thorn:
-			break;
+
+		// Getting rid of Thorn since SDL_Rects can't be rotated 
+		// case EWeaponTypes::Thorn:
+		// 	if(collision) Pull({GetRect().x + GetRect().w, GetRect().y + GetRect().h});
+		// 	break;
 		}
 }
 
@@ -172,4 +176,10 @@ void Projectile::Beam(float deltaTime)
 	// Turn on gravity too
 	gravityMultiplier = 1.25f;
 	AddForce(0, 1, force);
+}
+
+void Projectile::Pull(Vector2 pullFrom)
+{
+	pulling = true;
+	pullPos = pullFrom;
 }

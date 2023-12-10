@@ -24,20 +24,21 @@ public:
 
     const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
+    const float GetRenderAngle() { return renderAngle; }
     const Vector2& GetDrawSize() const { return size; }
     const Vector2& GetSpriteCenter() const { return spritePivot; }
 
     virtual void SetFlip(const bool shouldFlip) { flip = shouldFlip; }
     
+    virtual void SetDrawSize(Vector2 newSize);
     void SetPosition(const Vector2 pos) { position = pos; }
-
+    void SetPosition(const float x, const float y) { position = {x, y}; }
     void SetRenderAngle(const float angle) { renderAngle = angle; }
     void SetSpritePivot(const float x, const float y)
     {
         spritePivot = { x, y };
         customPivot = true;
     }
-
     void SetSpritePivot(const Vector2 pivot)
     {
         spritePivot = pivot;
@@ -45,8 +46,6 @@ public:
     }
     
     
-    void SetPosition(const float x, const float y) { position = {x, y}; }
-    virtual void SetDrawSize(const Vector2 newSize);
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
 
 protected:
