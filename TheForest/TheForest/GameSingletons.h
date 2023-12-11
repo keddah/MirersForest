@@ -17,8 +17,8 @@ public:
 
     static void CloseGame()
     {
-        SDL_DestroyRenderer(GameWindow::GetRenderer());
-        SDL_DestroyWindow(GameWindow::GetWindow());
+        SDL_DestroyRenderer(GetRenderer());
+        SDL_DestroyWindow(GetWindow());
         SDL_Quit();
     }
     
@@ -28,4 +28,5 @@ public:
 private:
     static SDL_Renderer* renderer;
     static SDL_Window* window;
+
 };

@@ -47,12 +47,12 @@ ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
 }
 
 // Overriden means use the position reference
-void ManualRenderer::Draw(short currentSlide, bool overriden)
+void ManualRenderer::Draw(bool referenced)
 {
     if(!visible) return;
 
     // Otherwise the drawRect will use the position reference that is set in the SpriteRenderer
-    if (!overriden)
+    if (!referenced)
     {
         drawRect.x = position.x;
         drawRect.y = position.y;
@@ -63,7 +63,7 @@ void ManualRenderer::Draw(short currentSlide, bool overriden)
     
     //print("source: " << sourceRect.x << ", " << sourceRect.y << ", " << sourceRect.w << ", " << sourceRect.h)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
-    print("renderer: " << drawRect.x << ", " << drawRect.y)
+    // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
     const SDL_FPoint center {spritePivot.x, spritePivot.y};

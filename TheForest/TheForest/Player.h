@@ -32,7 +32,7 @@ private:
     class WeaponController
     {
     public:
-        WeaponController(Player* plyr);
+        WeaponController(Player* pP);
         ~WeaponController() = default;
 
         void Update(float deltaTime);
@@ -41,7 +41,8 @@ private:
         std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
 
     private:
-        Player& thisPlayer;
+        // Okayer reference
+        Player& rP;
         
         void WeaponSelection();
         void ConfigureWeapon();
@@ -118,31 +119,36 @@ private:
     class Camera
     {
     public:
-        Camera(Player* plyr);
+        Camera(Player* pP);
         void Update() const;
 
     private:
         void FollowPlayer();
-    
-        Player& thisPlayer;
 
-        int screenWidth;
+        // Player reference
+        Player& rP;
     };
     
     TileManager& tileManager;
     short& levelSlide;
+
+    int screenWidth, screenHeight;
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png", "Sprites/idleTileSheet_dmg.png", "Sprites/runTileSheet_dmg.png"};
     SpriteRenderer renderer = SpriteRenderer(spritePaths, position);
 
+    ///// Animations
+    // Indexes for the sprites that are used for animations
+    const short idleAnim = 0;
+    const short runAnim = 1;
+    const short dmgIdleAnim = 2;
+    const short dmgRunAnim = 3;
+    const short fallAnim = 4;
+    const short dmgFallAnim = 5;
     void UpdateAnimation();
-    short idleAnim = 0;
-    short runAnim = 1;
-    short dmgIdleAnim = 2;
-    short dmgRunAnim = 3;
-    short fallAnim = 4;
-    short dmgFallAnim = 5;
     
+    const float runAnimSpeed = .125f;
+    const float idleAnimSpeed = .35f;
     
     Vector2 GetVelocity() const { return velocity; }
     Vector2 GetPosition() const { return position; }

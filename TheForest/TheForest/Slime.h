@@ -8,13 +8,13 @@ public:
     ~Slime() = default;
 
     void Update(float deltaTime);
-    void Draw() { if(!dead) renderer.Draw(); } 
-
+    void Draw() { if(!dead) renderer.Draw(); }
+    
     const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position = {x, y}; }
 
-    void SetLevelSlide(const short slide) { levelSlide = slide; }
+    void SetSlide(const short slide) { levelSlide = slide; }
     short GetLevelSlide() const { return levelSlide; }
     
     bool IsDead() const { return dead; }
@@ -29,8 +29,9 @@ private:
     Player& player;
 
     bool dead = false;
-    SDL_FRect rect;
     
+    SDL_FRect rect;
+
     bool canMove;
 
     const float moveSpeed = .01f;

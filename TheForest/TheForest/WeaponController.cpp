@@ -1,14 +1,14 @@
 #include "Player.h"
 
 
-Player::WeaponController::WeaponController(Player* plyr) : thisPlayer(*plyr)
+Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
 {
     arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
 void Player::WeaponController::Update(float deltaTime)
 {
-    arrowPos = {(thisPlayer.rect.x + thisPlayer.rect.w / 2) - arrow.GetRect().w / 2, thisPlayer.rect.y - thisPlayer.rect.h };
+    arrowPos = {(rP.rect.x + rP.rect.w / 2) - arrow.GetRect().w / 2, rP.rect.y - rP.rect.h };
 
     WeaponSelection();
     
@@ -40,12 +40,12 @@ void Player::WeaponController::UpdateBullets(float deltaTime)
 
 void Player::WeaponController::WeaponSelection()
 {
-    if(thisPlayer.controller.WheelUp()) PreviousWeapon();
-    else if(thisPlayer.controller.WheelDown()) NextWeapon();
+    if(rP.controller.WheelUp()) PreviousWeapon();
+    else if(rP.controller.WheelDown()) NextWeapon();
 
-    else if(thisPlayer.controller.OnePressed()) selectedWeapon = Projectile::EWeaponTypes::Seed;
-    else if(thisPlayer.controller.TwoPressed()) selectedWeapon = Projectile::EWeaponTypes::Petal;
-    else if(thisPlayer.controller.ThreePressed()) selectedWeapon = Projectile::EWeaponTypes::Sun;
+    else if(rP.controller.OnePressed()) selectedWeapon = Projectile::EWeaponTypes::Seed;
+    else if(rP.controller.TwoPressed()) selectedWeapon = Projectile::EWeaponTypes::Petal;
+    else if(rP.controller.ThreePressed()) selectedWeapon = Projectile::EWeaponTypes::Sun;
     // else if(thisPlayer.controller.FourPressed()) selectedWeapon = Projectile::EWeaponTypes::Thorn;
 
     switch (selectedWeapon)
@@ -71,7 +71,7 @@ void Player::WeaponController::WeaponSelection()
 // Gets called just before projectiles are spawned...
 void Player::WeaponController::ConfigureWeapon()
 {
-    const bool special = thisPlayer.controller.IsRMB();
+    const bool special = rP.controller.IsRMB();
     switch (selectedWeapon)
     {
         // Tuple order = Type->Force->Size->Delay->ammo->gravity
@@ -103,7 +103,7 @@ void Player::WeaponController::Shooting(float deltaTime)
     {
         spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
     }
-    else spawnPos = {thisPlayer.rect.x  +thisPlayer.rect.w / 2, thisPlayer.rect.y + thisPlayer.rect.h / 2 };
+    else spawnPos = {rP.rect.x  +rP.rect.w / 2, rP.rect.y + rP.rect.h / 2 };
 
     if(!canShoot)
     {
@@ -117,27 +117,27 @@ void Player::WeaponController::Shooting(float deltaTime)
         return;
     }
 
-    if(thisPlayer.controller.IsRMB() && selectedWeapon == Projectile::EWeaponTypes::Petal)
+    if(rP.controller.IsRMB() && selectedWeapon == Projectile::EWeaponTypes::Petal)
     {
         Shotgun();
         return;
     }
     
-    if(!(thisPlayer.controller.IsLMB() || thisPlayer.controller.IsRMB())) return;
+    if(!(rP.controller.IsLMB() || rP.controller.IsRMB())) return;
 
     // Since the projectile is so big it spawns in the ground and instantly blows up.
-    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && thisPlayer.controller.IsRMB();
+    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && rP.controller.IsRMB();
 
     // Spawn the projectile higher if it's the big seed.
-    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB(), thisPlayer.tileManager.GetTiles());
+    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), rP.velocity, rP.controller.IsRMB(), rP.tileManager.GetTiles());
     activeBullets.push_back(newBullet);
     
     canShoot = false;
 
-    thisPlayer.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
+    rP.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
 
     // The Sun's special causes the player to lose their velocity.
-    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && thisPlayer.controller.IsRMB()) thisPlayer.Float();
+    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && rP.controller.IsRMB()) rP.Float();
 }
 
 void Player::WeaponController::Shotgun()
@@ -160,11 +160,11 @@ void Player::WeaponController::Shotgun()
         // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
         weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
         
-        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB(),thisPlayer.tileManager.GetTiles());
+        Projectile petal = Projectile(weapon, spawnPos, shootAngle, rP.velocity, rP.controller.IsRMB(),rP.tileManager.GetTiles());
         activeBullets.emplace_back(petal);
 
         // The player is launched using x times more force to simulate each petal giving its own additional force
-        thisPlayer.Propel(petal.GetRepulsion(), std::get<5>(weapon) * pellets);
+        rP.Propel(petal.GetRepulsion(), std::get<5>(weapon) * pellets);
     }
 
     canShoot = false;
@@ -172,8 +172,8 @@ void Player::WeaponController::Shotgun()
 
 float Player::WeaponController::GetShootAngle() const
 {
-    const Vector2 mouse = thisPlayer.controller.GetMousePosition();
-    const Vector2 difference = mouse - thisPlayer.position;
+    const Vector2 mouse = rP.controller.GetMousePosition();
+    const Vector2 difference = mouse - rP.position;
     const float rot = atan2(difference.y, difference.x);
 
     return rot;

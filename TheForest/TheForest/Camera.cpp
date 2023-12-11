@@ -1,24 +1,25 @@
 #include "GameSingletons.h"
 #include "Player.h"
 
-Player::Camera::Camera(Player* plyr): thisPlayer(*plyr)
+Player::Camera::Camera(Player* pP): rP(*pP)
 {
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
 }
 
 void Player::Camera::Update() const
 {
-    if(thisPlayer.position.x > screenWidth)
+    // To stop the player from falling through the floor whenever they go to a new slide.
+    
+    if(rP.position.x > rP.screenWidth)
     {
-        thisPlayer.levelSlide++;
-        thisPlayer.position.x = thisPlayer.velocity.x;
-        thisPlayer.tileManager.NextSlide();
+        rP.levelSlide++;
+        rP.position.x = rP.velocity.x;
     }
     
-    else if(thisPlayer.levelSlide > 0 && thisPlayer.position.x < 0)
+    else if(rP.levelSlide > 0 && rP.position.x < 0)
     {
-        thisPlayer.levelSlide--;
-        thisPlayer.position.x = thisPlayer.velocity.x;
-        thisPlayer.tileManager.PreviousSlide();
+        rP.levelSlide--;
+        rP.position.x = rP.screenWidth + rP.velocity.x;
     }
+
+    rP.tileManager.SetLevelSlide(rP.levelSlide);
 }

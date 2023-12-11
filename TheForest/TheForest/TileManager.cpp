@@ -12,25 +12,25 @@ TileManager::TileManager()
 
 void TileManager::MakeTiles(short lvlIndex)
 {
-    Vector2 grassPos = Vector2(-500, 800);
-    Vector2 platform = Vector2(800, 500);
+    constexpr float start = -100;
+    Vector2 grassPos = Vector2(start, 800);
+    Vector2 platform = Vector2(2500, 500);
 
-
-    Vector2 dirtPos = Vector2(-500, grassPos.y - tileSize);
+    Vector2 dirtPos = Vector2(start, grassPos.y - tileSize);
     
     // Grass
-    for (int i = 0; i < 200; i++)
-    {
-        Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
-    
-        tiles.emplace_back(newTile);
-    
-        grassPos.x += tileSize;
-    }
+    // for (int i = 0; i < 200; i++)
+    // {
+    //     Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
+    //
+    //     tiles.emplace_back(newTile);
+    //
+    //     grassPos.x += tileSize;
+    // }
     
     for (int rows = 0; rows < 10; rows++)
     {
-        for(int column = 0; column < 1000; column++)
+        for(int column = 0; column < 500; column++)
         {
             Tile newTile = Tile(tileSheet, dirtPos, rows == 0? grassDirt1: dirt1, tileSize);
 
@@ -38,18 +38,18 @@ void TileManager::MakeTiles(short lvlIndex)
 
             dirtPos.x += tileSize;
         }
+        dirtPos.x = start;
         dirtPos.y += tileSize;
     }
 
-    // Vector2 pillar2 = Vector2(1900, 400);
-    // for (int i = 0; i < 5; i++)
-    // {
-    //     Tile newTile = Tile("TileSets/test16-16.jpg", pillar2);
-    //
-    //     tiles.emplace_back(newTile);
-    //
-    //     pillar2.y -= tileSize;
-    // }
+    for (int i = 0; i < 16; i++)
+    {
+        Tile newTile = Tile("TileSets/test16-16.jpg", platform, stone1, tileSize);
+    
+        tiles.emplace_back(newTile);
+    
+        platform.x += tileSize;
+    }
 
     // Vector2 startPos = Vector2(0, 400);
     // for (int h = 0; h < levelWidth + 50; h++)
@@ -62,11 +62,24 @@ void TileManager::MakeTiles(short lvlIndex)
     // }
 
     // Adding the tile to the correct slide
-    int screen;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screen, NULL);
+    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
     for (auto& tile : tiles)
     {
-        tile.SetSlide(floor(tile.GetPosition().x / screen));
+        tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
         // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
     }
+}
+
+void TileManager::SetLevelSlide(short slide)
+{
+    if(slide == levelSlide) return;
+    
+    const bool next = slide > levelSlide;
+    
+    for (auto& tile : tiles)
+    {
+        tile.SetPosition({tile.GetPosition().x + (next? -screenWidth : screenWidth), tile.GetPosition().y});
+        tile.SetSlide(slide);
+    }
+    levelSlide = slide;
 }

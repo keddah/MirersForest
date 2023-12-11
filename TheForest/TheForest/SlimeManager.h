@@ -12,7 +12,7 @@ public:
     void Update(float deltaTime);
     void Draw() const { for(const auto& slime : slimes) if(slime->GetLevelSlide() == levelSlide) slime->Draw(); }
 
-    void SetLevelSlide(const short slide) { levelSlide = slide; }
+    void SetLevelSlide(short slide);
     
 private:
     std::vector<Slime*> slimes = std::vector<Slime*>();
@@ -20,5 +20,6 @@ private:
     std::vector<Tile>& tiles; 
     Player& player;
 
+    int screenWidth;
     short levelSlide;
 };

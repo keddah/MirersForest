@@ -20,7 +20,7 @@ public:
         // for(const auto& thing: thingsToRender) delete &thing;
 
     // Overriden means use the position reference
-    virtual void Draw(short currentSlide, bool overridden = false);
+    virtual void Draw(bool referenced = false);
 
     const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
@@ -93,7 +93,7 @@ public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
     
     // Overriden means use the position reference
-    void Draw(short currentSlide = 0, bool overriden = true) override;
+    void Draw(bool referenced = true) override;
 
     const Vector2& GetPositionReference() const { return posRef; }
 

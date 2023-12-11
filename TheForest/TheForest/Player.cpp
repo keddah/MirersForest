@@ -1,11 +1,15 @@
 #include "Player.h"
 
+#include "GameSingletons.h"
+
 Player::Player(TileManager& tm, short& slide): tileManager(tm), levelSlide(slide)
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
     
     position.x = 50;
+
+    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 
 void Player::Update(float deltaTime)
@@ -37,10 +41,9 @@ void Player::Update(float deltaTime)
     UpdateRectangle();
     cam.Update();
 
+    if(position.y > 1080) Death();
     DamageTimer(deltaTime);
     UpdateAnimation();
-
-    print("player: " << position.x << ", " << position.y)
 }
 
 void Player::FixedUpdate(float deltaTime)
@@ -65,8 +68,6 @@ void Player::TakeDamage()
     isDamaged = true;
     health--;
 
-    renderer.ChangeSpriteSheet(direction == 0? 2 : 3);
-    
     if(health < 1) Death();
 }
 
@@ -85,6 +86,7 @@ void Player::UpdateRectangle()
 
 void Player::Death()
 {
+    health = 0;
     renderer.SetVisibility(false);
 }
 
@@ -139,6 +141,9 @@ void Player::UpdateAnimation()
 {
     const bool moving = abs(velocity.x) > .5f;
     const bool falling = abs(velocity.y) > 2;
+
+    renderer.SetAnimSpeed(moving? runAnimSpeed : idleAnimSpeed);
+    
     if(isDamaged)
     {
         if(moving) renderer.ChangeSpriteSheet(dmgRunAnim);

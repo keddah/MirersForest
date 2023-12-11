@@ -5,15 +5,19 @@
 Level::Level(short lvlNum)
 {
     // Create slides
-    for(int i = 0; i < 15; i++) slides.emplace_back(this);
+    // for(int i = 0; i < 15; i++) slides.emplace_back(this);
 
     tileManager.MakeTiles(0);
 }
 
-void Level::UpdateSlide(float deltaTime)
+void Level::Update(float deltaTime)
 {
+    SyncSlides();
     player.Update(deltaTime);
     slimeManger.Update(deltaTime);
+
+    
+    print("level: " << currentSlide)      
 }
 
 void Level::FixedUpdate(float deltaTime)
@@ -23,19 +27,22 @@ void Level::FixedUpdate(float deltaTime)
 
 void Level::DrawSlide()
 {
-    bkg.Draw(0);
-
+    bkg.Draw();
     tileManager.Draw();
-    
     slimeManger.Draw();
-
     player.Draw();
 }
 
 
 ////////// Slide class
-void Level::Slide::Draw()
+// void Level::Slide::Draw()
+// {
+//     for (auto& renderer : manuals) renderer.Draw(true);
+//     for (auto& renderer : sprites) renderer.Draw();
+// }
+
+void Level::SyncSlides()
 {
-    for (auto& renderer : manuals) renderer.Draw(level.currentSlide, false);
-    for (auto& renderer : sprites) renderer.Draw(level.currentSlide, false);
+    tileManager.SetLevelSlide(currentSlide);
+    slimeManger.SetLevelSlide(currentSlide);
 }

@@ -7,21 +7,22 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(flo
     const auto slime1 = new Slime(player, tiles);
     const auto slime2 = new Slime(player, tiles);
     const auto slime3 = new Slime(player, tiles);
+    const auto slime4 = new Slime(player, tiles);
 
     slime1->SetPosition(500, 0);
     slime2->SetPosition(900, 0);
     slime3->SetPosition(100, 0);
+    slime4->SetPosition(3000, 0);
 
     slimes.push_back(slime1);
     slimes.push_back(slime2);
     slimes.push_back(slime3);
+    slimes.push_back(slime4);
 
-    int screen;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screen, NULL);
-    for (auto& tile : tiles)
+    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
+    for (const auto& slime : slimes)
     {
-        
-        tile.SetSlide(static_cast<int>(tile.GetPosition().x) % screen);
+        slime->SetSlide(floor(slime->GetPosition().x / screenWidth));
         // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
     }
 }
@@ -30,9 +31,24 @@ void SlimeManager::Update(float deltaTime)
 {
     for(int i = 0; i < slimes.size(); i++)
     {
+        if(slimes[i]->GetLevelSlide() != levelSlide) continue;
+        
         slimes[i]->Update(deltaTime);
         if(slimes[i]->IsDead()) slimes.erase(slimes.begin() + i);
     }
+}
+
+void SlimeManager::SetLevelSlide(const short slide)
+{
+    if(slide == levelSlide) return;
+    
+    const bool next = slide > levelSlide;
+    for (const auto& slime : slimes)
+    {
+        slime->SetPosition({slime->GetPosition().x + (next? -screenWidth : screenWidth), slime->GetPosition().y});
+    }
+    
+    levelSlide = slide;
 }
 
 

@@ -8,14 +8,14 @@ class TileManager
 public:
     TileManager();
     void Draw() { for (auto& tile : tiles) if(tile.GetLevelSlide() == levelSlide) tile.Draw(); }
-    
+
     std::vector<Tile>& GetTiles() { return tiles; }
     
     void MakeTiles(short lvlIndex);
-    void NextSlide() { for (auto& tile : tiles) { levelSlide++; }}//tile.Scroll(levelSlide); } }
-    void PreviousSlide() { for (auto& tile : tiles) { levelSlide--;}}// tile.Scroll(levelSlide); } }
+    void SetLevelSlide(short slide);
     
 private:
+    int screenWidth;
     static constexpr short tileSize = 16;
 
     // The source rectangles for some of the different textures in the tile sheet

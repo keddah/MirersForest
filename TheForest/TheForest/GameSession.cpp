@@ -10,7 +10,7 @@ GameSession::GameSession()
 
 void GameSession::Update(float deltaTime)
 {
-    level1.UpdateSlide(deltaTime);
+    level1.Update(deltaTime);
 }
 
 void GameSession::FixedUpdate(float deltaTime)
