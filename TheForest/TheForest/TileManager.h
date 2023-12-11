@@ -10,8 +10,10 @@ public:
 
     std::vector<Tile>& GetTiles() { return tiles; }
     
-    void MakeTiles();
-
+    void MakeTiles(short lvlIndex);
+    void NextSlide() { for (auto& tile : tiles) { tile.Scroll(true); } }
+    void PreviousSlide() { for (auto& tile : tiles) { tile.Scroll(false); } }
+    
 private:
     static constexpr short tileSize = 16;
 

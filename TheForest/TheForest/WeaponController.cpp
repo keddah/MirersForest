@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "CustomTimer.h"
 
 
 Player::WeaponController::WeaponController(Player* plyr) : thisPlayer(*plyr)
@@ -15,7 +14,7 @@ void Player::WeaponController::Update(float deltaTime)
     
     // Weapon selection needs to be ran before shooting.
     ConfigureWeapon();
-    Shooting();
+    Shooting(deltaTime);
 
     UpdateBullets(deltaTime);
 }
@@ -102,10 +101,7 @@ void Player::WeaponController::ConfigureWeapon()
     }
 }
 
-
-/////////////////// BUGS
-/// shotgun doesn'w work properly once the mouse goes past a certain angle
-void Player::WeaponController::Shooting()
+void Player::WeaponController::Shooting(float deltaTime)
 {
     // Update the projectile spawn position;
     const SDL_FRect& spawnRect = arrow.GetRect();
@@ -119,7 +115,7 @@ void Player::WeaponController::Shooting()
 
     if(!canShoot)
     {
-        shootTimer += Time::GetDeltaTime();
+        shootTimer += deltaTime;
         if(shootTimer > std::get<2>(weapon))
         {
             shootTimer = 0;
@@ -141,7 +137,7 @@ void Player::WeaponController::Shooting()
     const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && thisPlayer.controller.IsRMB();
 
     // Spawn the projectile higher if it's the big seed.
-    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB(), thisPlayer.floor);
+    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), thisPlayer.velocity, thisPlayer.controller.IsRMB(), thisPlayer.tileManager.GetTiles());
     activeBullets.push_back(newBullet);
     
     canShoot = false;
@@ -157,22 +153,25 @@ void Player::WeaponController::Shotgun()
     constexpr short pellets = 8;
     constexpr short midPoint = pellets / 2;
 
+    // if the arrow is pointing to the right
     const bool correction = arrow.GetRenderAngle() > 0 && arrow.GetRenderAngle() < 180; 
 
     print(arrow.GetRenderAngle())
     
-    for(int i = 0; i < pellets; i++)
+    for(short i = 0; i < pellets; i++)
     {
-        constexpr float pelletSpread = 10; 
+        constexpr float pelletSpread = 10;
+
+        // Flip the the pellet spawn if the arrow is pointing to the right (to fix it)...
         const float shootAngle = correction? -(GetShootAngle() - (midPoint - i) / pelletSpread) + GetShootAngle() * 2 : GetShootAngle() + (-midPoint + i) / pelletSpread;
         
         // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
         weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
         
-        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB(),thisPlayer.floor);
+        Projectile petal = Projectile(weapon, spawnPos, shootAngle, thisPlayer.velocity, thisPlayer.controller.IsRMB(),thisPlayer.tileManager.GetTiles());
         activeBullets.emplace_back(petal);
 
-        // The player is launched using x times more to simulate each petal giving its own additional force
+        // The player is launched using x times more force to simulate each petal giving its own additional force
         thisPlayer.Propel(petal.GetRepulsion(), std::get<5>(weapon) * pellets);
     }
 
@@ -231,7 +230,6 @@ void Player::WeaponController::PreviousWeapon()
     //     break;
     }
 }
-
 
 void Player::WeaponController::Draw()
 {

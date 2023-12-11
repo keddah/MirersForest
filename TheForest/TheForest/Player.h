@@ -2,15 +2,15 @@
 
 #include "Physics.h"
 #include "Renderers.h"
-#include "Tile.h"
 #include "Controllers.h"
 #include "Projectile.h"
+#include "TileManager.h"
 
 
 class Player : public Physics
 {
 public:
-    Player(std::vector<Tile>& floorRef);
+    Player(TileManager& tm);
     ~Player() = default;
 
     void Update(float deltaTime);
@@ -19,11 +19,11 @@ public:
     void DrawWeapons() { wc.Draw(); }
 
     void Float();
+    void TakeDamage();
     
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
-    
-    const SpriteRenderer& GetRenderer() const { return renderer; } 
-    
+    const SpriteRenderer& GetRenderer() const { return *renderer; } 
+    const SDL_FRect& GetRect() const { return rect; } 
     PlayerController& Controller() { return controller; }
 
 private:
@@ -43,7 +43,7 @@ private:
         
         void WeaponSelection();
         void ConfigureWeapon();
-        void Shooting();
+        void Shooting(float deltaTime);
 
         //Variants
         void Shotgun();
@@ -114,34 +114,53 @@ private:
         std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
 
-    std::vector<Tile>& floor;
+    class Camera
+    {
+    public:
+        Camera(Player* plyr);
+        void Update();
+
+    private:
+        void FollowPlayer();
     
-    const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png"};
-    SpriteRenderer renderer = SpriteRenderer(spritePaths, position);
+        Player& thisPlayer;
+
+        int screenWidth, screenHeight;
+        short slide;
+    };
+    
+    TileManager& tileManager;
+    
+    const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png", "Sprites/idleTileSheet_dmg.png", "Sprites/runTileSheet_dmg.png"};
+    SpriteRenderer* renderer = new SpriteRenderer(spritePaths, position);
 
     short idleAnimation = 0;
     short runAnimation = 1;
     short fallAnimation = 2;
     
     
-    void UpdateRectangle();
     Vector2 GetVelocity() const { return velocity; }
     Vector2 GetPosition() const { return position; }
-    void Collisions();
 
     void Propel(Vector2 dir, float force);
     
+    void Collisions();
     void Move(float deltaTime);
     void Deceleration(float deltaTime);
     void Jump();
+    void UpdateRectangle();
 
+    void Death();
+    void DamageTimer(float deltaTime);
+    
     SDL_FRect rect;
     
     PlayerController controller;
 
+    Camera cam = Camera (this);
 
     //////////// Weapons
-    WeaponController wc =  WeaponController(this);
+    WeaponController wc = WeaponController(this);
     
     
     //////////// Movement
@@ -166,4 +185,13 @@ private:
     const float airControl = 5.5f;
     const float jumpHeight = 5;
     const float jumpForce = 25;
+
+
+    ////// Health/Damage
+    const short maxHealth = 3;
+    short health = maxHealth;
+
+    bool isDamaged;
+    const float dmgCooldown = 1.5f;
+    float dmgTimer;
 };

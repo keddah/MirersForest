@@ -17,9 +17,9 @@ public:
 	GameManager();
 	~GameManager();
 	
-	void Update();
-	void FixedUpdate();
-	void Draw();
+	void Update() const;
+	void FixedUpdate() const;
+	void Draw() const;
 
 	bool IsRunning() const;
 

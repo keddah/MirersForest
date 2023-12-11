@@ -47,18 +47,18 @@ GameManager::~GameManager()
 }
 
 // Gets called in a while loop in the main function
-void GameManager::Update()
+void GameManager::Update() const
 {
 	// Update all the things that need to be updated for the current session.
 	session->Update(Time::GetDeltaTime());
 }
 
-void GameManager::FixedUpdate()
+void GameManager::FixedUpdate() const
 {
 	session->FixedUpdate(Time::GetDeltaTime());
 }
 
-void GameManager::Draw()
+void GameManager::Draw() const
 {
 	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), 0, 15, 10, 255);
 	SDL_RenderFillRect(GameWindow::GetRenderer(), nullptr);

@@ -10,7 +10,7 @@ public:
     void Update(float deltaTime);
     void Draw() { if(!dead) renderer.Draw(); } 
 
-    const Vector2& GetPosition() { return position; }
+    const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position = {x, y}; }
     

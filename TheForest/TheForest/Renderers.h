@@ -24,15 +24,16 @@ public:
 
     const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
-    const float GetRenderAngle() { return renderAngle; }
+    float GetRenderAngle() const { return renderAngle; }
     const Vector2& GetDrawSize() const { return size; }
     const Vector2& GetSpriteCenter() const { return spritePivot; }
 
-    virtual void SetFlip(const bool shouldFlip) { flip = shouldFlip; }
+    virtual void SetVisibility(bool isVisible) { visible = isVisible; }
     
     virtual void SetDrawSize(Vector2 newSize);
     void SetPosition(const Vector2 pos) { position = pos; }
     void SetPosition(const float x, const float y) { position = {x, y}; }
+    virtual void SetFlip(const bool shouldFlip) { flip = shouldFlip; }
     void SetRenderAngle(const float angle) { renderAngle = angle; }
     void SetSpritePivot(const float x, const float y)
     {
@@ -44,13 +45,16 @@ public:
         spritePivot = pivot;
         customPivot = true;
     }
+
+    bool visible = true;
     
+    virtual void ChangeSpriteSheet(short index) { renderIndex = index; }
     
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
 
 protected:
     virtual SDL_Surface* SetSprite(const std::string& path);
-    
+
     std::string imagePath;
     std::vector<SDL_Texture*> thingsToRender = std::vector<SDL_Texture*>();
     short renderIndex = 0;
@@ -66,7 +70,6 @@ private:
     // The raw position that was assigned in the constructor
     Vector2 position;
     bool customPivot;
-    
 };
 
 class SpriteRenderer: public ManualRenderer
@@ -84,7 +87,6 @@ private:
 
 public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
-    void ChangeSpriteSheet(short index) { renderIndex = index; }
     
     // Overriden means use the position reference
     void Draw(bool overriden = true) override;
@@ -100,7 +102,7 @@ public:
 private:
     void Animate();
     void DrawRectangle() const;
-    
+
     // Using an Rect since it has 4 values...
     SDL_Colour drawColour = {0, 125, 125, 255};
 

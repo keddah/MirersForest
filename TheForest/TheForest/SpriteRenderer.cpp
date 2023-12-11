@@ -36,6 +36,8 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 
     // Start on a random frame so that the animations aren't synced up
     if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
+
+    visible = true;
 }
 
 // This constructor is used for animated things
@@ -49,7 +51,6 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         SDL_Surface* image = ManualRenderer::SetSprite(path);
         
         if (!GameWindow::GetRenderer()) print("COuldn't get renderer.")
-        
         else thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
 
         if (!thingsToRender[renderIndex])
@@ -74,6 +75,8 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         // Start on a random frame so that the animations aren't synced up
         if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
     }
+
+    visible = true;
 }
 
 // This constructor is used whenever the thing to render doesn't have a sprite.
@@ -89,6 +92,8 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
+
+    visible = true;
 }
 
 // Overriden means use the position reference

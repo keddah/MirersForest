@@ -29,6 +29,8 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
+    
+    visible = true;
 }
 
 ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
@@ -44,11 +46,18 @@ ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
+
+    visible = true;
 }
 
 // Overriden means use the position reference
 void ManualRenderer::Draw(bool overriden)
 {
+    if(!visible)
+    {
+        return;
+    }
+    
     // Otherwise the drawRect will use the position reference that is set in the SpriteRenderer
     if (!overriden)
     {
@@ -58,17 +67,17 @@ void ManualRenderer::Draw(bool overriden)
     drawRect.w = size.x;
     drawRect.h = size.y;
 
-    const SDL_FRect draw = {drawRect.x, drawRect.y, size.x, size.y};
-    
     //print("source: " << sourceRect.x << ", " << sourceRect.y << ", " << sourceRect.w << ", " << sourceRect.h)
     //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
-    
     const SDL_FPoint center {spritePivot.x, spritePivot.y};
+
+    if(!thingsToRender[renderIndex]) print("Can't render from this index")
+    
     // Responsible for drawing the texture
-    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &draw, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
 

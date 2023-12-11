@@ -8,12 +8,12 @@ TileManager::TileManager()
 
 // Make a tile Renderer so that the position doesn't have to be a reference
 
-void TileManager::MakeTiles()
+void TileManager::MakeTiles(short lvlIndex)
 {
     Vector2 grassPos = Vector2(-100, 800);
     Vector2 platform = Vector2(800, 500);
 
-    for (int i = 0; i < 60; i++)
+    for (int i = 0; i < 1000; i++)
     {
         Tile newTile = Tile(tileSheet, grassPos, wood, tileSize);
 

@@ -1,8 +1,6 @@
 #include "Player.h"
 
-#include "CustomTimer.h"
-
-Player::Player(std::vector<Tile>& floorRef): floor(floorRef)
+Player::Player(TileManager& tm): tileManager(tm)
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
@@ -35,7 +33,12 @@ void Player::Update(float deltaTime)
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     position += velocity;
+    
     UpdateRectangle();
+    cam.Update();
+
+    DamageTimer(deltaTime);
+    renderer->ChangeSpriteSheet(isDamaged? 2 : 0);
 }
 
 void Player::FixedUpdate(float deltaTime)
@@ -53,12 +56,22 @@ void Player::Float()
     setFloatTimer = true;
 }
 
+void Player::TakeDamage()
+{
+    if(isDamaged) return;
+    
+    isDamaged = true;
+    health--;
+    print(health)
+    if(health < 1) Death();
+}
+
 // The player is only responsible for setting the position.
 // The renderer is only responsible for setting the size.
 // Together, they make the rectangle.
 void Player::UpdateRectangle()
 {
-    const Vector2 playerSize = renderer.GetDrawSize();
+    const Vector2 playerSize = renderer->GetDrawSize();
 
     rect.x = position.x;
     rect.y = position.y;
@@ -66,15 +79,33 @@ void Player::UpdateRectangle()
     rect.h = playerSize.y;
 }
 
+void Player::Death()
+{
+    renderer->visible = false;
+}
+
+void Player::DamageTimer(float deltaTime)
+{
+    if(!isDamaged) return;
+
+    dmgTimer += deltaTime;
+
+    if(dmgTimer < dmgCooldown) return;
+
+    dmgTimer = 0;
+    isDamaged = false;
+    renderer->ChangeSpriteSheet(direction == 0? 0 : 1);
+}
+
 void Player::Collisions()
 {
     const Vector2 predictedPosX = position + Vector2(velocity.x, 0);
     const Vector2 predictedPosY = position + Vector2(0, velocity.y);
-    const auto predictedRectX = SDL_FRect{ predictedPosX.x, predictedPosX.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y };
-    const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
+    const auto predictedRectX = SDL_FRect{ predictedPosX.x, predictedPosX.y, renderer->GetDrawSize().x, renderer->GetDrawSize().y };
+    const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer->GetDrawSize().x, renderer->GetDrawSize().y};
 
     grounded = false;
-    for (auto& tile : floor)
+    for (auto& tile : tileManager.GetTiles())
     {
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
@@ -105,12 +136,12 @@ void Player::Propel(Vector2 dir, float force)
 
 void Player::Move(float deltaTime)
 {
-    if(abs(velocity.x) < .5f) renderer.ChangeSpriteSheet(1);
+    if(abs(velocity.x) < .5f) renderer->ChangeSpriteSheet(1);
         
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = controller.IsLeft()? -1 : (controller.IsRight()? 1: 0);
 
-    renderer.SetFlip(direction < 0);    
+    renderer->SetFlip(direction < 0);    
     
     // Adds initial velocity if the player isn't moving to being the acceleration.
     if(direction != 0 && abs(velocity.x) < .01f) velocity.x += direction * .1f;
@@ -131,9 +162,9 @@ void Player::Move(float deltaTime)
     if(!decelerating)
     {
         velocity.x += direction * acceleration * deltaTime;
-        if(abs(velocity.x) > .5f) renderer.ChangeSpriteSheet(runAnimation);
+        if(abs(velocity.x) > .5f) renderer->ChangeSpriteSheet(runAnimation);
     }
-    
+
     if(velocity.x > maxSpeed) velocity.x = maxSpeed;
     if(velocity.x < -maxSpeed) velocity.x = -maxSpeed;
 }

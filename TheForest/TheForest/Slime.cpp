@@ -20,6 +20,8 @@ void Slime::Update(float deltaTime)
     // and update everything that needs to know.
     position += velocity;
     UpdateRectangle();
+
+    HitPlayer();
     
     Death();
 
@@ -72,8 +74,8 @@ void Slime::Patrol(float deltaTime)
         }
     }
 
-    renderer.ChangeSpriteSheet(1);
     renderer.SetFrameCount(4);
+    renderer.ChangeSpriteSheet(1);
     velocity.x += patrolPoints[patrolIndex].x > position.x? -moveSpeed : moveSpeed;
 }
 
@@ -100,6 +102,11 @@ void Slime::Death()
     }
 
     dead = collision;
+}
+
+void Slime::HitPlayer()
+{
+    if(SDL_HasIntersectionF(&player.GetRect(), &rect)) player.TakeDamage();
 }
 
 void Slime::UpdateRectangle()
