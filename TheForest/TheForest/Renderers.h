@@ -20,7 +20,7 @@ public:
         // for(const auto& thing: thingsToRender) delete &thing;
 
     // Overriden means use the position reference
-    virtual void Draw(bool overridden = false);
+    virtual void Draw(short currentSlide, bool overridden = false);
 
     const SDL_FRect& GetRect() const { return drawRect; }
     const Vector2& GetPosition() const { return position; }
@@ -29,6 +29,8 @@ public:
     const Vector2& GetSpriteCenter() const { return spritePivot; }
 
     virtual void SetVisibility(bool isVisible) { visible = isVisible; }
+    virtual void SetLevelSlide(short slide) { levelSlide = slide; }
+    virtual short GetLevelSlide() const { return levelSlide; }
     
     virtual void SetDrawSize(Vector2 newSize);
     void SetPosition(const Vector2 pos) { position = pos; }
@@ -46,7 +48,6 @@ public:
         customPivot = true;
     }
 
-    bool visible = true;
     
     virtual void ChangeSpriteSheet(short index) { renderIndex = index; }
     
@@ -55,6 +56,9 @@ public:
 protected:
     virtual SDL_Surface* SetSprite(const std::string& path);
 
+    bool visible = true;
+    short levelSlide;
+    
     std::string imagePath;
     std::vector<SDL_Texture*> thingsToRender = std::vector<SDL_Texture*>();
     short renderIndex = 0;
@@ -89,7 +93,7 @@ public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
     
     // Overriden means use the position reference
-    void Draw(bool overriden = true) override;
+    void Draw(short currentSlide = 0, bool overriden = true) override;
 
     const Vector2& GetPositionReference() const { return posRef; }
 

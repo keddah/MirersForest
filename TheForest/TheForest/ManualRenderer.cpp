@@ -51,8 +51,9 @@ ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
 }
 
 // Overriden means use the position reference
-void ManualRenderer::Draw(bool overriden)
+void ManualRenderer::Draw(short currentSlide, bool overriden)
 {
+    if(levelSlide == currentSlide)
     if(!visible)
     {
         return;

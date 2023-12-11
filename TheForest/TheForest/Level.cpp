@@ -1,19 +1,26 @@
 #include "Level.h"
 
+#include "GameSingletons.h"
+
 Level::Level(short lvlNum)
 {
-    manuals.emplace_back(bkg);
-    
+    // Create slides
+    for(int i = 0; i < 15; i++) slides.emplace_back(this);
+
     tileManager.MakeTiles(0);
+
+    // Adding the tile to the correct slide
     for (auto& tile : tileManager.GetTiles())
     {
-        manuals.emplace_back(tile.GetRenderer());
+        int screen;
+        SDL_GetWindowSize(GameWindow::GetWindow(), &screen, NULL);
+        
+        tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
+        slides[tile.GetLevelSlide()].AddManualRenderer(tile.GetRenderer());
     }
-    
-    sprites.emplace_back(player.GetRenderer());
 }
 
-void Level::Update(float deltaTime)
+void Level::UpdateSlide(float deltaTime)
 {
     player.Update(deltaTime);
     slimeManger.Update(deltaTime);
@@ -24,13 +31,22 @@ void Level::FixedUpdate(float deltaTime)
     player.FixedUpdate(deltaTime);
 }
 
-void Level::Draw()
+void Level::DrawSlide()
 {
-    for (auto& renderer : manuals) renderer.Draw(false);
-
+    bkg.Draw(false);
+    
+    slides[currentSlide].Draw();
     slimeManger.Draw();
     
     // Draw weapons before drawing the rest of the sprite renderers (THE PLAYER) so that the arrow is behind the player
     player.DrawWeapons();
-    for (auto& renderer : sprites) renderer.Draw(false);
+    player.Draw();
+}
+
+
+////////// Slide class
+void Level::Slide::Draw()
+{
+    for (auto& renderer : manuals) renderer.Draw(level.currentSlide, false);
+    for (auto& renderer : sprites) renderer.Draw(level.currentSlide, false);
 }

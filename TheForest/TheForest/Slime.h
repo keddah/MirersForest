@@ -13,6 +13,9 @@ public:
     const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position = {x, y}; }
+
+    void SetLevelSlide(const short slide) { levelSlide = slide; }
+    short GetLevelSlide() const { return levelSlide; }
     
     bool IsDead() const { return dead; }
     
@@ -36,6 +39,9 @@ private:
     Vector2 patrolPoints[2] {Vector2(900, 700), Vector2(100, 800)};
     short patrolIndex;
 
+    // The section of the level that this slime is present on
+    short levelSlide;
+    
     void Collisions();
     void MoveTimer();
     void Patrol(float deltaTime);

@@ -15,6 +15,7 @@ public:
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
+    void Draw() const { renderer->Draw(); }
 
     void DrawWeapons() { wc.Draw(); }
 

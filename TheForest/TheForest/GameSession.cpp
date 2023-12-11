@@ -10,7 +10,7 @@ GameSession::GameSession()
 
 void GameSession::Update(float deltaTime)
 {
-    level1.Update(deltaTime);
+    level1.UpdateSlide(deltaTime);
 }
 
 void GameSession::FixedUpdate(float deltaTime)
@@ -20,5 +20,5 @@ void GameSession::FixedUpdate(float deltaTime)
 
 void GameSession::Draw()
 {
-    level1.Draw();
+    level1.DrawSlide();
 }

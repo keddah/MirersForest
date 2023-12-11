@@ -81,7 +81,7 @@ void Player::UpdateRectangle()
 
 void Player::Death()
 {
-    renderer->visible = false;
+    renderer->SetVisibility(false);
 }
 
 void Player::DamageTimer(float deltaTime)

@@ -8,9 +8,16 @@ public:
 
     const ManualRenderer& GetRenderer() const { return renderer; }
     void Scroll(bool next);
+
+    const Vector2& GetPosition() const { return pos; }
+    
+    short GetLevelSlide() const { return levelSlide; }
+    void SetSlide(const short slide) { levelSlide = slide; }
     
 private:
     std::string spritePath;
     Vector2 pos;
     ManualRenderer renderer;
+
+    short levelSlide;
 };

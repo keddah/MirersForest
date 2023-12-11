@@ -97,7 +97,7 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
 }
 
 // Overriden means use the position reference
-void SpriteRenderer::Draw(bool overriden)
+void SpriteRenderer::Draw(short currentSlide, bool overriden)
 {
     drawRect.x = posRef.x;
     drawRect.y = posRef.y;
