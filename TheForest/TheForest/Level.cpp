@@ -33,11 +33,12 @@ void Level::FixedUpdate(float deltaTime)
 
 void Level::DrawSlide()
 {
-    bkg.Draw(false);
+    bkg.Draw(0);
     
     slides[currentSlide].Draw();
     slimeManger.Draw();
-    
+
+
     // Draw weapons before drawing the rest of the sprite renderers (THE PLAYER) so that the arrow is behind the player
     player.DrawWeapons();
     player.Draw();

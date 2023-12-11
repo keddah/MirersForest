@@ -36,8 +36,6 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 
     // Start on a random frame so that the animations aren't synced up
     if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
-
-    visible = true;
 }
 
 // This constructor is used for animated things
@@ -75,8 +73,6 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         // Start on a random frame so that the animations aren't synced up
         if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
     }
-
-    visible = true;
 }
 
 // This constructor is used whenever the thing to render doesn't have a sprite.
@@ -92,8 +88,6 @@ SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
-
-    visible = true;
 }
 
 // Overriden means use the position reference
@@ -102,9 +96,11 @@ void SpriteRenderer::Draw(short currentSlide, bool overriden)
     drawRect.x = posRef.x;
     drawRect.y = posRef.y;
 
+    print("reference: " << posRef.x << ", " << posRef.y)
+
     // Need to debug before Drawing so that the box is behind the sprite.
     if(thingsToRender.empty()) DrawRectangle();
-    else ManualRenderer::Draw(true);
+    else ManualRenderer::Draw(currentSlide, true);
 
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).

@@ -15,7 +15,7 @@ public:
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-    void Draw() const { renderer->Draw(); }
+    void Draw() { renderer.Draw(); }
 
     void DrawWeapons() { wc.Draw(); }
 
@@ -23,7 +23,7 @@ public:
     void TakeDamage();
     
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
-    const SpriteRenderer& GetRenderer() const { return *renderer; } 
+    const SpriteRenderer& GetRenderer() const { return renderer; } 
     const SDL_FRect& GetRect() const { return rect; } 
     PlayerController& Controller() { return controller; }
 
@@ -114,7 +114,6 @@ private:
         // Type = 0 .. Force = 1 .. .. Delay = 2 .. Ammo = 3 .. Gravity = 4 .. Repulsion = 5
         std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
-
     class Camera
     {
     public:
@@ -133,11 +132,15 @@ private:
     TileManager& tileManager;
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png", "Sprites/idleTileSheet_dmg.png", "Sprites/runTileSheet_dmg.png"};
-    SpriteRenderer* renderer = new SpriteRenderer(spritePaths, position);
+    SpriteRenderer renderer = SpriteRenderer(spritePaths, position);
 
-    short idleAnimation = 0;
-    short runAnimation = 1;
-    short fallAnimation = 2;
+    void UpdateAnimation();
+    short idleAnim = 0;
+    short runAnim = 1;
+    short dmgIdleAnim = 2;
+    short dmgRunAnim = 3;
+    short fallAnim = 4;
+    short dmgFallAnim = 5;
     
     
     Vector2 GetVelocity() const { return velocity; }

@@ -35,10 +35,12 @@ void Player::Update(float deltaTime)
     position += velocity;
     
     UpdateRectangle();
-    cam.Update();
+    // cam.Update();
 
     DamageTimer(deltaTime);
-    renderer->ChangeSpriteSheet(isDamaged? 2 : 0);
+    UpdateAnimation();
+
+    print("player: " << position.x << ", " << position.y)
 }
 
 void Player::FixedUpdate(float deltaTime)
@@ -62,7 +64,9 @@ void Player::TakeDamage()
     
     isDamaged = true;
     health--;
-    print(health)
+
+    renderer.ChangeSpriteSheet(direction == 0? 2 : 3);
+    
     if(health < 1) Death();
 }
 
@@ -71,7 +75,7 @@ void Player::TakeDamage()
 // Together, they make the rectangle.
 void Player::UpdateRectangle()
 {
-    const Vector2 playerSize = renderer->GetDrawSize();
+    const Vector2 playerSize = renderer.GetDrawSize();
 
     rect.x = position.x;
     rect.y = position.y;
@@ -81,7 +85,7 @@ void Player::UpdateRectangle()
 
 void Player::Death()
 {
-    renderer->SetVisibility(false);
+    renderer.SetVisibility(false);
 }
 
 void Player::DamageTimer(float deltaTime)
@@ -94,15 +98,15 @@ void Player::DamageTimer(float deltaTime)
 
     dmgTimer = 0;
     isDamaged = false;
-    renderer->ChangeSpriteSheet(direction == 0? 0 : 1);
+    renderer.ChangeSpriteSheet(direction == 0? 0 : 1);
 }
 
 void Player::Collisions()
 {
     const Vector2 predictedPosX = position + Vector2(velocity.x, 0);
     const Vector2 predictedPosY = position + Vector2(0, velocity.y);
-    const auto predictedRectX = SDL_FRect{ predictedPosX.x, predictedPosX.y, renderer->GetDrawSize().x, renderer->GetDrawSize().y };
-    const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer->GetDrawSize().x, renderer->GetDrawSize().y};
+    const auto predictedRectX = SDL_FRect{ predictedPosX.x, predictedPosX.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y };
+    const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     grounded = false;
     for (auto& tile : tileManager.GetTiles())
@@ -128,6 +132,25 @@ void Player::Collisions()
     
 }
 
+void Player::UpdateAnimation()
+{
+    const bool moving = abs(velocity.x) > .5f;
+    const bool falling = abs(velocity.y) > 2;
+    if(isDamaged)
+    {
+        if(moving) renderer.ChangeSpriteSheet(dmgRunAnim);
+        // else if(falling) renderer.ChangeSpriteSheet(dmgFallAnim);
+        else renderer.ChangeSpriteSheet(dmgIdleAnim);
+    }
+
+    else
+    {
+        if(moving && !falling) renderer.ChangeSpriteSheet(runAnim);
+        // else if(falling) renderer.ChangeSpriteSheet(fallAnim);
+        else renderer.ChangeSpriteSheet(idleAnim);
+    }
+}
+
 void Player::Propel(Vector2 dir, float force)
 {
     // Since grounded fluctuates too much to use.
@@ -136,12 +159,10 @@ void Player::Propel(Vector2 dir, float force)
 
 void Player::Move(float deltaTime)
 {
-    if(abs(velocity.x) < .5f) renderer->ChangeSpriteSheet(1);
-        
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
     direction = controller.IsLeft()? -1 : (controller.IsRight()? 1: 0);
 
-    renderer->SetFlip(direction < 0);    
+    renderer.SetFlip(direction < 0);    
     
     // Adds initial velocity if the player isn't moving to being the acceleration.
     if(direction != 0 && abs(velocity.x) < .01f) velocity.x += direction * .1f;
@@ -162,7 +183,6 @@ void Player::Move(float deltaTime)
     if(!decelerating)
     {
         velocity.x += direction * acceleration * deltaTime;
-        if(abs(velocity.x) > .5f) renderer->ChangeSpriteSheet(runAnimation);
     }
 
     if(velocity.x > maxSpeed) velocity.x = maxSpeed;

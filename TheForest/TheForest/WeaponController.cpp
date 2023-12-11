@@ -21,28 +21,20 @@ void Player::WeaponController::Update(float deltaTime)
 
 void Player::WeaponController::UpdateBullets(float deltaTime)
 {
-    for (std::vector<Projectile>::iterator i = activeBullets.begin(); i != activeBullets.end();) 
-    {
-        if(i->IsDead())
-        {
-            i = activeBullets.erase(i);
-            return;
-        }
-        ++i;
-    }
-
     for(int i = 0; i < activeBullets.size(); i++)
     {
         activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
-        
+
+        // Thorn
         // if(activeBullets[i].IsPulling()) thisPlayer.AddForce(Vector2(activeBullets[i].GetPullPos().x, activeBullets[i].GetPullPos().y) - thisPlayer.position, thornRepulsion);
 
-        // if(activeBullets[i].IsDead())
-        // {
-        //     activeBullets.erase(activeBullets.begin() + i);
-        //     break;
-        // }
+        // (Done like this since the shotgun projectiles are spawned backwards....
+        if((activeBullets.end() - 1)->IsDead())
+        {
+            activeBullets.erase(activeBullets.end() - 1);
+            break;
+        }
     }
 }
 

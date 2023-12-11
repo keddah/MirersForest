@@ -10,47 +10,34 @@ TileManager::TileManager()
 
 void TileManager::MakeTiles(short lvlIndex)
 {
-    Vector2 grassPos = Vector2(-100, 800);
+    Vector2 grassPos = Vector2(-500, 800);
     Vector2 platform = Vector2(800, 500);
 
 
-    Vector2 dirt = Vector2(-100, grassPos.y - tileSize);
+    Vector2 dirtPos = Vector2(-500, grassPos.y - tileSize);
     
     // Grass
-    for (int i = 0; i < 200; i++)
-    {
-        Tile newTile = Tile(tileSheet, grassPos, wood, tileSize);
-
-        tiles.emplace_back(newTile);
-
-        grassPos.x += tileSize;
-    }
+    // for (int i = 0; i < 200; i++)
+    // {
+    //     Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
+    //
+    //     tiles.emplace_back(newTile);
+    //
+    //     grassPos.x += tileSize;
+    // }
     
     for (int rows = 0; rows < 5; rows++)
     {
-        for(int j = 0; j < 200; j++)
+        for(int column = 0; column < 200; column++)
         {
-            Tile newTile = Tile(tileSheet, dirt, wood, tileSize);
+            Tile newTile = Tile(tileSheet, {dirtPos.x, dirtPos.y  + (rows * tileSize)}, dirt1, tileSize);
 
             tiles.emplace_back(newTile);
 
-            dirt.x += tileSize;
+            dirtPos.x += tileSize;
         }
-
-        // Go down after completing a row
-        rows++;
     }
 
-    
-
-    for (int i = 0; i < 60; i++)
-    {
-        Tile newTile = Tile(tileSheet, {grassPos.x, grassPos.y + tileSize}, leaves2, tileSize);
-
-        tiles.emplace_back(newTile);
-
-        grassPos.x += tileSize;
-    }
     // Vector2 pillar2 = Vector2(1900, 400);
     // for (int i = 0; i < 5; i++)
     // {
