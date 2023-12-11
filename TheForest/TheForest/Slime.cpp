@@ -104,8 +104,10 @@ void Slime::Death()
     dead = collision;
 }
 
-void Slime::HitPlayer()
+void Slime::HitPlayer() const
 {
+    if(player.GetLevelSlide() != levelSlide) return;
+    
     if(SDL_HasIntersectionF(&player.GetRect(), &rect)) player.TakeDamage();
 }
 

@@ -10,16 +10,17 @@
 class Player : public Physics
 {
 public:
-    Player(TileManager& tm);
+    Player(TileManager& tm, short& slide);
     ~Player() = default;
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-    void Draw() { renderer.Draw(); }
 
-    void DrawWeapons() { wc.Draw(); }
+    // Draw weapons before drawing the player so that the arrow is behind the player.
+   void Draw() { wc.Draw(); renderer.Draw(); }
 
     void Float();
+    short GetLevelSlide() const { return levelSlide; }
     void TakeDamage();
     
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
@@ -118,18 +119,18 @@ private:
     {
     public:
         Camera(Player* plyr);
-        void Update();
+        void Update() const;
 
     private:
         void FollowPlayer();
     
         Player& thisPlayer;
 
-        int screenWidth, screenHeight;
-        short slide;
+        int screenWidth;
     };
     
     TileManager& tileManager;
+    short& levelSlide;
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png", "Sprites/idleTileSheet_dmg.png", "Sprites/runTileSheet_dmg.png"};
     SpriteRenderer renderer = SpriteRenderer(spritePaths, position);

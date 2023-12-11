@@ -1,5 +1,7 @@
 #include "SlimeManager.h"
 
+#include "GameSingletons.h"
+
 SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(floorRef), player(plyr)
 {
     const auto slime1 = new Slime(player, tiles);
@@ -13,6 +15,15 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(flo
     slimes.push_back(slime1);
     slimes.push_back(slime2);
     slimes.push_back(slime3);
+
+    int screen;
+    SDL_GetWindowSize(GameWindow::GetWindow(), &screen, NULL);
+    for (auto& tile : tiles)
+    {
+        
+        tile.SetSlide(static_cast<int>(tile.GetPosition().x) % screen);
+        // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
+    }
 }
 
 void SlimeManager::Update(float deltaTime)

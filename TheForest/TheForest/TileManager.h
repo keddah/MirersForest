@@ -7,12 +7,13 @@ class TileManager
 {
 public:
     TileManager();
-
+    void Draw() { for (auto& tile : tiles) if(tile.GetLevelSlide() == levelSlide) tile.Draw(); }
+    
     std::vector<Tile>& GetTiles() { return tiles; }
     
     void MakeTiles(short lvlIndex);
-    void NextSlide() { for (auto& tile : tiles) { tile.Scroll(true); } }
-    void PreviousSlide() { for (auto& tile : tiles) { tile.Scroll(false); } }
+    void NextSlide() { for (auto& tile : tiles) { levelSlide++; }}//tile.Scroll(levelSlide); } }
+    void PreviousSlide() { for (auto& tile : tiles) { levelSlide--;}}// tile.Scroll(levelSlide); } }
     
 private:
     static constexpr short tileSize = 16;
@@ -41,6 +42,7 @@ private:
 
     // Level layout (the formation of the tiles within the level)
     short tileSet[levelWidth][levelHeight];
-    
+
+    short levelSlide;
     std::vector<Tile> tiles;
 };

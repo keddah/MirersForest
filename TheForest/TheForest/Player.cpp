@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(TileManager& tm): tileManager(tm)
+Player::Player(TileManager& tm, short& slide): tileManager(tm), levelSlide(slide)
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
@@ -35,7 +35,7 @@ void Player::Update(float deltaTime)
     position += velocity;
     
     UpdateRectangle();
-    // cam.Update();
+    cam.Update();
 
     DamageTimer(deltaTime);
     UpdateAnimation();
@@ -111,13 +111,16 @@ void Player::Collisions()
     grounded = false;
     for (auto& tile : tileManager.GetTiles())
     {
+        // Don't collide with anything that isn't visible / in the slide
+        if(tile.GetLevelSlide() != levelSlide) continue;
+        
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
         
         // Separate the axis collisions.
         const bool predictedCollisionX = SDL_HasIntersectionF(&predictedRectX, &tileRect);
         const bool predictedCollisionY = SDL_HasIntersectionF(&predictedRectY, &tileRect);
-
+            
         if (predictedCollisionX)
         {
             velocity = Vector2(0, velocity.y);

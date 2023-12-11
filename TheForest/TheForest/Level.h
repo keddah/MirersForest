@@ -35,10 +35,10 @@ private:
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
 
     std::vector<Slide> slides = std::vector<Slide>(); 
-    short currentSlide = 1;
+    short currentSlide = 0;
     
     TileManager tileManager;
-    Player player = Player(tileManager);
+    Player player = Player(tileManager, currentSlide);
     SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
 
     

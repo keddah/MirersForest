@@ -8,12 +8,12 @@ Tile::Tile(const std::string& filePath, Vector2 position, SDL_Rect sourceRect, i
     renderer.FromTileSheet(sourceRect, tileSize);
 }
 
-void Tile::Scroll(bool next)
-{
-    int screenWidth;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, NULL);
-
-    pos.x += next? screenWidth : -screenWidth;
-
-    renderer = ManualRenderer(spritePath, pos);
-}
+// void Tile::Scroll(short slide)
+// {
+//     int screenWidth;
+//     SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, NULL);
+//
+//     // pos.x += next? screenWidth : -screenWidth;
+//
+//     renderer = ManualRenderer(spritePath, pos);
+// }

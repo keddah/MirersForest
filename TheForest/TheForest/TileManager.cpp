@@ -1,5 +1,7 @@
 #include "TileManager.h"
 
+#include "GameSingletons.h"
+
 TileManager::TileManager()
 {
     //tiles.push_back(test);
@@ -17,25 +19,26 @@ void TileManager::MakeTiles(short lvlIndex)
     Vector2 dirtPos = Vector2(-500, grassPos.y - tileSize);
     
     // Grass
-    // for (int i = 0; i < 200; i++)
-    // {
-    //     Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
-    //
-    //     tiles.emplace_back(newTile);
-    //
-    //     grassPos.x += tileSize;
-    // }
-    
-    for (int rows = 0; rows < 5; rows++)
+    for (int i = 0; i < 200; i++)
     {
-        for(int column = 0; column < 200; column++)
+        Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
+    
+        tiles.emplace_back(newTile);
+    
+        grassPos.x += tileSize;
+    }
+    
+    for (int rows = 0; rows < 10; rows++)
+    {
+        for(int column = 0; column < 1000; column++)
         {
-            Tile newTile = Tile(tileSheet, {dirtPos.x, dirtPos.y  + (rows * tileSize)}, dirt1, tileSize);
+            Tile newTile = Tile(tileSheet, dirtPos, rows == 0? grassDirt1: dirt1, tileSize);
 
             tiles.emplace_back(newTile);
 
             dirtPos.x += tileSize;
         }
+        dirtPos.y += tileSize;
     }
 
     // Vector2 pillar2 = Vector2(1900, 400);
@@ -58,4 +61,12 @@ void TileManager::MakeTiles(short lvlIndex)
     //     startPos.x += tileSize;
     // }
 
+    // Adding the tile to the correct slide
+    int screen;
+    SDL_GetWindowSize(GameWindow::GetWindow(), &screen, NULL);
+    for (auto& tile : tiles)
+    {
+        tile.SetSlide(floor(tile.GetPosition().x / screen));
+        // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
+    }
 }

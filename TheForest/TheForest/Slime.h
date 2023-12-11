@@ -49,6 +49,6 @@ private:
 
     void Death();
     
-    void HitPlayer();
+    void HitPlayer() const;
     void UpdateRectangle();
 };
