@@ -12,12 +12,11 @@ Level::Level(short lvlNum)
 
 void Level::Update(float deltaTime)
 {
-    SyncSlides();
     player.Update(deltaTime);
     slimeManger.Update(deltaTime);
-
     
-    print("level: " << currentSlide)      
+    SyncSlides();
+    // print("level: " << currentSlide)      
 }
 
 void Level::FixedUpdate(float deltaTime)
@@ -32,14 +31,6 @@ void Level::DrawSlide()
     slimeManger.Draw();
     player.Draw();
 }
-
-
-////////// Slide class
-// void Level::Slide::Draw()
-// {
-//     for (auto& renderer : manuals) renderer.Draw(true);
-//     for (auto& renderer : sprites) renderer.Draw();
-// }
 
 void Level::SyncSlides()
 {

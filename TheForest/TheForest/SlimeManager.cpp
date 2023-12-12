@@ -23,7 +23,6 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(flo
     for (const auto& slime : slimes)
     {
         slime->SetSlide(floor(slime->GetPosition().x / screenWidth));
-        // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
     }
 }
 

@@ -3,7 +3,7 @@
 #include "Player.h"
 
 Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon,
-	const Vector2 pos, const float angle, const Vector2 plyrVelocity, const bool isSpecial, std::vector<Tile>& floorRef) : tiles(floorRef)
+	const Vector2 pos, const float angle, const Vector2 plyrVelocity, const bool isSpecial, const std::vector<Tile>& floorRef) : tiles(floorRef)
 {
 	position = pos;
 

@@ -2,7 +2,7 @@
 
 #include "GameSingletons.h"
 
-Player::Player(TileManager& tm, short& slide): tileManager(tm), levelSlide(slide)
+Player::Player(const std::vector<Tile>& floorTiles, short& slide): tiles(floorTiles), currentSlide(slide)
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
@@ -15,6 +15,8 @@ Player::Player(TileManager& tm, short& slide): tileManager(tm), levelSlide(slide
 void Player::Update(float deltaTime)
 {
     controller.Update();
+    if(dead) return;
+    
     wc.Update(deltaTime);
     
     // If the jump button is held... gravity is slightly less powerful
@@ -39,8 +41,9 @@ void Player::Update(float deltaTime)
     position += velocity;
     
     UpdateRectangle();
-    cam.Update();
 
+    SectionDetection();
+    
     if(position.y > 1080) Death();
     DamageTimer(deltaTime);
     UpdateAnimation();
@@ -84,8 +87,37 @@ void Player::UpdateRectangle()
     rect.h = playerSize.y;
 }
 
+void Player::SectionDetection()
+{
+    if(position.x > screenWidth)
+    {
+        currentSlide++;
+        position.x = velocity.x;
+
+        for (auto& bullet : wc.GetActiveBullets())
+        {
+            bullet.SetPosition(Vector2(0, bullet.GetPosition().y));
+        }
+    }
+    
+    else if(currentSlide > 0 && position.x < 0)
+    {
+        currentSlide--;
+
+        // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
+        position.x = screenWidth + velocity.x;
+        
+        for (auto& bullet : wc.GetActiveBullets())
+        {
+            bullet.SetPosition(Vector2(screenWidth, bullet.GetPosition().y));
+        }
+    }
+
+}
+
 void Player::Death()
 {
+    dead = true;
     health = 0;
     renderer.SetVisibility(false);
 }
@@ -111,10 +143,10 @@ void Player::Collisions()
     const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     grounded = false;
-    for (auto& tile : tileManager.GetTiles())
+    for (auto& tile : tiles)
     {
-        // Don't collide with anything that isn't visible / in the slide
-        if(tile.GetLevelSlide() != levelSlide) continue;
+        // Don't collide with anything that isn't visible / in the same slide
+        if(tile.GetLevelSlide() != currentSlide) continue;
         
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};

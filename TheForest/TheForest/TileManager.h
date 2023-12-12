@@ -7,8 +7,8 @@ class TileManager
 {
 public:
     TileManager();
-    void Draw() { for (auto& tile : tiles) if(tile.GetLevelSlide() == levelSlide) tile.Draw(); }
-
+    void Draw();
+    
     std::vector<Tile>& GetTiles() { return tiles; }
     
     void MakeTiles(short lvlIndex);
@@ -17,7 +17,8 @@ public:
 private:
     int screenWidth;
     static constexpr short tileSize = 16;
-
+    void SlideTiles();
+    
     // The source rectangles for some of the different textures in the tile sheet
     const SDL_Rect stoneDirt1 {0,0, tileSize, tileSize};
     const SDL_Rect stoneDirt2 {tileSize * 2,0, tileSize, tileSize};

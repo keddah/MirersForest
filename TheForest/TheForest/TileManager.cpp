@@ -8,6 +8,15 @@ TileManager::TileManager()
     //MakeTiles();
 }
 
+void TileManager::Draw()
+{
+    for (auto& tile : tiles)
+    {
+        // Draw the tile if its on the correct slide
+        if(tile.GetLevelSlide() == levelSlide) tile.Draw(); 
+    }
+}
+
 // Make a tile Renderer so that the position doesn't have to be a reference
 
 void TileManager::MakeTiles(short lvlIndex)
@@ -17,17 +26,34 @@ void TileManager::MakeTiles(short lvlIndex)
     Vector2 platform = Vector2(2500, 500);
 
     Vector2 dirtPos = Vector2(start, grassPos.y - tileSize);
+
+    Vector2 pospos = {1800, 200};
+    //// next slide 
+    for (int i = 0; i < 70; i++)
+    {
+        Tile newTile = Tile(tileSheet, pospos, darkDirt1, tileSize);
     
-    // Grass
-    // for (int i = 0; i < 200; i++)
-    // {
-    //     Tile newTile = Tile(tileSheet, grassPos, grassDirt1, tileSize);
-    //
-    //     tiles.emplace_back(newTile);
-    //
-    //     grassPos.x += tileSize;
-    // }
+        tiles.emplace_back(newTile);
     
+        pospos.x += tileSize;
+    }
+
+    
+    for (int rows = 0; rows < 30; rows++)
+    {
+        for(int column = 0; column < 20; column++)
+        {
+            Tile newTile = Tile(tileSheet, platform, rows == 0? grassDirt1: dirt1, tileSize);
+
+            tiles.emplace_back(newTile);
+
+            platform.x += tileSize;
+        }
+        platform.x = 2500;
+        platform.y += tileSize;
+    }
+    
+    //// Main
     for (int rows = 0; rows < 10; rows++)
     {
         for(int column = 0; column < 500; column++)
@@ -42,44 +68,36 @@ void TileManager::MakeTiles(short lvlIndex)
         dirtPos.y += tileSize;
     }
 
-    for (int i = 0; i < 16; i++)
-    {
-        Tile newTile = Tile("TileSets/test16-16.jpg", platform, stone1, tileSize);
-    
-        tiles.emplace_back(newTile);
-    
-        platform.x += tileSize;
-    }
-
-    // Vector2 startPos = Vector2(0, 400);
-    // for (int h = 0; h < levelWidth + 50; h++)
-    // {
-    //     Tile newTile = Tile("TileSets/test16-16.jpg", startPos);
-    //
-    //     tiles.emplace_back(newTile);
-    //
-    //     startPos.x += tileSize;
-    // }
-
-    // Adding the tile to the correct slide
     SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
     for (auto& tile : tiles)
     {
         tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
-        // tile.SetSlide(static_cast<short>(round(tile.GetPosition().x / screen)));
     }
+    SlideTiles();
 }
 
 void TileManager::SetLevelSlide(short slide)
 {
+    // Only do anything if it's a new slide
     if(slide == levelSlide) return;
-    
+
+    // Going to the next area means that the inputted slide is further ahead than the current one
     const bool next = slide > levelSlide;
-    
     for (auto& tile : tiles)
     {
+        // Move every tile left/right (keeping their Y value)
         tile.SetPosition({tile.GetPosition().x + (next? -screenWidth : screenWidth), tile.GetPosition().y});
-        tile.SetSlide(slide);
     }
+    
     levelSlide = slide;
+}
+
+void TileManager::SlideTiles()
+{
+    // Adding the tile to the correct slide
+    for (auto& tile : tiles)
+    {
+        // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
+        // tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
+    }
 }

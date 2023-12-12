@@ -10,7 +10,7 @@
 class Player : public Physics
 {
 public:
-    Player(TileManager& tm, short& slide);
+    Player(const std::vector<Tile>& floorTiles, short& slide);
     ~Player() = default;
 
     void Update(float deltaTime);
@@ -20,7 +20,7 @@ public:
    void Draw() { wc.Draw(); renderer.Draw(); }
 
     void Float();
-    short GetLevelSlide() const { return levelSlide; }
+    short GetLevelSlide() const { return currentSlide; }
     void TakeDamage();
     
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
@@ -116,21 +116,9 @@ private:
         // Type = 0 .. Force = 1 .. .. Delay = 2 .. Ammo = 3 .. Gravity = 4 .. Repulsion = 5
         std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
-    class Camera
-    {
-    public:
-        Camera(Player* pP);
-        void Update() const;
-
-    private:
-        void FollowPlayer();
-
-        // Player reference
-        Player& rP;
-    };
     
-    TileManager& tileManager;
-    short& levelSlide;
+    const std::vector<Tile>& tiles;
+    short& currentSlide;
 
     int screenWidth, screenHeight;
     
@@ -161,6 +149,9 @@ private:
     void Jump();
     void UpdateRectangle();
 
+    // Detects whenever the player leaves the screen and moves the player and its objects to the next slide
+    void SectionDetection();
+    
     void Death();
     void DamageTimer(float deltaTime);
     
@@ -168,7 +159,6 @@ private:
     
     PlayerController controller;
 
-    Camera cam = Camera (this);
 
     //////////// Weapons
     WeaponController wc = WeaponController(this);
@@ -199,6 +189,7 @@ private:
 
 
     ////// Health/Damage
+    bool dead;
     const short maxHealth = 3;
     short health = maxHealth;
 

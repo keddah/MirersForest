@@ -129,7 +129,7 @@ void Player::WeaponController::Shooting(float deltaTime)
     const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && rP.controller.IsRMB();
 
     // Spawn the projectile higher if it's the big seed.
-    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), rP.velocity, rP.controller.IsRMB(), rP.tileManager.GetTiles());
+    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), rP.velocity, rP.controller.IsRMB(), rP.tiles);
     activeBullets.push_back(newBullet);
     
     canShoot = false;
@@ -160,7 +160,7 @@ void Player::WeaponController::Shotgun()
         // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
         weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
         
-        Projectile petal = Projectile(weapon, spawnPos, shootAngle, rP.velocity, rP.controller.IsRMB(),rP.tileManager.GetTiles());
+        Projectile petal = Projectile(weapon, spawnPos, shootAngle, rP.velocity, rP.controller.IsRMB(),rP.tiles);
         activeBullets.emplace_back(petal);
 
         // The player is launched using x times more force to simulate each petal giving its own additional force

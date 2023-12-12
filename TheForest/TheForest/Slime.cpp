@@ -38,6 +38,8 @@ void Slime::Collisions()
     grounded = false;
     for (auto& tile : tiles)
     {
+        if(tile.GetLevelSlide() != levelSlide) continue;
+        
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
         

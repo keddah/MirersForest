@@ -40,7 +40,7 @@ private:
     short currentSlide = 0;
     
     TileManager tileManager;
-    Player player = Player(tileManager, currentSlide);
+    Player player = Player(tileManager.GetTiles(), currentSlide);
     SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
 
     

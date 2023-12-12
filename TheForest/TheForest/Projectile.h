@@ -18,12 +18,14 @@ public:
 		//Thorn,
 	};
 	
-	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial, std::vector<Tile>& floorRef);
+	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial, const std::vector<Tile>& floorRef);
 	~Projectile() = default;
 	
 	void Update(float deltaTime);
 	void Draw() const;
 
+	void SetPosition(Vector2 pos) {position = pos;}
+	
 	Projectile& operator=(const Projectile& other)
 	{
 		    lifeTimer = other.lifeTimer;
