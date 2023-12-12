@@ -17,7 +17,6 @@ public:
 private:
     int screenWidth;
     static constexpr short tileSize = 16;
-    void SlideTiles();
     
     // The source rectangles for some of the different textures in the tile sheet
     const SDL_Rect stoneDirt1 {0,0, tileSize, tileSize};

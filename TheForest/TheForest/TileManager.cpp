@@ -21,7 +21,7 @@ void TileManager::Draw()
 
 void TileManager::MakeTiles(short lvlIndex)
 {
-    constexpr float start = -100;
+    constexpr float start = -400;
     Vector2 grassPos = Vector2(start, 800);
     Vector2 platform = Vector2(2500, 500);
 
@@ -73,7 +73,6 @@ void TileManager::MakeTiles(short lvlIndex)
     {
         tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
     }
-    SlideTiles();
 }
 
 void TileManager::SetLevelSlide(short slide)
@@ -90,14 +89,4 @@ void TileManager::SetLevelSlide(short slide)
     }
     
     levelSlide = slide;
-}
-
-void TileManager::SlideTiles()
-{
-    // Adding the tile to the correct slide
-    for (auto& tile : tiles)
-    {
-        // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
-        // tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
-    }
 }
