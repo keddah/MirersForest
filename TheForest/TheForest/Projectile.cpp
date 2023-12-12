@@ -120,7 +120,6 @@ void Projectile::UpdateRect()
 
 void Projectile::Collisions()
 {
-	
 	bool collision = false;
 	for (auto& tile : tiles)
 	{

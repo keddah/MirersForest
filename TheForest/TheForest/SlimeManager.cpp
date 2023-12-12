@@ -8,16 +8,28 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(flo
     const auto slime2 = new Slime(player, tiles);
     const auto slime3 = new Slime(player, tiles);
     const auto slime4 = new Slime(player, tiles);
+    const auto slime5 = new Slime(player, tiles);
+    const auto slime6 = new Slime(player, tiles);
+    const auto slime7 = new Slime(player, tiles);
+    const auto slime8 = new Slime(player, tiles);
 
     slime1->SetPosition(500, 0);
     slime2->SetPosition(900, 0);
     slime3->SetPosition(100, 0);
     slime4->SetPosition(3000, 0);
+    slime5->SetPosition(1000, 0);
+    slime6->SetPosition(600, 0);
+    slime7->SetPosition(700, 0);
+    slime8->SetPosition(800, 0);
 
     slimes.push_back(slime1);
     slimes.push_back(slime2);
     slimes.push_back(slime3);
     slimes.push_back(slime4);
+    slimes.push_back(slime5);
+    slimes.push_back(slime6);
+    slimes.push_back(slime7);
+    slimes.push_back(slime8);
 
     SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
     for (const auto& slime : slimes)

@@ -125,20 +125,32 @@ void Player::WeaponController::Shooting(float deltaTime)
         return;
     }
 
-    if(rP.controller.IsRMB() && selectedWeapon == Projectile::EWeaponTypes::Petal)
+    const bool special = rP.controller.IsRMB();
+    
+    if(special && selectedWeapon == Projectile::EWeaponTypes::Petal)
     {
         Shotgun();
         return;
     }
 
     // When shoot is pressed.....
-    if(!(rP.controller.IsLMB() || rP.controller.IsRMB())) return;
+    if(!(rP.controller.IsLMB() || special)) return;
 
+    
     // Since the projectile is so big it spawns in the ground and instantly blows up.
-    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && rP.controller.IsRMB();
+    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && special;
 
+    // The special projectile have different spawns...
+    Vector2 pos;
+    if(bigSeed) pos = {spawnPos.x, spawnPos.y - 20};
+    else if(special && std::get<0>(weapon) == Projectile::EWeaponTypes::Sun)
+    {
+        pos = {rP.position.x - 300, rP.position.y - 50};
+    }
+    else pos = spawnPos;
+    
     // Spawn the projectile higher if it's the big seed.
-    const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), rP.velocity, rP.controller.IsRMB(), rP.tiles);
+    const Projectile newBullet = Projectile(weapon, pos, GetShootAngle(), rP.velocity, special, rP.tiles);
     activeBullets.push_back(newBullet);
 
     ammo -= std::get<3>(weapon);
@@ -148,7 +160,7 @@ void Player::WeaponController::Shooting(float deltaTime)
     rP.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
 
     // The Sun's special causes the player to lose their velocity.
-    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && rP.controller.IsRMB()) rP.Float();
+    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && special) rP.Float();
 }
 
 void Player::WeaponController::Shotgun()

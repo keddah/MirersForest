@@ -89,21 +89,17 @@ void Slime::NextPoint()
 
 void Slime::Death()
 {
-    bool collision = false;
     for(auto& bullet: player.GetActiveBullets())
     {
-        // Since the renderer is created/destroyed each frame..... 
-        if(!bullet.IsDead())
-        {
-            const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
-            collision = SDL_HasIntersectionF(&rect, &bulletRect);
-        }
-
+        const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
+        const bool collision = SDL_HasIntersectionF(&rect, &bulletRect);
         
-        if(collision && bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
+        if(collision && bullet.GetType() != Projectile::EWeaponTypes::Sun)
+        {
+            bullet.Kill();
+            dead = true;
+        }
     }
-
-    dead = collision;
 }
 
 void Slime::HitPlayer() const
