@@ -23,6 +23,7 @@ void Player::WeaponController::UpdateBullets(float deltaTime)
 {
     for(int i = 0; i < activeBullets.size(); i++)
     {
+        activeBullets[i].Beam(deltaTime, rP.controller.GetMousePosition());
         activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
 

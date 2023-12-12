@@ -42,7 +42,7 @@ public:
 		    return *this;
 	}
 	
-	void Expire(float time)
+	void Expire(const float time)
 	{
 		lifeTimer += time;
 		if (lifeTimer > lifeSpan) dead = true;
@@ -51,8 +51,9 @@ public:
 	bool IsDead() const { return dead; }
 	void Kill() { dead = true;}
 
-	bool IsPulling() const { return pulling; }
-	const Vector2& GetPullPos() const { return pullPos; }
+	void Beam(float deltaTime, Vector2 mousePos);
+	// bool IsPulling() const { return pulling; }
+	// const Vector2& GetPullPos() const { return pullPos; }
 	
 	const Vector2& GetRepulsion() const { return repulsion; }
 
@@ -71,7 +72,6 @@ private:
 	void Collisions();
 	
 	void Explode();
-	void Beam(float deltaTime);
 
 	void Pull(Vector2  pullFrom);
 	
@@ -93,9 +93,10 @@ private:
 	
 	// Is the alternative weapon type (each weapon has 2 types)
 	bool special;
-	bool pulling;
-	Vector2  pullPos;
+	// bool pulling;
+	// Vector2  pullPos;
 	float flipTimer;
+	const float beamFlipDelay = .85f; 
 	
 	float delay = .8f;
 	short ammoCost = 1;

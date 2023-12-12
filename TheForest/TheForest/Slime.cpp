@@ -94,9 +94,9 @@ void Slime::Death()
         const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
         const bool collision = SDL_HasIntersectionF(&rect, &bulletRect);
         
-        if(collision && bullet.GetType() != Projectile::EWeaponTypes::Sun)
+        if(collision)
         {
-            bullet.Kill();
+            if(bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
             dead = true;
         }
     }

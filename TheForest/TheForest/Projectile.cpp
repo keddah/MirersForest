@@ -24,8 +24,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 	// The repulsion is just the opposite direction the projectile is going
 	repulsion = velocity * -1;
 	
-
-	switch (std::get<0>(weapon))
+	switch (type)
 	{
 		case EWeaponTypes::Seed:
 			typePath = special? bigSeedPath : seedPath; 
@@ -41,7 +40,6 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 			
 		// case EWeaponTypes::Thorn:
 		// 	typePath = thornPath;
-		// 	lifeSpan = 2.5f; 
 		// 	break;
 	}
 
@@ -77,12 +75,12 @@ void Projectile::Update(float deltaTime)
 	if(type == EWeaponTypes::Sun)
 	{
 		renderer->SetDrawSize({drawSize.x, drawSize.y});
-		Beam(deltaTime);
 	}
 
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
+	// Always face velocity
 	FaceVelocity();
 	
 	// Collisions before applying position
@@ -130,7 +128,6 @@ void Projectile::Collisions()
 		{
 			collision = true;
 		}
-		
 	}
 
 	switch (type)
@@ -145,6 +142,8 @@ void Projectile::Collisions()
 			break;
 			
 		case EWeaponTypes::Sun:
+			// If there's a collision and the beam is on its descent
+			if(special && collision && flipTimer > beamFlipDelay) dead = true;
 			break;
 
 		// Getting rid of Thorn since SDL_Rects can't be rotated 
@@ -161,24 +160,29 @@ void Projectile::Explode()
 	dead = true;
 }
 
-void Projectile::Beam(float deltaTime)
+void Projectile::Beam(float deltaTime, Vector2 mousePos)
 {
 	if(!special) return;
 
 	flipTimer += deltaTime;
+	if(flipTimer < beamFlipDelay) return;
 
-	if(flipTimer < .75f) return;
-
-	maxFallSpeed = 300;
+	// Reset the velocity every frame so that it's not too fast
 	SetVelocity();
 
-	// Turn on gravity too
-	gravityMultiplier = 1.25f;
-	AddForce(0, 1, force);
+	// Follow the mouse position
+	const Vector2 difference = mousePos - Vector2(position.x + renderer->GetDrawSize().x / 2, position.y + renderer->GetDrawSize().y / 2);
+	const float rot = atan2(difference.y, difference.x);
+	AddForce(Vector2(cos(rot), sin(rot)), force);
+
+	// Allow the projectile to move faster
+	maxFallSpeed = 300;
+
+	gravityMultiplier = 2.75f;
 }
 
-void Projectile::Pull(Vector2 pullFrom)
-{
-	pulling = true;
-	pullPos = pullFrom;
-}
+// void Projectile::Pull(Vector2 pullFrom)
+// {
+// 	pulling = true;
+// 	pullPos = pullFrom;
+// }
