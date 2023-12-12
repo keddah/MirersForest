@@ -19,9 +19,12 @@ public:
     // Draw weapons before drawing the player so that the arrow is behind the player.
    void Draw() { wc.Draw(); renderer.Draw(); }
 
-    void Float();
     short GetLevelSlide() const { return currentSlide; }
+
+    bool CanPowerup();
+    bool GivePowerup();
     void TakeDamage();
+    void Float();
     
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
     const SpriteRenderer& GetRenderer() const { return renderer; } 
@@ -36,22 +39,30 @@ private:
         ~WeaponController() = default;
 
         void Update(float deltaTime);
-        void UpdateBullets(float deltaTime);
         void Draw();
         std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
 
+        bool AmmoFull() const { return ammo == maxAmmo;  }
+        void Refill() { ammo = maxAmmo;  }
+
     private:
-        // Okayer reference
+        // player reference
         Player& rP;
+
+        // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
+        // When Getting :
+        // Type = 0 .. Force = 1 .. .. Delay = 2 .. AmmoCost = 3 .. Gravity = 4 .. Repulsion = 5
+        std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
         
+        void UpdateBullets(float deltaTime);
+
         void WeaponSelection();
         void ConfigureWeapon();
         void Shooting(float deltaTime);
+        float GetShootAngle() const;
 
         //Variants
         void Shotgun();
-        
-        float GetShootAngle() const;
 
         void NextWeapon();
         void PreviousWeapon();
@@ -94,27 +105,19 @@ private:
         const float sunRepulsion = 20;
         // const float thornRepulsion = 0 ;
 
-        // Special uses 2
-        const short seedAmmo = 3;
-
-        // Special uses 10
-        const short petalAmmo = 30;
-
-        // Special uses 2
-        const short sunAmmo = 6;
-
-        // Always uses 1
-        // const short thornAmmo = 5;
+        ///// Ammo
+        const short maxAmmo = 45;
+        short ammo = maxAmmo;
+        
+        const short seedCost = 8;
+        const short petalCost = 1;
+        const short sunCost = 15;
+        // const short thornCost = 10;
     
 	
         // Projectile spawn position
         Vector2 spawnPos;
         const Vector2 spawnOffset = {-90, 75};
-
-        // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
-        // When Getting :
-        // Type = 0 .. Force = 1 .. .. Delay = 2 .. Ammo = 3 .. Gravity = 4 .. Repulsion = 5
-        std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
     };
     
     const std::vector<Tile>& tiles;

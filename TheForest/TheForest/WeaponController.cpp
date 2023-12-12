@@ -74,17 +74,17 @@ void Player::WeaponController::ConfigureWeapon()
     const bool special = rP.controller.IsRMB();
     switch (selectedWeapon)
     {
-        // Tuple order = Type->Force->Size->Delay->ammo->gravity
-        case Projectile::EWeaponTypes::Seed:
-            weapon = std::make_tuple(selectedWeapon, (special? seedForce * .8f : seedForce), seedDelay, seedAmmo, seedGravity, seedRepulsion);
+        // Tuple order = Type->Force->Size->Delay->AmmoCost->Gravity
+    case Projectile::EWeaponTypes::Seed:
+            weapon = std::make_tuple(selectedWeapon, (special? seedForce * .8f : seedForce), seedDelay, special? seedCost * 2 : seedCost, seedGravity, seedRepulsion);
         break;
 			
         case Projectile::EWeaponTypes::Petal:
-            weapon = std::make_tuple(selectedWeapon, petalForce, special? petalDelay * 5: petalDelay, petalAmmo, petalGravity, petalRepulsion);
+            weapon = std::make_tuple(selectedWeapon, petalForce, special? petalDelay * 5: petalDelay, petalCost, petalGravity, petalRepulsion);
             break;
 			    
     case Projectile::EWeaponTypes::Sun:
-            weapon = std::make_tuple(selectedWeapon, sunForce, sunDelay, sunAmmo, sunGravity, special? 0 : sunRepulsion);
+            weapon = std::make_tuple(selectedWeapon, sunForce, sunDelay, special? sunCost * 2 : sunCost, sunGravity, special? 0 : sunRepulsion);
             break;
 			    
         // case Projectile::EWeaponTypes::Thorn:
@@ -95,6 +95,14 @@ void Player::WeaponController::ConfigureWeapon()
 
 void Player::WeaponController::Shooting(float deltaTime)
 {
+    print(ammo)
+    if(ammo <= 0)
+    {
+        canShoot = false;
+        ammo = 0;
+        return;
+    }
+    
     // Update the projectile spawn position;
     const SDL_FRect& spawnRect = arrow.GetRect();
     
@@ -122,7 +130,8 @@ void Player::WeaponController::Shooting(float deltaTime)
         Shotgun();
         return;
     }
-    
+
+    // When shoot is pressed.....
     if(!(rP.controller.IsLMB() || rP.controller.IsRMB())) return;
 
     // Since the projectile is so big it spawns in the ground and instantly blows up.
@@ -131,6 +140,8 @@ void Player::WeaponController::Shooting(float deltaTime)
     // Spawn the projectile higher if it's the big seed.
     const Projectile newBullet = Projectile(weapon, bigSeed? Vector2(spawnPos.x, spawnPos.y - 20): spawnPos, GetShootAngle(), rP.velocity, rP.controller.IsRMB(), rP.tiles);
     activeBullets.push_back(newBullet);
+
+    ammo -= std::get<3>(weapon);
     
     canShoot = false;
 
@@ -158,11 +169,13 @@ void Player::WeaponController::Shotgun()
         const float shootAngle = correction? -(GetShootAngle() - (midPoint - i) / pelletSpread) + GetShootAngle() * 2 : GetShootAngle() + (-midPoint + i) / pelletSpread;
         
         // Re setting the weapon so that the pellets at the top of the cone go further than the ones at the bottom
-        weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalAmmo, petalGravity, petalRepulsion);
+        weapon = std::make_tuple(selectedWeapon, petalForce + i, petalDelay * 10, petalCost, petalGravity, petalRepulsion);
         
         Projectile petal = Projectile(weapon, spawnPos, shootAngle, rP.velocity, rP.controller.IsRMB(),rP.tiles);
         activeBullets.emplace_back(petal);
-
+        
+        ammo -= std::get<3>(weapon);
+        
         // The player is launched using x times more force to simulate each petal giving its own additional force
         rP.Propel(petal.GetRepulsion(), std::get<5>(weapon) * pellets);
     }

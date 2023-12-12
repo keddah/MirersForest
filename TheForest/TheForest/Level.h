@@ -1,4 +1,5 @@
 #pragma once
+#include "FlowerManager.h"
 #include "Player.h"
 #include "SlimeManager.h"
 #include "TileManager.h"
@@ -13,25 +14,6 @@ public:
     void DrawSlide();
     
 private:
-    // class Slide
-    // {
-    // public:
-    //     Slide() = default;
-    //     Slide(Level* lvl): level(*lvl) {}
-    //     void Draw();
-    //
-    //     const std::vector<ManualRenderer>& GetManualRenderer(){ return manuals; }
-    //     const std::vector<SpriteRenderer>& GetSpriteRenderer(){ return sprites; }
-    //     
-    //     void AddManualRenderer(const ManualRenderer& rndrr){ manuals.push_back(rndrr); }
-    //     void AddSpriteRenderer(const SpriteRenderer& rndrr){ sprites.push_back(rndrr); }
-    //     
-    // private:
-    //     const Level& level;
-    //     
-    //     std::vector<ManualRenderer> manuals = std::vector<ManualRenderer>();
-    //     std::vector<SpriteRenderer> sprites = std::vector<SpriteRenderer>();
-    // };
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
 
     void SyncSlides();
@@ -42,6 +24,7 @@ private:
     TileManager tileManager;
     Player player = Player(tileManager.GetTiles(), currentSlide);
     SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
+    FlowerManager flowerManager = FlowerManager(player);
 
     
 };

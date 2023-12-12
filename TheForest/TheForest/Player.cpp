@@ -64,6 +64,19 @@ void Player::Float()
     setFloatTimer = true;
 }
 
+bool Player::GivePowerup()
+{
+    // If the player's health isn't max .. or the player's ammo isn't full
+    const bool canTake = health != maxHealth || !wc.AmmoFull();
+    
+    health++;
+    if(health > maxHealth) health = maxHealth;
+
+    wc.Refill();
+
+    return canTake;
+}
+
 void Player::TakeDamage()
 {
     if(isDamaged) return;
