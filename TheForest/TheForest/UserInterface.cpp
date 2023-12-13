@@ -1,11 +1,11 @@
 #include "UserInterface.h"
 
+#include <string>
+
 #include "GameSingletons.h"
 
 UserInterface::UserInterface(const Player& player) : rPlayer(player)
 {
-    txtRenderers.push_back(timeTxt);
-
     CreateUI();
 }
 
@@ -19,7 +19,6 @@ void UserInterface::Update(float deltaTime)
 void UserInterface::Draw()
 {
     for (auto& renderer : renderers) renderer.Draw();
-    for (auto& renderer : txtRenderers) renderer.Draw();
 }
 
 void UserInterface::CreateUI()
@@ -76,8 +75,8 @@ void UserInterface::CreateUI()
     maxBarWidth = projBkgSize.x - barPadding * 2;
     barWidth = maxBarWidth;
     
-    Vector2 ammoPos = Vector2(projBkgPos.x + barPadding, projBkgPos.y + barPadding);
-    Vector2 ammoSize = Vector2(barWidth, 20);
+    const Vector2 ammoPos = Vector2(projBkgPos.x + barPadding, projBkgPos.y + barPadding);
+    const Vector2 ammoSize = Vector2(barWidth, 20);
     const ManualRenderer ammoBar = ManualRenderer(ammoPos, ammoSize);
     renderers.push_back(ammoBar);
 
@@ -86,8 +85,8 @@ void UserInterface::CreateUI()
     renderers.back().SetRenderColour(seedColour);
 
     
-    Vector2 cooldownPos = Vector2(projBkgPos.x + barPadding, projBkgPos.y + ammoSize.y + barPadding * 2);
-    Vector2 cooldownSize = Vector2(barWidth, 10);
+    const Vector2 cooldownPos = Vector2(projBkgPos.x + barPadding, projBkgPos.y + ammoSize.y + barPadding * 2);
+    const Vector2 cooldownSize = Vector2(barWidth, 10);
     const ManualRenderer cooldownBar = ManualRenderer(cooldownPos, cooldownSize);
     renderers.push_back(cooldownBar);
 
@@ -96,6 +95,21 @@ void UserInterface::CreateUI()
     renderers.back().SetRenderColour({255,255,255,255});
 
     // The text for the projectile.
+
+    // Background for the timer
+    constexpr float timeBkgPadding = 5;
+    const Vector2 timerBkgSize = Vector2(200, 50);
+    const Vector2 timerBkgPos = Vector2(GameWindow::GetWindowWidth() - timerBkgSize.x - timeBkgPadding, 10);
+    const ManualRenderer timeBkg = ManualRenderer(timerBkgPos, timerBkgSize);
+    renderers.push_back(timeBkg);
+    renderers.back().SetRenderColour(bkgColour);
+    
+    // The actual timer
+    constexpr float timePadding = 5;
+    const Vector2 timerPos = Vector2(timerBkgPos.x + timePadding, timerBkgPos.y + timePadding);
+    TextRenderer timer = TextRenderer(font_oxygen, time, timeSize, timerPos);
+    renderers.push_back(timer);
+    renderers.back().SetRenderColour({120,200,200,255});
 }
 
 void UserInterface::CheckPlayerState()
@@ -174,8 +188,6 @@ void UserInterface::CheckPlayerState()
 
 void UserInterface::UpdateBar()
 {
-    timeTxt.SetText("builders");
-
     const float ammoPercent = rPlayer.GetAmmo() / rPlayer.GetMaxAmmo();
     renderers[ammoIndex].SetDrawSize({ammoPercent * maxBarWidth, renderers[ammoIndex].GetDrawSize().y});
 
@@ -185,13 +197,14 @@ void UserInterface::UpdateBar()
 
 void UserInterface::LevelTime(float deltaTime)
 {
-    seconds = floor(seconds + deltaTime);
+    seconds = seconds + deltaTime;
 
-    if(static_cast<int>(seconds) % 60 == 0)
+    if(seconds > 60)
     {
         minutes++;
         seconds = 0;
     }
 
-    
+    time = (minutes < 10? "0" + std::to_string(minutes) : std::to_string((minutes))) + ":" + (seconds < 10? "0" + std::to_string(static_cast<int>(seconds)) : std::to_string((static_cast<int>(seconds))));
+    print(time)
 }

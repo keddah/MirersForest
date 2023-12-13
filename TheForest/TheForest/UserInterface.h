@@ -14,10 +14,11 @@ public:
 private:
     const Player& rPlayer;
     std::vector<ManualRenderer> renderers;
-    std::vector<TextRenderer> txtRenderers;
 
-    const short timeSize = 120;
-    TextRenderer timeTxt = TextRenderer("Fonts/Oxygen-Regular.ttf", "undertheweather", timeSize, {100,100});
+    const std::string font_quicksand = "Quicksand-Regular.ttf";
+    const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
+    
+    const short timeSize = 24;
 
     // const short projectileTxtSize = 10;
     // const TTF_Font* projectileTxt = TTF_OpenFont("Fonts/Quicksand-Regular.ttf", projectileTxtSize); 
@@ -46,6 +47,7 @@ private:
 
     float seconds;
     int minutes;
+    std::string time = "dsfsd";
     
     void CreateUI();
     void CheckPlayerState();
