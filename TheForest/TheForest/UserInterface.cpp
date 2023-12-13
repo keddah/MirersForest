@@ -6,6 +6,14 @@
 
 UserInterface::UserInterface(const Player& player) : rPlayer(player)
 {
+    // Initialise the SDL text
+    const int success = TTF_Init();
+    if(success != 0)
+    {
+        print("failed init")
+        return;
+    }
+    
     CreateUI();
 }
 

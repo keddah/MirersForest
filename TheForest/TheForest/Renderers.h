@@ -122,8 +122,6 @@ class TextRenderer : public ManualRenderer
 public:
     TextRenderer(const std::string& filePath, const std::string& displayText, short size, Vector2 pos);
 
-    void Draw(bool referenced = false) override;
-    
     void SetText(const std::string& displayText);
     void SetFontSize(const short newSize) { fontSize = newSize; }
     
