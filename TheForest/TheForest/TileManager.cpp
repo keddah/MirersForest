@@ -29,34 +29,34 @@ void TileManager::MakeTiles(short lvlIndex)
 
     Vector2 pospos = {1800, 200};
     //// next slide 
-    for (int i = 0; i < 70; i++)
-    {
-        Tile newTile = Tile(tileSheet, pospos, darkDirt1, tileSize);
-    
-        tiles.emplace_back(newTile);
-    
-        pospos.x += tileSize;
-    }
-
-    
-    for (int rows = 0; rows < 30; rows++)
-    {
-        for(int column = 0; column < 20; column++)
-        {
-            Tile newTile = Tile(tileSheet, platform, rows == 0? grassDirt1: dirt1, tileSize);
-
-            tiles.emplace_back(newTile);
-
-            platform.x += tileSize;
-        }
-        platform.x = 2500;
-        platform.y += tileSize;
-    }
-    
+    // for (int i = 0; i < 70; i++)
+    // {
+    //     Tile newTile = Tile(tileSheet, pospos, darkDirt1, tileSize);
+    //
+    //     tiles.emplace_back(newTile);
+    //
+    //     pospos.x += tileSize;
+    // }
+    //
+    //
+    // for (int rows = 0; rows < 30; rows++)
+    // {
+    //     for(int column = 0; column < 20; column++)
+    //     {
+    //         Tile newTile = Tile(tileSheet, platform, rows == 0? grassDirt1: dirt1, tileSize);
+    //
+    //         tiles.emplace_back(newTile);
+    //
+    //         platform.x += tileSize;
+    //     }
+    //     platform.x = 2500;
+    //     platform.y += tileSize;
+    // }
+    //
     //// Main
     for (int rows = 0; rows < 10; rows++)
     {
-        for(int column = 0; column < 500; column++)
+        for(int column = 0; column < 100; column++)
         {
             Tile newTile = Tile(tileSheet, dirtPos, rows == 0? grassDirt1: dirt1, tileSize);
 
@@ -68,11 +68,10 @@ void TileManager::MakeTiles(short lvlIndex)
         dirtPos.y += tileSize;
     }
 
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
-    for (auto& tile : tiles)
-    {
-        tile.SetSlide(floor(tile.GetPosition().x / screenWidth));
-    }
+    // for (auto& tile : tiles)
+    // {
+    //     tile.SetSlide(floor(tile.GetPosition().x / GameWindow::GetWindowSize().x));
+    // }
 }
 
 void TileManager::SetLevelSlide(short slide)
@@ -85,7 +84,7 @@ void TileManager::SetLevelSlide(short slide)
     for (auto& tile : tiles)
     {
         // Move every tile left/right (keeping their Y value)
-        tile.SetPosition({tile.GetPosition().x + (next? -screenWidth : screenWidth), tile.GetPosition().y});
+        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowSize().x : GameWindow::GetWindowSize().x), tile.GetPosition().y});
     }
     
     levelSlide = slide;

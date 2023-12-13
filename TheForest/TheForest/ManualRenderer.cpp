@@ -68,12 +68,24 @@ void ManualRenderer::Draw(bool referenced)
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
     const SDL_FPoint center {spritePivot.x, spritePivot.y};
 
+    if(thingsToRender.empty())
+    {
+        DrawRectangle();
+        return;
+    }
+    
     if(!thingsToRender[renderIndex]) print("Can't render from this index")
     
     // Responsible for drawing the texture
     SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
+void ManualRenderer::DrawRectangle() const
+{
+    SDL_SetRenderDrawBlendMode(GameWindow::GetRenderer(), SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.r, drawColour.g, drawColour.b, drawColour.a);
+    SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
+}
 
 SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
 {

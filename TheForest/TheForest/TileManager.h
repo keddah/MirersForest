@@ -15,7 +15,6 @@ public:
     void SetLevelSlide(short slide);
     
 private:
-    int screenWidth;
     static constexpr short tileSize = 16;
     
     // The source rectangles for some of the different textures in the tile sheet
@@ -45,4 +44,6 @@ private:
 
     short levelSlide;
     std::vector<Tile> tiles;
+
+    // Vector2 screenSize;
 };

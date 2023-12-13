@@ -97,10 +97,7 @@ void SpriteRenderer::Draw(bool referenced)
     drawRect.y = posRef.y;
 
     // print("reference: " << posRef.x << ", " << posRef.y)
-
-    // Need to debug before Drawing so that the box is behind the sprite.
-    if(thingsToRender.empty()) DrawRectangle();
-    else ManualRenderer::Draw(true);
+    ManualRenderer::Draw(true);
 
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).
@@ -130,11 +127,4 @@ void SpriteRenderer::Animate()
     }
 
     if (currentFrame > frameCount - 1) currentFrame = 0;
-}
-
-void SpriteRenderer::DrawRectangle() const
-{
-    SDL_SetRenderDrawBlendMode(GameWindow::GetRenderer(), SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.r, drawColour.g, drawColour.b, drawColour.a);
-    SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
 }

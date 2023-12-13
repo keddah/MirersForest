@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "SlimeManager.h"
 #include "TileManager.h"
+#include "UserInterface.h"
 
 class Level
 {
@@ -25,6 +26,6 @@ private:
     Player player = Player(tileManager.GetTiles(), currentSlide);
     SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
     FlowerManager flowerManager = FlowerManager(player);
-
+    UserInterface ui = UserInterface(player);
     
 };

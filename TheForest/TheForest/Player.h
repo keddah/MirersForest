@@ -21,16 +21,28 @@ public:
 
     short GetLevelSlide() const { return currentSlide; }
 
-    bool CanPowerup();
     bool GivePowerup();
     void TakeDamage();
     void Float();
-    
+
+////////////// Gets
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     const SDL_FRect& GetRect() const { return rect; } 
     PlayerController& Controller() { return controller; }
 
+    bool IsDead() const { return dead; }
+    
+    ///// UI related
+    float GetAmmo() const { return wc.GetAmmo(); }
+    float GetMaxAmmo() const { return wc.GetMaxAmmo(); }
+    short GetHealth() const { return health; }
+
+    Projectile::EWeaponTypes GetType() const { return wc.GetType(); }
+    
+    float GetWeaponCooldown() const { return wc.GetCooldown(); }
+    float GetShootTimer() const { return wc.GetShootTimer(); }
+    
 private:
     class WeaponController
     {
@@ -41,6 +53,14 @@ private:
         void Update(float deltaTime);
         void Draw();
         std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
+
+        Projectile::EWeaponTypes GetType() const { return std::get<0>(weapon); }
+        
+        float GetCooldown() const { return std::get<2>(weapon); }
+        float GetShootTimer() const { return ammo == 0? 0 : shootTimer; }
+        
+        short GetAmmo() const { return ammo; }
+        short GetMaxAmmo() const { return maxAmmo; }
 
         bool AmmoFull() const { return ammo == maxAmmo;  }
         void Refill() { ammo = maxAmmo;  }
@@ -53,7 +73,7 @@ private:
         // When Getting :
         // Type = 0 .. Force = 1 .. .. Delay = 2 .. AmmoCost = 3 .. Gravity = 4 .. Repulsion = 5
         std::tuple<Projectile::EWeaponTypes, float, float, short, float, float> weapon;
-        
+
         void UpdateBullets(float deltaTime);
 
         void WeaponSelection();
@@ -123,7 +143,7 @@ private:
     const std::vector<Tile>& tiles;
     short& currentSlide;
 
-    int screenWidth, screenHeight;
+    // int screenWidth, screenHeight;
     
     const std::vector<std::string> spritePaths = {"Sprites/idleTileSheet.png", "Sprites/runTileSheet.png", "Sprites/idleTileSheet_dmg.png", "Sprites/runTileSheet_dmg.png"};
     SpriteRenderer renderer = SpriteRenderer(spritePaths, position);

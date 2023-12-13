@@ -9,7 +9,7 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide): tiles(floorTi
     
     position.x = 50;
 
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
+    // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 
 void Player::Update(float deltaTime)
@@ -102,7 +102,7 @@ void Player::UpdateRectangle()
 
 void Player::SectionDetection()
 {
-    if(position.x > screenWidth)
+    if(position.x > GameWindow::GetWindowSize().x)
     {
         currentSlide++;
         position.x = velocity.x;
@@ -118,11 +118,11 @@ void Player::SectionDetection()
         currentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
-        position.x = screenWidth + velocity.x;
+        position.x = GameWindow::GetWindowSize().x + velocity.x;
         
         for (auto& bullet : wc.GetActiveBullets())
         {
-            bullet.SetPosition(Vector2(screenWidth, bullet.GetPosition().y));
+            bullet.SetPosition(Vector2(GameWindow::GetWindowSize().x, bullet.GetPosition().y));
         }
     }
 

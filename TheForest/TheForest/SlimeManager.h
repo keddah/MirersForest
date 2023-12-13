@@ -20,6 +20,5 @@ private:
     std::vector<Tile>& tiles; 
     Player& player;
 
-    int screenWidth;
     short levelSlide;
 };

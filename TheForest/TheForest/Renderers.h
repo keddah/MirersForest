@@ -31,6 +31,9 @@ public:
     virtual void SetVisibility(bool isVisible) { visible = isVisible; }
     virtual void SetLevelSlide(short slide) { levelSlide = slide; }
     virtual short GetLevelSlide() const { return levelSlide; }
+
+    virtual void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
+
     
     virtual void SetDrawSize(Vector2 newSize);
     void SetPosition(const Vector2 pos) { position = pos; }
@@ -56,6 +59,8 @@ public:
 protected:
     virtual SDL_Surface* SetSprite(const std::string& path);
 
+    virtual void DrawRectangle() const;
+    
     bool visible = true;
     short levelSlide;
     
@@ -67,6 +72,8 @@ protected:
     SDL_Rect sourceRect = SDL_Rect();
     float renderAngle;
     Vector2 spritePivot;
+
+    SDL_Colour drawColour = {0, 125, 125, 255};
 
     bool flip;
     
@@ -97,18 +104,12 @@ public:
 
     const Vector2& GetPositionReference() const { return posRef; }
 
-    void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
-
     void SetFrameCount(const short count = 1) { frameCount = count; }
     void SetAnimSpeed(const float speed) { animSpeed = speed; }
     
 
 private:
     void Animate();
-    void DrawRectangle() const;
-
-    // Using an Rect since it has 4 values...
-    SDL_Colour drawColour = {0, 125, 125, 255};
 
     // Animations
     short currentFrame;
@@ -116,4 +117,12 @@ private:
     float frameTimer;
     float animSpeed = .35f;
     bool isAnimated;
+};
+
+class InterfaceRenderer : public ManualRenderer
+{
+public:
+    InterfaceRenderer(const std::string& spritePath, Vector2 pos);
+    InterfaceRenderer(const Vector2& pos, Vector2 drawSize);
+private:
 };

@@ -34,13 +34,10 @@ void FlowerManager::SetLevelSlide(const short slide)
 {
     if(slide == levelSlide) return;
 
-    int screenWidth;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
-    
     const bool next = slide > levelSlide;
     for (auto& flower : flowers)
     {
-        flower.SetPosition({flower.GetPosition().x + (next? -screenWidth : screenWidth), flower.GetPosition().y});
+        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowSize().x : GameWindow::GetWindowSize().x), flower.GetPosition().y});
     }
     
     levelSlide = slide;
@@ -74,6 +71,8 @@ void FlowerManager::FlowerUp::Update(float deltaTime)
 
 void FlowerManager::FlowerUp::Interaction()
 {
+    if(rP.IsDead()) return;
+    
     // When there is an interaction
     if(!SDL_HasIntersectionF(&rP.GetRect(), &rect)) return;
 

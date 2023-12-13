@@ -96,7 +96,17 @@ void Player::WeaponController::ConfigureWeapon()
 
 void Player::WeaponController::Shooting(float deltaTime)
 {
-    print(ammo)
+    if(!canShoot)
+    {
+        shootTimer += deltaTime;
+        if(shootTimer > std::get<2>(weapon))
+        {
+            shootTimer = 0;
+            canShoot = true;
+        }
+    }
+    
+    // print(ammo)
     if(ammo <= 0)
     {
         canShoot = false;
@@ -114,17 +124,7 @@ void Player::WeaponController::Shooting(float deltaTime)
     }
     else spawnPos = {rP.rect.x  +rP.rect.w / 2, rP.rect.y + rP.rect.h / 2 };
 
-    if(!canShoot)
-    {
-        shootTimer += deltaTime;
-        if(shootTimer > std::get<2>(weapon))
-        {
-            shootTimer = 0;
-            canShoot = true;
-        }
-        
-        return;
-    }
+    if(!canShoot) return;
 
     const bool special = rP.controller.IsRMB();
     
