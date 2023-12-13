@@ -45,10 +45,28 @@
     <ClCompile Include="TileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StaticRenderer.cpp">
+    <ClCompile Include="FlowerManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectileBase.cpp">
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SlimeManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ManualRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,9 +78,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
@@ -80,7 +95,25 @@
     <ClInclude Include="TileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileBase.h">
+    <ClInclude Include="FlowerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

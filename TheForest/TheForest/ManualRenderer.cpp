@@ -66,7 +66,7 @@ void ManualRenderer::Draw(bool referenced)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
-    const SDL_FPoint center {spritePivot.x, spritePivot.y};
+    const SDL_FPoint pivot {spritePivot.x, spritePivot.y};
 
     if(thingsToRender.empty())
     {
@@ -77,7 +77,7 @@ void ManualRenderer::Draw(bool referenced)
     if(!thingsToRender[renderIndex]) print("Can't render from this index")
     
     // Responsible for drawing the texture
-    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &center, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &pivot, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
 void ManualRenderer::DrawRectangle() const

@@ -102,7 +102,7 @@ void Player::UpdateRectangle()
 
 void Player::SectionDetection()
 {
-    if(position.x > GameWindow::GetWindowSize().x)
+    if(position.x > GameWindow::GetWindowWidth())
     {
         currentSlide++;
         position.x = velocity.x;
@@ -118,11 +118,11 @@ void Player::SectionDetection()
         currentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
-        position.x = GameWindow::GetWindowSize().x + velocity.x;
+        position.x = GameWindow::GetWindowWidth() + velocity.x;
         
         for (auto& bullet : wc.GetActiveBullets())
         {
-            bullet.SetPosition(Vector2(GameWindow::GetWindowSize().x, bullet.GetPosition().y));
+            bullet.SetPosition(Vector2(GameWindow::GetWindowWidth(), bullet.GetPosition().y));
         }
     }
 

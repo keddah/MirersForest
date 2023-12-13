@@ -105,7 +105,7 @@ private:
             },  arrowPos, false);
         
         const int seedForce = 15;
-        const int petalForce = 13;
+        const int petalForce = 12;
         const int sunForce = 20;
         // const int thornForce = 8;
 

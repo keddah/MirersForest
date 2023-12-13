@@ -84,7 +84,7 @@ void TileManager::SetLevelSlide(short slide)
     for (auto& tile : tiles)
     {
         // Move every tile left/right (keeping their Y value)
-        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowSize().x : GameWindow::GetWindowSize().x), tile.GetPosition().y});
+        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth() : GameWindow::GetWindowWidth()), tile.GetPosition().y});
     }
     
     levelSlide = slide;

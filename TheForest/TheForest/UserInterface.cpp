@@ -4,21 +4,22 @@
 
 UserInterface::UserInterface(const Player& player) : rPlayer(player)
 {
+    txtRenderers.push_back(timeTxt);
+
     CreateUI();
 }
 
 void UserInterface::Update(float deltaTime)
 {
+    LevelTime(deltaTime);
     CheckPlayerState();
     UpdateBar();
 }
 
 void UserInterface::Draw()
 {
-    for (auto& renderer : renderers)
-    {
-        renderer.Draw();
-    }
+    for (auto& renderer : renderers) renderer.Draw();
+    for (auto& renderer : txtRenderers) renderer.Draw();
 }
 
 void UserInterface::CreateUI()
@@ -30,7 +31,8 @@ void UserInterface::CreateUI()
     const ManualRenderer bkg = ManualRenderer(bkgPos, bkgSize);
     renderers.push_back(bkg);
     renderers.back().SetRenderColour(bkgColour);
-
+    heartBkgIndex = renderers.size() -1;
+    
     //\\//\\//\\//\\// Hearts //\\//\\//\\//\\//
     constexpr float  heartPadding = 5;
     constexpr float heartSpacing = 10;
@@ -61,7 +63,7 @@ void UserInterface::CreateUI()
 
     // The background for the selected projectile.
     const Vector2 projBkgSize = Vector2(600, 80);
-    const Vector2 projBkgPos = Vector2((GameWindow::GetWindowSize().x / 2) - projBkgSize.x / 2, 10);
+    const Vector2 projBkgPos = Vector2((GameWindow::GetWindowWidth() / 2) - projBkgSize.x / 2, 10);
 
     const ManualRenderer projBkg = ManualRenderer(projBkgPos, projBkgSize);
     renderers.push_back(projBkg);
@@ -108,7 +110,7 @@ void UserInterface::CheckPlayerState()
                 renderers[emptyHeartIndex + i].SetVisibility(true);
             }
 
-            renderers.front().SetRenderColour(dangerColour);
+            renderers[heartBkgIndex].SetRenderColour(dangerColour);
             break;
 
         case 1:
@@ -124,7 +126,7 @@ void UserInterface::CheckPlayerState()
             renderers[fullHeartIndex + 2].SetVisibility(false);
             renderers[emptyHeartIndex + 2].SetVisibility(true);
         
-            renderers.front().SetRenderColour(dangerColour);
+            renderers[heartBkgIndex].SetRenderColour(dangerColour);
             break;
 
         case 2:
@@ -140,7 +142,7 @@ void UserInterface::CheckPlayerState()
             renderers[fullHeartIndex + 2].SetVisibility(false);
             renderers[emptyHeartIndex + 2].SetVisibility(true);
 
-            renderers.front().SetRenderColour(bkgColour);
+            renderers[heartBkgIndex].SetRenderColour(bkgColour);
             break;
 
         case 3:
@@ -150,7 +152,7 @@ void UserInterface::CheckPlayerState()
                 renderers[fullHeartIndex + i].SetVisibility(true);
                 renderers[emptyHeartIndex + i].SetVisibility(false);
             }
-            renderers.front().SetRenderColour(bkgColour);
+            renderers[heartBkgIndex].SetRenderColour(bkgColour);
             break;
     }
     
@@ -172,9 +174,24 @@ void UserInterface::CheckPlayerState()
 
 void UserInterface::UpdateBar()
 {
+    timeTxt.SetText("builders");
+
     const float ammoPercent = rPlayer.GetAmmo() / rPlayer.GetMaxAmmo();
     renderers[ammoIndex].SetDrawSize({ammoPercent * maxBarWidth, renderers[ammoIndex].GetDrawSize().y});
 
     const float cooldownPercent = rPlayer.GetShootTimer() / rPlayer.GetWeaponCooldown();
     renderers[cooldownIndex].SetDrawSize({cooldownPercent * maxBarWidth, renderers[cooldownIndex].GetDrawSize().y});
+}
+
+void UserInterface::LevelTime(float deltaTime)
+{
+    seconds = floor(seconds + deltaTime);
+
+    if(static_cast<int>(seconds) % 60 == 0)
+    {
+        minutes++;
+        seconds = 0;
+    }
+
+    
 }

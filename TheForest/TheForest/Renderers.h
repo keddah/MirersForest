@@ -4,6 +4,7 @@
 
 #include <SDL_rect.h>
 #include <SDL_render.h>
+#include "SDL_ttf.h"
 #include <vector>
 
 #include "Vector2.h"
@@ -29,8 +30,6 @@ public:
     const Vector2& GetSpriteCenter() const { return spritePivot; }
 
     virtual void SetVisibility(bool isVisible) { visible = isVisible; }
-    virtual void SetLevelSlide(short slide) { levelSlide = slide; }
-    virtual short GetLevelSlide() const { return levelSlide; }
 
     virtual void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
 
@@ -62,7 +61,6 @@ protected:
     virtual void DrawRectangle() const;
     
     bool visible = true;
-    short levelSlide;
     
     std::string imagePath;
     std::vector<SDL_Texture*> thingsToRender = std::vector<SDL_Texture*>();
@@ -119,10 +117,17 @@ private:
     bool isAnimated;
 };
 
-class InterfaceRenderer : public ManualRenderer
+class TextRenderer : public ManualRenderer
 {
 public:
-    InterfaceRenderer(const std::string& spritePath, Vector2 pos);
-    InterfaceRenderer(const Vector2& pos, Vector2 drawSize);
+    TextRenderer(const std::string& filePath, const std::string& displayText, short size, Vector2 pos);
+
+    void SetText(const std::string& displayText);
+    void SetFontSize(const short newSize) { fontSize = newSize; }
+    
 private:
+    std::string fontPath;
+    std::string text = "dfdsfd";
+    short fontSize;
+    Vector2 txtPos;
 };

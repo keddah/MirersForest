@@ -10,7 +10,9 @@ float Time::newTime = 0;
 // Initially set values for the window.
 SDL_Renderer* GameWindow::renderer = nullptr;
 SDL_Window* GameWindow::window = nullptr;
-Vector2 GameWindow::windowSize = {};
+
+int GameWindow::windowWidth = 0;
+int GameWindow::windowHeight = 0;
 
 int main()
 {

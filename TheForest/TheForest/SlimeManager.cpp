@@ -33,7 +33,7 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(flo
 
     for (const auto& slime : slimes)
     {
-        slime->SetSlide(floor(slime->GetPosition().x / GameWindow::GetWindowSize().x));
+        slime->SetSlide(floor(slime->GetPosition().x / GameWindow::GetWindowWidth()));
     }
 }
 
@@ -55,7 +55,7 @@ void SlimeManager::SetLevelSlide(const short slide)
     const bool next = slide > levelSlide;
     for (const auto& slime : slimes)
     {
-        slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowSize().x : GameWindow::GetWindowSize().x), slime->GetPosition().y});
+        slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth() : GameWindow::GetWindowWidth()), slime->GetPosition().y});
     }
     
     levelSlide = slide;

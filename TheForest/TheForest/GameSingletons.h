@@ -15,6 +15,12 @@ public:
         window = w;
     }
 
+    static void SetWindowSize(float w, float h)
+    {
+        windowWidth = w;
+        windowHeight = h;
+    }
+
     static void CloseGame()
     {
         SDL_DestroyRenderer(GetRenderer());
@@ -25,17 +31,13 @@ public:
     static SDL_Renderer* GetRenderer() { return renderer; }
     static SDL_Window* GetWindow() { return window; }
     
-    static Vector2 GetWindowSize()
-    {
-        int w;
-        int h;
-        SDL_GetWindowSize(GetWindow(), &w, &h);
-        return Vector2(w, h);
-    }
+    static int GetWindowWidth() { return windowWidth; }
+    static int GetWindowHeight() { return windowHeight; }
 
 private:
     static SDL_Renderer* renderer;
     static SDL_Window* window;
-    
-    static Vector2 windowSize;
+
+    static int windowWidth;
+    static int windowHeight;
 };
