@@ -1,12 +1,11 @@
 #include "GameSingletons.h"
 #include "Renderers.h"
 
-TextRenderer::TextRenderer(const std::string& filePath, const std::string& displayText, const short size, Vector2 pos) : text(displayText)
+TextRenderer::TextRenderer(const std::string& filePath, std::string& displayText, const short size, Vector2 pos) : text(displayText)
 {
     fontPath = filePath;
     fontSize = size;
-    txtPos = pos;
-    SetPosition(txtPos);
+    SetPosition(pos);
     
     SetText(text);
 }
@@ -15,6 +14,8 @@ void TextRenderer::SetText(const std::string& displayText)
 {
     TTF_Font* txt = TTF_OpenFont(fontPath.c_str(), fontSize);
 
+    text = displayText;
+    
     if(!txt)
     {
         print("bad filePath")
@@ -30,8 +31,6 @@ void TextRenderer::SetText(const std::string& displayText)
     else thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), textImage));
 
     size = Vector2(textImage->w, textImage->h);
-    drawRect.x = txtPos.x;
-    drawRect.y = txtPos.y;
 
     sourceRect.w = size.x;
     sourceRect.h = size.y;

@@ -14,6 +14,7 @@ public:
 private:
     const Player& rPlayer;
     std::vector<ManualRenderer> renderers;
+    std::vector<TextRenderer> txtRenderers;
 
     const std::string font_quicksand = "Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
@@ -40,6 +41,8 @@ private:
     
     // The vector index for the ammo bar
     short ammoIndex;
+    
+    short timerIndex;
 
     // The vector index for the first heart (to get the rest... + 1 / 2)
     short fullHeartIndex;

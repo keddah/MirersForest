@@ -27,6 +27,7 @@ void UserInterface::Update(float deltaTime)
 void UserInterface::Draw()
 {
     for (auto& renderer : renderers) renderer.Draw();
+    for (auto& renderer : txtRenderers) renderer.Draw();
 }
 
 void UserInterface::CreateUI()
@@ -116,8 +117,9 @@ void UserInterface::CreateUI()
     constexpr float timePadding = 5;
     const Vector2 timerPos = Vector2(timerBkgPos.x + timePadding, timerBkgPos.y + timePadding);
     TextRenderer timer = TextRenderer(font_oxygen, time, timeSize, timerPos);
-    renderers.push_back(timer);
-    renderers.back().SetRenderColour({120,200,200,255});
+    txtRenderers.push_back(timer);
+    txtRenderers.back().SetRenderColour({120,200,200,255});
+    timerIndex = txtRenderers.size() - 1;
 }
 
 void UserInterface::CheckPlayerState()
@@ -214,5 +216,5 @@ void UserInterface::LevelTime(float deltaTime)
     }
 
     time = (minutes < 10? "0" + std::to_string(minutes) : std::to_string((minutes))) + ":" + (seconds < 10? "0" + std::to_string(static_cast<int>(seconds)) : std::to_string((static_cast<int>(seconds))));
-    print(time)
+    txtRenderers[timerIndex].SetText(time);
 }
