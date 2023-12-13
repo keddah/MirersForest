@@ -16,16 +16,20 @@ private:
     std::vector<ManualRenderer> renderers;
     std::vector<TextRenderer> txtRenderers;
 
-    const std::string font_quicksand = "Quicksand-Regular.ttf";
+    const std::string font_quicksand = "Fonts/Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
     
-    const short timeSize = 24;
+    const short timeSize = 36;
+    const short projTxtSize = 20;
 
-    // const short projectileTxtSize = 10;
-    // const TTF_Font* projectileTxt = TTF_OpenFont("Fonts/Quicksand-Regular.ttf", projectileTxtSize); 
-    
+    // Colours
     const SDL_Color bkgColour = {0,0,0,100};
     const SDL_Color dangerColour = {80,0,0,180};
+
+    const SDL_Color seedBkgColour = {5,30,10, 100};
+    const SDL_Color petalBkgColour = {17,10,30,100};
+    const SDL_Color sunBkgColour = {35,35,10 , 100};
+    
     const SDL_Color seedColour = {16, 219,54, 200};
     const SDL_Color petalColour = {80, 15, 200,200};
     const SDL_Color sunColour = {240, 250, 0, 200};
@@ -35,12 +39,17 @@ private:
 
     // The vector index for the heart background
     short heartBkgIndex;
+
+    short projBkgIndex;
     
     // The vector index for the cooldown bar
     short cooldownIndex;
     
     // The vector index for the ammo bar
     short ammoIndex;
+
+    // The vector index for the text of the selected projectile
+    short projIndex;
     
     short timerIndex;
 
@@ -50,7 +59,10 @@ private:
 
     float seconds;
     int minutes;
-    std::string time = "dsfsd";
+
+    // Needs to have an initial value
+    std::string time = "f";
+    std::string currentProj = "f";
     
     void CreateUI();
     void CheckPlayerState();

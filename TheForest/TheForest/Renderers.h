@@ -120,7 +120,7 @@ private:
 class TextRenderer : public ManualRenderer
 {
 public:
-    TextRenderer(const std::string& filePath, std::string& displayText, short size, Vector2 pos);
+    TextRenderer(const std::string& filePath, std::string displayText, short size, Vector2 pos);
 
     void SetText(const std::string& displayText);
     void SetFontSize(const short newSize) { fontSize = newSize; }

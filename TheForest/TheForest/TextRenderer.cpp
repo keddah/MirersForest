@@ -1,7 +1,7 @@
 #include "GameSingletons.h"
 #include "Renderers.h"
 
-TextRenderer::TextRenderer(const std::string& filePath, std::string& displayText, const short size, Vector2 pos) : text(displayText)
+TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short size, Vector2 pos) : text(displayText)
 {
     fontPath = filePath;
     fontSize = size;

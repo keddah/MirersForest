@@ -76,6 +76,7 @@ void UserInterface::CreateUI()
     const ManualRenderer projBkg = ManualRenderer(projBkgPos, projBkgSize);
     renderers.push_back(projBkg);
     renderers.back().SetRenderColour(bkgColour);
+    projBkgIndex = renderers.size() - 1;
 
     // The cooldown bar for the projectile
     constexpr float barPadding = 10;
@@ -104,17 +105,24 @@ void UserInterface::CreateUI()
     renderers.back().SetRenderColour({255,255,255,255});
 
     // The text for the projectile.
-
+    constexpr float projPadding = 30;
+    const Vector2 projPos = Vector2(projBkgPos.x + projBkgSize.x/2 - projPadding, projBkgPos.y + projBkgSize.y - 30);
+    TextRenderer proj = TextRenderer(font_quicksand, currentProj, projTxtSize, projPos);
+    txtRenderers.push_back(proj);
+    txtRenderers.back().SetRenderColour({120,200,200,255});
+    projIndex = txtRenderers.size() - 1;
+        
+    
     // Background for the timer
     constexpr float timeBkgPadding = 5;
-    const Vector2 timerBkgSize = Vector2(200, 50);
+    const Vector2 timerBkgSize = Vector2(100, 50);
     const Vector2 timerBkgPos = Vector2(GameWindow::GetWindowWidth() - timerBkgSize.x - timeBkgPadding, 10);
     const ManualRenderer timeBkg = ManualRenderer(timerBkgPos, timerBkgSize);
     renderers.push_back(timeBkg);
     renderers.back().SetRenderColour(bkgColour);
     
     // The actual timer
-    constexpr float timePadding = 5;
+    constexpr float timePadding = 2.5f;
     const Vector2 timerPos = Vector2(timerBkgPos.x + timePadding, timerBkgPos.y + timePadding);
     TextRenderer timer = TextRenderer(font_oxygen, time, timeSize, timerPos);
     txtRenderers.push_back(timer);
@@ -184,16 +192,26 @@ void UserInterface::CheckPlayerState()
     {
         case Projectile::EWeaponTypes::Seed:
             renderers[ammoIndex].SetRenderColour(seedColour);
+            txtRenderers[projIndex].SetRenderColour(seedColour);
+            renderers[projBkgIndex].SetRenderColour(seedBkgColour);
+            currentProj = "SEED";
             break;
             
         case Projectile::EWeaponTypes::Petal:
             renderers[ammoIndex].SetRenderColour(petalColour);
+            txtRenderers[projIndex].SetRenderColour(petalColour);
+            renderers[projBkgIndex].SetRenderColour(petalBkgColour);
+            currentProj = "PETAL";
             break;
         
         case Projectile::EWeaponTypes::Sun:
             renderers[ammoIndex].SetRenderColour(sunColour);
+            txtRenderers[projIndex].SetRenderColour(sunColour);
+            renderers[projBkgIndex].SetRenderColour(sunBkgColour);
+            currentProj = "SUN";
             break;
     }
+    txtRenderers[projIndex].SetText(currentProj);
 }
 
 void UserInterface::UpdateBar()
