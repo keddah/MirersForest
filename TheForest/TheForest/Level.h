@@ -1,4 +1,5 @@
 #pragma once
+#include "AudioManager.h"
 #include "FlowerManager.h"
 #include "Player.h"
 #include "SlimeManager.h"
@@ -21,10 +22,11 @@ private:
     
     // std::vector<Slide> slides = std::vector<Slide>(); 
     short currentSlide = 0;
-    
+
     TileManager tileManager;
-    Player player = Player(tileManager.GetTiles(), currentSlide);
-    SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles());
+    AudioManager audio;
+    Player player = Player(tileManager.GetTiles(), currentSlide, audio);
+    SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles(), audio);
     FlowerManager flowerManager = FlowerManager(player);
     UserInterface ui = UserInterface(player);
     

@@ -49,6 +49,7 @@ public:
 	}
 	
 	bool IsDead() const { return dead; }
+	bool IsSpecial() const { return special; }
 	void Kill() { dead = true;}
 
 	void Beam(float deltaTime, Vector2 mousePos);

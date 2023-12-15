@@ -2,7 +2,7 @@
 
 #include "GameSingletons.h"
 
-Player::Player(const std::vector<Tile>& floorTiles, short& slide): tiles(floorTiles), currentSlide(slide)
+Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound): tiles(floorTiles), currentSlide(slide), rAudio(sound)
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
@@ -72,6 +72,8 @@ bool Player::GivePowerup()
     health++;
     if(health > maxHealth) health = maxHealth;
 
+    rAudio.PlaySound(AudioManager::Esounds::Flowerup);
+    
     wc.Refill();
 
     return canTake;
@@ -84,6 +86,8 @@ void Player::TakeDamage()
     isDamaged = true;
     health--;
 
+    rAudio.PlaySound(AudioManager::Esounds::PlayerHit);
+    
     if(health < 1) Death();
 }
 
@@ -133,6 +137,9 @@ void Player::Death()
     dead = true;
     health = 0;
     renderer.SetVisibility(false);
+    rAudio.PlaySound(AudioManager::Esounds::PlayerHit);
+    rAudio.PlaySound(AudioManager::Esounds::ProjImpact);
+    rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
 }
 
 void Player::DamageTimer(float deltaTime)
@@ -271,7 +278,12 @@ void Player::Jump()
     const float forceDifference = position.y / (position.y + jumpHeight);
     const float thrust = forceDifference * jumpForce;
 
-    if(jumping) AddForce(0,1, -thrust);
+    if(jumping)
+    {
+        AddForce(0,1, -thrust);
+        rAudio.PlaySound(AudioManager::Esounds::Jump);
+    }
+
     
     // if jump buffer was true... set it to false
     jumpBuffer = jumpBuffer? false: jumpBuffer;

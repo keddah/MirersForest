@@ -6,7 +6,7 @@
 class SlimeManager
 {
 public:
-    SlimeManager(Player& plyr, std::vector<Tile>& floorRef);
+    SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound);
     const std::vector<Slime*>& GetSlimes() { return slimes; }
     
     void Update(float deltaTime);
@@ -18,7 +18,8 @@ private:
     std::vector<Slime*> slimes = std::vector<Slime*>();
 
     std::vector<Tile>& tiles; 
-    Player& player;
-
+    Player& rPlayer;
+    const AudioManager& rAudio;
+    
     short levelSlide;
 };

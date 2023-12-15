@@ -33,6 +33,8 @@ void Player::WeaponController::UpdateBullets(float deltaTime)
         // (Done like this since the shotgun projectiles are spawned backwards....
         if((activeBullets.end() - 1)->IsDead())
         {
+            if(activeBullets[i].GetType() == Projectile::EWeaponTypes::Seed && activeBullets[i].IsSpecial()) rP.rAudio.PlaySound(AudioManager::Esounds::SeedExplosion);
+            rP.rAudio.PlaySound(AudioManager::Esounds::ProjImpact);
             activeBullets.erase(activeBullets.end() - 1);
             break;
         }
@@ -96,6 +98,7 @@ void Player::WeaponController::ConfigureWeapon()
 
 void Player::WeaponController::Shooting(float deltaTime)
 {
+    //\\//\\//\\//\\// Bullet Availability //\\//\\//\\//\\//
     if(!canShoot)
     {
         shootTimer += deltaTime;
@@ -111,9 +114,15 @@ void Player::WeaponController::Shooting(float deltaTime)
     {
         canShoot = false;
         ammo = 0;
+
+        // Play the sound whenever the mouse is clicked
+        if(rP.controller.IsLMB() || rP.controller.IsRMB()) rP.rAudio.PlaySound(AudioManager::Esounds::NoAmmo);
         return;
     }
-    
+
+
+    //\\//\\//\\//\\// Setting Spawn //\\//\\//\\//\\//
+
     // Update the projectile spawn position;
     const SDL_FRect& spawnRect = arrow.GetRect();
     
@@ -123,6 +132,9 @@ void Player::WeaponController::Shooting(float deltaTime)
         spawnPos = {spawnRect.x + spawnOffset.x, spawnRect.y + spawnOffset.y};
     }
     else spawnPos = {rP.rect.x  +rP.rect.w / 2, rP.rect.y + rP.rect.h / 2 };
+
+
+    //\\//\\//\\//\\// Actual Shooting //\\//\\//\\//\\//
 
     if(!canShoot) return;
 
@@ -138,17 +150,29 @@ void Player::WeaponController::Shooting(float deltaTime)
     if(!(rP.controller.IsLMB() || special)) return;
 
     
-    // Since the projectile is so big it spawns in the ground and instantly blows up.
-    const bool bigSeed = std::get<0>(weapon) == Projectile::EWeaponTypes::Seed && special;
-
     // The special projectile have different spawns...
     Vector2 pos;
-    if(bigSeed) pos = {spawnPos.x, spawnPos.y - 20};
-    else if(special && std::get<0>(weapon) == Projectile::EWeaponTypes::Sun)
+    switch (std::get<0>(weapon))
     {
-        pos = {rP.position.x - 300, rP.position.y - 50};
+        case Projectile::EWeaponTypes::Seed:
+            // Since the projectile is so big it spawns in the ground and instantly blows up.
+            if(special) pos = {spawnPos.x, spawnPos.y - 20};
+            break;
+        
+        case Projectile::EWeaponTypes::Petal:
+            break;
+        
+        case Projectile::EWeaponTypes::Sun:
+            if(special)
+            {
+                pos = {rP.position.x - 300, rP.position.y - 50};
+
+                // The Sun's special causes the player to lose their velocity.
+                rP.Float();
+            }
+            break;
     }
-    else pos = spawnPos;
+    if(!special) pos = spawnPos;
     
     // Spawn the projectile higher if it's the big seed.
     const Projectile newBullet = Projectile(weapon, pos, GetShootAngle(), rP.velocity, special, rP.tiles);
@@ -158,10 +182,28 @@ void Player::WeaponController::Shooting(float deltaTime)
     
     canShoot = false;
 
+    if(!canShoot)
+    {
+        switch (std::get<0>(weapon))
+        {
+        case Projectile::EWeaponTypes::Seed:
+            rP.rAudio.PlaySound(AudioManager::Esounds::SeedShoot);
+            break;
+            
+        case Projectile::EWeaponTypes::Petal:
+            rP.rAudio.PlaySound(AudioManager::Esounds::PetalShoot);
+            break;
+            
+        case Projectile::EWeaponTypes::Sun:
+            if(special) rP.rAudio.PlaySound(AudioManager::Esounds::SunBeam);
+            else rP.rAudio.PlaySound(AudioManager::Esounds::SunShoot);
+            break;
+        }
+    }
+    
     rP.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
 
-    // The Sun's special causes the player to lose their velocity.
-    if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && special) rP.Float();
+    // if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && special) rP.Float();
 }
 
 void Player::WeaponController::Shotgun()
@@ -194,6 +236,13 @@ void Player::WeaponController::Shotgun()
     }
 
     canShoot = false;
+    if(!canShoot)
+    {
+        for(int i = 0; i < pellets; i++)
+        {
+            rP.rAudio.PlaySound(AudioManager::Esounds::PetalShoot);
+        }
+    }
 }
 
 float Player::WeaponController::GetShootAngle() const

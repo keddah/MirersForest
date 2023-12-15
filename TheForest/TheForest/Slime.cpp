@@ -1,6 +1,6 @@
 #include "Slime.h"
 
-Slime::Slime(Player& plyr, std::vector<Tile>& floorRef): tiles(floorRef), player(plyr)
+Slime::Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound): rTiles(floorRef), rPlayer(plyr), rAudio(sound)
 {
     maxSpeed = 20;
     maxFallSpeed = 50;
@@ -36,7 +36,7 @@ void Slime::Collisions()
     const auto predictedRectY = SDL_FRect{predictedPosY.x, predictedPosY.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y};
 
     grounded = false;
-    for (auto& tile : tiles)
+    for (auto& tile : rTiles)
     {
         if(tile.GetLevelSlide() != levelSlide) continue;
         
@@ -89,7 +89,7 @@ void Slime::NextPoint()
 
 void Slime::Death()
 {
-    for(auto& bullet: player.GetActiveBullets())
+    for(auto& bullet: rPlayer.GetActiveBullets())
     {
         const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
         const bool collision = SDL_HasIntersectionF(&rect, &bulletRect);
@@ -98,15 +98,16 @@ void Slime::Death()
         {
             if(bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
             dead = true;
+            rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
         }
     }
 }
 
 void Slime::HitPlayer() const
 {
-    if(player.GetLevelSlide() != levelSlide) return;
+    if(rPlayer.GetLevelSlide() != levelSlide) return;
     
-    if(SDL_HasIntersectionF(&player.GetRect(), &rect)) player.TakeDamage();
+    if(SDL_HasIntersectionF(&rPlayer.GetRect(), &rect)) rPlayer.TakeDamage();
 }
 
 void Slime::UpdateRectangle()

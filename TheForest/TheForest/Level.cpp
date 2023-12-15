@@ -3,6 +3,8 @@
 Level::Level(short lvlNum)
 {
     tileManager.MakeTiles(0);
+
+    audio.PlayMusic();
 }
 
 void Level::Update(float deltaTime)

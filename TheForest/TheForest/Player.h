@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AudioManager.h"
 #include "Physics.h"
 #include "Renderers.h"
 #include "Controllers.h"
@@ -10,7 +11,7 @@
 class Player : public Physics
 {
 public:
-    Player(const std::vector<Tile>& floorTiles, short& slide);
+    Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound);
     ~Player() = default;
 
     void Update(float deltaTime);
@@ -68,7 +69,6 @@ private:
     private:
         // player reference
         Player& rP;
-
         // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
         // When Getting :
         // Type = 0 .. Force = 1 .. .. Delay = 2 .. AmmoCost = 3 .. Gravity = 4 .. Repulsion = 5
@@ -142,6 +142,7 @@ private:
     
     const std::vector<Tile>& tiles;
     short& currentSlide;
+    const AudioManager& rAudio;
 
     // int screenWidth, screenHeight;
     

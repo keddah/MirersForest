@@ -2,16 +2,16 @@
 
 #include "GameSingletons.h"
 
-SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef): tiles(floorRef), player(plyr)
+SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound): tiles(floorRef), rPlayer(plyr), rAudio(sound)
 {
-    const auto slime1 = new Slime(player, tiles);
-    const auto slime2 = new Slime(player, tiles);
-    const auto slime3 = new Slime(player, tiles);
-    const auto slime4 = new Slime(player, tiles);
-    const auto slime5 = new Slime(player, tiles);
-    const auto slime6 = new Slime(player, tiles);
-    const auto slime7 = new Slime(player, tiles);
-    const auto slime8 = new Slime(player, tiles);
+    const auto slime1 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime2 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime3 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime4 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime5 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime6 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime7 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime8 = new Slime(rPlayer, tiles, rAudio);
 
     slime1->SetPosition(500, 0);
     slime2->SetPosition(900, 0);
