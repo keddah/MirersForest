@@ -41,7 +41,7 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 }
 
 // This constructor is used for animated things
-SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos, bool animated): posRef(pos)
+SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos, bool animated, bool isLooping): posRef(pos)
 {
     imagePath = spritePaths[0];
     isAnimated = animated;
@@ -73,8 +73,8 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         SDL_FreeSurface(image);
 
         // Start on a random frame so that the animations aren't synced up
-        if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
-        looping = true;
+        looping = isLooping;
+        if(isAnimated && looping) currentFrame = std::rand() % ( frameCount + 1 );
     }
 }
 
@@ -101,16 +101,26 @@ void SpriteRenderer::Draw(bool referenced)
     Animate();
 }
 
-void SpriteRenderer::PlayAnimation()
+void SpriteRenderer::PlayAnimation(bool referenced)
 {
     if(!visible) return;
     if(!thingsToRender[renderIndex]) print("Can't render from this index")
 
-    drawRect.x = posRef.x;
-    drawRect.y = posRef.y;
+    if(referenced)
+    {
+        drawRect.x = posRef.x;
+        drawRect.y = posRef.y;
+    }
+    else
+    {
+        drawRect.x = position.x;        
+        drawRect.y = position.y;        
+    }
 
     drawRect.w = size.x;
     drawRect.h = size.y;
+    sourceRect.w = size.x;
+    sourceRect.h = size.y;
     
     SDL_RenderCopyF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect);
     

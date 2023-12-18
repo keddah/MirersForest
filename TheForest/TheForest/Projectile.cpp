@@ -23,19 +23,45 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 	// The repulsion is just the opposite direction the projectile is going
 	repulsion = velocity * -1;
-	
+
+
+	const std::string seedPath = "Sprites/Projectiles/Projectile_seed.png";
+	const std::string bigSeedPath = "Sprites/Projectiles/Projectile_seedBig.png";
+	const std::string petalPath = "Sprites/Projectiles/Projectile_petal.png";
+	const std::string sunPath = "Sprites/Projectiles/Projectile_sun.png";
+	const std::string thornPath = "Sprites/Projectiles/Projectile_thorn.png";
+
 	switch (type)
 	{
 		case EWeaponTypes::Seed:
-			typePath = special? bigSeedPath : seedPath; 
+			typePath = special? bigSeedPath : seedPath;
+			impactVfx.ChangeSpriteSheet(0);
+			impactVfx.SetAnimSpeed(.0125f);
+			impactVfx.SetFrameCount(12);
+		
+			// impactVfx = new SpriteRenderer(impactPath, position, true, false);
+			impactOffset = special? -50 : -30;
 			break;
 			
 		case EWeaponTypes::Petal:
-			typePath = petalPath; 
+			typePath = petalPath;
+
+			impactVfx.ChangeSpriteSheet(1);
+			impactVfx.SetAnimSpeed(.026f);
+			impactVfx.SetFrameCount(12);
+
+			impactOffset = -30;
 			break;
 		
 		case EWeaponTypes::Sun:
 			typePath = sunPath;
+
+			impactVfx.ChangeSpriteSheet(2);
+			impactVfx.SetAnimSpeed(.03f);
+			impactVfx.SetFrameCount(11);
+			impactVfx.SetDrawSize({400, 200});
+			// impactVfx.SetDrawSize({impactVfx.GetDrawSize().x * 10, impactVfx.GetDrawSize().y * 5});
+			impactOffset = 30;
 			break;
 			
 		// case EWeaponTypes::Thorn:
@@ -58,15 +84,15 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 void Projectile::Update(float deltaTime)
 {
-	if(dead) return;
-
-	// When using the thorn weapon... it stretches in order to move... (need to get the previous size before deleting)
-	const Vector2 drawSize = {renderer->GetRect().w, renderer->GetRect().h};
+	if(dying) return;
 	
+	// When using the thorn weapon... it stretches in order to move... (need to get the previous size before deleting)
+	const Vector2 drawSize = renderer->GetDrawSize();
+
 	// The renderer's position reference doesn't work correctly.
 	// Makes a new renderer before a position update....
 	delete renderer;
-
+	
 	// The renderer doesn't work when it's made in the constructor
 	renderer = new SpriteRenderer(typePath, position);
 	renderer->SetRenderAngle(renderRot);
@@ -92,9 +118,20 @@ void Projectile::Update(float deltaTime)
 
 void Projectile::Draw() const
 {
-	if(dead) return;
+	if(dying) return;
 
 	renderer->Draw(false);
+}
+
+void Projectile::DeathAnimation(bool referenced)
+{
+	if(!dying) return;
+
+	const Vector2 fxPos = {(position.x + renderer->GetDrawSize().x / 2) - impactVfx.GetDrawSize().x / 2, position.y + impactOffset };
+	impactVfx.SetPosition(fxPos);
+	impactVfx.PlayAnimation(referenced);
+
+	if(!impactVfx.IsAnimating()) dead = true;
 }
 
 void Projectile::FaceVelocity()
@@ -134,16 +171,17 @@ void Projectile::Collisions()
 	{
 		case EWeaponTypes::Seed:
 			if(collision) Explode();
-			if(!special) dead = collision;
+			if(!special) dying = collision;
 			break;
 			
 		case EWeaponTypes::Petal:
-			dead = collision;
+			// dead = collision;
+			dying = collision; 
 			break;
 			
 		case EWeaponTypes::Sun:
 			// If there's a collision and the beam is on its descent
-			if(special && collision && flipTimer > beamFlipDelay) dead = true;
+			if(special && collision && flipTimer > beamFlipDelay) dying = true;
 			break;
 
 		// Getting rid of Thorn since SDL_Rects can't be rotated 
@@ -156,8 +194,8 @@ void Projectile::Collisions()
 void Projectile::Explode()
 {
 	if(!special) return;
-	
-	dead = true;
+
+	dying = true;	
 }
 
 void Projectile::Beam(float deltaTime, Vector2 mousePos)

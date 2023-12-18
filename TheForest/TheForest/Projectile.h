@@ -23,6 +23,7 @@ public:
 	
 	void Update(float deltaTime);
 	void Draw() const;
+	void DeathAnimation(bool referenced = true);
 
 	void SetPosition(Vector2 pos) {position = pos;}
 	
@@ -79,17 +80,39 @@ private:
 	const float lifeSpan = 8;
 	float lifeTimer;
 	bool dead = false;
+	bool dying = false;
 
 	SDL_FRect rect;
 	
 	std::string typePath;
-	const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
-	const std::string bigSeedPath {"Sprites/Projectiles/Projectile_seedBig.png"};
-	const std::string petalPath {"Sprites/Projectiles/Projectile_petal.png"};
-	const std::string sunPath {"Sprites/Projectiles/Projectile_sun.png"};
-	const std::string thornPath {"Sprites/Projectiles/Projectile_thorn.png"};
-	SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
+	// const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
+	// const std::string bigSeedPath {"Sprites/Projectiles/Projectile_seedBig.png"};
+	// const std::string petalPath {"Sprites/Projectiles/Projectile_petal.png"};
+	// const std::string sunPath {"Sprites/Projectiles/Projectile_sun.png"};
+	// const std::string thornPath {"Sprites/Projectiles/Projectile_thorn.png"};
 
+	// Impacts
+	std::string impactPath;
+	std::vector<std::string> impactPaths
+	{
+		"Sprites/Projectiles/seedImpactSheet.png",
+		"Sprites/Projectiles/petalImpactSheet.png",
+		"Sprites/Projectiles/sunBeamSheet.png",
+		"Sprites/Projectiles/seedExplosionSheet.png"
+	};
+	// const std::string seedImpact {"Sprites/Projectiles/Projectile_thorn.png"};
+	// const std::string petalImpact {"Sprites/Projectiles/petalImpactSheet.png"};
+	// const std::string sunImpact {"Sprites/Projectiles/Projectile_thorn.png"};
+	// const std::string explosionPath {"Sprites/Projectiles/seedExplosionSheet.png"};
+	
+	float impactOffset;
+	SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
+	SpriteRenderer impactVfx = SpriteRenderer(impactPaths, position, true, false);
+
+	
+	// Using a vector so that it can be initialised in a switch (without using a pointer)	
+	// std::vector<SpriteRenderer> impactVfx = std::vector<SpriteRenderer>();
+	
 	EWeaponTypes type;
 	
 	// Is the alternative weapon type (each weapon has 2 types)

@@ -303,5 +303,9 @@ void Player::WeaponController::Draw()
     // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
     arrow.SetRenderAngle((GetShootAngle() * 180/std::_Pi) + arrowOffset);
     arrow.Draw();
-    for(auto& bullet : activeBullets) bullet.Draw();
+    for(auto& bullet : activeBullets)
+    {
+        bullet.Draw();
+        bullet.DeathAnimation(false);
+    }
 }

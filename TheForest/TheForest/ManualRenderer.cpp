@@ -116,6 +116,8 @@ void ManualRenderer::SetDrawSize(const Vector2 newSize)
     size = newSize;
     drawRect.w = size.x;
     drawRect.h = size.y;
+    sourceRect.w = size.x;
+    sourceRect.h = size.y;
 }
 
 void ManualRenderer::FromTileSheet(const SDL_Rect sourceRectangle, int tileSize)
