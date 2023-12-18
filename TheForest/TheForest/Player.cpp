@@ -8,6 +8,7 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     maxFallSpeed = 50;
     
     position.x = 50;
+    renderer.SetFrameCount(4);
 
     // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }

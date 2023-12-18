@@ -30,6 +30,18 @@ void Player::WeaponController::UpdateBullets(float deltaTime)
         // Thorn
         // if(activeBullets[i].IsPulling()) thisPlayer.AddForce(Vector2(activeBullets[i].GetPullPos().x, activeBullets[i].GetPullPos().y) - thisPlayer.position, thornRepulsion);
 
+        // Sound that plays on projectile impacts
+        if((activeBullets.end() - 1)->IsDying())
+        {
+            if(!(activeBullets.end() - 1)->sfxPlaying)
+            {
+                rP.rAudio.PlaySound(AudioManager::Esounds::ProjImpact);
+                if((activeBullets.end() - 1)->GetType() == Projectile::EWeaponTypes::Seed && (activeBullets.end() - 1)->IsSpecial()) rP.rAudio.PlaySound(AudioManager::Esounds::SeedExplosion);
+                if((activeBullets.end() - 1)->GetType() == Projectile::EWeaponTypes::Sun && (activeBullets.end() - 1)->IsSpecial()) rP.rAudio.PlaySound(AudioManager::Esounds::BeamStrike);
+                (activeBullets.end() - 1)->sfxPlaying = true;
+            }
+        }
+        
         // (Done like this since the shotgun projectiles are spawned backwards....
         if((activeBullets.end() - 1)->IsDead())
         {

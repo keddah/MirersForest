@@ -24,6 +24,7 @@ public:
         SlimeDeath,
         PlayerHit,
         ProjImpact,
+        BeamStrike
     };
     
     // Overlap = can play over other sounds
@@ -36,7 +37,7 @@ private:
     Mix_Music* soundPlayer;
     std::vector<Mix_Chunk*> sounds;
 
-    static constexpr int soundsLength = 12;
+    static constexpr int soundsLength = 13;
     
     // The order of the array affects the selection of the sound
     const std::string soundPaths[soundsLength]
@@ -52,6 +53,7 @@ private:
         "Audio/slimeDeath.wav",
         "Audio/playerHit.wav",
         "Audio/projImpact.wav",
+        "Audio/beamStrike.wav",
         "Audio/R3DB0N3.wav"
     };
 

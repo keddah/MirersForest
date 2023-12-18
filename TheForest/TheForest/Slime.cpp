@@ -97,15 +97,21 @@ void Slime::Death()
     for(auto& bullet: rPlayer.GetActiveBullets())
     {
         const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
-        const bool collision = SDL_HasIntersectionF(&rect, &bulletRect);
+        const SDL_FRect fxRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetVFX().GetDrawSize().x, bullet.GetVFX().GetDrawSize().y};
+        const bool collision = (SDL_HasIntersectionF(&rect, &fxRect) && bullet.IsDying()) || SDL_HasIntersectionF(&rect, &bulletRect);
         
         if(collision)
         {
-            if(bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
+            const bool canKill = bullet.GetType() != Projectile::EWeaponTypes::Sun && (bullet.GetType() == Projectile::EWeaponTypes::Petal ||
+                (bullet.GetType() == Projectile::EWeaponTypes::Seed && !bullet.IsSpecial()));
+            
+            if(canKill) bullet.Kill();
+            
             rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
             dying = true;
         }
     }
+
     DeathAnimation();
 }
 

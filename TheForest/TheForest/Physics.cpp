@@ -43,7 +43,7 @@ void Physics::AddForce(const float x, const float y, const float force, bool res
 	if(reset) airTime = 0;
 }
 
-void Physics::ApplyGravity(bool isCharacter, bool lowered, bool accelerated)
+void Physics::ApplyGravity(bool isPlayer, bool lowered, bool accelerated)
 {
 	if(!gravityOn || grounded)
 	{
@@ -52,7 +52,7 @@ void Physics::ApplyGravity(bool isCharacter, bool lowered, bool accelerated)
 		return;
 	}
 
-	if(isCharacter)
+	if(isPlayer)
 	{
 		// Add to the air time...
 		airTime += Time::GetDeltaTime();

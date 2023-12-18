@@ -113,6 +113,15 @@ public:
     bool IsAnimating() const { return isAnimated; }
     short GetCurrentFrame() const { return currentFrame; }
     void SetCurrentFrame(const short frame) { currentFrame = frame; }
+
+    void ChangeSpriteSheet(short index) override
+    {
+        renderIndex = index;
+
+        // Changing the size of one frame
+        Resize();
+    }
+
     
     // Overriden means use the position reference
     void Draw(bool referenced = true) override;
@@ -128,14 +137,7 @@ public:
         frameCount = count;
 
         // Changing the size of one frame
-        int width, height;
-        SDL_QueryTexture(thingsToRender[0],0,0, &width, &height);
-
-        size.x = width / frameCount; 
-        size.y = height;
-
-        sourceRect.w = size.x;
-        sourceRect.h = size.y;
+        Resize();
     }
 
     float GetAnimSpeed() const { return animSpeed; }
@@ -143,11 +145,24 @@ public:
     
 
 private:
-    void Animate();
+    void Resize()
+    {
+        int width, height;
+        SDL_QueryTexture(thingsToRender[renderIndex],0,0, &width, &height);
 
+        size.x = width / frameCount; 
+        size.y = height;
+
+        drawRect.w = size.x;
+        drawRect.h = size.y;
+        sourceRect.w = size.x;
+        sourceRect.h = size.y;
+    }
+    
     // Animations
+    void Animate();
     short currentFrame;
-    short frameCount = 4;
+    short frameCount = 1;
     float frameTimer;
     float animSpeed = .35f;
     bool isAnimated;

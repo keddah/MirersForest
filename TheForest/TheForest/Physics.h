@@ -10,7 +10,8 @@ public:
 
     void AddForce(Vector2 direction, float force, bool reset = false);
     void AddForce(float x, float y, float force, bool reset = false);
-    
+
+    Vector2 GetVelocity() const { return velocity; }
     void SetVelocity(float x = 0, float y = 0) { velocity = {x, y}; }
     void SetVelocity(const Vector2 newValue) { velocity = newValue; }
 
@@ -34,7 +35,7 @@ protected:
     float maxFallSpeed = 50;
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
-    void ApplyGravity(bool isCharacter = false, bool lowered = false, bool accelerated = false);
+    void ApplyGravity(bool isPlayer = false, bool lowered = false, bool accelerated = false);
     void SetGravity(const bool on) { gravityOn = on; }
     static constexpr float Gravity = 9.81f;
     float currentGravity = Gravity;

@@ -24,59 +24,52 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 	// The repulsion is just the opposite direction the projectile is going
 	repulsion = velocity * -1;
 
-
-	const std::string seedPath = "Sprites/Projectiles/Projectile_seed.png";
-	const std::string bigSeedPath = "Sprites/Projectiles/Projectile_seedBig.png";
-	const std::string petalPath = "Sprites/Projectiles/Projectile_petal.png";
-	const std::string sunPath = "Sprites/Projectiles/Projectile_sun.png";
-	const std::string thornPath = "Sprites/Projectiles/Projectile_thorn.png";
-
 	switch (type)
 	{
 		case EWeaponTypes::Seed:
-			typePath = special? bigSeedPath : seedPath;
-			impactVfx.ChangeSpriteSheet(0);
-			impactVfx.SetAnimSpeed(.0125f);
-			impactVfx.SetFrameCount(12);
-		
-			// impactVfx = new SpriteRenderer(impactPath, position, true, false);
-			impactOffset = special? -50 : -30;
-			break;
+				renderer.ChangeSpriteSheet(special? 1 : 0);
+
+				impactVfx.ChangeSpriteSheet(special? 3 : 0);
+				impactVfx.SetAnimSpeed(.0125f);
+				impactVfx.SetFrameCount(12);
 			
-		case EWeaponTypes::Petal:
-			typePath = petalPath;
-
-			impactVfx.ChangeSpriteSheet(1);
-			impactVfx.SetAnimSpeed(.026f);
-			impactVfx.SetFrameCount(12);
-
-			impactOffset = -30;
-			break;
-		
-		case EWeaponTypes::Sun:
-			typePath = sunPath;
-
-			impactVfx.ChangeSpriteSheet(2);
-			impactVfx.SetAnimSpeed(.03f);
-			impactVfx.SetFrameCount(11);
-			impactVfx.SetDrawSize({400, 200});
-			// impactVfx.SetDrawSize({impactVfx.GetDrawSize().x * 10, impactVfx.GetDrawSize().y * 5});
-			impactOffset = 30;
-			break;
+				// impactVfx = new SpriteRenderer(impactPath, position, true, false);
+				impactOffset = special? -50 : -30;
+				break;
+				
+			case EWeaponTypes::Petal:
+				renderer.ChangeSpriteSheet(2);
 			
-		// case EWeaponTypes::Thorn:
-		// 	typePath = thornPath;
-		// 	break;
+				impactVfx.ChangeSpriteSheet(1);
+				impactVfx.SetAnimSpeed(.026f);
+				impactVfx.SetFrameCount(12);
+
+				impactOffset = -30;
+				break;
+			
+			case EWeaponTypes::Sun:
+				renderer.ChangeSpriteSheet(3);
+
+				renderPivot = {0, renderer.GetRect().y + renderer.GetRect().h / 2};
+			
+				impactVfx.ChangeSpriteSheet(2);
+				impactVfx.SetAnimSpeed(.03f);
+				impactVfx.SetFrameCount(11);
+				impactOffset = 40;
+				break;
+				
+			// case EWeaponTypes::Thorn:
+			// 	typePath = thornPath;
+			// 	break;
 	}
 
-	renderer = new SpriteRenderer(typePath, position);
-	if(typePath == thornPath || typePath == sunPath) renderPivot = {0, renderer->GetRect().y + renderer->GetRect().h / 2};
+	// renderer = new SpriteRenderer(typePath, position);
 
 	if(type == EWeaponTypes::Sun && special)
 	{
 		SetVelocity();
 		AddForce(Vector2(0, -1), force);
-		renderer->SetDrawSize({renderer->GetDrawSize().x * 3, renderer->GetDrawSize().y * 7.5f});
+		renderer.SetDrawSize({renderer.GetDrawSize().x * 3, renderer.GetDrawSize().y * 7.5f});
 	}
 
 	FaceVelocity();
@@ -86,23 +79,6 @@ void Projectile::Update(float deltaTime)
 {
 	if(dying) return;
 	
-	// When using the thorn weapon... it stretches in order to move... (need to get the previous size before deleting)
-	const Vector2 drawSize = renderer->GetDrawSize();
-
-	// The renderer's position reference doesn't work correctly.
-	// Makes a new renderer before a position update....
-	delete renderer;
-	
-	// The renderer doesn't work when it's made in the constructor
-	renderer = new SpriteRenderer(typePath, position);
-	renderer->SetRenderAngle(renderRot);
-
-	// Since the sun's special scales the sprite
-	if(type == EWeaponTypes::Sun)
-	{
-		renderer->SetDrawSize({drawSize.x, drawSize.y});
-	}
-
 	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
@@ -116,18 +92,20 @@ void Projectile::Update(float deltaTime)
 	UpdateRect();
 }
 
-void Projectile::Draw() const
+void Projectile::Draw()
 {
 	if(dying) return;
 
-	renderer->Draw(false);
+	renderer.SetPosition(position);
+	
+	renderer.Draw(false);
 }
 
 void Projectile::DeathAnimation(bool referenced)
 {
 	if(!dying) return;
 
-	const Vector2 fxPos = {(position.x + renderer->GetDrawSize().x / 2) - impactVfx.GetDrawSize().x / 2, position.y + impactOffset };
+	const Vector2 fxPos = {(position.x + renderer.GetDrawSize().x / 2) - impactVfx.GetDrawSize().x / 2, position.y + impactOffset };
 	impactVfx.SetPosition(fxPos);
 	impactVfx.PlayAnimation(referenced);
 
@@ -140,12 +118,12 @@ void Projectile::FaceVelocity()
 	const Vector2 posVel = position + velocity;
 	const Vector2 difference = posVel - position;
 	renderRot = (atan2(difference.y, difference.x)) * 180 / std::_Pi;
-	renderer->SetRenderAngle(renderRot);
+	renderer.SetRenderAngle(renderRot);
 }
 
 void Projectile::UpdateRect()
 {
-	const Vector2 size = renderer->GetDrawSize();
+	const Vector2 size = renderer.GetDrawSize();
 
 	rect.x = position.x;
 	rect.y = position.y;
@@ -181,7 +159,11 @@ void Projectile::Collisions()
 			
 		case EWeaponTypes::Sun:
 			// If there's a collision and the beam is on its descent
-			if(special && collision && flipTimer > beamFlipDelay) dying = true;
+			if(special && collision && flipTimer > beamFlipDelay)
+			{
+				dying = true;
+				velocity = {};
+			}
 			break;
 
 		// Getting rid of Thorn since SDL_Rects can't be rotated 
@@ -209,7 +191,7 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	SetVelocity();
 
 	// Follow the mouse position
-	const Vector2 difference = mousePos - Vector2(position.x + renderer->GetDrawSize().x / 2, position.y + renderer->GetDrawSize().y / 2);
+	const Vector2 difference = mousePos - Vector2(position.x + renderer.GetDrawSize().x / 2, position.y + renderer.GetDrawSize().y / 2);
 	const float rot = atan2(difference.y, difference.x);
 	AddForce(Vector2(cos(rot), sin(rot)), force);
 

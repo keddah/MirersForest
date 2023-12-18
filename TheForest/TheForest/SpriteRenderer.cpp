@@ -88,7 +88,7 @@ void SpriteRenderer::Draw(bool referenced)
 
     
     // print("reference: " << posRef.x << ", " << posRef.y)
-    ManualRenderer::Draw(true);
+    ManualRenderer::Draw(referenced);
 
     // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
     // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).

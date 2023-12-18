@@ -22,9 +22,11 @@ public:
 	~Projectile() = default;
 	
 	void Update(float deltaTime);
-	void Draw() const;
+	void Draw();
 	void DeathAnimation(bool referenced = true);
 
+	const SpriteRenderer& GetVFX() const { return impactVfx; }
+		
 	void SetPosition(Vector2 pos) {position = pos;}
 	
 	Projectile& operator=(const Projectile& other)
@@ -50,20 +52,24 @@ public:
 	}
 	
 	bool IsDead() const { return dead; }
+	bool IsDying() const { return dying; }
 	bool IsSpecial() const { return special; }
-	void Kill() { dead = true;}
-
+	
+	void Kill() { dying = true;}
+	void Explode();
 	void Beam(float deltaTime, Vector2 mousePos);
 	// bool IsPulling() const { return pulling; }
 	// const Vector2& GetPullPos() const { return pullPos; }
 	
 	const Vector2& GetRepulsion() const { return repulsion; }
 
-	const SpriteRenderer* GetRenderer() const { return renderer; }
+	const SpriteRenderer& GetRenderer() const { return renderer; }
 
 	const Vector2& GetPosition() const { return position; }
-	const SDL_FRect& GetRect() const { return renderer->GetRect(); }
+	const SDL_FRect& GetRect() const { return renderer.GetRect(); }
 	EWeaponTypes GetType() const { return type; }
+
+	bool sfxPlaying;
 	
 private:
 	const std::vector<Tile>& tiles;
@@ -73,7 +79,6 @@ private:
 	
 	void Collisions();
 	
-	void Explode();
 
 	void Pull(Vector2  pullFrom);
 	
@@ -84,7 +89,14 @@ private:
 
 	SDL_FRect rect;
 	
-	std::string typePath;
+	const std::vector<std::string> typePaths
+	{
+		"Sprites/Projectiles/Projectile_seed.png",
+		"Sprites/Projectiles/Projectile_seedBig.png",
+		"Sprites/Projectiles/Projectile_petal.png",
+		"Sprites/Projectiles/Projectile_sun.png",
+	};
+	
 	// const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
 	// const std::string bigSeedPath {"Sprites/Projectiles/Projectile_seedBig.png"};
 	// const std::string petalPath {"Sprites/Projectiles/Projectile_petal.png"};
@@ -93,7 +105,7 @@ private:
 
 	// Impacts
 	std::string impactPath;
-	std::vector<std::string> impactPaths
+	const std::vector<std::string> impactPaths
 	{
 		"Sprites/Projectiles/seedImpactSheet.png",
 		"Sprites/Projectiles/petalImpactSheet.png",
@@ -106,7 +118,8 @@ private:
 	// const std::string explosionPath {"Sprites/Projectiles/seedExplosionSheet.png"};
 	
 	float impactOffset;
-	SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
+	// SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
+	SpriteRenderer renderer = SpriteRenderer(typePaths, position, false);
 	SpriteRenderer impactVfx = SpriteRenderer(impactPaths, position, true, false);
 
 	

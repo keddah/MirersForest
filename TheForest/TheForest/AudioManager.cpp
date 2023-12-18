@@ -79,6 +79,10 @@ void AudioManager::PlaySound(Esounds sound, bool overlap) const
         case Esounds::ProjImpact:
             index = 10;
             break;
+
+        case Esounds::BeamStrike:
+            index = 11;
+            break;
     }
 
     print(index)
