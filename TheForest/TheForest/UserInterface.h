@@ -9,7 +9,8 @@ public:
 
     void Update(float deltaTime);
     void Draw();
-        
+
+    void TimerOnOff(const bool on) { timerOn = on; }
     
 private:
     const Player& rPlayer;
@@ -57,6 +58,7 @@ private:
     short fullHeartIndex;
     short emptyHeartIndex;
 
+    bool timerOn;
     float seconds;
     int minutes;
 

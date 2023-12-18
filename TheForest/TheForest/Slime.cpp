@@ -7,11 +7,15 @@ Slime::Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& soun
     
     renderer.SetFrameCount(6);
     renderer.SetAnimSpeed(.225f);
+
+    deathRenderer.SetFrameCount(11);
+    deathRenderer.SetAnimSpeed(.05f);
 }
 
 void Slime::Update(float deltaTime)
 {
-    if(dead) return;
+    vfxPos = {position.x, position.y - 30 };
+    if(dead || dying) return;
     
     ApplyGravity(true);
     Collisions();
@@ -19,6 +23,7 @@ void Slime::Update(float deltaTime)
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     position += velocity;
+    
     UpdateRectangle();
 
     HitPlayer();
@@ -97,10 +102,21 @@ void Slime::Death()
         if(collision)
         {
             if(bullet.GetType() != Projectile::EWeaponTypes::Sun) bullet.Kill();
-            dead = true;
             rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
+            dying = true;
         }
     }
+    DeathAnimation();
+}
+
+void Slime::DeathAnimation()
+{
+    if(!dying) return;
+
+    deathRenderer.PlayAnimation();
+
+    // Once the animation finishes ... is animating = false - Stop drawing/updating after that happens
+    if(!deathRenderer.IsAnimating()) dead = true;
 }
 
 void Slime::HitPlayer() const

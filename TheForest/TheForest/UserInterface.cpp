@@ -225,6 +225,8 @@ void UserInterface::UpdateBar()
 
 void UserInterface::LevelTime(float deltaTime)
 {
+    if(!timerOn) return;
+    
     seconds = seconds + deltaTime;
 
     if(seconds > 60)

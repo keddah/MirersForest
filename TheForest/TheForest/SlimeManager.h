@@ -10,7 +10,7 @@ public:
     const std::vector<Slime*>& GetSlimes() { return slimes; }
     
     void Update(float deltaTime);
-    void Draw() const { for(const auto& slime : slimes) if(slime->GetLevelSlide() == levelSlide) slime->Draw(); }
+    void Draw() const;
 
     void SetLevelSlide(short slide);
     

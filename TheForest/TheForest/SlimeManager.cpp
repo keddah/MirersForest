@@ -48,6 +48,18 @@ void SlimeManager::Update(float deltaTime)
     }
 }
 
+void SlimeManager::Draw() const
+{
+    for(const auto& slime : slimes)
+    {
+        if(slime->GetLevelSlide() == levelSlide)
+        {
+            slime->Draw();
+            slime->DeathAnimation();
+        }
+    }
+}
+
 void SlimeManager::SetLevelSlide(const short slide)
 {
     if(slide == levelSlide) return;

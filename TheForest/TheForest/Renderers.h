@@ -33,7 +33,6 @@ public:
 
     virtual void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
 
-    
     virtual void SetDrawSize(Vector2 newSize);
     void SetPosition(const Vector2 pos) { position = pos; }
     void SetPosition(const float x, const float y) { position = {x, y}; }
@@ -84,7 +83,7 @@ private:
 class SpriteRenderer: public ManualRenderer
 {
 public:
-    SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false);
+    SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false, bool isLooping = true);
     SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos, bool animated = true);
 
     // Used for things that need to be renderer that don't have sprites (bullets)
@@ -96,13 +95,31 @@ private:
 
 public:
     void SetIsAnimated(bool animated = true) { isAnimated = animated; } 
+    bool IsAnimating() const { return isAnimated; }
     
     // Overriden means use the position reference
     void Draw(bool referenced = true) override;
-
+    
+    // Plays a one time animation (doesn't loop around after all the frames have been played)
+    void PlayAnimation();
+    
     const Vector2& GetPositionReference() const { return posRef; }
 
-    void SetFrameCount(const short count = 1) { frameCount = count; }
+    void SetFrameCount(const short count = 1)
+    {
+        frameCount = count;
+
+        // Changing the size of one frame
+        int width, height;
+        SDL_QueryTexture(thingsToRender[0],0,0, &width, &height);
+
+        size.x = width / frameCount; 
+        size.y = height;
+
+        sourceRect.w = size.x;
+        sourceRect.h = size.y;
+    }
+    
     void SetAnimSpeed(const float speed) { animSpeed = speed; }
     
 
@@ -115,6 +132,7 @@ private:
     float frameTimer;
     float animSpeed = .35f;
     bool isAnimated;
+    bool looping;
 };
 
 class TextRenderer : public ManualRenderer

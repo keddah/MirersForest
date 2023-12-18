@@ -29,5 +29,4 @@ private:
     SlimeManager slimeManger = SlimeManager(player, tileManager.GetTiles(), audio);
     FlowerManager flowerManager = FlowerManager(player);
     UserInterface ui = UserInterface(player);
-    
 };

@@ -8,8 +8,9 @@ public:
     ~Slime() = default;
 
     void Update(float deltaTime);
-    void Draw() { if(!dead) renderer.Draw(); }
-    
+    void Draw() { if(!dying) renderer.Draw(); }
+    void DeathAnimation();
+
     const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position = {x, y}; }
@@ -24,12 +25,15 @@ public:
 private:
     const std::vector<std::string> slimeSheets {"Sprites/Slimes/SlimeSheet.png", "Sprites/Slimes/movingSlime.png"};
     SpriteRenderer renderer = SpriteRenderer(slimeSheets, position);
+    Vector2 vfxPos = position;
+    SpriteRenderer deathRenderer = SpriteRenderer("Sprites/Slimes/slimeDeath.png", vfxPos, true, false);
 
     std::vector<Tile>& rTiles; 
     Player& rPlayer;
     const AudioManager& rAudio;
 
     bool dead = false;
+    bool dying = false;
     
     SDL_FRect rect;
 

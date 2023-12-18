@@ -15,7 +15,7 @@ public:
         window = w;
     }
 
-    static void SetWindowSize(float w, float h)
+    static void SetWindowSize(int w, int h)
     {
         windowWidth = w;
         windowHeight = h;

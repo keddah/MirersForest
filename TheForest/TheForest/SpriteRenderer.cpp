@@ -4,7 +4,7 @@
 #include "GameSingletons.h"
 
 
-SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated): posRef(pos)
+SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated, bool isLooping): posRef(pos)
 {
     imagePath = spritePath;
     isAnimated = animated;
@@ -34,8 +34,10 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 
     SDL_FreeSurface(image);
 
+    looping = isLooping;
+    
     // Start on a random frame so that the animations aren't synced up
-    if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
+    if(isAnimated && !isLooping) currentFrame = std::rand() % ( frameCount + 1 );
 }
 
 // This constructor is used for animated things
@@ -72,30 +74,19 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
 
         // Start on a random frame so that the animations aren't synced up
         if(isAnimated) currentFrame = std::rand() % ( frameCount + 1 );
+        looping = true;
     }
-}
-
-// This constructor is used whenever the thing to render doesn't have a sprite.
-SpriteRenderer::SpriteRenderer(const Vector2& pos, Vector2 drawSize): posRef(pos)
-{
-    size = drawSize;
-
-    // It's position will be set by the owner of this object
-    drawRect.w = size.x;
-    drawRect.h = size.y;
-
-    sourceRect.x = 0;
-    sourceRect.y = 0;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
 }
 
 // Overriden means use the position reference
 void SpriteRenderer::Draw(bool referenced)
 {
+    if(!looping) return;
+    
     drawRect.x = posRef.x;
     drawRect.y = posRef.y;
 
+    
     // print("reference: " << posRef.x << ", " << posRef.y)
     ManualRenderer::Draw(true);
 
@@ -107,6 +98,22 @@ void SpriteRenderer::Draw(bool referenced)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     // Goes to the next frame 
+    Animate();
+}
+
+void SpriteRenderer::PlayAnimation()
+{
+    if(!visible) return;
+    if(!thingsToRender[renderIndex]) print("Can't render from this index")
+
+    drawRect.x = posRef.x;
+    drawRect.y = posRef.y;
+
+    drawRect.w = size.x;
+    drawRect.h = size.y;
+    
+    SDL_RenderCopyF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect);
+    
     Animate();
 }
 
@@ -126,5 +133,6 @@ void SpriteRenderer::Animate()
         frameTimer = 0;
     }
 
-    if (currentFrame > frameCount - 1) currentFrame = 0;
+    if (looping && currentFrame > frameCount - 1) currentFrame = 0;
+    else if(!looping && currentFrame > frameCount - 1) isAnimated = false;
 }
