@@ -46,4 +46,5 @@ private:
     std::vector<Tile> tiles;
 
     // Vector2 screenSize;
+    void Level1Tiles();
 };

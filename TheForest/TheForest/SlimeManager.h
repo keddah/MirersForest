@@ -13,6 +13,7 @@ public:
     void Draw() const;
 
     void SetLevelSlide(short slide);
+    void SpawnSlimes(short levelIndex);
     
 private:
     std::vector<Slime*> slimes = std::vector<Slime*>();
@@ -22,4 +23,6 @@ private:
     const AudioManager& rAudio;
     
     short levelSlide;
+
+    void SpawnLevel1();
 };

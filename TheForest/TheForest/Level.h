@@ -19,8 +19,9 @@ private:
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
 
     void SyncSlides();
+
+    short currentLevel = 0;
     
-    // std::vector<Slide> slides = std::vector<Slide>(); 
     short currentSlide = 0;
 
     TileManager tileManager;

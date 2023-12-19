@@ -124,11 +124,12 @@ void Player::WeaponController::Shooting(float deltaTime)
     // print(ammo)
     if(ammo <= 0)
     {
+        // Play the sound whenever the mouse is clicked
+        if(canShoot && (rP.controller.IsLMB() || rP.controller.IsRMB())) rP.rAudio.PlaySound(AudioManager::Esounds::NoAmmo);
+        
         canShoot = false;
         ammo = 0;
 
-        // Play the sound whenever the mouse is clicked
-        if(rP.controller.IsLMB() || rP.controller.IsRMB()) rP.rAudio.PlaySound(AudioManager::Esounds::NoAmmo);
         return;
     }
 

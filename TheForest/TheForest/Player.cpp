@@ -10,6 +10,7 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     position.x = 50;
     renderer.SetFrameCount(4);
 
+    currentSlide = 1;
     // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 

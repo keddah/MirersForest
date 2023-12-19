@@ -2,8 +2,9 @@
 
 Level::Level(short lvlNum)
 {
-    tileManager.MakeTiles(0);
-
+    tileManager.MakeTiles(currentLevel);
+    slimeManger.SpawnSlimes(currentLevel);
+    
     audio.PlayMusic();
 
     ui.TimerOnOff(true);
