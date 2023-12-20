@@ -184,9 +184,11 @@ private:
     void Collisions();
     void Move(float deltaTime);
     void Deceleration(float deltaTime);
-    void Jump();
     void UpdateRectangle();
 
+    void CoyoteTime(float deltaTime);
+    void Jump();
+    
     void Pausing();
     
     // Detects whenever the player leaves the screen and moves the player and its objects to the next slide
@@ -226,6 +228,9 @@ private:
     const float airControl = 5.5f;
     const float jumpHeight = 5;
     const float jumpForce = 20;
+
+    const float coyoteDuration = .2f;
+    float coyoteTimer;
 
 
     ////// Health/Damage

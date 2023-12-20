@@ -19,12 +19,14 @@ void Level::Update(float deltaTime)
     if(player.IsRespawning())
     {
         tileManager.Reset();
-        slimeManger.Reset();
+
+        // Need to reset the player first so that the level slide gets updated
         player.Reset();
+        slimeManger.Reset(currentLevel);
         flowerManager.Reset();
     }
     
-    SyncSlides();
+    else SyncSlides();
 }
 
 void Level::FixedUpdate(float deltaTime)

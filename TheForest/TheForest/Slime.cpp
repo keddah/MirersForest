@@ -97,7 +97,7 @@ void Slime::Death()
     for(auto& bullet: rPlayer.GetActiveBullets())
     {
         const SDL_FRect bulletRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetRect().w, bullet.GetRect().h};
-        const SDL_FRect fxRect = {bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetVFX().GetDrawSize().x, bullet.GetVFX().GetDrawSize().y};
+        const SDL_FRect fxRect = {bullet.GetVFX().GetPosition().x, bullet.GetVFX().GetPosition().y, bullet.GetVFX().GetDrawSize().x, bullet.GetVFX().GetDrawSize().y};
         const bool collision = (SDL_HasIntersectionF(&rect, &fxRect) && bullet.IsDying()) || SDL_HasIntersectionF(&rect, &bulletRect);
         
         if(collision)

@@ -144,5 +144,10 @@ void SpriteRenderer::Animate()
     }
 
     if (looping && currentFrame > frameCount - 1) currentFrame = 0;
-    else if(!looping && currentFrame > frameCount - 1) isAnimated = false;
+    else if(!looping && currentFrame > frameCount - 1)
+    {
+        // Turn off the animation but reset it.
+        isAnimated = false;
+        currentFrame = 0;
+    }
 }

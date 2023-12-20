@@ -23,6 +23,7 @@ void Player::Update(float deltaTime)
     if(dead || paused) return;
     
     wc.Update(deltaTime);
+
     
     // If the jump button is held... gravity is slightly less powerful
     // if the crouch button is being held... gravity is slightly more powerful
@@ -41,6 +42,8 @@ void Player::Update(float deltaTime)
     // Collisions before applying position
     Collisions();
     
+    CoyoteTime(deltaTime);
+    
     // Once all the movements have been done... add the velocity to the position
     // and update everything that needs to know.
     position += velocity;
@@ -49,7 +52,7 @@ void Player::Update(float deltaTime)
 
     SectionDetection();
     
-    if(position.y > 1080) Death();
+    if(position.y > GameWindow::GetWindowHeight()) Death();
     DamageTimer(deltaTime);
     UpdateAnimation();
 }
@@ -78,14 +81,14 @@ void Player::Reset()
     respawning = false;
     isDamaged = false;
     dmgTimer = 0;
-
+    
     // Resets the air time
-    AddForce({}, 0,0, true);
+    grounded = true;
     
     currentSlide = 0;
     health = maxHealth;
     wc.Refill();
-    position = {};
+    position = {50, 0};
 }
 
 bool Player::GivePowerup()
@@ -126,6 +129,12 @@ void Player::UpdateRectangle()
     rect.y = position.y;
     rect.w = playerSize.x;
     rect.h = playerSize.y;
+}
+
+void Player::CoyoteTime(float deltaTime)
+{
+    if(grounded) coyoteTimer = coyoteDuration;
+    else coyoteTimer -= deltaTime;
 }
 
 void Player::Pausing()
@@ -315,15 +324,17 @@ void Player::Jump()
     // Activate the jump buffer if you're in the air for .3 seconds and the jump button is pressed
     if(GetAirTime() > .3f && !grounded && jumping) jumpBuffer = true; 
     
-    if (!grounded) return;
+    // if (!grounded ^ !coyoteJump) return;
+    if (coyoteTimer <= 0) return;
 
     const float forceDifference = position.y / (position.y + jumpHeight);
     const float thrust = forceDifference * jumpForce;
 
     if(jumping)
     {
-        AddForce(0,1, -thrust);
+        AddForce(0,1, coyoteTimer < coyoteDuration / 4? -thrust * 2: -thrust);
         rAudio.PlaySound(AudioManager::Esounds::Jump);
+        coyoteTimer = 0;
     }
 
     

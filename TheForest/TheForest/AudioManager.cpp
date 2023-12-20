@@ -85,6 +85,5 @@ void AudioManager::PlaySound(Esounds sound, bool overlap) const
             break;
     }
 
-    print(index)
     Mix_PlayChannel(sfxChannel, sounds[index], 0);
 }

@@ -34,32 +34,30 @@ void SlimeManager::SetLevelSlide(const short slide)
     if(slide == levelSlide) return;
     
     const bool next = slide > levelSlide;
-    for (const auto& slime : slimes)
-    {
-        slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth() : GameWindow::GetWindowWidth()), slime->GetPosition().y});
-    }
-    
-    levelSlide = slide;
-}
-
-void SlimeManager::Reset()
-{
-    while(levelSlide != 0)
+    if(!resetting)
     {
         for (const auto& slime : slimes)
         {
-            // Move every tile left/right (keeping their Y value)
-            slime->SetPosition({slime->GetPosition().x + GameWindow::GetWindowWidth(), slime->GetPosition().y});
+            slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth() : GameWindow::GetWindowWidth()), slime->GetPosition().y});
         }
-        levelSlide--;
     }
+    
+    levelSlide = slide;
+    resetting = false;
+}
+
+void SlimeManager::Reset(short lvlIndex)
+{
+    slimes.clear();
+    SpawnSlimes(lvlIndex);
+    resetting = true;
 }
 
 void SlimeManager::SpawnSlimes(short levelIndex)
 {
     switch (levelIndex)
     {
-        case 1:
+        case 0:
             SpawnLevel1();
             break;
 

@@ -9,8 +9,10 @@ public:
 
     void Update(float deltaTime);
     void Draw() { if(!dying) renderer.Draw(); }
-    void DeathAnimation();
 
+    void DeathAnimation();
+    void Respawn();
+    
     const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
     void SetPosition(float x, float y) { position = {x, y}; }
