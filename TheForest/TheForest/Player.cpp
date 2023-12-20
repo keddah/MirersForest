@@ -12,7 +12,7 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     position.x = 50;
     renderer.SetFrameCount(4);
 
-    currentSlide = 5;
+    currentSlide = 0;
 }
 
 void Player::Update(float deltaTime)
@@ -149,7 +149,7 @@ void Player::SectionDetection()
     if(position.x > GameWindow::GetWindowWidth())
     {
         currentSlide++;
-        position.x = velocity.x;
+        position.x = velocity.x * .5f;
 
         for (auto& bullet : wc.GetActiveBullets())
         {
@@ -222,7 +222,9 @@ void Player::Collisions()
         if (predictedCollisionY)
         {
             velocity = Vector2(velocity.x, 0);
-            grounded = true;
+
+            // Prevents collisions that are above the player being detected as the ground
+            grounded = position.y + renderer.GetDrawSize().y < tileRect.y;
         }
 
     }

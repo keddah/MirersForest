@@ -15,12 +15,12 @@ public:
     void SetLevelSlide(short slide);
     void SpawnSlimes(short levelIndex);
 
-    void Reset(short levelIndex) { slimes.clear(); SpawnSlimes(levelIndex); }
+    void Reset();
     
 private:
     std::vector<Slime*> slimes = std::vector<Slime*>();
 
-    std::vector<Tile>& tiles; 
+    std::vector<Tile>& rTiles; 
     Player& rPlayer;
     const AudioManager& rAudio;
     

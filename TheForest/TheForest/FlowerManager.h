@@ -10,7 +10,7 @@ public:
     void Draw();
     void SetLevelSlide(short slide);
 
-    void Reset() { for (auto& flower : flowers) flower.Reset(); }
+    void Reset();
     
 private:
     class FlowerUp

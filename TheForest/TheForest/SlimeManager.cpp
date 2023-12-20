@@ -2,7 +2,7 @@
 
 #include "GameSingletons.h"
 
-SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound): tiles(floorRef), rPlayer(plyr), rAudio(sound)
+SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound): rTiles(floorRef), rPlayer(plyr), rAudio(sound)
 {
 }
 
@@ -42,6 +42,19 @@ void SlimeManager::SetLevelSlide(const short slide)
     levelSlide = slide;
 }
 
+void SlimeManager::Reset()
+{
+    while(levelSlide != 0)
+    {
+        for (const auto& slime : slimes)
+        {
+            // Move every tile left/right (keeping their Y value)
+            slime->SetPosition({slime->GetPosition().x + GameWindow::GetWindowWidth(), slime->GetPosition().y});
+        }
+        levelSlide--;
+    }
+}
+
 void SlimeManager::SpawnSlimes(short levelIndex)
 {
     switch (levelIndex)
@@ -63,9 +76,9 @@ void SlimeManager::SpawnSlimes(short levelIndex)
 
 void SlimeManager::SpawnLevel1()
 {
-    const auto slime1 = new Slime(rPlayer, tiles, rAudio);
-    const auto slime2 = new Slime(rPlayer, tiles, rAudio);
-    const auto slime3 = new Slime(rPlayer, tiles, rAudio);
+    const auto slime1 = new Slime(rPlayer, rTiles, rAudio);
+    const auto slime2 = new Slime(rPlayer, rTiles, rAudio);
+    const auto slime3 = new Slime(rPlayer, rTiles, rAudio);
 
     slime1->SetPosition(400, 0);
     slime2->SetPosition(550, 0);

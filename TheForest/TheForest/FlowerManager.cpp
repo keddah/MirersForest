@@ -43,6 +43,20 @@ void FlowerManager::SetLevelSlide(const short slide)
     levelSlide = slide;
 }
 
+void FlowerManager::Reset()
+{
+    while(levelSlide != 0)
+    {
+        for (auto& flower : flowers)
+        {
+            flower.Reset();
+
+            // Move every tile left/right (keeping their Y value)
+            flower.SetPosition({flower.GetPosition().x + GameWindow::GetWindowWidth(), flower.GetPosition().y});
+        }
+        levelSlide--;
+    }
+}
 
 
 //\\//\\//\\//\\\\//\\__ FlowerUp __//\\//\\//\\//\\\\//\\

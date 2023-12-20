@@ -13,7 +13,8 @@ public:
     
     void MakeTiles(short lvlIndex);
     void SetLevelSlide(short slide);
-    
+    void Reset();
+
 private:
     static constexpr short tileSize = 16;
     

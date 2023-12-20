@@ -48,10 +48,23 @@ void TileManager::SetLevelSlide(short slide)
     for (auto& tile : tiles)
     {
         // Move every tile left/right (keeping their Y value)
-        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), tile.GetPosition().y});
+        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), tile.GetPosition().y});
     }
     
     levelSlide = slide;
+}
+
+void TileManager::Reset()
+{
+    while(levelSlide != 0)
+    {
+        for (auto& tile : tiles)
+        {
+            // Move every tile left/right (keeping their Y value)
+            tile.SetPosition({tile.GetPosition().x + GameWindow::GetWindowWidth(), tile.GetPosition().y});
+        }
+        levelSlide--;
+    }
 }
 
 void TileManager::Level1Tiles()
@@ -61,139 +74,139 @@ void TileManager::Level1Tiles()
 
 
     //\\//\\//\\//\\// 1st Slide //\\//\\//\\//\\// 
-    // for(short darkCols = 0; darkCols < 4; darkCols++)
-    // {
-    //     for(short darkRow = 0; darkRow < 140; darkRow++)
-    //     {
-    //         Tile newTile = Tile(tileSheet, spawnPos, darkDirt2, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = start;
-    //     spawnPos.y += tileSize;
-    // }
-    //
-    // spawnPos = Vector2(start, tileSize * 60);
-    // for(short stoneCols = 0; stoneCols < 4; stoneCols++)
-    // {
-    //     for(short stoneRows = 0; stoneRows < 140; stoneRows++)
-    //     {
-    //         Tile newTile = Tile(tileSheet, spawnPos, stoneDirt2, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = start;
-    //     spawnPos.y += tileSize;
-    // }
-    //
-    // spawnPos = Vector2(start, tileSize * 56);
-    // for(short dirtCols = 0; dirtCols < 4; dirtCols++)
-    // {
-    //     for(short dirtRows = 0; dirtRows < 140; dirtRows++)
-    //     {
-    //         Tile newTile = Tile(tileSheet, spawnPos, dirt2, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = start;
-    //     spawnPos.y += tileSize;
-    // }
-    //
-    // spawnPos = Vector2(start, tileSize * 55);
-    // for(short grass = 0; grass < 140; grass++)
-    // {
-    //     Tile newTile = Tile(tileSheet, spawnPos, grassDirt2, tileSize);
-    //
-    //     tiles.emplace_back(newTile);
-    //
-    //     spawnPos.x += tileSize;
-    // }
-    //
-    //
-    // Vector2 treeTrunk = Vector2(1200 + 30 * tileSize, spawnPos.y + tileSize);
-    // for(short hori = 0; hori < 4; hori++)
-    // {
-    //     for(short vert = 0; vert < 40; vert++)
-    //     {
-    //         Tile newTile = Tile(tileSheet, treeTrunk, wood, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         treeTrunk.y -= tileSize;
-    //     }
-    //     treeTrunk.y = spawnPos.y + tileSize;
-    //     treeTrunk.x += tileSize;
-    // }
-    //
-    // spawnPos = Vector2(1200, 400);
-    // for(short hori = 0; hori < 10; hori++)
-    // {
-    //     for(short i = 0; i < 30; i++)
-    //     {
-    //         const short rnd = rand() % 2;
-    //         Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves1 : leaves2, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = 1200 + tileSize * hori  * 3;
-    //     spawnPos.y += tileSize;
-    // }
-    //
-    // spawnPos = Vector2(1600, 400);
-    // for(short hori = 0; hori < 10; hori++)
-    // {
-    //     for(short i = 0; i < 30; i++)
-    //     {
-    //         const short rnd = rand() % 2;
-    //         Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = 1600 + tileSize * hori;
-    //     spawnPos.y -= tileSize;
-    // }
-    //
-    // spawnPos = Vector2(1800, 400);
-    // for(short hori = 0; hori < 10; hori++)
-    // {
-    //     for(short i = 0; i < 30; i++)
-    //     {
-    //         const short rnd = rand() % 2;
-    //         Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = 1800 - tileSize * hori * 2;
-    //     spawnPos.y -= tileSize;
-    // }
-    //
-    // spawnPos = Vector2(1900, 300);
-    // for(short hori = 0; hori < 10; hori++)
-    // {
-    //     for(short i = 0; i < 30; i++)
-    //     {
-    //         const short rnd = rand() % 2;
-    //         Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
-    //
-    //         tiles.emplace_back(newTile);
-    //
-    //         spawnPos.x += tileSize;
-    //     }
-    //     spawnPos.x = 1900 + tileSize * hori + tileSize;
-    //     spawnPos.y -= tileSize;
-    // }
+    for(short darkCols = 0; darkCols < 4; darkCols++)
+    {
+        for(short darkRow = 0; darkRow < 140; darkRow++)
+        {
+            Tile newTile = Tile(tileSheet, spawnPos, darkDirt2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+    
+    spawnPos = Vector2(start, tileSize * 60);
+    for(short stoneCols = 0; stoneCols < 4; stoneCols++)
+    {
+        for(short stoneRows = 0; stoneRows < 140; stoneRows++)
+        {
+            Tile newTile = Tile(tileSheet, spawnPos, stoneDirt2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+    
+    spawnPos = Vector2(start, tileSize * 56);
+    for(short dirtCols = 0; dirtCols < 4; dirtCols++)
+    {
+        for(short dirtRows = 0; dirtRows < 140; dirtRows++)
+        {
+            Tile newTile = Tile(tileSheet, spawnPos, dirt2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+    
+    spawnPos = Vector2(start, tileSize * 55);
+    for(short grass = 0; grass < 140; grass++)
+    {
+        Tile newTile = Tile(tileSheet, spawnPos, grassDirt2, tileSize);
+    
+        tiles.emplace_back(newTile);
+    
+        spawnPos.x += tileSize;
+    }
+    
+    
+    Vector2 treeTrunk = Vector2(1200 + 30 * tileSize, spawnPos.y + tileSize);
+    for(short hori = 0; hori < 4; hori++)
+    {
+        for(short vert = 0; vert < 40; vert++)
+        {
+            Tile newTile = Tile(tileSheet, treeTrunk, wood, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            treeTrunk.y -= tileSize;
+        }
+        treeTrunk.y = spawnPos.y + tileSize;
+        treeTrunk.x += tileSize;
+    }
+    
+    spawnPos = Vector2(1200, 400);
+    for(short hori = 0; hori < 10; hori++)
+    {
+        for(short i = 0; i < 30; i++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves1 : leaves2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = 1200 + tileSize * hori  * 3;
+        spawnPos.y += tileSize;
+    }
+    
+    spawnPos = Vector2(1600, 400);
+    for(short hori = 0; hori < 10; hori++)
+    {
+        for(short i = 0; i < 30; i++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = 1600 + tileSize * hori;
+        spawnPos.y -= tileSize;
+    }
+    
+    spawnPos = Vector2(1800, 400);
+    for(short hori = 0; hori < 10; hori++)
+    {
+        for(short i = 0; i < 30; i++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = 1800 - tileSize * hori * 2;
+        spawnPos.y -= tileSize;
+    }
+    
+    spawnPos = Vector2(1900, 300);
+    for(short hori = 0; hori < 10; hori++)
+    {
+        for(short i = 0; i < 30; i++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = 1900 + tileSize * hori + tileSize;
+        spawnPos.y -= tileSize;
+    }
 
 
     //\\//\\//\\//\\// 2nd Slide //\\//\\//\\//\\// 

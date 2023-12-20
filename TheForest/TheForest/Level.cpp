@@ -15,15 +15,16 @@ void Level::Update(float deltaTime)
     flowerManager.Update(deltaTime);
     ui.Update(deltaTime);
     
-    SyncSlides();
 
     if(player.IsRespawning())
     {
+        tileManager.Reset();
+        slimeManger.Reset();
         player.Reset();
-        slimeManger.Reset(currentLevel);
         flowerManager.Reset();
     }
-    // print("level: " << currentSlide)      
+    
+    SyncSlides();
 }
 
 void Level::FixedUpdate(float deltaTime)
