@@ -9,6 +9,8 @@ public:
     void Update(float deltaTime);
     void Draw();
     void SetLevelSlide(short slide);
+
+    void Reset() { for (auto& flower : flowers) flower.Reset(); }
     
 private:
     class FlowerUp
@@ -24,6 +26,7 @@ private:
         Vector2 GetPosition() const { return position; }
 
         short GetLevelSlide() const { return levelSlide; }
+        void Reset() { used = false; respawnTimer = 0;}
     
     private:
         Vector2 position;

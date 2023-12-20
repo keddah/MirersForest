@@ -16,15 +16,16 @@ int GameWindow::windowHeight = 0;
 
 int main()
 {
-	GameManager game;
+	const GameManager game;
 
 	Time::SetCurrentTime(Time::GetElapsedTime());
 
 	float tickTimer = 0;
-	const float timeStep = .001f;
-	
+
 	while (game.IsRunning())
 	{
+		constexpr float timeStep = .001f;
+		
 		Time::Update();
 		game.Update();
 		game.Draw();

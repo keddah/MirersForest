@@ -25,7 +25,7 @@ void PlayerController::HandleInputs()
 	num2 = keyState[SDL_SCANCODE_2];
 	num3 = keyState[SDL_SCANCODE_3];
 	num4 = keyState[SDL_SCANCODE_4];
-	
+
 	int mouse_x, mouse_y;
 	SDL_GetMouseState(&mouse_x, &mouse_y);
 	mousePos.x = mouse_x;
@@ -54,7 +54,13 @@ void PlayerController::HandleInputs()
 		case SDL_QUIT:
 			GameWindow::CloseGame();
 			break;
+
+		case SDL_KEYDOWN:
+			// Toggle pause down
+			if(e.key.keysym.scancode == SDL_SCANCODE_ESCAPE || e.key.keysym.scancode == SDL_SCANCODE_P) pauseDown = !pauseDown;
+			break;
 		}
+			
 	}
 }
 
@@ -67,6 +73,6 @@ void PlayerController::ClearInputs()
 	num2 = false;
 	num3 = false;
 	num4 = false;
-	
+
 	for (bool& moveInput : moveInputs) moveInput = false;
 }

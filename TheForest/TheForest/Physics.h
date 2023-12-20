@@ -11,9 +11,7 @@ public:
     void AddForce(Vector2 direction, float force, bool reset = false);
     void AddForce(float x, float y, float force, bool reset = false);
 
-    Vector2 GetVelocity() const { return velocity; }
-    void SetVelocity(float x = 0, float y = 0) { velocity = {x, y}; }
-    void SetVelocity(const Vector2 newValue) { velocity = newValue; }
+    virtual Vector2 GetVelocity() const { return velocity; }
 
 private:
     bool gravityOn = true;
@@ -22,6 +20,9 @@ private:
 protected:
     Vector2 position;
     Vector2 velocity;
+
+    void SetVelocity(float x = 0, float y = 0) { velocity = {x, y}; }
+    void SetVelocity(const Vector2 newValue) { velocity = newValue; }
     
     float decelerationRate = 175;
     float drag = 10;

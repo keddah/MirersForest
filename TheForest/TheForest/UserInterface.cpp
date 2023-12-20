@@ -4,7 +4,7 @@
 
 #include "GameSingletons.h"
 
-UserInterface::UserInterface(const Player& player) : rPlayer(player)
+UserInterface::UserInterface(Player& player) : rPlayer(player)
 {
     // Initialise the SDL text
     const int success = TTF_Init();
@@ -15,6 +15,21 @@ UserInterface::UserInterface(const Player& player) : rPlayer(player)
     }
     
     CreateUI();
+
+    pauseScreen.SetVisibility(false);
+    deathScreen.SetVisibility(false);
+
+    Button resume = Button(0,0,450,100, {99,163,92,120});
+    Button restart = Button(0,0,450,100, {165,152,90,120});
+    Button quit = Button(0,0,250,100, {175,130,80,120});
+
+    resume.SetPosition(Vector2(GameWindow::GetWindowWidth() / 2 - resume.GetRect().w / 2, 340));
+    restart.SetPosition(Vector2(GameWindow::GetWindowWidth() / 2 - restart.GetRect().w / 2, 500));
+    quit.SetPosition(Vector2(GameWindow::GetWindowWidth() / 2 - quit.GetRect().w / 2, 680));
+
+    buttons.push_back(resume);
+    buttons.push_back(restart);
+    buttons.push_back(quit);
 }
 
 void UserInterface::Update(float deltaTime)
@@ -22,12 +37,55 @@ void UserInterface::Update(float deltaTime)
     LevelTime(deltaTime);
     CheckPlayerState();
     UpdateBar();
+    
+    ButtonPresses();
+    Respawning(deltaTime);
+
+    
+    if(rPlayer.IsPaused())
+    {
+        pauseScreen.SetVisibility(true);
+        renderers[projBkgIndex].SetVisibility(false);
+        renderers[heartBkgIndex].SetVisibility(false);
+        renderers[cooldownIndex].SetVisibility(false);
+        renderers[ammoIndex].SetVisibility(false);
+        txtRenderers[projIndex].SetVisibility(false);
+
+        for(auto& btn: buttons) btn.Show();
+
+        for(int i = 0; i < 3; i++)
+        {
+            // Hide all the full hearts ... show the empty ones
+            renderers[fullHeartIndex + i].SetVisibility(false);
+            renderers[emptyHeartIndex + i].SetVisibility(false);
+        }
+        
+        timerOn = false;
+    }
+    else
+    {
+        pauseScreen.SetVisibility(false);
+        renderers[projBkgIndex].SetVisibility(true);
+        renderers[cooldownIndex].SetVisibility(true);
+        renderers[ammoIndex].SetVisibility(true);
+        renderers[heartBkgIndex].SetVisibility(true);
+        txtRenderers[projIndex].SetVisibility(true);
+
+        for(auto& btn: buttons) btn.Hide();
+        
+        // Start the timer once the player starts moving or if the timer has already started and unpaused
+        if(rPlayer.GetVelocity().Magnitude() > 5 ^ seconds > 0) timerOn = true;
+    }
 }
 
 void UserInterface::Draw()
 {
     for (auto& renderer : renderers) renderer.Draw();
     for (auto& renderer : txtRenderers) renderer.Draw();
+    for(auto& button : buttons) button.Draw();
+    
+    pauseScreen.Draw();
+    deathScreen.Draw();
 }
 
 void UserInterface::CreateUI()
@@ -107,7 +165,7 @@ void UserInterface::CreateUI()
     // The text for the projectile.
     constexpr float projPadding = 30;
     const Vector2 projPos = Vector2(projBkgPos.x + projBkgSize.x/2 - projPadding, projBkgPos.y + projBkgSize.y - 30);
-    TextRenderer proj = TextRenderer(font_quicksand, currentProj, projTxtSize, projPos);
+    TextRenderer proj = TextRenderer(font_quicksand, currentProjectile, projTxtSize, projPos);
     txtRenderers.push_back(proj);
     txtRenderers.back().SetRenderColour({120,200,200,255});
     projIndex = txtRenderers.size() - 1;
@@ -132,6 +190,8 @@ void UserInterface::CreateUI()
 
 void UserInterface::CheckPlayerState()
 {
+    if(rPlayer.IsPaused()) return;;
+    
     switch (rPlayer.GetHealth())
     {
         case 0:
@@ -194,24 +254,42 @@ void UserInterface::CheckPlayerState()
             renderers[ammoIndex].SetRenderColour(seedColour);
             txtRenderers[projIndex].SetRenderColour(seedColour);
             renderers[projBkgIndex].SetRenderColour(seedBkgColour);
-            currentProj = "SEED";
+            currentProjectile = "SEED";
             break;
             
         case Projectile::EWeaponTypes::Petal:
             renderers[ammoIndex].SetRenderColour(petalColour);
             txtRenderers[projIndex].SetRenderColour(petalColour);
             renderers[projBkgIndex].SetRenderColour(petalBkgColour);
-            currentProj = "PETAL";
+            currentProjectile = "PETAL";
             break;
         
         case Projectile::EWeaponTypes::Sun:
             renderers[ammoIndex].SetRenderColour(sunColour);
             txtRenderers[projIndex].SetRenderColour(sunColour);
             renderers[projBkgIndex].SetRenderColour(sunBkgColour);
-            currentProj = "SUN";
+            currentProjectile = "SUN";
             break;
     }
-    txtRenderers[projIndex].SetText(currentProj);
+    txtRenderers[projIndex].SetText(currentProjectile);
+}
+
+void UserInterface::Respawning(float deltaTime)
+{
+    if(rPlayer.IsDead())
+    {
+        deathDelayTimer += deltaTime;
+        if(deathDelayTimer > .35f) deathScreen.SetVisibility(true);
+    }
+
+    if(!deathScreen.IsVisible()) return;
+
+    if(rPlayer.Respawn())
+    {
+        deathScreen.SetVisibility(false);
+        seconds = 0;
+        minutes = 0;
+    }
 }
 
 void UserInterface::UpdateBar()
@@ -237,4 +315,70 @@ void UserInterface::LevelTime(float deltaTime)
 
     time = (minutes < 10? "0" + std::to_string(minutes) : std::to_string((minutes))) + ":" + (seconds < 10? "0" + std::to_string(static_cast<int>(seconds)) : std::to_string((static_cast<int>(seconds))));
     txtRenderers[timerIndex].SetText(time);
+}
+
+void UserInterface::ButtonPresses()
+{
+    if(!pauseScreen.IsVisible()) return;
+
+    const SDL_Point mousePos = { static_cast<int>(rPlayer.GetMousePos().x), static_cast<int>(rPlayer.GetMousePos().y)};
+    if(!rPlayer.LMB()) return;
+    
+    for(int i = 0; i < 3; i++)
+    {
+        switch (i)
+        {
+            // Resume
+            case 0:
+                if(SDL_PointInRect(&mousePos, &buttons[i].GetRect())) PressResume();
+                break;
+
+            // Restart
+            case 1:
+                if(SDL_PointInRect(&mousePos, &buttons[i].GetRect())) PressRestart();
+                break;
+
+            // Quit
+            case 2:
+                if(SDL_PointInRect(&mousePos, &buttons[i].GetRect())) PressQuit();
+                break;
+        }
+    }
+}
+
+void UserInterface::PressResume()
+{
+    pauseScreen.SetVisibility(false);
+    rPlayer.Unpause();
+}
+
+void UserInterface::PressRestart()
+{
+    rPlayer.Respawn(true);
+    PressResume();
+}
+
+void UserInterface::PressQuit()
+{
+    GameWindow::CloseGame();
+}
+
+
+//\\//\\//\\//\\////\\//\\//\\//\\// Buttons //\\//\\//\\//\\////\\//\\//\\//\\//
+
+
+UserInterface::Button::Button(int x, int y, int w, int h, SDL_Color colour)
+{
+    renderer.SetPosition(x, y);
+    renderer.SetDrawSize(w, h);
+
+    renderer.SetRenderColour(colour);
+}
+
+UserInterface::Button::Button(SDL_Rect rect, SDL_Color colour)
+{
+    renderer.SetPosition(rect.x, rect.y);
+    renderer.SetDrawSize(rect.w, rect.h);
+
+    renderer.SetRenderColour(colour);
 }

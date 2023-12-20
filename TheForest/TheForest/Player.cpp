@@ -13,13 +13,14 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     renderer.SetFrameCount(4);
 
     currentSlide = 5;
-    // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 
 void Player::Update(float deltaTime)
 {
     controller.Update();
-    if(dead) return;
+    Pausing();
+    
+    if(dead || paused) return;
     
     wc.Update(deltaTime);
     
@@ -55,6 +56,8 @@ void Player::Update(float deltaTime)
 
 void Player::FixedUpdate(float deltaTime)
 {
+    if(dead || paused) return;
+    
     // Ran in update to check for the input
     Jump();
     
@@ -66,6 +69,23 @@ void Player::Float()
     SetVelocity(0,0);
     SetGravity(false);
     setFloatTimer = true;
+}
+
+void Player::Reset()
+{
+    renderer.SetVisibility(true);
+    dead = false;
+    respawning = false;
+    isDamaged = false;
+    dmgTimer = 0;
+
+    // Resets the air time
+    AddForce({}, 0,0, true);
+    
+    currentSlide = 0;
+    health = maxHealth;
+    wc.Refill();
+    position = {};
 }
 
 bool Player::GivePowerup()
@@ -106,6 +126,22 @@ void Player::UpdateRectangle()
     rect.y = position.y;
     rect.w = playerSize.x;
     rect.h = playerSize.y;
+}
+
+void Player::Pausing()
+{
+    // Can't pause when dead
+    if(dead) return;
+    
+    paused = controller.PauseDown();
+}
+
+void Player::Unpause()
+{
+    paused = false;
+
+    // So that you don't have to toggle the pause button to pause again the (next time)
+    controller.ResetPaused();
 }
 
 void Player::SectionDetection()

@@ -91,7 +91,7 @@ void Player::WeaponController::ConfigureWeapon()
     {
         // Tuple order = Type->Force->Size->Delay->AmmoCost->Gravity
     case Projectile::EWeaponTypes::Seed:
-            weapon = std::make_tuple(selectedWeapon, (special? seedForce * 1.5f : seedForce), seedDelay, special? seedCost * 2 : seedCost, seedGravity, seedRepulsion);
+            weapon = std::make_tuple(selectedWeapon, (special? seedForce * .8f : seedForce), seedDelay, special? seedCost * 2 : seedCost, seedGravity, special? seedRepulsion * 1.4f : seedRepulsion);
         break;
 			
         case Projectile::EWeaponTypes::Petal:

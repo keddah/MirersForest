@@ -5,20 +5,50 @@
 class UserInterface
 {
 public:
-    UserInterface(const Player& player);
-
+    UserInterface(Player& player);
+    
     void Update(float deltaTime);
     void Draw();
 
-    void TimerOnOff(const bool on) { timerOn = on; }
-    
 private:
-    const Player& rPlayer;
+    class Button
+    {
+    public:
+        Button(SDL_Rect rect, SDL_Color colour);
+        Button(int x, int y, int w, int h, SDL_Colour colour);
+
+        void Draw() { renderer.Draw(); }
+        void Hide() { renderer.SetVisibility(false); }
+        void Show() { renderer.SetVisibility(true); }
+        
+        void SetPosition(Vector2 pos) { renderer.SetPosition(pos); }
+        void SetSize(Vector2 size) { renderer.SetDrawSize(size); }
+        void SetRect(SDL_Rect rect)
+        {
+            renderer.SetPosition(Vector2(rect.x, rect.y));
+            renderer.SetDrawSize(Vector2(rect.w, rect.h));
+        }
+        const SDL_Rect& GetRect() const { return { static_cast<int>(renderer.GetRect().x), static_cast<int>(renderer.GetRect().y), static_cast<int>(renderer.GetRect().w), static_cast<int>(renderer.GetRect().h) }; }
+
+    private:
+        ManualRenderer renderer = ManualRenderer(Vector2(), Vector2());
+    };
+    
+    Player& rPlayer;
+
+    std::vector<Button> buttons;
+    
     std::vector<ManualRenderer> renderers;
     std::vector<TextRenderer> txtRenderers;
 
     const std::string font_quicksand = "Fonts/Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
+    
+    const std::string deathscreenPath = "Sprites/UI/deathscreen.png";
+    const std::string pausePath = "Sprites/UI/pauseScreen.png";
+
+    ManualRenderer pauseScreen = ManualRenderer(pausePath, {});
+    ManualRenderer deathScreen = ManualRenderer(deathscreenPath, {});
     
     const short timeSize = 36;
     const short projTxtSize = 20;
@@ -58,18 +88,27 @@ private:
     short fullHeartIndex;
     short emptyHeartIndex;
 
+    float deathDelayTimer;
+    
     bool timerOn;
     float seconds;
     int minutes;
 
     // Needs to have an initial value
     std::string time = "f";
-    std::string currentProj = "f";
+    std::string currentProjectile = "f";
     
     void CreateUI();
     void CheckPlayerState();
-
+    void Respawning(float deltaTime);
+    
     void UpdateBar();
 
     void LevelTime(float deltaTime);
+
+    void ButtonPresses();
+    
+    void PressResume();
+    void PressRestart();
+    void PressQuit();
 };

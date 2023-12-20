@@ -31,7 +31,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 				impactVfx.ChangeSpriteSheet(special? 3 : 0);
 				impactVfx.SetAnimSpeed(.025f);
-				impactVfx.SetFrameCount(11);
+				impactVfx.SetFrameCount(special? 11 : 12);
 			
 				// impactVfx = new SpriteRenderer(impactPath, position, true, false);
 				impactOffset = special? -50 : -30;

@@ -18,10 +18,20 @@ public:
     void FixedUpdate(float deltaTime);
 
     // Draw weapons before drawing the player so that the arrow is behind the player.
-   void Draw() { wc.Draw(); renderer.Draw(); }
+    void Draw() { wc.Draw(); renderer.Draw(); }
 
     short GetLevelSlide() const { return currentSlide; }
 
+    bool Respawn(const bool force = false)
+    {
+        if(force) respawning = true;
+        else respawning = controller.JumpBtnDown() && dead;
+        return respawning;
+    }
+    bool IsRespawning() const { return respawning; }
+    void Reset();
+    void Unpause();
+    
     bool GivePowerup();
     void TakeDamage();
     void Float();
@@ -30,15 +40,20 @@ public:
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
     const SpriteRenderer& GetRenderer() const { return renderer; } 
     const SDL_FRect& GetRect() const { return rect; } 
-    PlayerController& Controller() { return controller; }
 
+    bool IsPaused() const { return paused; }
+    
     bool IsDead() const { return dead; }
+    void Kill() { dead = true; }
     
     ///// UI related
     float GetAmmo() const { return wc.GetAmmo(); }
     float GetMaxAmmo() const { return wc.GetMaxAmmo(); }
     short GetHealth() const { return health; }
 
+    Vector2 GetMousePos() const { return controller.GetMousePosition(); }
+    bool LMB() const { return controller.IsLMB(); }
+    
     Projectile::EWeaponTypes GetType() const { return wc.GetType(); }
     
     float GetWeaponCooldown() const { return wc.GetCooldown(); }
@@ -162,7 +177,6 @@ private:
     const float runAnimSpeed = .125f;
     const float idleAnimSpeed = .35f;
     
-    Vector2 GetVelocity() const { return velocity; }
     Vector2 GetPosition() const { return position; }
 
     void Propel(Vector2 dir, float force);
@@ -173,6 +187,8 @@ private:
     void Jump();
     void UpdateRectangle();
 
+    void Pausing();
+    
     // Detects whenever the player leaves the screen and moves the player and its objects to the next slide
     void SectionDetection();
     
@@ -182,7 +198,7 @@ private:
     SDL_FRect rect;
     
     PlayerController controller;
-
+    bool paused;
 
     //////////// Weapons
     WeaponController wc = WeaponController(this);
@@ -216,6 +232,7 @@ private:
     bool dead;
     const short maxHealth = 3;
     short health = maxHealth;
+    bool respawning;
 
     bool isDamaged;
     const float dmgCooldown = 1.5f;

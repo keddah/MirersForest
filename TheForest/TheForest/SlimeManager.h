@@ -14,6 +14,8 @@ public:
 
     void SetLevelSlide(short slide);
     void SpawnSlimes(short levelIndex);
+
+    void Reset(short levelIndex) { slimes.clear(); SpawnSlimes(levelIndex); }
     
 private:
     std::vector<Slime*> slimes = std::vector<Slime*>();

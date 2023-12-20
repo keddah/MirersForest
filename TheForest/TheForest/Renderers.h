@@ -30,10 +30,12 @@ public:
     virtual const Vector2& GetSpriteCenter() const { return spritePivot; }
 
     virtual void SetVisibility(bool isVisible) { visible = isVisible; }
+    virtual bool IsVisible() const { return visible; }
 
     virtual void SetRenderColour(SDL_Colour colour) { drawColour = colour; }
 
     virtual void SetDrawSize(Vector2 newSize);
+    virtual void SetDrawSize(float w, float h);
     virtual void SetPosition(const Vector2 pos) { position = pos; }
     virtual void SetPosition(const float x, const float y) { position = {x, y}; }
     virtual void SetFlip(const bool shouldFlip) { flip = shouldFlip; }

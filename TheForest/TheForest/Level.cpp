@@ -6,8 +6,6 @@ Level::Level(short lvlNum) : currentLevel(lvlNum)
     slimeManger.SpawnSlimes(currentLevel);
     
     audio.PlayMusic();
-
-    ui.TimerOnOff(true);
 }
 
 void Level::Update(float deltaTime)
@@ -18,6 +16,13 @@ void Level::Update(float deltaTime)
     ui.Update(deltaTime);
     
     SyncSlides();
+
+    if(player.IsRespawning())
+    {
+        player.Reset();
+        slimeManger.Reset(currentLevel);
+        flowerManager.Reset();
+    }
     // print("level: " << currentSlide)      
 }
 

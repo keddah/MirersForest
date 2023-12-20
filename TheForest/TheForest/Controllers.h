@@ -28,6 +28,9 @@ public:
 	bool CrouchBtnDown() const { return moveInputs[1]; } 
 	bool IsLeft() const { return moveInputs[2]; }
 	bool IsRight() const { return moveInputs[3]; }
+	
+	bool PauseDown() const { return pauseDown; }
+	void ResetPaused() { pauseDown = false; }
 
 
 	// Weapon Selection
@@ -56,6 +59,8 @@ private:
 	Vector2 mousePos;
 	bool wheelUp;
 	bool wheelDown;
+
+	bool pauseDown;
 	
 
 
