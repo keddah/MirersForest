@@ -110,7 +110,7 @@ private:
 		"Sprites/Projectiles/seedImpactSheet.png",
 		"Sprites/Projectiles/petalImpactSheet.png",
 		"Sprites/Projectiles/sunBeamSheet.png",
-		"Sprites/Projectiles/seedExplosionSheet.png"
+		"Sprites/Projectiles/seedExplosionSheet2.png"
 	};
 	// const std::string seedImpact {"Sprites/Projectiles/Projectile_thorn.png"};
 	// const std::string petalImpact {"Sprites/Projectiles/petalImpactSheet.png"};
@@ -144,8 +144,6 @@ private:
 	float renderRot;
 	Vector2 renderPivot;
 	
-	float gravityMultiplier = 1;
-
 	const short blastRadius = 15;
 
 	Vector2 repulsion;

@@ -70,5 +70,5 @@ void Physics::ApplyGravity(bool isPlayer, bool lowered, bool accelerated)
 	}
 	// If lowered gravity... dampen the gravity.. otherwise .. if accelerated gravity.. strengthen it... otherwise.. normal gravity.
 	// (prioritises lowered gravity)
-	AddForce(Vector2(0, 1), lowered? currentGravity * .6f : accelerated? currentGravity * 1.4f: currentGravity);
+	AddForce(Vector2(0, 1), (lowered? currentGravity * .6f : accelerated? currentGravity * 1.4f: currentGravity) * gravMultiplier);
 }

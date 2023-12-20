@@ -4,8 +4,6 @@
 
 GameSession::GameSession()
 {
-    int screenWidth, screenHeight;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 
 void GameSession::Update(float deltaTime)

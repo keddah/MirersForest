@@ -31,6 +31,7 @@ protected:
     
     float at_gravMultiplierHigh = 10;
     float at_gravMultiplierLow = .15f;
+    float gravMultiplier = 1;
     float maxSpeed = 20;
     float maxFallSpeed = 50;
 

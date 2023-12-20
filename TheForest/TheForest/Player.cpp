@@ -6,11 +6,13 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
+    gravMultiplier = .8f;
+    decelerationRate = 185;
     
     position.x = 50;
     renderer.SetFrameCount(4);
 
-    currentSlide = 1;
+    currentSlide = 5;
     // SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, &screenHeight);
 }
 

@@ -9,7 +9,7 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 
 	type = std::get<0>(weapon);
 	force = std::get<1>(weapon);
-	gravityMultiplier = std::get<4>(weapon);
+	gravMultiplier = std::get<4>(weapon);
 	decelerationRate = 10;
 
 	special = isSpecial;
@@ -30,8 +30,8 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 				renderer.ChangeSpriteSheet(special? 1 : 0);
 
 				impactVfx.ChangeSpriteSheet(special? 3 : 0);
-				impactVfx.SetAnimSpeed(.0125f);
-				impactVfx.SetFrameCount(12);
+				impactVfx.SetAnimSpeed(.025f);
+				impactVfx.SetFrameCount(11);
 			
 				// impactVfx = new SpriteRenderer(impactPath, position, true, false);
 				impactOffset = special? -50 : -30;
@@ -79,7 +79,6 @@ void Projectile::Update(float deltaTime)
 {
 	if(dying) return;
 	
-	currentGravity = Gravity * gravityMultiplier;
 	ApplyGravity();
 
 	// Always face velocity
@@ -198,7 +197,7 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	// Allow the projectile to move faster
 	maxFallSpeed = 300;
 
-	gravityMultiplier = 2.75f;
+	gravMultiplier = 2.75f;
 }
 
 // void Projectile::Pull(Vector2 pullFrom)

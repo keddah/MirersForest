@@ -198,7 +198,7 @@ private:
     
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 100;
+    const float accelerationRate = 115;
     float moveSpeed = .9f;
     const float maxMoveSpeed = 10;
     
@@ -209,7 +209,7 @@ private:
     bool jumpBuffer;
     const float airControl = 5.5f;
     const float jumpHeight = 5;
-    const float jumpForce = 25;
+    const float jumpForce = 20;
 
 
     ////// Health/Damage

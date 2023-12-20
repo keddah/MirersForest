@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level::Level(short lvlNum)
+Level::Level(short lvlNum) : currentLevel(lvlNum)
 {
     tileManager.MakeTiles(currentLevel);
     slimeManger.SpawnSlimes(currentLevel);
