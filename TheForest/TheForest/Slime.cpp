@@ -30,7 +30,7 @@ void Slime::Update(float deltaTime)
     
     Death();
 
-    // Patrol(deltaTime);
+    Patrol(deltaTime);
 }
 
 void Slime::Collisions()
@@ -67,29 +67,52 @@ void Slime::Collisions()
 
 void Slime::Patrol(float deltaTime)
 {
-    if(!canMove)
+    // Don't do anything if no patrol points have been set.
+    if(patrolPoints.empty()) return;
+
+    print("point: " << patrolPoints[patrolIndex].x)
+    print("slime: " << position.x)
+    
+    constexpr float tolerance = 20;
+
+    // Stop moving when in range
+    if(position.x >= patrolPoints[patrolIndex].x - tolerance && position.x < patrolPoints[patrolIndex].x + tolerance)
     {
-        if(position.Compare(patrolPoints[patrolIndex], 200))
+        velocity.x = 0;
+
+        canMove = false;
+        renderer.ChangeSpriteSheet(idleAnim);
+        renderer.SetFrameCount(6);
+        renderer.SetAnimSpeed(.225f);
+
+        // Add to the wait timer
+        patrolTimer += deltaTime;
+        if(patrolTimer > waitTime)
         {
-            velocity.x = 0;
             NextPoint();
-            canMove = false;
-            
-            patrolTimer += deltaTime;
-            if(patrolTimer > waitTime) canMove = true;
-            else return;
+            canMove = true;
         }
+        else return;
     }
 
+    // Move Animation
     renderer.SetFrameCount(4);
-    renderer.ChangeSpriteSheet(1);
-    velocity.x += patrolPoints[patrolIndex].x > position.x? -moveSpeed : moveSpeed;
+    renderer.ChangeSpriteSheet(moveAnim);
+    renderer.SetAnimSpeed(.0825f);
+
+    ///// Move
+    // If the patrol point is to the right of the slime... move right ... otherwise left
+    velocity.x += patrolPoints[patrolIndex].x > position.x? moveSpeed : -moveSpeed;
+    renderer.SetFlip(velocity.x < 0);
 }
 
 void Slime::NextPoint()
 {
     patrolIndex++;
-    if(patrolIndex > sizeof(patrolPoints)) patrolIndex = 0;
+    patrolTimer = 0;
+    
+    // If the index is the same as the length... it's out of range
+    if(patrolIndex == patrolPoints.size()) patrolIndex = 0;
 }
 
 void Slime::Death()
@@ -123,6 +146,16 @@ void Slime::DeathAnimation()
 
     // Once the animation finishes ... is animating = false - Stop drawing/updating after that happens
     if(!deathRenderer.IsAnimating()) dead = true;
+}
+
+void Slime::SetPatrol(const std::vector<Vector2>& points, float delay, float speed)
+{
+    patrolPoints = points;
+    waitTime = delay;
+    moveSpeed = speed;
+    patrolTimer = 0;
+    
+    canMove = true;
 }
 
 void Slime::HitPlayer() const

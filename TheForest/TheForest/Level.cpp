@@ -4,6 +4,7 @@ Level::Level(short lvlNum) : currentLevel(lvlNum)
 {
     tileManager.MakeTiles(currentLevel);
     slimeManger.SpawnSlimes(currentLevel);
+    flowerManager.SpawnFlowers(currentLevel);
     
     audio.PlayMusic();
 }

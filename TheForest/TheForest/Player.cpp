@@ -9,10 +9,10 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     gravMultiplier = .8f;
     decelerationRate = 185;
     
-    position.x = 50;
+    position = {50, 400};
     renderer.SetFrameCount(4);
 
-    currentSlide = 0;
+    currentSlide = 5;
 }
 
 void Player::Update(float deltaTime)
@@ -83,12 +83,13 @@ void Player::Reset()
     dmgTimer = 0;
     
     // Resets the air time
-    grounded = true;
+    Float();
+    
     
     currentSlide = 0;
     health = maxHealth;
     wc.Refill();
-    position = {50, 0};
+    position = {50, 400};
 }
 
 bool Player::GivePowerup()

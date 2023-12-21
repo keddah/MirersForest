@@ -11,7 +11,8 @@ public:
     void Draw() { if(!dying) renderer.Draw(); }
 
     void DeathAnimation();
-    void Respawn();
+    
+    void SetPatrol(const std::vector<Vector2>& points, float delay = 7.5f, float speed = .01f);
     
     const Vector2& GetPosition() const { return position; }
     void SetPosition(Vector2 pos) { position = pos; }
@@ -39,12 +40,15 @@ private:
     
     SDL_FRect rect;
 
+    const short idleAnim = 0;
+    const short moveAnim = 1;
+    
     bool canMove;
 
-    const float moveSpeed = .01f;
-    const float waitTime = 7.5f;
+    float moveSpeed = .01f;
+    float waitTime = 7.5f;
     float patrolTimer = 0;
-    Vector2 patrolPoints[2] {Vector2(900, 700), Vector2(100, 800)};
+    std::vector<Vector2> patrolPoints;
     short patrolIndex;
 
     // The section of the level that this slime is present on

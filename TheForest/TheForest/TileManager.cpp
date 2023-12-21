@@ -48,7 +48,7 @@ void TileManager::SetLevelSlide(short slide)
     for (auto& tile : tiles)
     {
         // Move every tile left/right (keeping their Y value)
-        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), tile.GetPosition().y});
+        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), tile.GetPosition().y});
     }
     
     levelSlide = slide;
@@ -508,8 +508,8 @@ void TileManager::Level1Tiles()
         spawnPos.y += tileSize;
     }
     
-    spawnPos = Vector2(700 + GameWindow::GetWindowWidth() * 2, 0);
-    for(short cols = 0; cols < 30; cols++)
+    spawnPos = Vector2(700 + GameWindow::GetWindowWidth() * 2, -64);
+    for(short cols = 0; cols < 34; cols++)
     {
         for(short rows = 0; rows < 6; rows++)
         {

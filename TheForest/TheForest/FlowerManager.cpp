@@ -4,15 +4,7 @@
 
 FlowerManager::FlowerManager(Player& player) : rPlayer(player)
 {
-    FlowerUp one = FlowerUp(rPlayer, {500, 700});
-    FlowerUp two = FlowerUp(rPlayer, {900, 700});
-    FlowerUp three = FlowerUp(rPlayer, {2500, 700});
-    FlowerUp four = FlowerUp(rPlayer, {3200, 700});
-
-    flowers.push_back(one);
-    flowers.push_back(two);
-    flowers.push_back(three);
-    flowers.push_back(four);
+    
 }
 
 void FlowerManager::Update(float deltaTime)
@@ -37,11 +29,39 @@ void FlowerManager::SetLevelSlide(const short slide)
     const bool next = slide > levelSlide;
     for (auto& flower : flowers)
     {
-        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth() : GameWindow::GetWindowWidth()), flower.GetPosition().y});
+        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), flower.GetPosition().y});
     }
     
     levelSlide = slide;
 }
+
+void FlowerManager::SpawnFlowers(short lvlIndex)
+{
+    switch (lvlIndex)
+    {
+    case 0:
+        Level1Flowers();
+        break;
+
+    default:
+        Level1Flowers();
+        break;
+    }
+}
+
+void FlowerManager::Level1Flowers()
+{
+    FlowerUp one = FlowerUp(rPlayer, {1750, 228});
+    FlowerUp two = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 900, 450));
+    FlowerUp three = FlowerUp(rPlayer, Vector2( GameWindow::GetWindowWidth() * 4 + 1550, 520));
+    // FlowerUp four = FlowerUp(rPlayer, Vector2( GameWindow::GetWindowWidth() * 5 + 420, 970));
+
+    flowers.push_back(one);
+    flowers.push_back(two);
+    flowers.push_back(three);
+    // flowers.push_back(four);
+}
+
 
 void FlowerManager::Reset()
 {

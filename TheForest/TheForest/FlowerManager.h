@@ -10,6 +10,7 @@ public:
     void Draw();
     void SetLevelSlide(short slide);
 
+    void SpawnFlowers(short lvlIndex);
     void Reset();
     
 private:
@@ -22,6 +23,7 @@ private:
         void Update(float deltaTime);
         void Draw() { if(!used) renderer.Draw(); }
 
+        
         void SetPosition(Vector2 pos) { position = pos; renderer.SetPosition(position); }
         Vector2 GetPosition() const { return position; }
 
@@ -52,5 +54,6 @@ private:
     
     short levelSlide;
     
+    void Level1Flowers();
 };
 
