@@ -29,7 +29,7 @@ void FlowerManager::SetLevelSlide(const short slide)
     const bool next = slide > levelSlide;
     for (auto& flower : flowers)
     {
-        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), flower.GetPosition().y});
+        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), flower.GetPosition().y});
     }
     
     levelSlide = slide;

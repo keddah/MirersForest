@@ -132,6 +132,11 @@ void Player::UpdateRectangle()
     rect.h = playerSize.y;
 }
 
+void Player::FinishLevel()
+{
+    finished = true;
+}
+
 void Player::CoyoteTime(float deltaTime)
 {
     if(grounded) coyoteTimer = coyoteDuration;
@@ -156,10 +161,10 @@ void Player::Unpause()
 
 void Player::SectionDetection()
 {
-    if(position.x > GameWindow::GetWindowWidth())
+    if(position.x + rect.w > GameWindow::GetWindowWidth())
     {
         currentSlide++;
-        position.x = velocity.x * .5f;
+        position.x = -rect.w;
 
         for (auto& bullet : wc.GetActiveBullets())
         {
@@ -167,7 +172,7 @@ void Player::SectionDetection()
         }
     }
     
-    else if(currentSlide > 0 && position.x < 0)
+    else if(currentSlide > 0 && position.x + rect.w + 1 < 0)
     {
         currentSlide--;
 
@@ -217,6 +222,7 @@ void Player::Collisions()
     {
         // Don't collide with anything that isn't visible / in the same slide
         if(tile.GetLevelSlide() != currentSlide) continue;
+
         
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
@@ -225,6 +231,12 @@ void Player::Collisions()
         const bool predictedCollisionX = SDL_HasIntersectionF(&predictedRectX, &tileRect);
         const bool predictedCollisionY = SDL_HasIntersectionF(&predictedRectY, &tileRect);
             
+        if(tile.IsFinishLine() && predictedCollisionX)
+        {
+            FinishLevel();
+            return;
+        }
+        
         if (predictedCollisionX)
         {
             velocity = Vector2(0, velocity.y);

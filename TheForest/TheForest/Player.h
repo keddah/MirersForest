@@ -42,6 +42,8 @@ public:
     const SDL_FRect& GetRect() const { return rect; } 
 
     bool IsPaused() const { return paused; }
+
+    bool IsFinished() const { return finished; }
     
     bool IsDead() const { return dead; }
     void Kill() { dead = true; }
@@ -186,6 +188,8 @@ private:
     void Deceleration(float deltaTime);
     void UpdateRectangle();
 
+    void FinishLevel();
+    
     void CoyoteTime(float deltaTime);
     void Jump();
     
@@ -242,4 +246,6 @@ private:
     bool isDamaged;
     const float dmgCooldown = 1.5f;
     float dmgTimer;
+
+    bool finished = false;
 };

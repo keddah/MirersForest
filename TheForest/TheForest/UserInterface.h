@@ -44,11 +44,11 @@ private:
     const std::string font_quicksand = "Fonts/Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
     
-    const std::string deathscreenPath = "Sprites/UI/deathscreen.png";
-    const std::string pausePath = "Sprites/UI/pauseScreen.png";
 
-    ManualRenderer pauseScreen = ManualRenderer(pausePath, {});
-    ManualRenderer deathScreen = ManualRenderer(deathscreenPath, {});
+    ManualRenderer pauseScreen = ManualRenderer("Sprites/UI/pauseScreen.png", {});
+    ManualRenderer deathScreen = ManualRenderer("Sprites/UI/deathscreen.png", {});
+
+    ManualRenderer levelCompletion = ManualRenderer("Sprites/UI/levelCompletionSheet.png", {});
     
     const short timeSize = 36;
     const short projTxtSize = 20;

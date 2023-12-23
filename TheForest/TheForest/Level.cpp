@@ -15,8 +15,9 @@ void Level::Update(float deltaTime)
     slimeManger.Update(deltaTime);
     flowerManager.Update(deltaTime);
     ui.Update(deltaTime);
-    
 
+    completed = player.IsFinished();
+    
     if(player.IsRespawning())
     {
         tileManager.Reset();
@@ -35,7 +36,7 @@ void Level::FixedUpdate(float deltaTime)
     player.FixedUpdate(deltaTime);
 }
 
-void Level::DrawSlide()
+void Level::Draw()
 {
     // The background is behind everything
     bkg.Draw();

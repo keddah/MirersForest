@@ -95,7 +95,7 @@ SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
 
     if (!image)
     {
-        print("Couldn't load surface.")
+        print("Couldn't load surface. Bad file path")
             return nullptr;
     }
 

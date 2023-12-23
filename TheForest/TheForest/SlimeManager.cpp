@@ -38,7 +38,7 @@ void SlimeManager::SetLevelSlide(const short slide)
     {
         for (const auto& slime : slimes)
         {
-            slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), slime->GetPosition().y});
+            slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), slime->GetPosition().y});
         }
     }
     

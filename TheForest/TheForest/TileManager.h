@@ -33,6 +33,9 @@ private:
     const SDL_Rect darkDirt2 {tileSize * 5,tileSize * 30, tileSize, tileSize};
     const SDL_Rect wood {tileSize * 13,tileSize * 12, tileSize, tileSize};
     const SDL_Rect platform {tileSize * 16,tileSize * 24, tileSize, tileSize};
+    const SDL_Rect end1 {tileSize * 3,tileSize * 22, tileSize, tileSize};
+    const SDL_Rect end2 {tileSize * 2,tileSize * 22, tileSize, tileSize};
+    const SDL_Rect invisible {tileSize * 16, 0, tileSize, tileSize};
 
     const std::string tileSheet = "TileSets/Textures-16.png"; 
     

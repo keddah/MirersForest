@@ -18,5 +18,5 @@ void GameSession::FixedUpdate(float deltaTime)
 
 void GameSession::Draw()
 {
-    level1.DrawSlide();
+    level1.Draw();
 }

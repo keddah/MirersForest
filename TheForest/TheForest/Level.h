@@ -13,7 +13,9 @@ public:
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
-    void DrawSlide();
+    void Draw();
+
+    bool IsComplete() const { return completed; }
     
 private:
     ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
@@ -23,6 +25,8 @@ private:
     short currentLevel = 0;
     
     short currentSlide = 0;
+
+    bool completed = false;
 
     TileManager tileManager;
     AudioManager audio;

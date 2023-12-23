@@ -4,13 +4,14 @@
 class Tile
 {
 public:
-    Tile(const std::string& filePath, Vector2 pos, SDL_Rect source, int tileSize);
+    Tile(const std::string& filePath, Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
 
     const ManualRenderer& GetRenderer() const { return renderer; }
     void Draw() { renderer.Draw(); }
     
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2 pos) { position = pos; renderer.SetPosition(pos); }
+    bool IsFinishLine() const { return finishLine; }
     
     short GetLevelSlide() const { return levelSlide; }
     void SetSlide(const short slide) { levelSlide = slide; }
@@ -21,4 +22,6 @@ private:
     ManualRenderer renderer;
 
     short levelSlide;
+    
+    bool finishLine;
 };

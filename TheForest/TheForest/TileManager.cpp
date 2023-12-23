@@ -741,4 +741,32 @@ void TileManager::Level1Tiles()
         spawnPos.x = 1600 + GameWindow::GetWindowWidth() * 5;
         spawnPos.y += tileSize;
     }
+
+    start = spawnPos.x + tileSize * 4;
+    spawnPos = {start, 800};
+    for(short cols = 0; cols < 18; cols++)
+    {
+        for(short rows = 0; rows < 20; rows++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? end1 : end2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+
+    start += tileSize;
+    spawnPos = {start, 0};
+    while(spawnPos.y < GameWindow::GetWindowHeight())
+    {
+        Tile newTile = Tile(tileSheet, spawnPos,invisible, tileSize, true);
+    
+        tiles.emplace_back(newTile);
+    
+        spawnPos.y += tileSize;
+    }
 }

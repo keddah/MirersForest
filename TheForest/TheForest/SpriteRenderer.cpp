@@ -11,13 +11,18 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 
     SDL_Surface* image = SetSprite(imagePath);
 
-    if (!GameWindow::GetRenderer()) print("COuldn't get renderer.")
-        thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+    if (!GameWindow::GetRenderer())
+    {
+        print("COuldn't get renderer.")
+        return;
+    }
+
+    thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
 
     if (!thingsToRender[renderIndex])
     {
         print("nothing to render.")
-            return;
+        return;
     }
 
     size.x = isAnimated? image->w / frameCount: image->w;
