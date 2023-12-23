@@ -20,7 +20,7 @@ void Player::Update(float deltaTime)
     controller.Update();
     Pausing();
     
-    if(dead || paused) return;
+    if(dead || paused || canFinish) return;
     
     wc.Update(deltaTime);
 
@@ -59,7 +59,7 @@ void Player::Update(float deltaTime)
 
 void Player::FixedUpdate(float deltaTime)
 {
-    if(dead || paused) return;
+    if(dead || paused || canFinish) return;
     
     // Ran in update to check for the input
     Jump();
@@ -76,20 +76,21 @@ void Player::Float()
 
 void Player::Reset()
 {
-    renderer.SetVisibility(true);
     dead = false;
     respawning = false;
     isDamaged = false;
     dmgTimer = 0;
-    
-    // Resets the air time
-    Float();
-    
-    
-    currentSlide = 0;
     health = maxHealth;
     wc.Refill();
+    wc.KillBullets();
+    
+    // To make the player's location more noticeable
+    Float();
+    
+    currentSlide = 0;
     position = {50, 400};
+    finished = false;
+    canFinish = false;
 }
 
 bool Player::GivePowerup()
@@ -134,7 +135,7 @@ void Player::UpdateRectangle()
 
 void Player::FinishLevel()
 {
-    finished = true;
+    finished = canFinish;
 }
 
 void Player::CoyoteTime(float deltaTime)
@@ -161,7 +162,7 @@ void Player::Unpause()
 
 void Player::SectionDetection()
 {
-    if(position.x + rect.w > GameWindow::GetWindowWidth())
+    if(position.x + velocity.x + rect.w > GameWindow::GetWindowWidth())
     {
         currentSlide++;
         position.x = -rect.w;
@@ -172,12 +173,12 @@ void Player::SectionDetection()
         }
     }
     
-    else if(currentSlide > 0 && position.x + rect.w + 1 < 0)
+    else if(currentSlide > 0 && position.x + velocity.x < -rect.w - 1)
     {
         currentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
-        position.x = GameWindow::GetWindowWidth() + velocity.x;
+        position.x = GameWindow::GetWindowWidth();
         
         for (auto& bullet : wc.GetActiveBullets())
         {
@@ -185,13 +186,14 @@ void Player::SectionDetection()
         }
     }
 
+    // Stop the player from going offscreen if there isn't a slide
+    else if(currentSlide == 0 && position.x + velocity.x < 0) position.x = 0;
 }
 
 void Player::Death()
 {
     dead = true;
     health = 0;
-    renderer.SetVisibility(false);
     rAudio.PlaySound(AudioManager::Esounds::PlayerHit);
     rAudio.PlaySound(AudioManager::Esounds::ProjImpact);
     rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
@@ -233,7 +235,7 @@ void Player::Collisions()
             
         if(tile.IsFinishLine() && predictedCollisionX)
         {
-            FinishLevel();
+            canFinish = true;
             return;
         }
         

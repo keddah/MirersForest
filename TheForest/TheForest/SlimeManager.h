@@ -28,4 +28,5 @@ private:
     short levelSlide;
 
     void SpawnLevel1();
+    void SpawnLevel2();
 };

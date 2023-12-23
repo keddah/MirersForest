@@ -27,19 +27,29 @@ void FlowerManager::SetLevelSlide(const short slide)
     if(slide == levelSlide) return;
 
     const bool next = slide > levelSlide;
-    for (auto& flower : flowers)
+
+    while(next? levelSlide < slide : levelSlide > slide)
     {
-        flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), flower.GetPosition().y});
+        for (auto& flower : flowers)
+        {
+            // Move every tile left/right (keeping their Y value)
+            flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), flower.GetPosition().y});
+        }
+        levelSlide += next? 1 : -1;
     }
-    
-    levelSlide = slide;
 }
 
-void FlowerManager::SpawnFlowers(short lvlIndex)
+void FlowerManager::SpawnFlowers(short lvlIndex, const bool reset)
 {
+    if(reset) flowers.clear();
+    
     switch (lvlIndex)
     {
     case 0:
+        Level1Flowers();
+        break;
+
+    case 1:
         Level1Flowers();
         break;
 
@@ -60,6 +70,10 @@ void FlowerManager::Level1Flowers()
     flowers.push_back(two);
     flowers.push_back(three);
     // flowers.push_back(four);
+}
+
+void FlowerManager::Level2Flowers()
+{
 }
 
 

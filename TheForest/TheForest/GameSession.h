@@ -4,13 +4,13 @@
 class GameSession
 {
 public:
-    GameSession();
-    ~GameSession() = default;
+    GameSession() = default;
+    ~GameSession() { delete &level; }
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
     void Draw();
     
 private:
-    Level level1 {0};
+    Level level {0};
 };

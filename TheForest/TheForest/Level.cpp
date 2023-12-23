@@ -17,6 +17,7 @@ void Level::Update(float deltaTime)
     ui.Update(deltaTime);
 
     completed = player.IsFinished();
+    NextLevel();
     
     if(player.IsRespawning())
     {
@@ -56,4 +57,25 @@ void Level::SyncSlides()
     tileManager.SetLevelSlide(currentSlide);
     slimeManger.SetLevelSlide(currentSlide);
     flowerManager.SetLevelSlide(currentSlide);
+}
+
+void Level::NextLevel()
+{
+    if(!completed) return;
+
+    currentLevel++;
+
+    if(currentLevel == levelCount)
+    {
+        print("done")
+        return;
+    }
+
+    bkg.ChangeSpriteSheet(currentLevel);
+    
+    player.Reset();
+    completed = false;
+    tileManager.MakeTiles(currentLevel, true);
+    slimeManger.Reset(currentLevel);
+    flowerManager.SpawnFlowers(currentLevel, true);
 }

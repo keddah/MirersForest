@@ -22,6 +22,8 @@ public:
 
     short GetLevelSlide() const { return currentSlide; }
 
+    void NextLevel() { finished = true; }
+    
     bool Respawn(const bool force = false)
     {
         if(force) respawning = true;
@@ -31,7 +33,8 @@ public:
     bool IsRespawning() const { return respawning; }
     void Reset();
     void Unpause();
-    
+    void FinishLevel();
+
     bool GivePowerup();
     void TakeDamage();
     void Float();
@@ -44,6 +47,7 @@ public:
     bool IsPaused() const { return paused; }
 
     bool IsFinished() const { return finished; }
+    bool AbleToFinished() const { return canFinish; }
     
     bool IsDead() const { return dead; }
     void Kill() { dead = true; }
@@ -55,6 +59,7 @@ public:
 
     Vector2 GetMousePos() const { return controller.GetMousePosition(); }
     bool LMB() const { return controller.IsLMB(); }
+    bool SpaceDown() const { return controller.JumpBtnDown(); }
     
     Projectile::EWeaponTypes GetType() const { return wc.GetType(); }
     
@@ -82,8 +87,9 @@ private:
 
         bool AmmoFull() const { return ammo == maxAmmo;  }
         void Refill() { ammo = maxAmmo;  }
+        void KillBullets() { for (auto& bullet : activeBullets) bullet.Kill(); }
 
-    private:
+        private:
         // player reference
         Player& rP;
         // The weapon type .. The force .. The size .. The Delay .. The ammo count .. The gravity multiplier .. The repulsion force
@@ -188,8 +194,6 @@ private:
     void Deceleration(float deltaTime);
     void UpdateRectangle();
 
-    void FinishLevel();
-    
     void CoyoteTime(float deltaTime);
     void Jump();
     
@@ -248,4 +252,5 @@ private:
     float dmgTimer;
 
     bool finished = false;
+    bool canFinish = false;
 };

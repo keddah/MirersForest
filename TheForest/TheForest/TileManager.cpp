@@ -19,12 +19,22 @@ void TileManager::Draw()
 
 // Make a tile Renderer so that the position doesn't have to be a reference
 
-void TileManager::MakeTiles(short lvlIndex)
+void TileManager::MakeTiles(short lvlIndex, const bool reset)
 {
+    if(reset)
+    {
+        levelSlide = 0;
+        tiles.clear();
+    }
+    
     switch (lvlIndex)
     {
         case 0:
             Level1Tiles();
+            break;
+
+        case 1:
+            Level2Tiles();
             break;
 
         default:
@@ -45,13 +55,16 @@ void TileManager::SetLevelSlide(short slide)
 
     // Going to the next area means that the inputted slide is further ahead than the current one
     const bool next = slide > levelSlide;
-    for (auto& tile : tiles)
+
+    while(next? levelSlide < slide : levelSlide > slide)
     {
-        // Move every tile left/right (keeping their Y value)
-        tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth() * slide: GameWindow::GetWindowWidth()), tile.GetPosition().y});
+        for (auto& tile : tiles)
+        {
+            // Move every tile left/right (keeping their Y value)
+            tile.SetPosition({tile.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), tile.GetPosition().y});
+        }
+        levelSlide += next? 1 : -1;
     }
-    
-    levelSlide = slide;
 }
 
 void TileManager::Reset()
@@ -767,6 +780,28 @@ void TileManager::Level1Tiles()
     
         tiles.emplace_back(newTile);
     
+        spawnPos.y += tileSize;
+    }
+}
+
+void TileManager::Level2Tiles()
+{
+    float start = 0;
+    Vector2 spawnPos = Vector2(start, tileSize * 64);
+
+
+    //\\//\\//\\//\\// 1st Slide //\\//\\//\\//\\// 
+    for(short darkCols = 0; darkCols < 4; darkCols++)
+    {
+        for(short darkRow = 0; darkRow < 130; darkRow++)
+        {
+            Tile newTile = Tile(tileSheet, spawnPos, stone2, tileSize);
+    
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
         spawnPos.y += tileSize;
     }
 }

@@ -32,17 +32,22 @@ void SlimeManager::Draw() const
 void SlimeManager::SetLevelSlide(const short slide)
 {
     if(slide == levelSlide) return;
-    
+
     const bool next = slide > levelSlide;
-    if(!resetting)
+
+    while(next? levelSlide < slide : levelSlide > slide)
     {
-        for (const auto& slime : slimes)
+        if(!resetting)
         {
-            slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), slime->GetPosition().y});
+            for (const auto& slime : slimes)
+            {
+                // Move every slime left/right (keeping their Y value)
+                slime->SetPosition({slime->GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), slime->GetPosition().y});
+            }
         }
+        levelSlide += next? 1 : -1;
     }
     
-    levelSlide = slide;
     resetting = false;
 }
 
@@ -59,6 +64,10 @@ void SlimeManager::SpawnSlimes(short levelIndex)
     {
         case 0:
             SpawnLevel1();
+            break;
+
+        case 1:
+            SpawnLevel2();
             break;
 
         default:
@@ -126,6 +135,15 @@ void SlimeManager::SpawnLevel1()
     slime6->SetPatrol({{900, slime6->GetPosition().y}, {330, slime6->GetPosition().y}}, 3, .015f);
     slime7->SetPatrol({{1250, slime7->GetPosition().y}, {1000, slime7->GetPosition().y}}, .5f, .0125f);
     slime8->SetPatrol({{1300, slime8->GetPosition().y}, {1580, slime8->GetPosition().y}});
+}
+
+void SlimeManager::SpawnLevel2()
+{
+    const auto slime1 = new Slime(rPlayer, rTiles, rAudio);
+    slime1->SetPosition(400, 0);
+    slimes.push_back(slime1);
+
+    
 }
 
 

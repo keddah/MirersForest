@@ -18,7 +18,7 @@ UserInterface::UserInterface(Player& player) : rPlayer(player)
 
     pauseScreen.SetVisibility(false);
     deathScreen.SetVisibility(false);
-    levelCompletion.SetVisibility(false);
+    completionScreen.SetVisibility(false);
 
     Button resume = Button(0,0,450,100, {99,163,92,120});
     Button restart = Button(0,0,450,100, {165,152,90,120});
@@ -41,42 +41,9 @@ void UserInterface::Update(float deltaTime)
     
     ButtonPresses();
     Respawning(deltaTime);
-
     
-    if(rPlayer.IsPaused())
-    {
-        pauseScreen.SetVisibility(true);
-        renderers[projBkgIndex].SetVisibility(false);
-        renderers[heartBkgIndex].SetVisibility(false);
-        renderers[cooldownIndex].SetVisibility(false);
-        renderers[ammoIndex].SetVisibility(false);
-        txtRenderers[projIndex].SetVisibility(false);
-
-        for(auto& btn: buttons) btn.Show();
-
-        for(int i = 0; i < 3; i++)
-        {
-            // Hide all the full hearts ... show the empty ones
-            renderers[fullHeartIndex + i].SetVisibility(false);
-            renderers[emptyHeartIndex + i].SetVisibility(false);
-        }
-        
-        timerOn = false;
-    }
-    else
-    {
-        pauseScreen.SetVisibility(false);
-        renderers[projBkgIndex].SetVisibility(true);
-        renderers[cooldownIndex].SetVisibility(true);
-        renderers[ammoIndex].SetVisibility(true);
-        renderers[heartBkgIndex].SetVisibility(true);
-        txtRenderers[projIndex].SetVisibility(true);
-
-        for(auto& btn: buttons) btn.Hide();
-        
-        // Start the timer once the player starts moving or if the timer has already started and unpaused
-        if(rPlayer.GetVelocity().Magnitude() > 5 ^ seconds > 0) timerOn = true;
-    }
+    Pausing();
+    LevelCompletion();
 }
 
 void UserInterface::Draw()
@@ -87,7 +54,7 @@ void UserInterface::Draw()
     
     pauseScreen.Draw();
     deathScreen.Draw();
-    levelCompletion.Draw(false);
+    completionScreen.Draw(false);
 }
 
 void UserInterface::CreateUI()
@@ -192,7 +159,7 @@ void UserInterface::CreateUI()
 
 void UserInterface::CheckPlayerState()
 {
-    if(rPlayer.IsPaused()) return;;
+    if(rPlayer.IsPaused()) return;
     
     switch (rPlayer.GetHealth())
     {
@@ -294,6 +261,18 @@ void UserInterface::Respawning(float deltaTime)
     }
 }
 
+void UserInterface::LevelCompletion()
+{
+    if(!rPlayer.AbleToFinished()) return;
+
+    completionScreen.SetVisibility(true);
+    if(!rPlayer.SpaceDown()) return;
+
+    rPlayer.FinishLevel();
+    completionScreen.SetVisibility(false);
+}
+
+
 void UserInterface::UpdateBar()
 {
     const float ammoPercent = rPlayer.GetAmmo() / rPlayer.GetMaxAmmo();
@@ -345,6 +324,44 @@ void UserInterface::ButtonPresses()
                 if(SDL_PointInRect(&mousePos, &buttons[i].GetRect())) PressQuit();
                 break;
         }
+    }
+}
+
+void UserInterface::Pausing()
+{
+    if(rPlayer.IsPaused())
+    {
+        pauseScreen.SetVisibility(true);
+        renderers[projBkgIndex].SetVisibility(false);
+        renderers[heartBkgIndex].SetVisibility(false);
+        renderers[cooldownIndex].SetVisibility(false);
+        renderers[ammoIndex].SetVisibility(false);
+        txtRenderers[projIndex].SetVisibility(false);
+
+        for(auto& btn: buttons) btn.Show();
+
+        for(int i = 0; i < 3; i++)
+        {
+            // Hide all the full hearts ... show the empty ones
+            renderers[fullHeartIndex + i].SetVisibility(false);
+            renderers[emptyHeartIndex + i].SetVisibility(false);
+        }
+        
+        timerOn = false;
+    }
+    else
+    {
+        pauseScreen.SetVisibility(false);
+        renderers[projBkgIndex].SetVisibility(true);
+        renderers[cooldownIndex].SetVisibility(true);
+        renderers[ammoIndex].SetVisibility(true);
+        renderers[heartBkgIndex].SetVisibility(true);
+        txtRenderers[projIndex].SetVisibility(true);
+
+        for(auto& btn: buttons) btn.Hide();
+        
+        // Start the timer once the player starts moving or if the timer has already started and unpaused
+        if(rPlayer.GetVelocity().Magnitude() > 5 ^ seconds > 0) timerOn = true;
     }
 }
 

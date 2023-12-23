@@ -10,7 +10,7 @@ public:
     void Draw();
     void SetLevelSlide(short slide);
 
-    void SpawnFlowers(short lvlIndex);
+    void SpawnFlowers(short lvlIndex, bool reset = false);
     void Reset();
     
 private:
@@ -55,5 +55,6 @@ private:
     short levelSlide;
     
     void Level1Flowers();
+    void Level2Flowers();
 };
 

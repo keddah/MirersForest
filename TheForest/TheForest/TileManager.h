@@ -11,7 +11,7 @@ public:
     
     std::vector<Tile>& GetTiles() { return tiles; }
     
-    void MakeTiles(short lvlIndex);
+    void MakeTiles(short lvlIndex, bool reset = false);
     void SetLevelSlide(short slide);
     void Reset();
 
@@ -52,4 +52,6 @@ private:
 
     // Vector2 screenSize;
     void Level1Tiles();
+    
+    void Level2Tiles();
 };

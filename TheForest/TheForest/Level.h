@@ -15,13 +15,15 @@ public:
     void FixedUpdate(float deltaTime);
     void Draw();
 
-    bool IsComplete() const { return completed; }
-    
 private:
-    ManualRenderer bkg = ManualRenderer("Sprites/background.jpg", {0,0});
+    Vector2 empty;
+    const std::vector<std::string> backgrounds = {"Sprites/background.jpg", "Sprites/caveBkg.jpg"};
+    SpriteRenderer bkg = SpriteRenderer(backgrounds, empty, false);
 
     void SyncSlides();
-
+    void NextLevel();
+    
+    const short levelCount = 2;
     short currentLevel = 0;
     
     short currentSlide = 0;

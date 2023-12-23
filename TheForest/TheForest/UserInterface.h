@@ -48,7 +48,8 @@ private:
     ManualRenderer pauseScreen = ManualRenderer("Sprites/UI/pauseScreen.png", {});
     ManualRenderer deathScreen = ManualRenderer("Sprites/UI/deathscreen.png", {});
 
-    ManualRenderer levelCompletion = ManualRenderer("Sprites/UI/levelCompletionSheet.png", {});
+    ManualRenderer completionScreen = ManualRenderer("Sprites/UI/levelCompletionSheet.png", {});
+    void LevelCompletion();
     
     const short timeSize = 36;
     const short projTxtSize = 20;
@@ -107,7 +108,8 @@ private:
     void LevelTime(float deltaTime);
 
     void ButtonPresses();
-    
+
+    void Pausing();
     void PressResume();
     void PressRestart();
     void PressQuit();
