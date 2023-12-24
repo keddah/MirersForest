@@ -47,7 +47,7 @@ public:
     bool IsPaused() const { return paused; }
 
     bool IsFinished() const { return finished; }
-    bool AbleToFinished() const { return canFinish; }
+    bool AbleToFinish() const { return canFinish; }
     
     bool IsDead() const { return dead; }
     void Kill() { dead = true; }

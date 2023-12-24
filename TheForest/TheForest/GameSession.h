@@ -12,5 +12,5 @@ public:
     void Draw();
     
 private:
-    Level level {0};
+    Level level {1};
 };

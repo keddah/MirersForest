@@ -70,9 +70,6 @@ void Slime::Patrol(float deltaTime)
     // Don't do anything if no patrol points have been set.
     if(patrolPoints.empty()) return;
 
-    print("point: " << patrolPoints[patrolIndex].x)
-    print("slime: " << position.x)
-    
     constexpr float tolerance = 20;
 
     // Stop moving when in range

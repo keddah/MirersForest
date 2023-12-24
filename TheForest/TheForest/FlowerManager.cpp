@@ -50,7 +50,7 @@ void FlowerManager::SpawnFlowers(short lvlIndex, const bool reset)
         break;
 
     case 1:
-        Level1Flowers();
+        Level2Flowers();
         break;
 
     default:
@@ -61,9 +61,9 @@ void FlowerManager::SpawnFlowers(short lvlIndex, const bool reset)
 
 void FlowerManager::Level1Flowers()
 {
-    FlowerUp one = FlowerUp(rPlayer, {1750, 228});
-    FlowerUp two = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 900, 450));
-    FlowerUp three = FlowerUp(rPlayer, Vector2( GameWindow::GetWindowWidth() * 4 + 1550, 520));
+    const FlowerUp one = FlowerUp(rPlayer, {1750, 228});
+    const FlowerUp two = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 900, 450));
+    const FlowerUp three = FlowerUp(rPlayer, Vector2( GameWindow::GetWindowWidth() * 4 + 1550, 520));
     // FlowerUp four = FlowerUp(rPlayer, Vector2( GameWindow::GetWindowWidth() * 5 + 420, 970));
 
     flowers.push_back(one);
@@ -74,6 +74,26 @@ void FlowerManager::Level1Flowers()
 
 void FlowerManager::Level2Flowers()
 {
+    //\\//\\//\\//\\// 3rd Slide //\\//\\//\\//\\// 
+
+    const FlowerUp one = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 100, 770));
+    flowers.push_back(one);
+
+    const FlowerUp two = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 1400, 990));
+    flowers.push_back(two);
+
+
+    //\\//\\//\\//\\// 4th Slide //\\//\\//\\//\\// 
+
+    const FlowerUp three = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 3 + 400, 570));
+    flowers.push_back(three);
+
+
+    //\\//\\//\\//\\// 5th Slide //\\//\\//\\//\\// 
+
+    const FlowerUp four = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 4 + 1700, 420));
+    flowers.push_back(four);
+
 }
 
 

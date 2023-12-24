@@ -2,6 +2,7 @@
 
 Level::Level(short lvlNum) : currentLevel(lvlNum)
 {
+    bkg.ChangeSpriteSheet(currentLevel);
     tileManager.MakeTiles(currentLevel);
     slimeManger.SpawnSlimes(currentLevel);
     flowerManager.SpawnFlowers(currentLevel);

@@ -21,8 +21,12 @@ private:
     // The source rectangles for some of the different textures in the tile sheet
     const SDL_Rect stoneDirt1 {0,0, tileSize, tileSize};
     const SDL_Rect stoneDirt2 {tileSize * 2,0, tileSize, tileSize};
-    const SDL_Rect stone1 {tileSize * 9,0, tileSize, tileSize};
-    const SDL_Rect stone2 {tileSize * 9,tileSize, tileSize, tileSize};
+    const SDL_Rect lightishStone {tileSize * 9,0, tileSize, tileSize};
+    const SDL_Rect darkStone1 {tileSize * 8,tileSize, tileSize, tileSize};
+    const SDL_Rect darkStone2 {tileSize * 9,tileSize, tileSize, tileSize};
+    const SDL_Rect darkStone3 {tileSize * 10,tileSize, tileSize, tileSize};
+    const SDL_Rect hardDarkStone {tileSize * 6,tileSize, tileSize, tileSize};
+    const SDL_Rect softDarkStone {tileSize * 11,tileSize, tileSize, tileSize};
     const SDL_Rect leaves1 {0,tileSize * 16, tileSize, tileSize};
     const SDL_Rect leaves2 {tileSize,tileSize * 16, tileSize, tileSize};
     const SDL_Rect grassDirt1 {tileSize * 2,tileSize * 29, tileSize, tileSize};

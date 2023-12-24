@@ -7,12 +7,12 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
     gravMultiplier = .8f;
-    decelerationRate = 185;
+    decelerationRate = 215;
     
-    position = {50, 400};
+    position = {50, 0};
     renderer.SetFrameCount(4);
 
-    currentSlide = 5;
+    currentSlide = 2;
 }
 
 void Player::Update(float deltaTime)
@@ -97,6 +97,7 @@ bool Player::GivePowerup()
 {
     // If the player's health isn't max .. or the player's ammo isn't full
     const bool canTake = health != maxHealth || !wc.AmmoFull();
+    if(!canTake) return canTake;
     
     health++;
     if(health > maxHealth) health = maxHealth;
@@ -165,7 +166,7 @@ void Player::SectionDetection()
     if(position.x + velocity.x + rect.w > GameWindow::GetWindowWidth())
     {
         currentSlide++;
-        position.x = -rect.w;
+        position.x = -rect.w/2;
 
         for (auto& bullet : wc.GetActiveBullets())
         {
@@ -175,10 +176,13 @@ void Player::SectionDetection()
     
     else if(currentSlide > 0 && position.x + velocity.x < -rect.w - 1)
     {
+        print("before move: " << position.x)
         currentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
-        position.x = GameWindow::GetWindowWidth();
+        position.x = GameWindow::GetWindowWidth() - rect.w;
+
+        print("after move: " << position.x)
         
         for (auto& bullet : wc.GetActiveBullets())
         {

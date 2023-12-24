@@ -10,6 +10,7 @@ public:
 
     void AddForce(Vector2 direction, float force, bool reset = false);
     void AddForce(float x, float y, float force, bool reset = false);
+    virtual void SetGravity(const bool on) { gravityOn = on; }
 
     virtual Vector2 GetVelocity() const { return velocity; }
 
@@ -38,7 +39,6 @@ protected:
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
     void ApplyGravity(bool isPlayer = false, bool lowered = false, bool accelerated = false);
-    void SetGravity(const bool on) { gravityOn = on; }
     static constexpr float Gravity = 9.81f;
     float currentGravity = Gravity;
     

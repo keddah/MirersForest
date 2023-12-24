@@ -263,7 +263,7 @@ void UserInterface::Respawning(float deltaTime)
 
 void UserInterface::LevelCompletion()
 {
-    if(!rPlayer.AbleToFinished()) return;
+    if(!rPlayer.AbleToFinish()) return;
 
     completionScreen.SetVisibility(true);
     if(!rPlayer.SpaceDown()) return;
@@ -284,7 +284,7 @@ void UserInterface::UpdateBar()
 
 void UserInterface::LevelTime(float deltaTime)
 {
-    if(!timerOn) return;
+    if(!timerOn || rPlayer.IsDead() || rPlayer.AbleToFinish()) return;
     
     seconds = seconds + deltaTime;
 
