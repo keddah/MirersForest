@@ -63,12 +63,12 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 			// 	break;
 	}
 
-	// renderer = new SpriteRenderer(typePath, position);
-
 	if(type == EWeaponTypes::Sun && special)
 	{
 		SetVelocity();
-		AddForce(Vector2(0, -1), force);
+
+		// Make the projectile move upwards
+		AddForce(Vector2(0, -1), force * 1.75f);
 		renderer.SetDrawSize({renderer.GetDrawSize().x * 3, renderer.GetDrawSize().y * 7.5f});
 	}
 
@@ -78,8 +78,6 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 void Projectile::Update(float deltaTime)
 {
 	if(dying) return;
-	
-	ApplyGravity();
 
 	// Always face velocity
 	FaceVelocity();
@@ -89,6 +87,13 @@ void Projectile::Update(float deltaTime)
 
 	position += velocity;
 	UpdateRect();
+}
+
+void Projectile::FixedUpdate(float deltaTime)
+{
+	if(dying) return;
+
+	ApplyGravity();
 }
 
 void Projectile::Draw()

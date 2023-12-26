@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Level - Code
+*
+* The code file for the Level class. Responsible for calling all of the update and draw functions for everything that requires them in the level.
+* Also responsible for creating the correct level tiles, slime and flower formation. 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Level.h"
 
 Level::Level(short lvlNum) : currentLevel(lvlNum)
@@ -19,16 +28,16 @@ Level::~Level()
     delete &player;
 }
 
-void Level::Update(float deltaTime)
+void Level::FixedUpdate(float deltaTime)
 {
-    player.Update(deltaTime);
-    slimeManger.Update(deltaTime);
-    flowerManager.Update(deltaTime);
-    ui.Update(deltaTime);
+    player.FixedUpdate(deltaTime);
+    slimeManger.FixedUpdate(deltaTime);
+    flowerManager.FixedUpdate(deltaTime);
 
+    // Check if it should go to the next level after setting completed
     completed = player.IsFinished();
     NextLevel();
-    
+
     if(player.IsRespawning())
     {
         tileManager.Reset();
@@ -38,13 +47,15 @@ void Level::Update(float deltaTime)
         slimeManger.Reset(currentLevel);
         flowerManager.Reset();
     }
-    
+
+    // Don't sync the slides if the player is respawning (since the slides all need to be set to 0 anyway)
     else SyncSlides();
 }
 
-void Level::FixedUpdate(float deltaTime)
+void Level::Update(float deltaTime)
 {
-    player.FixedUpdate(deltaTime);
+    player.Update(deltaTime);
+    ui.Update(deltaTime);
 }
 
 void Level::Draw()
@@ -80,8 +91,10 @@ void Level::NextLevel()
         return;
     }
 
+    // Change the level background
     bkg.ChangeSpriteSheet(currentLevel);
-    
+
+    // Reset everything
     player.Reset();
     completed = false;
     tileManager.MakeTiles(currentLevel, true);

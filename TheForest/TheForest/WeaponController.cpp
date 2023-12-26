@@ -6,27 +6,35 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
     arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
+void Player::WeaponController::FixedUpdate(float deltaTime)
+{
+    for(auto& bullet : activeBullets)
+    {
+        bullet.FixedUpdate(deltaTime);
+        bullet.Beam(deltaTime, rP.controller.GetMousePosition());
+    }
+}
+
 void Player::WeaponController::Update(float deltaTime)
 {
     arrowPos = {(rP.rect.x + rP.rect.w / 2) - arrow.GetRect().w / 2, rP.rect.y - rP.rect.h };
 
-    WeaponSelection();
+    UpdateBullets(deltaTime);
     
     // Weapon selection needs to be ran before shooting.
     ConfigureWeapon();
-    Shooting(deltaTime);
+    WeaponSelection();
 
-    UpdateBullets(deltaTime);
+    // Needs to be ran after weapon selection
+    Shooting(deltaTime);
 }
 
 void Player::WeaponController::UpdateBullets(float deltaTime)
 {
     for(int i = 0; i < activeBullets.size(); i++)
     {
-        activeBullets[i].Beam(deltaTime, rP.controller.GetMousePosition());
         activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
-
         // Thorn
         // if(activeBullets[i].IsPulling()) thisPlayer.AddForce(Vector2(activeBullets[i].GetPullPos().x, activeBullets[i].GetPullPos().y) - thisPlayer.position, thornRepulsion);
 

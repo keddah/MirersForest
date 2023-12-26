@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Game Manager - Code
+*
+* The code file for the Game manager class. Initiates SDL, creates a window and a renderer.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "GameManager.h"
 
 
@@ -50,15 +58,15 @@ GameManager::~GameManager()
 	GameWindow::CloseGame();
 }
 
-// Gets called in a while loop in the main function
 void GameManager::Update() const
 {
-	// Update all the things that need to be updated for the current session.
 	session->Update(Time::GetDeltaTime());
 }
 
+// Gets called in a while loop in the main function
 void GameManager::FixedUpdate() const
 {
+	// Update all the things that need to be updated for the current session.
 	session->FixedUpdate(Time::GetDeltaTime());
 }
 

@@ -22,6 +22,8 @@ public:
 	~Projectile() = default;
 	
 	void Update(float deltaTime);
+	void FixedUpdate(float deltaTime);
+
 	void Draw();
 	void DeathAnimation(bool referenced = true);
 
@@ -36,7 +38,7 @@ public:
 		
 		    type = other.type;
 		    special = other.special;
-		    delay = other.delay;
+		    shootDelay = other.shootDelay;
 		    ammoCost = other.ammoCost;
 		    force = other.force;
 		    renderRot = other.renderRot;
@@ -133,9 +135,9 @@ private:
 	// bool pulling;
 	// Vector2  pullPos;
 	float flipTimer;
-	const float beamFlipDelay = .85f; 
+	const float beamFlipDelay = .7f; 
 	
-	float delay = .8f;
+	float shootDelay = .8f;
 	short ammoCost = 1;
 	float rechargeDelay;
 

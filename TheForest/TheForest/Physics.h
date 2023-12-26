@@ -39,7 +39,7 @@ protected:
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
     void ApplyGravity(bool isPlayer = false, bool lowered = false, bool accelerated = false);
-    static constexpr float Gravity = 9.81f;
+    static constexpr float Gravity = 16;
     float currentGravity = Gravity;
     
     void SetGrounded(bool isGrounded) { grounded = isGrounded; }

@@ -7,7 +7,7 @@ FlowerManager::FlowerManager(Player& player) : rPlayer(player)
     
 }
 
-void FlowerManager::Update(float deltaTime)
+void FlowerManager::FixedUpdate(float deltaTime)
 {
     // Only update if on the correct slide
     for (auto& flower : flowers) if(flower.GetLevelSlide() == levelSlide) flower.Update(deltaTime);

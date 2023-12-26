@@ -6,7 +6,7 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const Audi
 {
 }
 
-void SlimeManager::Update(float deltaTime)
+void SlimeManager::FixedUpdate(float deltaTime)
 {
     for(int i = 0; i < slimes.size(); i++)
     {

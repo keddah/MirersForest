@@ -6,7 +6,7 @@ class FlowerManager
 {
 public:
     FlowerManager(Player& player);
-    void Update(float deltaTime);
+    void FixedUpdate(float deltaTime);
     void Draw();
     void SetLevelSlide(short slide);
 

@@ -1,15 +1,26 @@
+/**************************************************************************************************************
+* Player - Code
+*
+* The code file for the Player class. Responsible for giving functionality to the player. Manages player collisions, produces responses to
+* player inputs, manages animation changes... etc.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Player.h"
 
 #include "GameSingletons.h"
 
 Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound): tiles(floorTiles), currentSlide(slide), rAudio(sound)
 {
-    maxSpeed = maxMoveSpeed;
-    maxFallSpeed = 50;
-    gravMultiplier = .5f;
-    decelerationRate = 215;
+    // Change the protected values from the Physics class
+    Physics::maxSpeed = maxMoveSpeed;
+    Physics::maxFallSpeed = 100;
+    Physics::gravMultiplier = 1.85f;
+    Physics::decelerationRate = 275;
     
     position = {50, 400};
+    grounded = true;
     renderer.SetFrameCount(4);
 }
 
@@ -17,15 +28,17 @@ void Player::Update(float deltaTime)
 {
     controller.Update();
     Pausing();
-    
+
     if(dead || paused || canFinish) return;
     
-    wc.Update(deltaTime);
+    DamageTimer(deltaTime);
 
+    SectionDetection();
+
+    wc.Update(deltaTime);
     
-    // If the jump button is held... gravity is slightly less powerful
-    // if the crouch button is being held... gravity is slightly more powerful
-    ApplyGravity(true, controller.JumpBtnDown(), controller.CrouchBtnDown());
+    if(position.y > GameWindow::GetWindowHeight()) Death();
+    
     if(setFloatTimer)
     {
         floatTimer += deltaTime;
@@ -36,29 +49,30 @@ void Player::Update(float deltaTime)
             floatTimer = 0;
         }
     }
-    
-    // Collisions before applying position
-    Collisions();
-    
-    CoyoteTime(deltaTime);
-    
-    // Once all the movements have been done... add the velocity to the position
-    // and update everything that needs to know.
-    position += velocity;
-    
-    UpdateRectangle();
-
-    SectionDetection();
-    
-    if(position.y > GameWindow::GetWindowHeight()) Death();
-    DamageTimer(deltaTime);
-    UpdateAnimation();
 }
 
 void Player::FixedUpdate(float deltaTime)
 {
     if(dead || paused || canFinish) return;
     
+    wc.FixedUpdate(deltaTime);
+    
+    // If the jump button is held... gravity is slightly less powerful
+    // if the crouch button is being held... gravity is slightly more powerful
+    ApplyGravity(true, controller.JumpBtnDown(), controller.CrouchBtnDown());
+    
+    // Collisions before applying position
+    Collisions();
+
+    CoyoteTime(deltaTime);
+    
+    // Once all the movements have been done... add the velocity to the position
+    // and update everything that needs to know.
+    position += velocity;
+    UpdateRectangle();
+
+    UpdateAnimation();
+
     // Ran in update to check for the input
     Jump();
     
@@ -174,13 +188,11 @@ void Player::SectionDetection()
     
     else if(currentSlide > 0 && position.x + velocity.x < -rect.w - 1)
     {
-        print("before move: " << position.x)
         currentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
         position.x = GameWindow::GetWindowWidth() - rect.w;
 
-        print("after move: " << position.x)
         
         for (auto& bullet : wc.GetActiveBullets())
         {
@@ -189,7 +201,11 @@ void Player::SectionDetection()
     }
 
     // Stop the player from going offscreen if there isn't a slide
-    else if(currentSlide == 0 && position.x + velocity.x < 0) position.x = 0;
+    else if(currentSlide == 0 && position.x + velocity.x < 0)
+    {
+        velocity.x = 0;
+        position.x = 0;
+    }
 }
 
 void Player::Death()
@@ -295,12 +311,12 @@ void Player::Move(float deltaTime)
     // Adds initial velocity if the player isn't moving to being the acceleration.
     if(direction != 0 && abs(velocity.x) < .01f) velocity.x += direction * .1f;
 
-    // decelerate if there is no input
-    decelerating = direction == 0;
+    // decelerate if there is no input or moving in the opposite direction
+    decelerating = direction == 0 || (direction > 0 && velocity.x < -.01f) ^ (direction < 0 && velocity.x > .01f);
     Deceleration(deltaTime);
 
     // Since the grounded bool will fluctuate (since it's set before this is run)
-    const bool falling = GetAirTime() > .1f;
+    const bool falling = GetAirTime() > .03f;
 
     // Interpolating to the max speed...
     const float percentage = abs(velocity.x) / maxSpeed;
@@ -308,10 +324,7 @@ void Player::Move(float deltaTime)
     // If you're in the air use a multiplier to make controls more responsive (Get rewarded for being in the air)
     const float acceleration = percentage * (falling? accelerationRate * airControl: accelerationRate);
     
-    if(!decelerating)
-    {
-        velocity.x += direction * acceleration * deltaTime;
-    }
+    velocity.x += direction * acceleration * deltaTime;
 
     if(velocity.x > maxSpeed) velocity.x = maxSpeed;
     if(velocity.x < -maxSpeed) velocity.x = -maxSpeed;
@@ -323,7 +336,7 @@ void Player::Deceleration(float deltaTime)
     if(!grounded) return;
     
     // if the speed from the previous frame is the same as the speed in this frame... decelerate
-    if(decelerating && abs(velocity.x) > .01)
+    if(decelerating && abs(velocity.x) > .01f)
     {
         const float percentage = velocity.x / drag;
         const float deceleration = decelerationRate * percentage;

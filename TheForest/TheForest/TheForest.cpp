@@ -1,4 +1,10 @@
-// TheForest.cpp : This file contains the 'main' function. Program execution begins and ends there.
+/**************************************************************************************************************
+* The Forest - Code
+*
+* This file contains the 'main' function. Program execution begins and ends there. This is where the game loops are created and the singleton values are set
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
 #include "GameManager.h"
 
 // Initially set values for the time.
@@ -16,21 +22,25 @@ int GameWindow::windowHeight = 0;
 
 int main()
 {
+	// Create an instance of the game
 	const GameManager game;
 
+	// Using this as the starting point of the delta time
 	Time::SetCurrentTime(Time::GetElapsedTime());
 
+	// Used for fixed update;
 	float tickTimer = 0;
 
 	while (game.IsRunning())
 	{
-		constexpr float timeStep = .001f;
+		// The time that has to elapse in order for fixed update to tick.
+		constexpr float timeStep = .0125f;
 		
 		Time::Update();
-		game.Update();
-		game.Draw();
-		Time::SetLastFrameTime();
 
+		game.Update();
+		
+		// When the timer elapses... do the fixed update.
 		tickTimer += Time::GetDeltaTime();
 		while(tickTimer > timeStep)
 		{
@@ -38,6 +48,8 @@ int main()
 			tickTimer = 0;
 		}
 		
+		game.Draw();
+		Time::SetLastFrameTime();
 	}
 
 	SDL_DestroyWindow(GameWindow::GetWindow());

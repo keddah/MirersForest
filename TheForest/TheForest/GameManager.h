@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Game Manager - Header
+*
+* The header file for the Game manager. This class is used to initiate SDL. The draw and update functions are called from the main function.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 
 #include <iostream>

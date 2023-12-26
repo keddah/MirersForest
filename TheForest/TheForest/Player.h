@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Player - Header
+*
+* The header file for the Player class. Declares all of the functions and parameters that the player needs to function.
+* This file also contains the Weapon Controller class which is a private class of the player.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 
 #include "AudioManager.h"
@@ -39,6 +48,7 @@ public:
     void TakeDamage();
     void Float();
 
+    
 ////////////// Gets
     std::vector<Projectile>& GetActiveBullets() { return wc.GetActiveBullets(); }
     const SpriteRenderer& GetRenderer() const { return renderer; } 
@@ -74,6 +84,7 @@ private:
         ~WeaponController() { for (const auto& bullet : activeBullets) delete &bullet; }
 
         void Update(float deltaTime);
+        void FixedUpdate(float deltaTime);
         void Draw();
         std::vector<Projectile>& GetActiveBullets() { return activeBullets; }
 
@@ -128,9 +139,9 @@ private:
             },  arrowPos, false);
 
         // The force used to throw the projectiles
-        const int seedForce = 15;
+        const int seedForce = 16;
         const int petalForce = 12;
-        const int sunForce = 20;
+        const int sunForce = 32;
         // const int thornForce = 8;
 
         // The delay between each shot 
@@ -140,14 +151,14 @@ private:
         // const float thornDelay = 1.2f;
 
         // Gravity Multipliers
-        const float seedGravity = .03f;
+        const float seedGravity = .04f;
         const float petalGravity = .05f;
         const float sunGravity = 0;
         // const float thornGravity = .01f ;
 
         // The force that is used to propel the player whenever they're midair
-        const float seedRepulsion = 1.5f;
-        const float petalRepulsion = .5f;
+        const float seedRepulsion = 3;
+        const float petalRepulsion = 1.055f;
         const float sunRepulsion = 15;
         // const float thornRepulsion = 0 ;
 
@@ -165,6 +176,9 @@ private:
         Vector2 spawnPos;
         const Vector2 spawnOffset = {-90, 75};
     };
+
+
+
     
     const std::vector<Tile>& tiles;
     short& currentSlide;
@@ -181,8 +195,6 @@ private:
     const short runAnim = 1;
     const short dmgIdleAnim = 2;
     const short dmgRunAnim = 3;
-    const short fallAnim = 4;
-    const short dmgFallAnim = 5;
     void UpdateAnimation();
     
     const float runAnimSpeed = .125f;
@@ -227,18 +239,18 @@ private:
     
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 115;
-    float moveSpeed = .9f;
-    const float maxMoveSpeed = 10;
+    const float accelerationRate = 220;
+    float moveSpeed = 2.2f;
+    const float maxMoveSpeed = 20;
     
     bool decelerating;
     
     ////// Jumping
     bool jumping;
     bool jumpBuffer;
-    const float airControl = 5.5f;
-    const float jumpHeight = 3;
-    const float jumpForce = 15;
+    const float airControl = 5;
+    const float jumpHeight = 10;
+    const float jumpForce = 35;
 
     const float coyoteDuration = .2f;
     float coyoteTimer;

@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Game Session - Header
+*
+* The header file for the Game session class. Creates a Level object and runs the looping functions (Update/Draw) 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "Level.h"
 

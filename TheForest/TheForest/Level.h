@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Level - Header
+*
+* The header file for the Level class. Creates objects for the player, tile manager, slime manager, flower manager, audio manager
+* and UI. Also manages going to the next level and ensuring that all the managers have the same level slide.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "AudioManager.h"
 #include "FlowerManager.h"
@@ -12,8 +21,8 @@ public:
     Level(short lvlNum);
     ~Level();
     
-    void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
+    void Update(float deltaTime);
     void Draw();
 
 private:
