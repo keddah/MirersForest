@@ -1,7 +1,7 @@
 /**************************************************************************************************************
 * Player - Header
 *
-* The header file for the Player class. Declares all of the functions and parameters that the player needs to function.
+* The header file for the Player class and the Weapon Controller class. Declares all of the functions and parameters that the player needs to function.
 * This file also contains the Weapon Controller class which is a private class of the player.
 *
 * Created by Dean Atkinson-Walker 2023
@@ -158,7 +158,7 @@ private:
 
         // The force that is used to propel the player whenever they're midair
         const float seedRepulsion = 3;
-        const float petalRepulsion = 1.055f;
+        const float petalRepulsion = 1.075f;
         const float sunRepulsion = 15;
         // const float thornRepulsion = 0 ;
 
@@ -239,7 +239,7 @@ private:
     
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 220;
+    const float accelerationRate = 240;
     float moveSpeed = 2.2f;
     const float maxMoveSpeed = 20;
     
@@ -252,7 +252,7 @@ private:
     const float jumpHeight = 10;
     const float jumpForce = 35;
 
-    const float coyoteDuration = .2f;
+    const float coyoteDuration = .25f;
     float coyoteTimer;
 
 

@@ -1,3 +1,15 @@
+/**************************************************************************************************************
+* Renderers - Header
+*
+* The header file for the Manual Renderer, Sprite Renderer and Text Renderer classes. The manual Renderer is the parent class which the Sprite and Text renderers
+* are derived from. All classes have a Draw function.
+* Since the manual renderers aren't using a reference for its position, it means it isn't used for a character or something that constantly moves (it shouldn't be).
+* Sprite renderers are used for things that constantly move or anything that needs to be animated.
+* The Sprite and Manual renderers can also load multiple textures at once and change between them if necessary.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include <iostream>
 #include <random>
@@ -9,6 +21,7 @@
 
 #include "Vector2.h"
 
+// Manual meaning the position is set manually (without using a reference)
 class ManualRenderer
 {
 public:
@@ -46,7 +59,6 @@ public:
         customPivot = true;
     }
 
-    
     virtual void ChangeSpriteSheet(short index) { renderIndex = index; }
     
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    

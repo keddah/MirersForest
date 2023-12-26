@@ -1,7 +1,16 @@
+/**************************************************************************************************************
+* Text Renderer - Code
+*
+* The code file for the Text renderer class. Responsible for drawing text to the screen by loading a ttf font and creating a texture
+* from it.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "GameSingletons.h"
 #include "Renderers.h"
 
-TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short size, Vector2 pos) : text(displayText)
+TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short size, Vector2 pos) : text(std::move(displayText))
 {
     fontPath = filePath;
     fontSize = size;

@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Sprite Renderer - Code
+*
+* The code file for the Sprite renderer class. Responsible for drawing things to the screen by loading SDL surfaces and creating textures
+* from them. Depending on which constructor is used, several textures can be created for each instance of this class. The draw function is
+* inherited from the Manual renderer but is overriden to allow for animations
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Renderers.h"
 
 #include "CustomTimer.h"
@@ -141,6 +151,7 @@ void SpriteRenderer::Animate()
     sourceRect.w = size.x;
     sourceRect.h = size.y;
 
+    // A timer that goes to the next frame in the animation once it elapses.
     frameTimer += Time::GetDeltaTime();
     if (frameTimer > animSpeed)
     {
@@ -148,6 +159,7 @@ void SpriteRenderer::Animate()
         frameTimer = 0;
     }
 
+    // If the animation is looping... set the current frame back to 0... otherwise turn off the animation then reset the current frame
     if (looping && currentFrame > frameCount - 1) currentFrame = 0;
     else if(!looping && currentFrame > frameCount - 1)
     {

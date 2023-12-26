@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Manual Renderer - Code
+*
+* The code file for the Manual renderer class. Responsible for drawing things to the screen by loading SDL surfaces and creating textures
+* from them. Depending on which constructor is used, several textures can be created for each instance of this class.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Renderers.h"
 #include "GameSingletons.h"
 
@@ -6,17 +15,20 @@
 
 ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : position(pos)
 {
-    imagePath = spritePath;
+    SDL_Surface* image = SetSprite(spritePath);
 
-    SDL_Surface* image = SetSprite(imagePath);
-
-    if (!GameWindow::GetRenderer()) print("COuldn't get renderer.")
-        thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+    if (!GameWindow::GetRenderer())
+    {
+        print("COuldn't get renderer.")
+        return;
+    }
+    
+    thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
 
     if (!thingsToRender[renderIndex])
     {
         print("nothing to render.")
-            return;
+        return;
     }
 
     // The size is set in the SetSprite function
@@ -68,6 +80,7 @@ void ManualRenderer::Draw(bool referenced)
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
     const SDL_FPoint pivot {spritePivot.x, spritePivot.y};
 
+    // If there aren't any textures to draw... draw a rectangle instead
     if(thingsToRender.empty())
     {
         DrawRectangle();
@@ -96,7 +109,7 @@ SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
     if (!image)
     {
         print("Couldn't load surface. Bad file path")
-            return nullptr;
+        return nullptr;
     }
 
     // Doesn't consider if the image is a spritesheet or a single image...

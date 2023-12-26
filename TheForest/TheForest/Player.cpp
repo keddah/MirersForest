@@ -30,18 +30,21 @@ void Player::Update(float deltaTime)
     Pausing();
 
     if(dead || paused || canFinish) return;
-    
-    DamageTimer(deltaTime);
-
-    SectionDetection();
 
     wc.Update(deltaTime);
     
+    DamageTimer(deltaTime);
+    SectionDetection();
+
+    // Kill the character if they fall off the level
     if(position.y > GameWindow::GetWindowHeight()) Death();
-    
+
+    // Whenever the float function is called gravity is turned off... 
     if(setFloatTimer)
     {
         floatTimer += deltaTime;
+
+        // This turns it back on when the timer elapses.
         if(floatTimer > floatDuration)
         {
             SetGravity(true);
@@ -51,6 +54,7 @@ void Player::Update(float deltaTime)
     }
 }
 
+// Primarily responsible for handling things that move
 void Player::FixedUpdate(float deltaTime)
 {
     if(dead || paused || canFinish) return;
@@ -173,10 +177,14 @@ void Player::Unpause()
     controller.ResetPaused();
 }
 
+// Called in Update. Used to determine when the player should load into the next section of the level.
+// Also moves the player and the active bullets to the start/end of the screen depending on the direction the player is going in.
 void Player::SectionDetection()
 {
     if(position.x + velocity.x + rect.w > GameWindow::GetWindowWidth())
     {
+        // Since the slide is a reference, it updates the Level object's value too. This value is used to set the other objects
+        // That need it too.
         currentSlide++;
         position.x = -rect.w/2;
 
@@ -212,7 +220,9 @@ void Player::Death()
 {
     dead = true;
     health = 0;
-    rAudio.PlaySound(AudioManager::Esounds::PlayerHit);
+
+    // Stop all the other sounds first, then play all of these.
+    rAudio.PlaySound(AudioManager::Esounds::PlayerHit, false);
     rAudio.PlaySound(AudioManager::Esounds::ProjImpact);
     rAudio.PlaySound(AudioManager::Esounds::SlimeDeath);
 }
@@ -232,6 +242,7 @@ void Player::DamageTimer(float deltaTime)
 
 void Player::Collisions()
 {
+    // Separating the collision detection into vertical and horizontal to manage the grounded value.
     const Vector2 predictedPosX = position + Vector2(velocity.x, 0);
     const Vector2 predictedPosY = position + Vector2(0, velocity.y);
     const auto predictedRectX = SDL_FRect{ predictedPosX.x, predictedPosX.y, renderer.GetDrawSize().x, renderer.GetDrawSize().y };
@@ -243,29 +254,29 @@ void Player::Collisions()
         // Don't collide with anything that isn't visible / in the same slide
         if(tile.GetLevelSlide() != currentSlide) continue;
 
-        
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
         
         // Separate the axis collisions.
         const bool predictedCollisionX = SDL_HasIntersectionF(&predictedRectX, &tileRect);
         const bool predictedCollisionY = SDL_HasIntersectionF(&predictedRectY, &tileRect);
-            
+
+        // If you collide with an end tile... just end the game.
         if(tile.IsFinishLine() && (predictedCollisionX || predictedCollisionY))
         {
             canFinish = true;
             return;
         }
+
+        // Remove horizontal velocity but keep vertical the same.
+        if (predictedCollisionX) velocity = Vector2(0, velocity.y);
         
-        if (predictedCollisionX)
-        {
-            velocity = Vector2(0, velocity.y);
-        }
         if (predictedCollisionY)
         {
+            // Remove vertical velocity but keep horizontal the same.
             velocity = Vector2(velocity.x, 0);
 
-            // Prevents collisions that are above the player being detected as the ground
+            // Prevents grounded being set to true if the collision is above the player.
             grounded = position.y + renderer.GetDrawSize().y < tileRect.y;
         }
 
@@ -283,14 +294,12 @@ void Player::UpdateAnimation()
     if(isDamaged)
     {
         if(moving) renderer.ChangeSpriteSheet(dmgRunAnim);
-        // else if(falling) renderer.ChangeSpriteSheet(dmgFallAnim);
         else renderer.ChangeSpriteSheet(dmgIdleAnim);
     }
 
     else
     {
         if(moving && !falling) renderer.ChangeSpriteSheet(runAnim);
-        // else if(falling) renderer.ChangeSpriteSheet(fallAnim);
         else renderer.ChangeSpriteSheet(idleAnim);
     }
 }
@@ -298,12 +307,13 @@ void Player::UpdateAnimation()
 void Player::Propel(Vector2 dir, float force)
 {
     // Since grounded fluctuates too much to use.
-    if(GetAirTime() > .05f) AddForce(dir, force, true);
+    if(GetAirTime() > .025f) AddForce(dir, force, true);
 }
 
 void Player::Move(float deltaTime)
 {
     // If left dir = -1 ... otherwise ... if right dir = 1 ... otherwise dir = 0
+    // Done like this so that direction = 0 whenever there isn't an input (it doesn't remember the last input)
     direction = controller.IsLeft()? -1 : (controller.IsRight()? 1: 0);
 
     renderer.SetFlip(direction < 0);    
@@ -354,9 +364,9 @@ void Player::Jump()
     // Activate the jump buffer if you're in the air for .3 seconds and the jump button is pressed
     if(GetAirTime() > .3f && !grounded && jumping) jumpBuffer = true; 
     
-    // if (!grounded ^ !coyoteJump) return;
     if (coyoteTimer <= 0) return;
 
+    // Doing jumping in the same way as normal movement to make the jump smoother
     const float forceDifference = position.y / (position.y + jumpHeight);
     const float thrust = forceDifference * jumpForce;
 
