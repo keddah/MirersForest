@@ -6,13 +6,11 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
 {
     maxSpeed = maxMoveSpeed;
     maxFallSpeed = 50;
-    gravMultiplier = .8f;
+    gravMultiplier = .5f;
     decelerationRate = 215;
     
-    position = {50, 0};
+    position = {50, 400};
     renderer.SetFrameCount(4);
-
-    currentSlide = 2;
 }
 
 void Player::Update(float deltaTime)
@@ -237,7 +235,7 @@ void Player::Collisions()
         const bool predictedCollisionX = SDL_HasIntersectionF(&predictedRectX, &tileRect);
         const bool predictedCollisionY = SDL_HasIntersectionF(&predictedRectY, &tileRect);
             
-        if(tile.IsFinishLine() && predictedCollisionX)
+        if(tile.IsFinishLine() && (predictedCollisionX || predictedCollisionY))
         {
             canFinish = true;
             return;

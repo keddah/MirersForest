@@ -30,10 +30,10 @@ AudioManager::~AudioManager()
 
 void AudioManager::PlaySound(Esounds sound, bool overlap) const
 {
-    if(Mix_Playing(-1) && !overlap) return;
+    // Stop the other sounds first if not allowed to overlap
+    if(Mix_Playing(-1) && !overlap) Mix_Pause(-1);
 
     short index;
-    
     switch (sound)
     {
         case Esounds::Jump:

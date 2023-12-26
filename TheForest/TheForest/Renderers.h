@@ -17,7 +17,7 @@ public:
     ManualRenderer(const Vector2& pos, Vector2 drawSize);
 
     // Delete all the textures then empty the vector.
-    virtual ~ManualRenderer() = default;
+    virtual ~ManualRenderer() { thingsToRender.clear(); }
         // for(const auto& thing: thingsToRender) delete &thing;
 
     // Overriden means use the position reference

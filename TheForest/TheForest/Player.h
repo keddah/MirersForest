@@ -71,7 +71,7 @@ private:
     {
     public:
         WeaponController(Player* pP);
-        ~WeaponController() = default;
+        ~WeaponController() { for (const auto& bullet : activeBullets) delete &bullet; }
 
         void Update(float deltaTime);
         void Draw();
@@ -126,12 +126,14 @@ private:
             "Sprites/Arrows/sun_arrow.png",
             "Sprites/Arrows/thorn_arrow.png"
             },  arrowPos, false);
-        
+
+        // The force used to throw the projectiles
         const int seedForce = 15;
         const int petalForce = 12;
         const int sunForce = 20;
         // const int thornForce = 8;
 
+        // The delay between each shot 
         const float seedDelay = .8f;
         const float petalDelay = .125f;
         const float sunDelay = 2;
@@ -143,9 +145,10 @@ private:
         const float sunGravity = 0;
         // const float thornGravity = .01f ;
 
-        const float seedRepulsion = 2.5f;
-        const float petalRepulsion = .875f;
-        const float sunRepulsion = 20;
+        // The force that is used to propel the player whenever they're midair
+        const float seedRepulsion = 1.5f;
+        const float petalRepulsion = .5f;
+        const float sunRepulsion = 15;
         // const float thornRepulsion = 0 ;
 
         ///// Ammo
@@ -234,8 +237,8 @@ private:
     bool jumping;
     bool jumpBuffer;
     const float airControl = 5.5f;
-    const float jumpHeight = 5;
-    const float jumpForce = 20;
+    const float jumpHeight = 3;
+    const float jumpForce = 15;
 
     const float coyoteDuration = .2f;
     float coyoteTimer;

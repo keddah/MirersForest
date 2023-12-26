@@ -9,7 +9,8 @@ public:
     
     void Update(float deltaTime);
     void Draw();
-
+    void EndGame();
+    
 private:
     class Button
     {
@@ -48,6 +49,7 @@ private:
     ManualRenderer pauseScreen = ManualRenderer("Sprites/UI/pauseScreen.png", {});
     ManualRenderer deathScreen = ManualRenderer("Sprites/UI/deathscreen.png", {});
 
+    ManualRenderer endScreen = ManualRenderer("Sprites/UI/endScreen.png", {});
     ManualRenderer completionScreen = ManualRenderer("Sprites/UI/levelCompletionSheet.png", {});
     void LevelCompletion();
     

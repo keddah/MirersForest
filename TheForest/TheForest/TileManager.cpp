@@ -806,10 +806,10 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
-
+    
+    
     //\\//\\//\\//\\// 2nd Slide //\\//\\//\\//\\//
-
+    
     start = tileSize * 10 + GameWindow::GetWindowWidth();
     spawnPos = {start, tileSize * 50};
     for(short cols = 0; cols < 20; cols++)
@@ -826,7 +826,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 600, 550);
     for(short cols = 0; cols < 2; cols++)
     {
@@ -841,27 +841,27 @@ void TileManager::Level2Tiles()
         spawnPos.x = GameWindow::GetWindowWidth() + 600;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 900, 400);
     for(short i = 0; i < 8; i++)
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
-
+    
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 1500, 900);
     for(short i = 0; i < 8; i++)
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
-
+    
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 1850, 800);
     for(short cols = 0; cols < 20; cols++)
     {
@@ -878,7 +878,7 @@ void TileManager::Level2Tiles()
         if(cols != 19) spawnPos.x = GameWindow::GetWindowWidth() + 1850;
         spawnPos.y += tileSize;
     }
-
+    
     start = spawnPos.x;
     spawnPos.y = 500;
     for(short cols = 0; cols < 39; cols++)
@@ -895,10 +895,10 @@ void TileManager::Level2Tiles()
         if(cols != 38) spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
-
+    
+    
     //\\//\\//\\//\\// 3rd Slide //\\//\\//\\//\\//
-
+    
     
     start = spawnPos.x;
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 2, -tileSize * 10);
@@ -909,7 +909,7 @@ void TileManager::Level2Tiles()
     
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 2, spawnPos.y);
     for(short cols = 0; cols < 2; cols++)
     {
@@ -923,7 +923,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = GameWindow::GetWindowWidth() * 2;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = {start - tileSize * 10, 200};
     for(short rows = 0; rows < 10; rows++)
     {
@@ -932,7 +932,7 @@ void TileManager::Level2Tiles()
     
         spawnPos.x += tileSize;
     }
-
+    
     start = spawnPos.x;
     spawnPos.x = start;
     for(short cols = 0; cols < 60; cols++)
@@ -949,26 +949,26 @@ void TileManager::Level2Tiles()
         if(cols != 59) spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos.y = 200;
     start = spawnPos.x;
     for(short rows = 0; rows < 20; rows++)
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x += tileSize;
     }
-
+    
     spawnPos = {start, 600};
     for(short rows = 0; rows < 6; rows++)
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 2 + 1100, -400);
     for(short cols = 0; cols < 75; cols++)
     {
@@ -983,7 +983,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = GameWindow::GetWindowWidth() * 2 + 1100;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 2 + 1134, 1020);
     for(short cols = 0; cols < 4; cols++)
     {
@@ -999,7 +999,7 @@ void TileManager::Level2Tiles()
         if(cols != 3) spawnPos.x = GameWindow::GetWindowWidth() * 2 + 1134;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos.y = 300;
     start = spawnPos.x;
     for(short cols = 0; cols < 50; cols++)
@@ -1022,19 +1022,19 @@ void TileManager::Level2Tiles()
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x -= tileSize;
     }
-
+    
     spawnPos = {start - tileSize * 11, 400};
     for(short rows = 0; rows < 5; rows++)
     {
         Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
-
+    
         spawnPos.x += tileSize;
     }
-
+    
     start = GameWindow::GetWindowWidth() * 2 + 1836;
     spawnPos = { start, 300 };
     for(short cols = 0; cols < 2; cols++)
@@ -1049,10 +1049,10 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
-
+    
+    
     //\\//\\//\\//\\// 4th Slide //\\//\\//\\//\\//
-
+    
     start = GameWindow::GetWindowWidth() * 3 + 300;
     spawnPos = { start, 600 };
     for(short cols = 0; cols < 2; cols++)
@@ -1067,7 +1067,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     start = GameWindow::GetWindowWidth() * 3 + 700;
     spawnPos = { start, 900 };
     for(short cols = 0; cols < 2; cols++)
@@ -1082,7 +1082,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     start = GameWindow::GetWindowWidth() * 3 + 950;
     spawnPos = { start, 500 };
     for(short cols = 0; cols < 2; cols++)
@@ -1097,7 +1097,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     start = GameWindow::GetWindowWidth() * 3 + 1500;
     spawnPos = { start, 500 };
     for(short cols = 0; cols < 2; cols++)
@@ -1112,7 +1112,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 3 + 1800, 1000);
     for(short cols = 0; cols < 5; cols++)
     {
@@ -1128,9 +1128,9 @@ void TileManager::Level2Tiles()
         if(cols != 4) spawnPos.x = GameWindow::GetWindowWidth() * 3 + 1800;
         spawnPos.y += tileSize;
     }
-
+    
     //\\//\\//\\//\\// 5th Slide //\\//\\//\\//\\//
-
+    
     start = spawnPos.x;
     spawnPos = {start, 200};
     for(short cols = 0; cols < 56; cols++)
@@ -1147,7 +1147,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = start;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 4 + 900, -300);
     for(short cols = 0; cols < 64; cols++)
     {
@@ -1162,7 +1162,7 @@ void TileManager::Level2Tiles()
         spawnPos.x = GameWindow::GetWindowWidth() * 4 + 900;
         spawnPos.y += tileSize;
     }
-
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 4 + 1000, 1000);
     for(short cols = 0; cols < 5; cols++)
     {
@@ -1178,7 +1178,9 @@ void TileManager::Level2Tiles()
         spawnPos.x = GameWindow::GetWindowWidth() * 4 + 1000;
         spawnPos.y += tileSize;
     }
-
+    
+    //\\//\\//\\//\\// 5th/6th Slide //\\//\\//\\//\\//
+    
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 4 + 1600, 450);
     for(short cols = 0; cols < 50; cols++)
     {
@@ -1196,12 +1198,12 @@ void TileManager::Level2Tiles()
     }
 
 
-    //\\//\\//\\//\\// 6th Slide //\\//\\//\\//\\//
+    //\\//\\//\\//\\// 6th/7th Slide //\\//\\//\\//\\//
     
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 5 + 1800, 450);
     for(short cols = 0; cols < 50; cols++)
     {
-        for(short rows = 0; rows < 25; rows++)
+        for(short rows = 0; rows < 20; rows++)
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
@@ -1212,5 +1214,109 @@ void TileManager::Level2Tiles()
         }
         spawnPos.x = GameWindow::GetWindowWidth() * 5 + 1800;
         spawnPos.y += tileSize;
+    }
+
+
+    //\\//\\//\\//\\// 7th Slide //\\//\\//\\//\\//
+
+    spawnPos = Vector2(GameWindow::GetWindowWidth() * 6 + 200, 600);
+    for(short cols = 0; cols < 30; cols++)
+    {
+        for(short rows = 0; rows < 16; rows++)
+        {
+            const short rnd1 = rand() % 2;
+            const short rnd2 = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        if(cols != 29) spawnPos.x = GameWindow::GetWindowWidth() * 6 + 200;
+        spawnPos.y += tileSize;
+    }
+
+    start = spawnPos.x;
+    spawnPos = {start, 900};
+    for(short cols = 0; cols < 15; cols++)
+    {
+        for(short rows = 0; rows < 16; rows++)
+        {
+            const short rnd1 = rand() % 2;
+            const short rnd2 = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+
+    spawnPos = Vector2(GameWindow::GetWindowWidth() * 6 + 1200, 900);
+    for(short cols = 0; cols < 15; cols++)
+    {
+        for(short rows = 0; rows < 16; rows++)
+        {
+            const short rnd1 = rand() % 2;
+            const short rnd2 = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        if(cols != 14) spawnPos.x = GameWindow::GetWindowWidth() * 6 + 1200;
+        spawnPos.y += tileSize;
+    }
+
+    start = spawnPos.x;
+    spawnPos = Vector2(start, 600);
+    for(short cols = 0; cols < 30; cols++)
+    {
+        for(short rows = 0; rows < 16; rows++)
+        {
+            const short rnd1 = rand() % 2;
+            const short rnd2 = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        if(cols != 29) spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+
+    start = spawnPos.x;
+    spawnPos = Vector2(start, 450);
+    for(short cols = 0; cols < 45; cols++)
+    {
+        for(short rows = 0; rows < 24; rows++)
+        {
+            const short rnd1 = rand() % 2;
+            const short rnd2 = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x += tileSize;
+        }
+        spawnPos.x = start;
+        spawnPos.y += tileSize;
+    }
+
+    
+    //\\//\\//\\//\\// 8th Slide //\\//\\//\\//\\//
+
+    spawnPos = Vector2(GameWindow::GetWindowWidth() * 8 - 300, GameWindow::GetWindowHeight());
+    for(short cols = 0; cols < 8; cols++)
+    {
+        for(short rows = 0; rows < 8; rows++)
+        {
+            const short rnd = rand() % 2;
+            Tile newTile = Tile(tileSheet, spawnPos, rnd == 0? end2: end1, tileSize, true);
+            tiles.emplace_back(newTile);
+    
+            spawnPos.x -= tileSize;
+        }
+        spawnPos.x = GameWindow::GetWindowWidth() * 8 - 300;
+        spawnPos.y -= tileSize;
     }
 }

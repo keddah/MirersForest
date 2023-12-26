@@ -140,7 +140,6 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="FlowerManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />

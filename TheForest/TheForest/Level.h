@@ -10,7 +10,8 @@ class Level
 {
 public:
     Level(short lvlNum);
-
+    ~Level();
+    
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
     void Draw();

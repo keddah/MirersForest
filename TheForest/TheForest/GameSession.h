@@ -7,10 +7,10 @@ public:
     GameSession() = default;
     ~GameSession() { delete &level; }
 
-    void Update(float deltaTime);
-    void FixedUpdate(float deltaTime);
-    void Draw();
+    void Update(float deltaTime) { level.Update(deltaTime); }
+    void FixedUpdate(float deltaTime) { level.FixedUpdate(deltaTime); }
+    void Draw() { level.Draw(); }
     
 private:
-    Level level {1};
+    Level level {0};
 };

@@ -94,6 +94,11 @@ void FlowerManager::Level2Flowers()
     const FlowerUp four = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 4 + 1700, 420));
     flowers.push_back(four);
 
+    
+    //\\//\\//\\//\\// 7th Slide //\\//\\//\\//\\// 
+
+    const FlowerUp five = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 6 + 500, 870));
+    flowers.push_back(five);
 }
 
 

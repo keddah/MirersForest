@@ -19,6 +19,7 @@ UserInterface::UserInterface(Player& player) : rPlayer(player)
     pauseScreen.SetVisibility(false);
     deathScreen.SetVisibility(false);
     completionScreen.SetVisibility(false);
+    endScreen.SetVisibility(false);
 
     Button resume = Button(0,0,450,100, {99,163,92,120});
     Button restart = Button(0,0,450,100, {165,152,90,120});
@@ -54,7 +55,18 @@ void UserInterface::Draw()
     
     pauseScreen.Draw();
     deathScreen.Draw();
-    completionScreen.Draw(false);
+    completionScreen.Draw();
+    endScreen.Draw();
+}
+
+void UserInterface::EndGame()
+{
+    completionScreen.SetVisibility(false);
+    endScreen.SetVisibility(true);
+
+    if(!rPlayer.SpaceDown()) return;
+    
+    GameWindow::CloseGame();
 }
 
 void UserInterface::CreateUI()

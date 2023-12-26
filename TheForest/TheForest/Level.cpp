@@ -10,6 +10,15 @@ Level::Level(short lvlNum) : currentLevel(lvlNum)
     audio.PlayMusic();
 }
 
+Level::~Level()
+{
+    delete &ui;
+    delete &tileManager;
+    delete &slimeManger;
+    delete &flowerManager;
+    delete &player;
+}
+
 void Level::Update(float deltaTime)
 {
     player.Update(deltaTime);
@@ -64,11 +73,10 @@ void Level::NextLevel()
 {
     if(!completed) return;
 
-    currentLevel++;
-
+    if(currentLevel != levelCount) currentLevel++;
     if(currentLevel == levelCount)
     {
-        print("done")
+        ui.EndGame();
         return;
     }
 

@@ -219,6 +219,25 @@ void SlimeManager::SpawnLevel2()
         newSlime->SetGravity(false);
         slimes.push_back(newSlime);
     }
+
+    
+    //\\//\\//\\//\\// 7th Slide //\\//\\//\\//\\// 
+
+    const auto slime13 = new Slime(rPlayer, rTiles, rAudio);
+    slime13->SetPosition(GameWindow::GetWindowWidth() * 6 + 300, 0);
+    slimes.push_back(slime13);
+
+    const auto slime14 = new Slime(rPlayer, rTiles, rAudio);
+    slime14->SetPosition(GameWindow::GetWindowWidth() * 6 + 550, 0);
+    slimes.push_back(slime14);
+
+    const auto slime15 = new Slime(rPlayer, rTiles, rAudio);
+    slime15->SetPosition(GameWindow::GetWindowWidth() * 6 + 1300, 0);
+    slimes.push_back(slime15);
+
+    const auto slime16 = new Slime(rPlayer, rTiles, rAudio);
+    slime16->SetPosition(GameWindow::GetWindowWidth() * 6 + 1550, 0);
+    slimes.push_back(slime16);
 }
 
 
