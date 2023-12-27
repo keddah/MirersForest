@@ -56,6 +56,7 @@ void Level::Update(float deltaTime)
 {
     player.Update(deltaTime);
     ui.Update(deltaTime);
+    slimeManger.Update(deltaTime);
 }
 
 void Level::Draw()

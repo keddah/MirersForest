@@ -14,7 +14,7 @@ TextRenderer::TextRenderer(const std::string& filePath, std::string displayText,
 {
     fontPath = filePath;
     fontSize = size;
-    SetPosition(pos);
+    ManualRenderer::SetPosition(pos);
     
     SetText(text);
 }

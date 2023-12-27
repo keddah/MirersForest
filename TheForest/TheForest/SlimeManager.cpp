@@ -15,13 +15,22 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const Audi
 {
 }
 
+void SlimeManager::Update(float deltaTime) const
+{
+    for (const auto& slime: slimes)
+    {
+        if(slime->GetLevelSlide() != levelSlide) continue;
+        slime->Update(deltaTime);
+    }
+}
+
 void SlimeManager::FixedUpdate(float deltaTime)
 {
     for(int i = 0; i < slimes.size(); i++)
     {
         if(slimes[i]->GetLevelSlide() != levelSlide) continue;
         
-        slimes[i]->Update(deltaTime);
+        slimes[i]->FixedUpdate(deltaTime);
         if(slimes[i]->IsDead()) slimes.erase(slimes.begin() + i);
     }
 }
@@ -67,9 +76,9 @@ void SlimeManager::Reset(short lvlIndex)
     resetting = true;
 }
 
-void SlimeManager::SpawnSlimes(short levelIndex)
+void SlimeManager::SpawnSlimes(const short lvlIndex)
 {
-    switch (levelIndex)
+    switch (lvlIndex)
     {
         case 0:
             SpawnLevel1();
@@ -86,7 +95,7 @@ void SlimeManager::SpawnSlimes(short levelIndex)
 
     for (const auto& slime : slimes)
     {
-        slime->SetSlide(floor(slime->GetPosition().x / GameWindow::GetWindowWidth()));
+        slime->SetSlide(static_cast<short>(floor(slime->GetPosition().x / GameWindow::GetWindowWidth())));
     }
 }
 
@@ -112,7 +121,7 @@ void SlimeManager::SpawnLevel1()
     slime3->SetPosition(900, 0);
 
     // Slide 3
-    slime4->SetPosition(GameWindow::GetWindowWidth() * 2 + 600, 730);
+    slime4->SetPosition(GameWindow::GetWindowWidth() * 2 + 800, 730);
     slime5->SetPosition(GameWindow::GetWindowWidth() * 2 + 1350, 400);
 
     // Slide 5
@@ -139,7 +148,7 @@ void SlimeManager::SpawnLevel1()
     
     slimes.push_back(slime10);
 
-    slime4->SetPatrol({{1100, slime4->GetPosition().y}, {600, slime4->GetPosition().y}}, 6);
+    slime4->SetPatrol({{1100, slime4->GetPosition().y}, {650, slime4->GetPosition().y}}, 5);
 
     slime6->SetPatrol({{900, slime6->GetPosition().y}, {330, slime6->GetPosition().y}}, 3, .015f);
     slime7->SetPatrol({{1250, slime7->GetPosition().y}, {1000, slime7->GetPosition().y}}, .5f, .0125f);

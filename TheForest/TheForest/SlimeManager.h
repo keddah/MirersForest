@@ -18,11 +18,12 @@ public:
     SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound);
     const std::vector<Slime*>& GetSlimes() { return slimes; }
     
+    void Update(float deltaTime) const;
     void FixedUpdate(float deltaTime);
     void Draw() const;
 
     void SetLevelSlide(short slide);
-    void SpawnSlimes(short levelIndex);
+    void SpawnSlimes(short lvlIndex);
 
     void Reset(short lvlIndex);
     
@@ -34,7 +35,7 @@ private:
     const AudioManager& rAudio;
 
     bool resetting = false;
-    short levelSlide;
+    short levelSlide = 0;
 
     void SpawnLevel1();
     void SpawnLevel2();

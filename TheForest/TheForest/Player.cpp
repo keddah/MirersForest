@@ -22,6 +22,7 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     position = {50, 400};
     grounded = true;
     renderer.SetFrameCount(4);
+
 }
 
 void Player::Update(float deltaTime)

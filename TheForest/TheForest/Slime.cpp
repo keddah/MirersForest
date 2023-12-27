@@ -25,7 +25,13 @@ Slime::Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& soun
 
 void Slime::Update(float deltaTime)
 {
-    vfxPos = {position.x, position.y - 30 };
+    if(dead || dying) return;
+
+    Patrol(deltaTime);
+}
+
+void Slime::FixedUpdate(float deltaTime)
+{
     if(dead || dying) return;
     
     ApplyGravity(true);
@@ -38,7 +44,6 @@ void Slime::Update(float deltaTime)
     UpdateRectangle();
     HitPlayer();
     Death();
-    Patrol(deltaTime);
 }
 
 void Slime::Collisions()

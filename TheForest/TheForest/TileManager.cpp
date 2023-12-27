@@ -51,7 +51,7 @@ void TileManager::MakeTiles(short lvlIndex, const bool reset)
     }
 
     // Set which slide each tile is supposed to be on.
-    for (auto& tile : tiles) tile.SetSlide(floor((tile.GetPosition().x + tileSize * .5f) / GameWindow::GetWindowWidth()));
+    for (auto& tile : tiles) tile.SetSlide(static_cast<short>(floor((tile.GetPosition().x + tileSize * .5f) / GameWindow::GetWindowWidth())));
 }
 
 void TileManager::SetLevelSlide(short slide)

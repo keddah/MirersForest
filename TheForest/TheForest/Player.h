@@ -81,7 +81,7 @@ private:
     {
     public:
         WeaponController(Player* pP);
-        ~WeaponController() { for (const auto& bullet : activeBullets) delete &bullet; }
+        ~WeaponController();
 
         void Update(float deltaTime);
         void FixedUpdate(float deltaTime);
@@ -122,7 +122,7 @@ private:
         void PreviousWeapon();
         
         bool canShoot = true;
-        float shootTimer;
+        float shootTimer = 0;
     
         Projectile::EWeaponTypes selectedWeapon = Projectile::EWeaponTypes::Seed;
 

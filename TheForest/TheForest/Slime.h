@@ -17,6 +17,7 @@ public:
     ~Slime() = default;
 
     void Update(float deltaTime);
+    void FixedUpdate(float deltaTime);
     void Draw() { if(!dying) renderer.Draw(); }
 
     void DeathAnimation();

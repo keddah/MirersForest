@@ -96,6 +96,7 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
 // Overriden means use the position reference
 void SpriteRenderer::Draw(bool referenced)
 {
+    // Uses the PlayAnimation function if not looping
     if(!looping) return;
     
     drawRect.x = posRef.x;
@@ -104,10 +105,6 @@ void SpriteRenderer::Draw(bool referenced)
     
     // print("reference: " << posRef.x << ", " << posRef.y)
     ManualRenderer::Draw(referenced);
-
-    // Telling the renderer to use the position set above instead of the position that's set in the StaticRenderer's draw function
-    // Also don't try to render anything if there isn't a renderer (instead just do DrawRectangle).
-    // if(toRender) ManualRenderer::Draw(true);
 
     // print("renderer: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
     // print("renderer: " << drawRect.x << ", " << drawRect.y)

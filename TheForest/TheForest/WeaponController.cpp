@@ -16,6 +16,11 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
     arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
+Player::WeaponController::~WeaponController()
+{
+    for (const auto& bullet : activeBullets) delete &bullet;
+}
+
 void Player::WeaponController::FixedUpdate(float deltaTime)
 {
     // Everything movement related
@@ -232,8 +237,6 @@ void Player::WeaponController::Shooting(float deltaTime)
     }
     
     rP.Propel(newBullet.GetRepulsion(), std::get<5>(weapon));
-
-    // if(std::get<0>(weapon) == Projectile::EWeaponTypes::Sun && special) rP.Float();
 }
 
 void Player::WeaponController::Shotgun()
@@ -244,6 +247,9 @@ void Player::WeaponController::Shotgun()
     // if the arrow is pointing to the right
     const bool correction = arrow.GetRenderAngle() > 0 && arrow.GetRenderAngle() < 180; 
 
+    float repulsion_x = 0;
+    float repulsion_y = 0;
+    
     for(short i = 0; i < pellets; i++)
     {
         constexpr float pelletSpread = 10;
@@ -258,10 +264,14 @@ void Player::WeaponController::Shotgun()
         activeBullets.emplace_back(petal);
         
         ammo -= std::get<3>(weapon);
-        
-        // The player is launched using x times more force to simulate each petal giving its own additional force
-        rP.Propel(petal.GetRepulsion(), std::get<5>(weapon) * pellets);
+
+        repulsion_x += petal.GetRepulsion().x;
+        repulsion_y += petal.GetRepulsion().y;
     }
+    
+    // Getting the average repulsion direction and multiplying by how many pellets there are to simulate each pellet applying force
+    // simultaneously
+    rP.Propel(Vector2(repulsion_x / pellets, repulsion_y / pellets), std::get<5>(weapon) * pellets);
 
     canShoot = false;
     if(!canShoot)
@@ -329,7 +339,7 @@ void Player::WeaponController::PreviousWeapon()
 void Player::WeaponController::Draw()
 {
     // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
-    if(!rP.IsPaused()) arrow.SetRenderAngle((GetShootAngle() * 180/std::_Pi) + arrowOffset);
+    if(!rP.IsPaused()) arrow.SetRenderAngle(static_cast<float>((GetShootAngle() * 180/std::_Pi) + arrowOffset));
     arrow.Draw();
     for(auto& bullet : activeBullets)
     {
