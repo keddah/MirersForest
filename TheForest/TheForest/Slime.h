@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Slime - Header
+*
+* The header file for the Slime class. Responsible for creating the renderer for slime objects and creating functions that
+* will be ran by the slime manager.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "Player.h"
 
@@ -55,7 +64,6 @@ private:
     short levelSlide;
     
     void Collisions();
-    void MoveTimer();
     void Patrol(float deltaTime);
     void NextPoint();
 

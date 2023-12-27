@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Projectile - Header
+*
+* The header file for the Projectile class. Declares the projectile types, creates the renderer for the death vfx and the projectile itself
+* as well as stores the file paths for the projectile and impact sprites.  
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 
 #include <tuple>
@@ -99,12 +108,6 @@ private:
 		"Sprites/Projectiles/Projectile_sun.png",
 	};
 	
-	// const std::string seedPath {"Sprites/Projectiles/Projectile_seed.png"};
-	// const std::string bigSeedPath {"Sprites/Projectiles/Projectile_seedBig.png"};
-	// const std::string petalPath {"Sprites/Projectiles/Projectile_petal.png"};
-	// const std::string sunPath {"Sprites/Projectiles/Projectile_sun.png"};
-	// const std::string thornPath {"Sprites/Projectiles/Projectile_thorn.png"};
-
 	// Impacts
 	std::string impactPath;
 	const std::vector<std::string> impactPaths
@@ -114,26 +117,16 @@ private:
 		"Sprites/Projectiles/sunBeamSheet.png",
 		"Sprites/Projectiles/seedExplosionSheet2.png"
 	};
-	// const std::string seedImpact {"Sprites/Projectiles/Projectile_thorn.png"};
-	// const std::string petalImpact {"Sprites/Projectiles/petalImpactSheet.png"};
-	// const std::string sunImpact {"Sprites/Projectiles/Projectile_thorn.png"};
-	// const std::string explosionPath {"Sprites/Projectiles/seedExplosionSheet.png"};
 	
 	float impactOffset;
-	// SpriteRenderer* renderer;// = SpriteRenderer(position, {20,20});
 	SpriteRenderer renderer = SpriteRenderer(typePaths, position, false);
 	SpriteRenderer impactVfx = SpriteRenderer(impactPaths, position, true, false);
 
-	
-	// Using a vector so that it can be initialised in a switch (without using a pointer)	
-	// std::vector<SpriteRenderer> impactVfx = std::vector<SpriteRenderer>();
-	
 	EWeaponTypes type;
 	
-	// Is the alternative weapon type (each weapon has 2 types)
+	// Is the alternative weapon type (each weapon type has 2 abilities)
 	bool special;
-	// bool pulling;
-	// Vector2  pullPos;
+	
 	float flipTimer;
 	const float beamFlipDelay = .7f; 
 	

@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Controllers - Header
+*
+* The header file for the Player controller class. Responsible for providing get functions for the player class so that
+* it can read inputs (everything is private). 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 
 #include <iostream>
@@ -40,7 +49,7 @@ public:
 	bool OnePressed() const { return num1; }
 	bool TwoPressed() const { return num2; }
 	bool ThreePressed() const { return num3; }
-	bool FourPressed() const { return num4; }
+	// bool FourPressed() const { return num4; }
 	
 
 	
@@ -54,7 +63,7 @@ private:
 	bool num1;
 	bool num2;
 	bool num3;
-	bool num4;
+	// bool num4;
 	
 	Vector2 mousePos;
 	bool wheelUp;

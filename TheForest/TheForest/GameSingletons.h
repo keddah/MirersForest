@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Game Singletons - Header
+*
+* The header file for the Game window class (static). This is used so that the SDL renderer and window can be accessed without
+* a reference to other things. The renderer and window need to be set when SDL is initiated. For the level slides, this was needed
+* to get the window width (progressing relies on the screen width).
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #define print(x) { std::cout<< x << std::endl; }
 #include <SDL.h>

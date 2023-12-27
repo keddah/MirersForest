@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Slime Manager - Header
+*
+* The header file for the Slime manager class. Responsible for creating object references that each slime will need
+* in order to be created. Also creates functions that handle the creation / management of slimes.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include <vector>
 

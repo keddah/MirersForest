@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Tile Manager - Header
+*
+* The header file for the Tile manager class. Declares all of the functions and parameters that the tile manager needs to create the tiles for each level
+* in the game.
+* Also creates source rectangles to be used for the different placeable tiles from the tile sheet that is created in each tile object.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include <vector>
 
@@ -41,21 +51,9 @@ private:
     const SDL_Rect end2 {tileSize * 2,tileSize * 22, tileSize, tileSize};
     const SDL_Rect invisible {tileSize * 16, 0, tileSize, tileSize};
 
-    const std::string tileSheet = "TileSets/Textures-16.png"; 
-    
-    // The start position can't be a local variable because the sprite renderer uses this position as a reference
-
-    static constexpr int levelWidth = 100;
-    static constexpr int levelHeight = 20;
-
-    // Level layout (the formation of the tiles within the level)
-    short tileSet[levelWidth][levelHeight];
-
     short levelSlide;
     std::vector<Tile> tiles;
 
-    // Vector2 screenSize;
     void Level1Tiles();
-    
     void Level2Tiles();
 };

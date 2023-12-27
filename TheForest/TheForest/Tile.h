@@ -1,10 +1,19 @@
+/**************************************************************************************************************
+* Tile - Header
+*
+* The header file for the Tile class. Responsible for providing its own file path for the tile sheet and supplying functions
+* that the tile manager will need to maintain each tile in the level.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "Renderers.h"
 
 class Tile
 {
 public:
-    Tile(const std::string& filePath, Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
+    Tile(Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
 
     const ManualRenderer& GetRenderer() const { return renderer; }
     void Draw() { renderer.Draw(); }
@@ -17,11 +26,11 @@ public:
     void SetSlide(const short slide) { levelSlide = slide; }
     
 private:
-    std::string spritePath;
+    const std::string tileSheet = "TileSets/Textures-16.png"; 
+
     Vector2 position;
     ManualRenderer renderer;
-
-    short levelSlide;
     
+    short levelSlide;
     bool finishLine;
 };

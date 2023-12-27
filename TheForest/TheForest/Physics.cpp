@@ -58,7 +58,7 @@ void Physics::AddForce(const float x, const float y, const float force, bool res
 	if(reset) airTime = 0;
 }
 
-void Physics::ApplyGravity(bool isPlayer, bool lowered, bool accelerated)
+void Physics::ApplyGravity(bool isCharacter, bool lowered, bool accelerated)
 {
 	if(!gravityOn || grounded)
 	{
@@ -67,14 +67,14 @@ void Physics::ApplyGravity(bool isPlayer, bool lowered, bool accelerated)
 		return;
 	}
 
-	if(isPlayer)
+	if(isCharacter)
 	{
 		// Add to the air time...
 		airTime += Time::GetDeltaTime();
 
 		// Depending on how long the thing has been in the air ... apply gravity multipliers.
 		// Use lighter gravity if the air time is longer than x seconds.
-		if(airTime < .145f)
+		if(airTime < .18f)
 		{
 			lowMultiplier = minLowMultiplier;
 			currentGravity = Gravity * lowMultiplier;
@@ -83,7 +83,10 @@ void Physics::ApplyGravity(bool isPlayer, bool lowered, bool accelerated)
 		// Use normal gravity if the air time is longer than x seconds.
 		else
 		{
-			lowMultiplier += .05f;
+			// Slowly add increase the gravity until the multiplier is 1
+			lowMultiplier += .005f;
+			if(lowMultiplier > 1) lowMultiplier = 1;
+			
 			currentGravity = Gravity * lowMultiplier;
 		}
 	}

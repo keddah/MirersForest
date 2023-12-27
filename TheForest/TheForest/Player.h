@@ -158,7 +158,7 @@ private:
 
         // The force that is used to propel the player whenever they're midair
         const float seedRepulsion = 3;
-        const float petalRepulsion = 1.075f;
+        const float petalRepulsion = 1.09f;
         const float sunRepulsion = 15;
         // const float thornRepulsion = 0 ;
 
@@ -249,7 +249,7 @@ private:
     bool jumping;
     bool jumpBuffer;
     const float airControl = 5;
-    const float jumpHeight = 10;
+    const float jumpHeight = 11.5f;
     const float jumpForce = 35;
 
     const float coyoteDuration = .25f;

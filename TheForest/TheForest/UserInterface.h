@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* User Interface - Header
+*
+* The header file for the UI class and the private class Button. This class is responsible for making UI elements based on the player's state.
+* Also creates menus for when the player dies, pauses or finishes a level.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "Player.h"
 #include "Renderers.h"
@@ -34,6 +43,8 @@ private:
     private:
         ManualRenderer renderer = ManualRenderer(Vector2(), Vector2());
     };
+
+
     
     Player& rPlayer;
 
@@ -44,11 +55,9 @@ private:
 
     const std::string font_quicksand = "Fonts/Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";
-    
 
     ManualRenderer pauseScreen = ManualRenderer("Sprites/UI/pauseScreen.png", {});
     ManualRenderer deathScreen = ManualRenderer("Sprites/UI/deathscreen.png", {});
-
     ManualRenderer endScreen = ManualRenderer("Sprites/UI/endScreen.png", {});
     ManualRenderer completionScreen = ManualRenderer("Sprites/UI/levelCompletionSheet.png", {});
     void LevelCompletion();
@@ -91,6 +100,7 @@ private:
     short fullHeartIndex;
     short emptyHeartIndex;
 
+    // Timer that shows the death screen after it elapses.
     float deathDelayTimer;
     
     bool timerOn;
@@ -98,7 +108,7 @@ private:
     int minutes;
 
     // Needs to have an initial value
-    std::string time = "f";
+    std::string time = "0";
     std::string currentProjectile = "f";
     
     void CreateUI();

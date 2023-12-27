@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Audio Manager - Code
+*
+* The code file for the Audio manager class. Initiates the audio mixer, creates each sound from the array of audio file paths
+* and adds them to an array of sounds. 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "AudioManager.h"
 
 #define print(x){std::cout << (x) << std::endl;}

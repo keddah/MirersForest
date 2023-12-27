@@ -1,13 +1,24 @@
+/**************************************************************************************************************
+* Slime - Code
+*
+* The code file for the Slime class. Responsible for handling its own animations, collisions and managing player collisions.
+* Can also be set patrol points. 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Slime.h"
 
 Slime::Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound): rTiles(floorRef), rPlayer(plyr), rAudio(sound)
 {
     maxSpeed = 20;
     maxFallSpeed = 50;
-    
+
+    // The renderer for the slime
     renderer.SetFrameCount(6);
     renderer.SetAnimSpeed(.225f);
 
+    // The renderer for the death animation
     deathRenderer.SetFrameCount(11);
     deathRenderer.SetAnimSpeed(.05f);
 }
@@ -25,11 +36,8 @@ void Slime::Update(float deltaTime)
     position += velocity;
     
     UpdateRectangle();
-
     HitPlayer();
-    
     Death();
-
     Patrol(deltaTime);
 }
 

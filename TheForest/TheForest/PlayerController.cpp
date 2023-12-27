@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Player Controller - Code
+*
+* The code file for the Player controller class. Responsible for reading player inputs using SDL.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Controllers.h"
 #include "GameSingletons.h"
 
@@ -16,15 +24,18 @@ void PlayerController::HandleInputs()
 {
 	const Uint8* keyState = SDL_GetKeyboardState(0);
 
+	// Vertical inputs
 	moveInputs[0] = keyState[SDL_SCANCODE_W] || keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_SPACE];
 	moveInputs[1] = keyState[SDL_SCANCODE_S] || keyState[SDL_SCANCODE_DOWN] || keyState[SDL_SCANCODE_LCTRL];
+
+	// Horizontal inputs
 	moveInputs[2] = keyState[SDL_SCANCODE_A] || keyState[SDL_SCANCODE_LEFT];
 	moveInputs[3] = keyState[SDL_SCANCODE_D] || keyState[SDL_SCANCODE_RIGHT];
 
 	num1 = keyState[SDL_SCANCODE_1];
 	num2 = keyState[SDL_SCANCODE_2];
 	num3 = keyState[SDL_SCANCODE_3];
-	num4 = keyState[SDL_SCANCODE_4];
+	// num4 = keyState[SDL_SCANCODE_4];
 
 	int mouse_x, mouse_y;
 	SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -50,7 +61,8 @@ void PlayerController::HandleInputs()
 			wheelUp = e.wheel.y > 0;
 			wheelDown = e.wheel.y < 0;
 			break;
-		
+
+			// When alt + F4 is pressed.
 		case SDL_QUIT:
 			GameWindow::CloseGame();
 			break;
@@ -72,7 +84,7 @@ void PlayerController::ClearInputs()
 	num1 = false;
 	num2 = false;
 	num3 = false;
-	num4 = false;
+	// num4 = false;
 
 	for (bool& moveInput : moveInputs) moveInput = false;
 }

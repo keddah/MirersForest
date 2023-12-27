@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* User Interface - Code
+*
+* The code file for the UI class. Responsible for creating UI elements and keeping them up to date with the player's state.
+* Also manages the responses to player inputs that are related to the game's state. like pausing, restarting going to the
+* next level.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "UserInterface.h"
 
 #include <string>
@@ -65,8 +75,8 @@ void UserInterface::EndGame()
     endScreen.SetVisibility(true);
 
     if(!rPlayer.SpaceDown()) return;
-    
-    GameWindow::CloseGame();
+
+    PressQuit();
 }
 
 void UserInterface::CreateUI()
@@ -79,6 +89,7 @@ void UserInterface::CreateUI()
     renderers.push_back(bkg);
     renderers.back().SetRenderColour(bkgColour);
     heartBkgIndex = renderers.size() -1;
+
     
     //\\//\\//\\//\\// Hearts //\\//\\//\\//\\//
     constexpr float  heartPadding = 5;
@@ -108,6 +119,7 @@ void UserInterface::CreateUI()
         heartPos.x += emptyHeart.GetDrawSize().x + heartSpacing;
     }
 
+    
     // The background for the selected projectile.
     const Vector2 projBkgSize = Vector2(600, 80);
     const Vector2 projBkgPos = Vector2((GameWindow::GetWindowWidth() / 2) - projBkgSize.x / 2, 10);
@@ -172,7 +184,8 @@ void UserInterface::CreateUI()
 void UserInterface::CheckPlayerState()
 {
     if(rPlayer.IsPaused()) return;
-    
+
+    ///// Health
     switch (rPlayer.GetHealth())
     {
         case 0:
@@ -228,7 +241,10 @@ void UserInterface::CheckPlayerState()
             renderers[heartBkgIndex].SetRenderColour(bkgColour);
             break;
     }
-    
+
+
+
+    ///// Selected Weapon
     switch (rPlayer.GetType())
     {
         case Projectile::EWeaponTypes::Seed:
@@ -275,12 +291,19 @@ void UserInterface::Respawning(float deltaTime)
 
 void UserInterface::LevelCompletion()
 {
+    // When the player finishes the level
     if(!rPlayer.AbleToFinish()) return;
 
+    // Show the completion screen.
     completionScreen.SetVisibility(true);
+
+    //... When the player presses space
     if(!rPlayer.SpaceDown()) return;
 
+    // Go to the next level
     rPlayer.FinishLevel();
+
+    // Hide the completion screen.
     completionScreen.SetVisibility(false);
 }
 
@@ -306,6 +329,7 @@ void UserInterface::LevelTime(float deltaTime)
         seconds = 0;
     }
 
+    // Keep a 00:00 format
     time = (minutes < 10? "0" + std::to_string(minutes) : std::to_string((minutes))) + ":" + (seconds < 10? "0" + std::to_string(static_cast<int>(seconds)) : std::to_string((static_cast<int>(seconds))));
     txtRenderers[timerIndex].SetText(time);
 }
@@ -315,6 +339,8 @@ void UserInterface::ButtonPresses()
     if(!pauseScreen.IsVisible()) return;
 
     const SDL_Point mousePos = { static_cast<int>(rPlayer.GetMousePos().x), static_cast<int>(rPlayer.GetMousePos().y)};
+
+    // Only do anything after the player clicks.
     if(!rPlayer.LMB()) return;
     
     for(int i = 0; i < 3; i++)
@@ -343,6 +369,7 @@ void UserInterface::Pausing()
 {
     if(rPlayer.IsPaused())
     {
+        // Hide/Show everything that needs to be hidden/shown
         pauseScreen.SetVisibility(true);
         renderers[projBkgIndex].SetVisibility(false);
         renderers[heartBkgIndex].SetVisibility(false);
@@ -358,7 +385,8 @@ void UserInterface::Pausing()
             renderers[fullHeartIndex + i].SetVisibility(false);
             renderers[emptyHeartIndex + i].SetVisibility(false);
         }
-        
+
+        // Pause the game timer.
         timerOn = false;
     }
     else

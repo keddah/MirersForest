@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Flower Manager - Header
+*
+* The header file for the Flower manager class. Responsible for creating object references that each flower will need
+* in order to be created. Also creates functions that handle the creation / management of flowers.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 #include "Player.h"
 #include "Vector2.h"

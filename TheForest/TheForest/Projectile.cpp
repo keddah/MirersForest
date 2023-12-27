@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Projectile - Code
+*
+* The code file for the Projectile class. Responsible for giving the correct properties to the projectile that is spawned by the player.
+* On creation, the object will be able to become any of the projectile types but the parameters given in its constructor determine
+* what type of projectile it is.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Projectile.h"
 
 #include "Player.h"
@@ -186,7 +196,7 @@ void Projectile::Explode()
 
 void Projectile::Beam(float deltaTime, Vector2 mousePos)
 {
-	if(!special) return;
+	if(!(special && type == EWeaponTypes::Sun)) return;
 
 	flipTimer += deltaTime;
 	if(flipTimer < beamFlipDelay) return;
@@ -200,9 +210,9 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	AddForce(Vector2(cos(rot), sin(rot)), force);
 
 	// Allow the projectile to move faster
-	maxFallSpeed = 300;
-
-	gravMultiplier = 2.75f;
+	maxFallSpeed = 1000;
+	drag = 6;
+	gravMultiplier = 3;
 }
 
 // void Projectile::Pull(Vector2 pullFrom)

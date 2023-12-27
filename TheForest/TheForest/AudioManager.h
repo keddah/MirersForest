@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Audio Manager - Header
+*
+* The header file for the Audio manager class. Responsible for providing the file paths for each audio file that it can play.
+* Also declares an enum of the different sounds
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #pragma once
 
 #include <iostream>

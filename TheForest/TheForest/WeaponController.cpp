@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Weapon Controller - Code
+*
+* The code file for the Weapon controller class. Responsible for handling everything weapons related.
+* Spawns projectiles... uses the player reference to get the mouse position. Also responsible for updating and drawing
+* all of the projectiles that it creates. Since this is a private class of the player it can access all of the player's private members.
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "Player.h"
 
 
@@ -8,6 +18,7 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
 
 void Player::WeaponController::FixedUpdate(float deltaTime)
 {
+    // Everything movement related
     for(auto& bullet : activeBullets)
     {
         bullet.FixedUpdate(deltaTime);
@@ -35,8 +46,6 @@ void Player::WeaponController::UpdateBullets(float deltaTime)
     {
         activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
-        // Thorn
-        // if(activeBullets[i].IsPulling()) thisPlayer.AddForce(Vector2(activeBullets[i].GetPullPos().x, activeBullets[i].GetPullPos().y) - thisPlayer.position, thornRepulsion);
 
         // Sound that plays on projectile impacts
         if((activeBullets.end() - 1)->IsDying())
@@ -235,8 +244,6 @@ void Player::WeaponController::Shotgun()
     // if the arrow is pointing to the right
     const bool correction = arrow.GetRenderAngle() > 0 && arrow.GetRenderAngle() < 180; 
 
-    print(arrow.GetRenderAngle())
-    
     for(short i = 0; i < pellets; i++)
     {
         constexpr float pelletSpread = 10;
@@ -322,7 +329,7 @@ void Player::WeaponController::PreviousWeapon()
 void Player::WeaponController::Draw()
 {
     // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
-    arrow.SetRenderAngle((GetShootAngle() * 180/std::_Pi) + arrowOffset);
+    if(!rP.IsPaused()) arrow.SetRenderAngle((GetShootAngle() * 180/std::_Pi) + arrowOffset);
     arrow.Draw();
     for(auto& bullet : activeBullets)
     {

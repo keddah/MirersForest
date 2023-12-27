@@ -45,7 +45,7 @@ protected:
     float maxFallSpeed = 50;
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
-    void ApplyGravity(bool isPlayer = false, bool lowered = false, bool accelerated = false);
+    void ApplyGravity(bool isCharacter = false, bool lowered = false, bool accelerated = false);
     static constexpr float Gravity = 16;
     float currentGravity = Gravity;
     

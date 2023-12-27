@@ -1,5 +1,13 @@
-#include "TileManager.h"
+/**************************************************************************************************************
+* Tile Manager - Code
+*
+* The code file for the Tile manager class. Responsible for creating the tiles for the all the levels in the game. Also creates the finish line
+* (since it's just an invisible tile)
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
 
+#include "TileManager.h"
 #include "GameSingletons.h"
 
 TileManager::TileManager()
@@ -54,6 +62,8 @@ void TileManager::SetLevelSlide(short slide)
     // Going to the next area means that the inputted slide is further ahead than the current one
     const bool next = slide > levelSlide;
 
+    // If going to the next slide... while the current slide is less than parameter slide... (otherwise opposite)
+    // (Spawning on a random slide doesn't break the game)
     while(next? levelSlide < slide : levelSlide > slide)
     {
         for (auto& tile : tiles)
@@ -65,6 +75,7 @@ void TileManager::SetLevelSlide(short slide)
     }
 }
 
+// Used to move all the tiles to the position that was given when they were created.
 void TileManager::Reset()
 {
     while(levelSlide != 0)
@@ -89,7 +100,7 @@ void TileManager::Level1Tiles()
     {
         for(short darkRow = 0; darkRow < 140; darkRow++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, darkDirt2, tileSize);
+            Tile newTile = Tile(spawnPos, darkDirt2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -104,7 +115,7 @@ void TileManager::Level1Tiles()
     {
         for(short stoneRows = 0; stoneRows < 140; stoneRows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, stoneDirt2, tileSize);
+            Tile newTile = Tile(spawnPos, stoneDirt2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -119,7 +130,7 @@ void TileManager::Level1Tiles()
     {
         for(short dirtRows = 0; dirtRows < 140; dirtRows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, dirt2, tileSize);
+            Tile newTile = Tile(spawnPos, dirt2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -132,7 +143,8 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(start, tileSize * 55);
     for(short grass = 0; grass < 140; grass++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, grassDirt2, tileSize);
+        const bool dirt = grass == 105 || grass == 106 || grass == 107 || grass == 108;
+        Tile newTile = Tile(spawnPos, dirt? dirt2 : grassDirt2, tileSize);
     
         tiles.emplace_back(newTile);
     
@@ -140,18 +152,18 @@ void TileManager::Level1Tiles()
     }
     
     
-    Vector2 treeTrunk = Vector2(1200 + 30 * tileSize, spawnPos.y + tileSize);
+    Vector2 treeTrunk = Vector2(1200 + 30 * tileSize, spawnPos.y - tileSize);
     for(short hori = 0; hori < 4; hori++)
     {
-        for(short vert = 0; vert < 40; vert++)
+        for(short vert = 0; vert < 29; vert++)
         {
-            Tile newTile = Tile(tileSheet, treeTrunk, wood, tileSize);
+            Tile newTile = Tile(treeTrunk, wood, tileSize);
     
             tiles.emplace_back(newTile);
     
             treeTrunk.y -= tileSize;
         }
-        treeTrunk.y = spawnPos.y + tileSize;
+        treeTrunk.y = spawnPos.y - tileSize;
         treeTrunk.x += tileSize;
     }
     
@@ -161,7 +173,7 @@ void TileManager::Level1Tiles()
         for(short i = 0; i < 30; i++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves1 : leaves2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves1 : leaves2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -177,7 +189,7 @@ void TileManager::Level1Tiles()
         for(short i = 0; i < 30; i++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -193,7 +205,7 @@ void TileManager::Level1Tiles()
         for(short i = 0; i < 30; i++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -209,7 +221,7 @@ void TileManager::Level1Tiles()
         for(short i = 0; i < 30; i++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -226,7 +238,7 @@ void TileManager::Level1Tiles()
     {
         for(short vert = 0; vert < 42; vert++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, wood, tileSize);
+            Tile newTile = Tile(spawnPos, wood, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -239,7 +251,7 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(1516 + GameWindow::GetWindowWidth(), 660);
     for(short i = 0; i < 22; i++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, wood, tileSize);
+        Tile newTile = Tile(spawnPos, wood, tileSize);
 
         tiles.emplace_back(newTile);
 
@@ -250,7 +262,7 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(1716 + GameWindow::GetWindowWidth(), 750);
     for(short i = 0; i < 22; i++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, wood, tileSize);
+        Tile newTile = Tile(spawnPos, wood, tileSize);
 
         tiles.emplace_back(newTile);
 
@@ -264,7 +276,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 8; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -280,7 +292,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 8; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -296,7 +308,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 20; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -312,7 +324,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 20; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -328,7 +340,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 5; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -344,7 +356,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 15; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -360,7 +372,7 @@ void TileManager::Level1Tiles()
         for(short i = 0; i < 20; i++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -378,7 +390,7 @@ void TileManager::Level1Tiles()
             const short rnd = rand() % 2;
             if(i > 5 && i > 15)
             {
-                Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+                Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
                 tiles.emplace_back(newTile);
             }
             
@@ -395,7 +407,7 @@ void TileManager::Level1Tiles()
         for(short vert = 0; vert < 10; vert++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? leaves2 : leaves1, tileSize);
 
             tiles.emplace_back(newTile);
 
@@ -413,7 +425,7 @@ void TileManager::Level1Tiles()
     {
         for(short darkRow = 0; darkRow < 80; darkRow++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, darkDirt1, tileSize);
+            Tile newTile = Tile(spawnPos, darkDirt1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -428,7 +440,7 @@ void TileManager::Level1Tiles()
     {
         for(short stoneRows = 0; stoneRows < 80; stoneRows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, stoneDirt2, tileSize);
+            Tile newTile = Tile(spawnPos, stoneDirt2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -443,7 +455,7 @@ void TileManager::Level1Tiles()
     {
         for(short dirtRows = 0; dirtRows < 80; dirtRows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, dirt2, tileSize);
+            Tile newTile = Tile(spawnPos, dirt2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -456,7 +468,7 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(start, tileSize * 55);
     for(short grass = 0; grass < 80; grass++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, grassDirt2, tileSize);
+        Tile newTile = Tile(spawnPos, grassDirt2, tileSize);
     
         tiles.emplace_back(newTile);
     
@@ -468,7 +480,7 @@ void TileManager::Level1Tiles()
     {
         for(short dirtRows = 0; dirtRows < 20; dirtRows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, dirt1, tileSize);
+            Tile newTile = Tile(spawnPos, dirt1, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -481,7 +493,7 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(1510 + GameWindow::GetWindowWidth() * 2, 716);
     for(short i = 0; i < 31; i++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
 
         tiles.emplace_back(newTile);
 
@@ -494,7 +506,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -509,7 +521,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -524,7 +536,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 6; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -540,7 +552,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 20; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -558,7 +570,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -573,7 +585,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 6; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -586,7 +598,7 @@ void TileManager::Level1Tiles()
     spawnPos = Vector2(980 + GameWindow::GetWindowWidth() * 3, 400);
     for(short rows = 0; rows < 6; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+        Tile newTile = Tile(spawnPos, platform, tileSize);
 
         tiles.emplace_back(newTile);
 
@@ -598,7 +610,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 16; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -616,7 +628,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 100; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -631,7 +643,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 20; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -647,7 +659,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 20; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -664,7 +676,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 25; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -682,7 +694,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 16; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -698,7 +710,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 4; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
         
             tiles.emplace_back(newTile);
         
@@ -713,7 +725,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 4; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -728,7 +740,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 4; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -743,7 +755,7 @@ void TileManager::Level1Tiles()
     {
         for(short rows = 0; rows < 4; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, platform, tileSize);
+            Tile newTile = Tile(spawnPos, platform, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -760,7 +772,7 @@ void TileManager::Level1Tiles()
         for(short rows = 0; rows < 20; rows++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 1? end1 : end2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 1? end1 : end2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -774,7 +786,7 @@ void TileManager::Level1Tiles()
     spawnPos = {start, 0};
     while(spawnPos.y < GameWindow::GetWindowHeight())
     {
-        Tile newTile = Tile(tileSheet, spawnPos,invisible, tileSize, true);
+        Tile newTile = Tile(spawnPos,invisible, tileSize, true);
     
         tiles.emplace_back(newTile);
     
@@ -797,7 +809,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -818,7 +830,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -832,7 +844,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
     
             tiles.emplace_back(newTile);
     
@@ -845,7 +857,7 @@ void TileManager::Level2Tiles()
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 900, 400);
     for(short i = 0; i < 8; i++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
     
         tiles.emplace_back(newTile);
     
@@ -855,7 +867,7 @@ void TileManager::Level2Tiles()
     spawnPos = Vector2(GameWindow::GetWindowWidth() + 1500, 900);
     for(short i = 0; i < 8; i++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
     
         tiles.emplace_back(newTile);
     
@@ -869,7 +881,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -887,7 +899,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);    
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -904,7 +916,7 @@ void TileManager::Level2Tiles()
     spawnPos = Vector2(GameWindow::GetWindowWidth() * 2, -tileSize * 10);
     for(short rows = 0; rows < 24; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);    
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);    
         tiles.emplace_back(newTile);
     
         spawnPos.y += tileSize;
@@ -915,7 +927,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 13; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);    
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);    
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -927,7 +939,7 @@ void TileManager::Level2Tiles()
     spawnPos = {start - tileSize * 10, 200};
     for(short rows = 0; rows < 10; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);    
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);    
         tiles.emplace_back(newTile);
     
         spawnPos.x += tileSize;
@@ -941,7 +953,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -954,7 +966,7 @@ void TileManager::Level2Tiles()
     start = spawnPos.x;
     for(short rows = 0; rows < 20; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
     
         spawnPos.x += tileSize;
@@ -963,7 +975,7 @@ void TileManager::Level2Tiles()
     spawnPos = {start, 600};
     for(short rows = 0; rows < 6; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
     
         spawnPos.x += tileSize;
@@ -975,7 +987,7 @@ void TileManager::Level2Tiles()
         for(short rows = 0; rows < 15; rows++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 0? darkStone2 : softDarkStone, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 0? darkStone2 : softDarkStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -991,7 +1003,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1008,7 +1020,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1020,7 +1032,7 @@ void TileManager::Level2Tiles()
     spawnPos = {start - tileSize, 700};
     for(short rows = 0; rows < 5; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
     
         spawnPos.x -= tileSize;
@@ -1029,7 +1041,7 @@ void TileManager::Level2Tiles()
     spawnPos = {start - tileSize * 11, 400};
     for(short rows = 0; rows < 5; rows++)
     {
-        Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+        Tile newTile = Tile(spawnPos, lightishStone, tileSize);
         tiles.emplace_back(newTile);
     
         spawnPos.x += tileSize;
@@ -1041,7 +1053,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 16; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1059,7 +1071,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1074,7 +1086,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 12; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1089,7 +1101,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 14; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1104,7 +1116,7 @@ void TileManager::Level2Tiles()
     {
         for(short rows = 0; rows < 14; rows++)
         {
-            Tile newTile = Tile(tileSheet, spawnPos, lightishStone, tileSize);
+            Tile newTile = Tile(spawnPos, lightishStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1120,7 +1132,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1139,7 +1151,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1154,7 +1166,7 @@ void TileManager::Level2Tiles()
         for(short rows = 0; rows < 16; rows++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 0? darkStone2 : softDarkStone, tileSize);
+            Tile newTile = Tile(spawnPos, rnd == 0? darkStone2 : softDarkStone, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1170,7 +1182,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1188,7 +1200,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1207,7 +1219,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1226,7 +1238,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1243,7 +1255,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1259,7 +1271,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1276,7 +1288,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1293,7 +1305,7 @@ void TileManager::Level2Tiles()
         {
             const short rnd1 = rand() % 2;
             const short rnd2 = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
+            Tile newTile = Tile(spawnPos, rnd1 == 0? hardDarkStone: rnd2 == 0? darkStone3 : darkStone2, tileSize);
             tiles.emplace_back(newTile);
     
             spawnPos.x += tileSize;
@@ -1311,7 +1323,7 @@ void TileManager::Level2Tiles()
         for(short rows = 0; rows < 8; rows++)
         {
             const short rnd = rand() % 2;
-            Tile newTile = Tile(tileSheet, spawnPos, rnd == 0? end2: end1, tileSize, true);
+            Tile newTile = Tile(spawnPos, rnd == 0? end2: end1, tileSize, true);
             tiles.emplace_back(newTile);
     
             spawnPos.x -= tileSize;

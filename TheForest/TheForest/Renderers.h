@@ -99,25 +99,6 @@ public:
     SpriteRenderer(const std::string& spritePath, const Vector2& pos, bool animated = false, bool isLooping = true);
     SpriteRenderer(const std::vector<std::string>& spritePaths, const Vector2& pos, bool animated = true, bool isLooping = true);
 
-    SpriteRenderer& operator=(const SpriteRenderer& other)
-    {
-        thingsToRender = other.thingsToRender;
-        visible = other.visible;
-        renderIndex = other.renderIndex;
-        flip = other.flip;
-        size = other.size;
-        currentFrame = other.currentFrame;
-        isAnimated = other.isAnimated;
-        drawColour = other.drawColour;
-        drawRect = other.drawRect;
-        frameCount = other.frameCount;
-        sourceRect = other.sourceRect;
-        animSpeed = other.animSpeed;
-        looping = other.looping;
-        frameTimer = other.frameTimer;
-        return *this;
-    }
-
 private:
     // Used for things that will constantly be updated (like characters)
     const Vector2& posRef;

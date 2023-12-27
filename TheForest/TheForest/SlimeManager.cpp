@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Slime Manager - Code
+*
+* The code file for the Slime manager class. Responsible for spawning, updating and drawing all of the slimes that it creates. Also
+* handles when to draw/update the slimes depending on which slide the player is on. 
+*
+* Created by Dean Atkinson-Walker 2023
+***************************************************************************************************************/
+
 #include "SlimeManager.h"
 
 #include "GameSingletons.h"

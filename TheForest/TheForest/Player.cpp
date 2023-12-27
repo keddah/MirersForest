@@ -331,8 +331,13 @@ void Player::Move(float deltaTime)
     // Interpolating to the max speed...
     const float percentage = abs(velocity.x) / maxSpeed;
 
+    float acceleration;
+
     // If you're in the air use a multiplier to make controls more responsive (Get rewarded for being in the air)
-    const float acceleration = percentage * (falling? accelerationRate * airControl: accelerationRate);
+    if(!setFloatTimer) acceleration = percentage * (falling? accelerationRate * airControl: accelerationRate);
+
+    // If the float ability is enabled... give more air control
+    else acceleration = percentage * airControl * accelerationRate / 2;
     
     velocity.x += direction * acceleration * deltaTime;
 
