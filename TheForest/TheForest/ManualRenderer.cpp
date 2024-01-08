@@ -41,6 +41,8 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
+
+    SDL_FreeSurface(image);
 }
 
 ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)

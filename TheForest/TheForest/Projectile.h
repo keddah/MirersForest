@@ -28,7 +28,6 @@ public:
 	};
 	
 	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial, const std::vector<Tile>& floorRef);
-	~Projectile() = default;
 	
 	void Update(float deltaTime);
 	void FixedUpdate(float deltaTime);
@@ -69,8 +68,6 @@ public:
 	void Kill() { dying = true;}
 	void Explode();
 	void Beam(float deltaTime, Vector2 mousePos);
-	// bool IsPulling() const { return pulling; }
-	// const Vector2& GetPullPos() const { return pullPos; }
 	
 	const Vector2& GetRepulsion() const { return repulsion; }
 
@@ -91,8 +88,6 @@ private:
 	void Collisions();
 	
 
-	void Pull(Vector2  pullFrom);
-	
 	const float lifeSpan = 8;
 	float lifeTimer;
 	bool dead = false;
@@ -132,14 +127,12 @@ private:
 	
 	float shootDelay = .8f;
 	short ammoCost = 1;
-	float rechargeDelay;
 
 	float force = 8;
 
 	float renderRot;
 	Vector2 renderPivot;
 	
-	const short blastRadius = 15;
 
 	Vector2 repulsion;
 };

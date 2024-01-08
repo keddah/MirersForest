@@ -19,7 +19,6 @@ class Level
 {
 public:
     Level(short lvlNum);
-    ~Level();
     
     void FixedUpdate(float deltaTime);
     void Update(float deltaTime);
@@ -35,9 +34,7 @@ private:
     
     const short levelCount = 2;
     short currentLevel = 0;
-    
     short currentSlide = 0;
-
     bool completed = false;
 
     TileManager tileManager;

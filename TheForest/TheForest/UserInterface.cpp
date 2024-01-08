@@ -60,8 +60,8 @@ void UserInterface::Update(float deltaTime)
 void UserInterface::Draw()
 {
     for (auto& renderer : renderers) renderer.Draw();
-    for (auto& renderer : txtRenderers) renderer.Draw();
-    for(auto& button : buttons) button.Draw();
+    for (auto& renderer : txtRenderers) renderer->Draw();
+    for (auto& button : buttons) button.Draw();
     
     pauseScreen.Draw();
     deathScreen.Draw();
@@ -158,9 +158,9 @@ void UserInterface::CreateUI()
     // The text for the projectile.
     constexpr float projPadding = 30;
     const Vector2 projPos = Vector2(projBkgPos.x + projBkgSize.x/2 - projPadding, projBkgPos.y + projBkgSize.y - 30);
-    TextRenderer proj = TextRenderer(font_quicksand, currentProjectile, projTxtSize, projPos);
+    TextRenderer* proj = new TextRenderer(font_quicksand, currentProjectile, projTxtSize, projPos);
     txtRenderers.push_back(proj);
-    txtRenderers.back().SetRenderColour({120,200,200,255});
+    txtRenderers.back()->SetRenderColour({120,200,200,255});
     projIndex = txtRenderers.size() - 1;
         
     
@@ -175,9 +175,9 @@ void UserInterface::CreateUI()
     // The actual timer
     constexpr float timePadding = 2.5f;
     const Vector2 timerPos = Vector2(timerBkgPos.x + timePadding, timerBkgPos.y + timePadding);
-    TextRenderer timer = TextRenderer(font_oxygen, time, timeSize, timerPos);
+    TextRenderer* timer = new TextRenderer(font_oxygen, time, timeSize, timerPos);
     txtRenderers.push_back(timer);
-    txtRenderers.back().SetRenderColour({120,200,200,255});
+    txtRenderers.back()->SetRenderColour({120,200,200,255});
     timerIndex = txtRenderers.size() - 1;
 }
 
@@ -249,26 +249,26 @@ void UserInterface::CheckPlayerState()
     {
         case Projectile::EWeaponTypes::Seed:
             renderers[ammoIndex].SetRenderColour(seedColour);
-            txtRenderers[projIndex].SetRenderColour(seedColour);
+            txtRenderers[projIndex]->SetRenderColour(seedColour);
             renderers[projBkgIndex].SetRenderColour(seedBkgColour);
             currentProjectile = "SEED";
             break;
             
         case Projectile::EWeaponTypes::Petal:
             renderers[ammoIndex].SetRenderColour(petalColour);
-            txtRenderers[projIndex].SetRenderColour(petalColour);
+            txtRenderers[projIndex]->SetRenderColour(petalColour);
             renderers[projBkgIndex].SetRenderColour(petalBkgColour);
             currentProjectile = "PETAL";
             break;
         
         case Projectile::EWeaponTypes::Sun:
             renderers[ammoIndex].SetRenderColour(sunColour);
-            txtRenderers[projIndex].SetRenderColour(sunColour);
+            txtRenderers[projIndex]->SetRenderColour(sunColour);
             renderers[projBkgIndex].SetRenderColour(sunBkgColour);
             currentProjectile = "SUN";
             break;
     }
-    txtRenderers[projIndex].SetText(currentProjectile);
+    txtRenderers[projIndex]->SetText(currentProjectile);
 }
 
 void UserInterface::Respawning(float deltaTime)
@@ -331,7 +331,7 @@ void UserInterface::LevelTime(float deltaTime)
 
     // Keep a 00:00 format
     time = (minutes < 10? "0" + std::to_string(minutes) : std::to_string((minutes))) + ":" + (seconds < 10? "0" + std::to_string(static_cast<int>(seconds)) : std::to_string((static_cast<int>(seconds))));
-    txtRenderers[timerIndex].SetText(time);
+    txtRenderers[timerIndex]->SetText(time);
 }
 
 void UserInterface::ButtonPresses()
@@ -375,7 +375,7 @@ void UserInterface::Pausing()
         renderers[heartBkgIndex].SetVisibility(false);
         renderers[cooldownIndex].SetVisibility(false);
         renderers[ammoIndex].SetVisibility(false);
-        txtRenderers[projIndex].SetVisibility(false);
+        txtRenderers[projIndex]->SetVisibility(false);
 
         for(auto& btn: buttons) btn.Show();
 
@@ -396,7 +396,7 @@ void UserInterface::Pausing()
         renderers[cooldownIndex].SetVisibility(true);
         renderers[ammoIndex].SetVisibility(true);
         renderers[heartBkgIndex].SetVisibility(true);
-        txtRenderers[projIndex].SetVisibility(true);
+        txtRenderers[projIndex]->SetVisibility(true);
 
         for(auto& btn: buttons) btn.Hide();
         
@@ -415,6 +415,9 @@ void UserInterface::PressRestart()
 {
     rPlayer.Respawn(true);
     PressResume();
+    seconds = 0;
+    minutes = 0;
+
 }
 
 void UserInterface::PressQuit()

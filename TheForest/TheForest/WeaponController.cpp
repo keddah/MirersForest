@@ -18,7 +18,7 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
 
 Player::WeaponController::~WeaponController()
 {
-    for (const auto& bullet : activeBullets) delete &bullet;
+    activeBullets.clear();
 }
 
 void Player::WeaponController::FixedUpdate(float deltaTime)

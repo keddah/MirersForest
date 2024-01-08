@@ -15,6 +15,8 @@ class FlowerManager
 {
 public:
     FlowerManager(Player& player);
+    ~FlowerManager() { flowers.clear(); }
+
     void FixedUpdate(float deltaTime);
     void Draw();
     void SetLevelSlide(short slide);

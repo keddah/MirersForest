@@ -37,40 +37,40 @@ Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float
 	switch (type)
 	{
 		case EWeaponTypes::Seed:
-				renderer.ChangeSpriteSheet(special? 1 : 0);
+			renderer.ChangeSpriteSheet(special? 1 : 0);
 
-				impactVfx.ChangeSpriteSheet(special? 3 : 0);
-				impactVfx.SetAnimSpeed(.025f);
-				impactVfx.SetFrameCount(special? 11 : 12);
+			impactVfx.ChangeSpriteSheet(special? 3 : 0);
+			impactVfx.SetAnimSpeed(.025f);
+			impactVfx.SetFrameCount(special? 11 : 12);
 			
-				// impactVfx = new SpriteRenderer(impactPath, position, true, false);
-				impactOffset = special? -50 : -30;
-				break;
+			// impactVfx = new SpriteRenderer(impactPath, position, true, false);
+			impactOffset = special? -50 : -30;
+			break;
 				
-			case EWeaponTypes::Petal:
-				renderer.ChangeSpriteSheet(2);
+		case EWeaponTypes::Petal:
+			renderer.ChangeSpriteSheet(2);
 			
-				impactVfx.ChangeSpriteSheet(1);
-				impactVfx.SetAnimSpeed(.026f);
-				impactVfx.SetFrameCount(12);
+			impactVfx.ChangeSpriteSheet(1);
+			impactVfx.SetAnimSpeed(.026f);
+			impactVfx.SetFrameCount(12);
 
-				impactOffset = -30;
-				break;
+			impactOffset = -30;
+			break;
 			
-			case EWeaponTypes::Sun:
-				renderer.ChangeSpriteSheet(3);
+		case EWeaponTypes::Sun:
+			renderer.ChangeSpriteSheet(3);
 
-				renderPivot = {0, renderer.GetRect().y + renderer.GetRect().h / 2};
+			renderPivot = {0, renderer.GetRect().y + renderer.GetRect().h / 2};
 			
-				impactVfx.ChangeSpriteSheet(2);
-				impactVfx.SetAnimSpeed(.03f);
-				impactVfx.SetFrameCount(11);
-				impactOffset = 40;
-				break;
+			impactVfx.ChangeSpriteSheet(2);
+			impactVfx.SetAnimSpeed(.03f);
+			impactVfx.SetFrameCount(11);
+			impactOffset = 40;
+			break;
 				
-			// case EWeaponTypes::Thorn:
-			// 	typePath = thornPath;
-			// 	break;
+		// case EWeaponTypes::Thorn:
+		// 	typePath = thornPath;
+		// 	break;
 	}
 
 	if(type == EWeaponTypes::Sun && special)

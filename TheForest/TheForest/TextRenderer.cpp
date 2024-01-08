@@ -14,6 +14,7 @@ TextRenderer::TextRenderer(const std::string& filePath, std::string displayText,
 {
     fontPath = filePath;
     fontSize = size;
+
     ManualRenderer::SetPosition(pos);
     
     SetText(text);
@@ -21,19 +22,19 @@ TextRenderer::TextRenderer(const std::string& filePath, std::string displayText,
 
 void TextRenderer::SetText(const std::string& displayText)
 {
-    TTF_Font* txt = TTF_OpenFont(fontPath.c_str(), fontSize);
-
     text = displayText;
     
-    if(!txt)
+    font = TTF_OpenFont(fontPath.c_str(), fontSize);
+
+    if(!font)
     {
-        print("bad filePath")
+        print("bad filePath - text")
         return;
     }
 
     // The following creates an image representing the text that we input
-    SDL_Surface* textImage = TTF_RenderText_Solid(txt, text.c_str(), drawColour);
-    TTF_CloseFont(txt);
+    SDL_Surface* textImage = TTF_RenderText_Solid(font, text.c_str(), drawColour);
+    TTF_CloseFont(font);
 
     // If this isn't the first time setting the text...
     if(!thingsToRender.empty()) thingsToRender[0] = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), textImage);

@@ -31,7 +31,6 @@ public:
 
     // Delete all the textures then empty the vector.
     virtual ~ManualRenderer() { thingsToRender.clear(); }
-        // for(const auto& thing: thingsToRender) delete &thing;
 
     // Overriden means use the position reference
     virtual void Draw(bool referenced = false);
@@ -109,6 +108,8 @@ public:
     short GetCurrentFrame() const { return currentFrame; }
     void SetCurrentFrame(const short frame) { currentFrame = frame; }
 
+    void ReleaseTextures() { for (auto& thing : thingsToRender) SDL_DestroyTexture(thing); }
+
     void ChangeSpriteSheet(short index) override
     {
         renderIndex = index;
@@ -171,12 +172,15 @@ class TextRenderer : public ManualRenderer
 {
 public:
     TextRenderer(const std::string& filePath, std::string displayText, short size, Vector2 pos);
+    ~TextRenderer() { TTF_Quit(); }
 
     void SetText(const std::string& displayText);
     void SetFontSize(const short newSize) { fontSize = newSize; }
     
 private:
     std::string fontPath;
+    TTF_Font* font;
+
     std::string text;
     short fontSize;
 };

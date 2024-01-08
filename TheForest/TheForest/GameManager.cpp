@@ -36,9 +36,7 @@ GameManager::GameManager()
 		return;
 	}
 
-	int w, h;
-	SDL_GetWindowSize(GameWindow::GetWindow(), &w, &h);
-	GameWindow::SetWindowSize(w, h);
+	GameWindow::SetWindowSize(screenWidth, screenHeight);
 
 	GameWindow::SetRenderer(SDL_CreateRenderer(GameWindow::GetWindow(), -1, SDL_RENDERER_ACCELERATED));
 	if (!GameWindow::GetRenderer())

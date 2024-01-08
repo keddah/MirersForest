@@ -40,7 +40,7 @@ AudioManager::~AudioManager()
 void AudioManager::PlaySound(Esounds sound, bool overlap) const
 {
     // Stop the other sounds first if not allowed to overlap
-    if(Mix_Playing(-1) && !overlap) Mix_Pause(-1);
+    if(Mix_Playing(sfxChannel) && !overlap) Mix_Pause(sfxChannel);
 
     short index;
     switch (sound)

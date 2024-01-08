@@ -36,6 +36,6 @@ private:
 	bool running;
 	std::unique_ptr<GameSession> session;
 	
-	const int screenWidth = 1920;
-	const int screenHeight = 1080;
+	static constexpr int screenWidth = 1920;
+	static constexpr int screenHeight = 1080;
 };

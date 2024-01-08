@@ -27,6 +27,7 @@ void Slime::Update(float deltaTime)
 {
     if(dead || dying) return;
 
+    deathRenderer.SetPosition(position);
     Patrol(deltaTime);
 }
 
@@ -152,7 +153,7 @@ void Slime::DeathAnimation()
 {
     if(!dying) return;
 
-    deathRenderer.PlayAnimation();
+    deathRenderer.PlayAnimation(false);
 
     // Once the animation finishes ... is animating = false - Stop drawing/updating after that happens
     if(!deathRenderer.IsAnimating()) dead = true;

@@ -51,7 +51,7 @@ private:
     std::vector<Button> buttons;
     
     std::vector<ManualRenderer> renderers;
-    std::vector<TextRenderer> txtRenderers;
+    std::vector<TextRenderer*> txtRenderers;
 
     const std::string font_quicksand = "Fonts/Quicksand-Regular.ttf";
     const std::string font_oxygen = "Fonts/Oxygen-Regular.ttf";

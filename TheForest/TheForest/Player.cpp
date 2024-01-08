@@ -16,8 +16,8 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     // Change the protected values from the Physics class
     Physics::maxSpeed = maxMoveSpeed;
     Physics::maxFallSpeed = 100;
-    Physics::gravMultiplier = 1.85f;
-    Physics::decelerationRate = 275;
+    Physics::gravMultiplier = 1.65f;
+    Physics::decelerationRate = 295;
     
     position = {50, 400};
     grounded = true;
@@ -35,7 +35,6 @@ void Player::Update(float deltaTime)
     wc.Update(deltaTime);
     
     DamageTimer(deltaTime);
-    SectionDetection();
 
     // Kill the character if they fall off the level
     if(position.y > GameWindow::GetWindowHeight()) Death();
@@ -75,7 +74,8 @@ void Player::FixedUpdate(float deltaTime)
     // and update everything that needs to know.
     position += velocity;
     UpdateRectangle();
-
+    SectionDetection();
+    
     UpdateAnimation();
 
     // Ran in update to check for the input

@@ -19,14 +19,6 @@ Level::Level(short lvlNum) : currentLevel(lvlNum)
     audio.PlayMusic();
 }
 
-Level::~Level()
-{
-    delete &ui;
-    delete &tileManager;
-    delete &slimeManger;
-    delete &flowerManager;
-    delete &player;
-}
 
 void Level::FixedUpdate(float deltaTime)
 {

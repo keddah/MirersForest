@@ -17,12 +17,12 @@ class GameWindow
 public:
     static void SetRenderer(SDL_Renderer* r)
     {
-        renderer = r;
+        if(r) renderer = r;
     }
 
     static void SetWindow(SDL_Window* w)
     {
-        window = w;
+        if(w) window = w;
     }
 
     static void SetWindowSize(int w, int h)
@@ -33,8 +33,18 @@ public:
 
     static void CloseGame()
     {
-        SDL_DestroyRenderer(GetRenderer());
-        SDL_DestroyWindow(GetWindow());
+        if (renderer)
+        {
+            SDL_DestroyRenderer(GetRenderer());
+            renderer = nullptr;
+        }
+
+        if (window)
+        {
+            SDL_DestroyWindow(GetWindow());
+            window = nullptr;
+        }
+
         SDL_Quit();
     }
 
