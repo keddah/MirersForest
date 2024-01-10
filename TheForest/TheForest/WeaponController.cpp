@@ -16,11 +16,6 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
     arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
-Player::WeaponController::~WeaponController()
-{
-    activeBullets.clear();
-}
-
 void Player::WeaponController::FixedUpdate(float deltaTime)
 {
     // Everything movement related

@@ -14,9 +14,10 @@ class Tile
 {
 public:
     Tile(Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
-
+    
     const ManualRenderer& GetRenderer() const { return renderer; }
     void Draw() { renderer.Draw(); }
+    void Destroy() { renderer.DestroyAllTextures(); }
     
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2 pos) { position = pos; renderer.SetPosition(pos); }

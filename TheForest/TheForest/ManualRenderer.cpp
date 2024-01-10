@@ -24,6 +24,7 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
     }
     
     thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+    SDL_FreeSurface(image);
 
     if (!thingsToRender[renderIndex])
     {
@@ -41,8 +42,6 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
     sourceRect.y = 0;
     sourceRect.w = size.x;
     sourceRect.h = size.y;
-
-    SDL_FreeSurface(image);
 }
 
 ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)

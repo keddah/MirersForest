@@ -26,6 +26,7 @@ void TileManager::MakeTiles(short lvlIndex, const bool reset)
     if(reset)
     {
         levelSlide = 0;
+        for(auto& tile : tiles) tile.Destroy();
         tiles.clear();
     }
     
@@ -44,10 +45,10 @@ void TileManager::MakeTiles(short lvlIndex, const bool reset)
             break;
     }
 
-    const int screenWidth = GameWindow::GetWindowWidth(); 
+    const int width = GameWindow::GetWindowWidth(); 
     
     // Set which slide each tile is supposed to be on.
-    for (auto& tile : tiles) tile.SetSlide(static_cast<short>(floor((tile.GetPosition().x + tileSize * .5f) / screenWidth)));
+    for (auto& tile : tiles) tile.SetSlide(static_cast<short>(floor((tile.GetPosition().x + tileSize * .5f) / width)));
 }
 
 void TileManager::SetLevelSlide(short slide)

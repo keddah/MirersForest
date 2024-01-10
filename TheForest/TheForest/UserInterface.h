@@ -73,9 +73,9 @@ private:
     const SDL_Color petalBkgColour = {17,10,30,100};
     const SDL_Color sunBkgColour = {35,35,10 , 100};
     
-    const SDL_Color seedColour = {16, 219,54, 200};
-    const SDL_Color petalColour = {80, 15, 200,200};
-    const SDL_Color sunColour = {240, 250, 0, 200};
+    const SDL_Color seedColour = {16, 219,54, 220};
+    const SDL_Color petalColour = {80, 15, 200,220};
+    const SDL_Color sunColour = {240, 250, 0, 220};
     
     float maxBarWidth;
     float barWidth;

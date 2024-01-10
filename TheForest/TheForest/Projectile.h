@@ -28,7 +28,7 @@ public:
 	};
 	
 	Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon, Vector2 pos, float angle, Vector2 plyrVelocity, bool isSpecial, const std::vector<Tile>& floorRef);
-	
+
 	void Update(float deltaTime);
 	void FixedUpdate();
 
@@ -61,7 +61,16 @@ public:
 		if (lifeTimer > lifeSpan) dead = true;
 	}
 	
-	bool IsDead() const { return dead; }
+	bool IsDead()
+	{ 
+		if (dead)
+		{
+			renderer.DestroyAllTextures(); 
+			impactVfx.DestroyAllTextures();
+		}
+		return dead; 
+	}
+
 	bool IsDying() const { return dying; }
 	bool IsSpecial() const { return special; }
 	

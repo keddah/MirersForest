@@ -16,6 +16,7 @@
 
 #include <SDL_rect.h>
 #include <SDL_render.h>
+
 #include "SDL_ttf.h"
 #include <vector>
 
@@ -29,8 +30,10 @@ public:
     ManualRenderer(const std::string& spritePath, Vector2 pos);
     ManualRenderer(const Vector2& pos, Vector2 drawSize);
 
-    // Delete all the textures then empty the vector.
     virtual ~ManualRenderer() { thingsToRender.clear(); }
+
+    // Delete all the textures then empty the vector.
+    virtual void DestroyAllTextures() { for (const auto& texture : thingsToRender) SDL_DestroyTexture(texture); thingsToRender.clear(); }
 
     // Overriden means use the position reference
     virtual void Draw(bool referenced = false);
@@ -169,12 +172,18 @@ private:
 class TextRenderer : public ManualRenderer
 {
 public:
-    TextRenderer(const std::string& filePath, std::string displayText, short size, Vector2 pos);
-    ~TextRenderer() override { ManualRenderer::~ManualRenderer(); TTF_Quit(); }
+    TextRenderer(const std::string& filePath, std::string displayText, short _fontSize, Vector2 pos);
+    ~TextRenderer() override
+    {
+        for(SDL_Texture* texture : thingsToRender) SDL_DestroyTexture(texture);
+        ManualRenderer::~ManualRenderer();
+        TTF_CloseFont(font);
+        TTF_Quit();
+    }
 
     void SetText(const std::string& displayText);
     void SetFontSize(const short newSize) { fontSize = newSize; }
-    
+
 private:
     std::string fontPath;
     TTF_Font* font;

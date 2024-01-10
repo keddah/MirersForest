@@ -25,7 +25,14 @@ void Level::FixedUpdate(float deltaTime)
     player.FixedUpdate(deltaTime);
     slimeManger.FixedUpdate(deltaTime);
     flowerManager.FixedUpdate(deltaTime);
+}
 
+void Level::Update(float deltaTime)
+{
+    player.Update(deltaTime);
+    ui.Update(deltaTime);
+    slimeManger.Update(deltaTime);
+    
     // Check if it should go to the next level after setting completed
     completed = player.IsFinished();
     NextLevel();
@@ -42,13 +49,6 @@ void Level::FixedUpdate(float deltaTime)
 
     // Don't sync the slides if the player is respawning (since the slides all need to be set to 0 anyway)
     else SyncSlides();
-}
-
-void Level::Update(float deltaTime)
-{
-    player.Update(deltaTime);
-    ui.Update(deltaTime);
-    slimeManger.Update(deltaTime);
 }
 
 void Level::Draw()

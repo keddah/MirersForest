@@ -65,16 +65,17 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
     {
         SDL_Surface* image = ManualRenderer::SetSprite(path);
         
-        if (!GameWindow::GetRenderer()) print("COuldn't get renderer.")
-        else thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
-
-        if (!thingsToRender[renderIndex])
+        if (!GameWindow::GetRenderer())
         {
-            print("nothing to render.")
-                return;
+            print("COuldn't get renderer.")
+            return;
         }
+        
+        thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+
         size.x = isAnimated? image->w / frameCount: image->w;
         size.y = image->h;
+        SDL_FreeSurface(image);
 
         // It's position will be set by the owner of this object
         drawRect.w = size.x;
@@ -85,7 +86,6 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
         sourceRect.w = size.x;
         sourceRect.h = size.y;
 
-        SDL_FreeSurface(image);
 
         // Start on a random frame so that the animations aren't synced up
         looping = isLooping;

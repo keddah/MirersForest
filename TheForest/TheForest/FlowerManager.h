@@ -30,7 +30,8 @@ private:
     public:
         FlowerUp() = default;
         FlowerUp(Player& player, Vector2 pos);
-
+        // ~FlowerUp() { renderer.DestroyAllTextures(); }
+        
         void Update(float deltaTime);
         void Draw() { if(!used) renderer.Draw(); }
 
@@ -39,6 +40,7 @@ private:
         Vector2 GetPosition() const { return position; }
 
         short GetLevelSlide() const { return levelSlide; }
+        void SetSlide(const short slide) { levelSlide = slide; }
         void Reset() { used = false; respawnTimer = 0;}
     
     private:

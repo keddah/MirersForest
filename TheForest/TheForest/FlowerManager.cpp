@@ -25,33 +25,57 @@ void FlowerManager::FixedUpdate(float deltaTime)
 
 void FlowerManager::Draw()
 {
-    for (auto& flower : flowers)
+    for(auto& flower : flowers)
     {
-        // Draw the flower if its on the correct slide
-        if(flower.GetLevelSlide() == levelSlide) flower.Draw(); 
+        if(flower.GetLevelSlide() == levelSlide) flower.Draw();
     }
 }
 
 void FlowerManager::SetLevelSlide(const short slide)
 {
+    // Only do anything if it's a new slide
     if(slide == levelSlide) return;
 
+    const int screenWidth = GameWindow::GetWindowWidth(); 
+    
+    // Going to the next area means that the inputted slide is further ahead than the current one
     const bool next = slide > levelSlide;
 
+    // If going to the next slide... while the current slide is less than parameter slide... (otherwise opposite)
+    // (Spawning on a random slide doesn't break the game)
     while(next? levelSlide < slide : levelSlide > slide)
     {
         for (auto& flower : flowers)
         {
             // Move every tile left/right (keeping their Y value)
-            flower.SetPosition({flower.GetPosition().x + (next? -GameWindow::GetWindowWidth(): GameWindow::GetWindowWidth()), flower.GetPosition().y});
+            flower.SetPosition({flower.GetPosition().x + (next? -screenWidth: screenWidth), flower.GetPosition().y});
         }
         levelSlide += next? 1 : -1;
     }
 }
 
+void FlowerManager::Reset()
+{
+    const int screenWidth = GameWindow::GetWindowWidth();
+    
+    while(levelSlide != 0)
+    {
+        for (auto& flower : flowers)
+        {
+            // Move every tile left/right (keeping their Y value)
+            flower.SetPosition({flower.GetPosition().x + screenWidth, flower.GetPosition().y});
+        }
+        levelSlide--;
+    }
+}
+
 void FlowerManager::SpawnFlowers(short lvlIndex, const bool reset)
 {
-    if(reset) flowers.clear();
+    if(reset)
+    {
+        levelSlide = 0;
+        flowers.clear();
+    }
     
     switch (lvlIndex)
     {
@@ -66,6 +90,12 @@ void FlowerManager::SpawnFlowers(short lvlIndex, const bool reset)
     default:
         Level1Flowers();
         break;
+    }
+
+    const int width = GameWindow::GetWindowWidth();
+    for (auto& flower : flowers)
+    {
+        flower.SetSlide(static_cast<short>(floor(flower.GetPosition().x / width)));
     }
 }
 
@@ -82,47 +112,32 @@ void FlowerManager::Level1Flowers()
 
 void FlowerManager::Level2Flowers()
 {
+    const int screenWidth = GameWindow::GetWindowWidth(); 
     //\\//\\//\\//\\// 3rd Slide //\\//\\//\\//\\// 
 
-    const FlowerUp one = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 100, 770));
+    const FlowerUp one = FlowerUp(rPlayer, Vector2( screenWidth * 2 + 100, 770));
     flowers.push_back(one);
 
-    const FlowerUp two = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 2 + 1400, 990));
+    const FlowerUp two = FlowerUp(rPlayer, Vector2(screenWidth * 2 + 1400, 990));
     flowers.push_back(two);
 
 
     //\\//\\//\\//\\// 4th Slide //\\//\\//\\//\\// 
 
-    const FlowerUp three = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 3 + 400, 570));
+    const FlowerUp three = FlowerUp(rPlayer, Vector2(screenWidth * 3 + 400, 570));
     flowers.push_back(three);
 
 
     //\\//\\//\\//\\// 5th Slide //\\//\\//\\//\\// 
 
-    const FlowerUp four = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 4 + 1700, 420));
+    const FlowerUp four = FlowerUp(rPlayer, Vector2(screenWidth * 4 + 1700, 420));
     flowers.push_back(four);
 
     
     //\\//\\//\\//\\// 7th Slide //\\//\\//\\//\\// 
 
-    const FlowerUp five = FlowerUp(rPlayer, Vector2(GameWindow::GetWindowWidth() * 6 + 500, 870));
+    const FlowerUp five = FlowerUp(rPlayer, Vector2(screenWidth * 6 + 500, 870));
     flowers.push_back(five);
-}
-
-
-void FlowerManager::Reset()
-{
-    while(levelSlide != 0)
-    {
-        for (auto& flower : flowers)
-        {
-            flower.Reset();
-
-            // Move every tile left/right (keeping their Y value)
-            flower.SetPosition({flower.GetPosition().x + GameWindow::GetWindowWidth(), flower.GetPosition().y});
-        }
-        levelSlide--;
-    }
 }
 
 
@@ -130,9 +145,7 @@ void FlowerManager::Reset()
 
 FlowerManager::FlowerUp::FlowerUp(Player& player, Vector2 pos): position(pos), rP(player)
 {
-    int screenWidth;
-    SDL_GetWindowSize(GameWindow::GetWindow(), &screenWidth, nullptr);
-    levelSlide = static_cast<short>(floor(position.x / screenWidth));
+    renderer.SetVisibility(true);
 }
 
 void FlowerManager::FlowerUp::Update(float deltaTime)

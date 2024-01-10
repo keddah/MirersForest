@@ -17,6 +17,8 @@ SlimeManager::SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const Audi
 
 void SlimeManager::Update(float deltaTime) const
 {
+    if(rPlayer.IsPaused()) return;
+    
     for (const auto& slime: slimes)
     {
         if(slime->GetLevelSlide() != levelSlide) continue;
@@ -26,6 +28,8 @@ void SlimeManager::Update(float deltaTime) const
 
 void SlimeManager::FixedUpdate(float deltaTime)
 {
+    if(rPlayer.IsPaused()) return;
+
     for(int i = 0; i < slimes.size(); i++)
     {
         if(slimes[i]->GetLevelSlide() != levelSlide) continue;
@@ -41,6 +45,8 @@ void SlimeManager::Draw() const
     {
         if(slime->GetLevelSlide() == levelSlide)
         {
+            // Don't animate if the game is paused
+            slime->GetRenderer().SetIsAnimated(!rPlayer.IsPaused());
             slime->Draw();
             slime->DeathAnimation();
         }
@@ -93,9 +99,10 @@ void SlimeManager::SpawnSlimes(const short lvlIndex)
             break;
     }
 
+    const int width = GameWindow::GetWindowWidth();
     for (const auto& slime : slimes)
     {
-        slime->SetSlide(static_cast<short>(floor(slime->GetPosition().x / GameWindow::GetWindowWidth())));
+        slime->SetSlide(static_cast<short>(floor(slime->GetPosition().x / width)));
     }
 }
 

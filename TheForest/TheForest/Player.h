@@ -21,7 +21,8 @@ class Player : public Physics
 {
 public:
     Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound);
-
+    ~Player() { renderer.DestroyAllTextures(); }
+    
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
 
@@ -80,7 +81,7 @@ private:
     {
     public:
         WeaponController(Player* pP);
-        ~WeaponController();
+        ~WeaponController() { arrow.DestroyAllTextures(); activeBullets.clear(); }
 
         void Update(float deltaTime);
         void FixedUpdate(float deltaTime);

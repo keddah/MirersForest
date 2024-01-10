@@ -22,7 +22,6 @@ Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioMan
     position = {50, 400};
     grounded = true;
     renderer.SetFrameCount(4);
-
 }
 
 void Player::Update(float deltaTime)
@@ -30,6 +29,9 @@ void Player::Update(float deltaTime)
     controller.Update();
     Pausing();
 
+    // Don't animate if the game is paused
+    renderer.SetIsAnimated(!paused);
+    
     if(dead || paused || canFinish) return;
 
     wc.Update(deltaTime);
@@ -105,6 +107,7 @@ void Player::Reset()
     Float();
     
     rCurrentSlide = 0;
+    velocity = {};
     position = {50, 400};
     finished = false;
     canFinish = false;

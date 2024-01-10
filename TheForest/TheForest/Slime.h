@@ -14,7 +14,7 @@ class Slime: public Physics
 {
 public:
     Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound);
-    ~Slime() = default;
+    ~Slime() { renderer.DestroyAllTextures(); deathRenderer.DestroyAllTextures(); }
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
@@ -33,7 +33,7 @@ public:
     
     bool IsDead() const { return dead; }
     
-    const SpriteRenderer& GetRenderer() const { return renderer; }
+    SpriteRenderer& GetRenderer() { return renderer; }
 
 private:
     const std::vector<std::string> slimeSheets {"Sprites/Slimes/SlimeSheet.png", "Sprites/Slimes/movingSlime.png"};
