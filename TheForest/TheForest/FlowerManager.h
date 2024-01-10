@@ -63,7 +63,7 @@ private:
     
     std::vector<FlowerUp> flowers = std::vector<FlowerUp>();
     
-    short levelSlide;
+    short levelSlide = 0;
     
     void Level1Flowers();
     void Level2Flowers();

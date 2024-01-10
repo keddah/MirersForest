@@ -108,8 +108,6 @@ public:
     short GetCurrentFrame() const { return currentFrame; }
     void SetCurrentFrame(const short frame) { currentFrame = frame; }
 
-    void ReleaseTextures() { for (auto& thing : thingsToRender) SDL_DestroyTexture(thing); }
-
     void ChangeSpriteSheet(short index) override
     {
         renderIndex = index;
@@ -172,7 +170,7 @@ class TextRenderer : public ManualRenderer
 {
 public:
     TextRenderer(const std::string& filePath, std::string displayText, short size, Vector2 pos);
-    ~TextRenderer() { TTF_Quit(); }
+    ~TextRenderer() override { ManualRenderer::~ManualRenderer(); TTF_Quit(); }
 
     void SetText(const std::string& displayText);
     void SetFontSize(const short newSize) { fontSize = newSize; }

@@ -26,7 +26,7 @@ void Player::WeaponController::FixedUpdate(float deltaTime)
     // Everything movement related
     for(auto& bullet : activeBullets)
     {
-        bullet.FixedUpdate(deltaTime);
+        bullet.FixedUpdate();
         bullet.Beam(deltaTime, rP.controller.GetMousePosition());
     }
 }

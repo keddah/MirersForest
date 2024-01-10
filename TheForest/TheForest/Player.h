@@ -21,7 +21,6 @@ class Player : public Physics
 {
 public:
     Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound);
-    ~Player() = default;
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
@@ -29,7 +28,7 @@ public:
     // Draw weapons before drawing the player so that the arrow is behind the player.
     void Draw() { wc.Draw(); renderer.Draw(); }
 
-    short GetLevelSlide() const { return currentSlide; }
+    short GetLevelSlide() const { return rCurrentSlide; }
 
     void NextLevel() { finished = true; }
     
@@ -139,9 +138,9 @@ private:
             },  arrowPos, false);
 
         // The force used to throw the projectiles
-        const int seedForce = 16;
-        const int petalForce = 12;
-        const int sunForce = 32;
+        const short seedForce = 16;
+        const short petalForce = 12;
+        const short sunForce = 32;
         // const int thornForce = 8;
 
         // The delay between each shot 
@@ -177,11 +176,9 @@ private:
         const Vector2 spawnOffset = {-90, 75};
     };
 
-
-
     
     const std::vector<Tile>& tiles;
-    short& currentSlide;
+    short& rCurrentSlide;
     const AudioManager& rAudio;
 
     // int screenWidth, screenHeight;
@@ -239,16 +236,16 @@ private:
     
     
     ////// Acceleration/Deceleration
-    const float accelerationRate = 240;
+    const int accelerationRate = 240;
     float moveSpeed = 2.2f;
-    const float maxMoveSpeed = 20;
+    const short maxMoveSpeed = 20;
     
     bool decelerating;
     
     ////// Jumping
     bool jumping;
     bool jumpBuffer;
-    const float airControl = 5;
+    const short airControl = 5;
     const float jumpHeight = 11.5f;
     const float jumpForce = 35;
 
@@ -263,6 +260,8 @@ private:
     bool respawning;
 
     bool isDamaged;
+    
+    // In seconds
     const float dmgCooldown = 1.5f;
     float dmgTimer;
 

@@ -29,8 +29,8 @@ private:
     const std::string tileSheet = "TileSets/Textures-16.png"; 
 
     Vector2 position;
-    ManualRenderer renderer;
+    ManualRenderer renderer = ManualRenderer("TileSets/Textures-16.png", position);
     
-    short levelSlide;
+    short levelSlide = 0;
     bool finishLine;
 };

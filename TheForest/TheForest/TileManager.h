@@ -16,7 +16,7 @@
 class TileManager
 {
 public:
-    TileManager();
+    TileManager() = default;
     void Draw();
     
     std::vector<Tile>& GetTiles() { return tiles; }
@@ -51,7 +51,7 @@ private:
     const SDL_Rect end2 {tileSize * 2,tileSize * 22, tileSize, tileSize};
     const SDL_Rect invisible {tileSize * 16, 0, tileSize, tileSize};
 
-    short levelSlide;
+    short levelSlide = 0;
     std::vector<Tile> tiles;
 
     void Level1Tiles();

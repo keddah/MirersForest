@@ -9,7 +9,7 @@
 
 #include "Tile.h"
 
-Tile::Tile(Vector2 pos, SDL_Rect source, int tileSize, const bool isFinish): position(pos), renderer("TileSets/Textures-16.png", position)
+Tile::Tile(Vector2 pos, SDL_Rect source, int tileSize, const bool isFinish): position(pos)
 {
     renderer.FromTileSheet(source, tileSize);
 

@@ -62,7 +62,7 @@ private:
     short patrolIndex;
 
     // The section of the level that this slime is present on
-    short levelSlide;
+    short levelSlide = 0;
     
     void Collisions();
     void Patrol(float deltaTime);

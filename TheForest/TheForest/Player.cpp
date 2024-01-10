@@ -11,7 +11,7 @@
 
 #include "GameSingletons.h"
 
-Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound): tiles(floorTiles), currentSlide(slide), rAudio(sound)
+Player::Player(const std::vector<Tile>& floorTiles, short& slide, const AudioManager& sound): tiles(floorTiles), rCurrentSlide(slide), rAudio(sound)
 {
     // Change the protected values from the Physics class
     Physics::maxSpeed = maxMoveSpeed;
@@ -104,7 +104,7 @@ void Player::Reset()
     // To make the player's location more noticeable
     Float();
     
-    currentSlide = 0;
+    rCurrentSlide = 0;
     position = {50, 400};
     finished = false;
     canFinish = false;
@@ -186,7 +186,7 @@ void Player::SectionDetection()
     {
         // Since the slide is a reference, it updates the Level object's value too. This value is used to set the other objects
         // That need it too.
-        currentSlide++;
+        rCurrentSlide++;
         position.x = -rect.w/2;
 
         for (auto& bullet : wc.GetActiveBullets())
@@ -195,9 +195,9 @@ void Player::SectionDetection()
         }
     }
     
-    else if(currentSlide > 0 && position.x + velocity.x < -rect.w - 1)
+    else if(rCurrentSlide > 0 && position.x + velocity.x < -rect.w - 1)
     {
-        currentSlide--;
+        rCurrentSlide--;
 
         // Keep the velocity and set the position to the right of the screen (the velocity would be going left if going to the previous slide)
         position.x = GameWindow::GetWindowWidth() - rect.w;
@@ -210,7 +210,7 @@ void Player::SectionDetection()
     }
 
     // Stop the player from going offscreen if there isn't a slide
-    else if(currentSlide == 0 && position.x + velocity.x < 0)
+    else if(rCurrentSlide == 0 && position.x + velocity.x < 0)
     {
         velocity.x = 0;
         position.x = 0;
@@ -253,7 +253,7 @@ void Player::Collisions()
     for (auto& tile : tiles)
     {
         // Don't collide with anything that isn't visible / in the same slide
-        if(tile.GetLevelSlide() != currentSlide) continue;
+        if(tile.GetLevelSlide() != rCurrentSlide) continue;
 
         // Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separetly.
         const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};

@@ -10,12 +10,6 @@
 #include "TileManager.h"
 #include "GameSingletons.h"
 
-TileManager::TileManager()
-{
-    //tiles.push_back(test);
-    //MakeTiles();
-}
-
 void TileManager::Draw()
 {
     for (auto& tile : tiles)

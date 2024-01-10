@@ -99,7 +99,7 @@ void Projectile::Update(float deltaTime)
 	UpdateRect();
 }
 
-void Projectile::FixedUpdate(float deltaTime)
+void Projectile::FixedUpdate()
 {
 	if(dying) return;
 
@@ -151,7 +151,7 @@ void Projectile::Collisions()
 	for (auto& tile : tiles)
 	{
 		// Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separately.
-		const SDL_FRect tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
+		const auto tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
 
 		if(SDL_HasIntersectionF(&tileRect, &rect))
 		{
@@ -214,9 +214,3 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	drag = 6;
 	gravMultiplier = 3;
 }
-
-// void Projectile::Pull(Vector2 pullFrom)
-// {
-// 	pulling = true;
-// 	pullPos = pullFrom;
-// }

@@ -124,5 +124,5 @@ private:
     void Pausing();
     void PressResume();
     void PressRestart();
-    void PressQuit();
+    static void PressQuit();
 };

@@ -19,10 +19,10 @@ AudioManager::AudioManager()
         return;
     }
 
-    for(int i = 0; i < soundsLength; i++)
+    for (const auto& soundPath : soundPaths)
     {
         std::stringstream file;
-        file << soundPaths[i];
+        file << soundPath;
         Mix_Chunk* newSound = Mix_LoadWAV(file.str().c_str());
         sounds.push_back(newSound);
     }

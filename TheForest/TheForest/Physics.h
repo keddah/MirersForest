@@ -20,7 +20,7 @@ public:
 
 private:
     bool gravityOn = true;
-    float airTime;
+    float airTime = 0;
 
 protected:
     Vector2 position;
@@ -31,7 +31,7 @@ protected:
     void SetVelocity(float x = 0, float y = 0) { velocity = {x, y}; }
     void SetVelocity(const Vector2 newValue) { velocity = newValue; }
     
-    float decelerationRate = 175;
+    int decelerationRate = 175;
     float drag = 10;
 
     float GetAirTime() const { return airTime; }
@@ -41,8 +41,8 @@ protected:
     float lowMultiplier = minLowMultiplier;
     
     float gravMultiplier = 1;
-    float maxSpeed = 20;
-    float maxFallSpeed = 50;
+    int maxSpeed = 20;
+    int maxFallSpeed = 50;
 
     // Lowered = whether the gravity should be floatier - Accelerated = the opposite
     void ApplyGravity(bool isCharacter = false, bool lowered = false, bool accelerated = false);

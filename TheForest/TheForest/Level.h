@@ -25,6 +25,7 @@ public:
     void Draw();
 
 private:
+    // This constructor for the spriteRenderer needs a reference (this is the reference) 
     Vector2 empty;
     const std::vector<std::string> backgrounds = {"Sprites/background.jpg", "Sprites/caveBkg.jpg"};
     SpriteRenderer bkg = SpriteRenderer(backgrounds, empty, false);

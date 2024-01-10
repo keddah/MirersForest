@@ -9,7 +9,7 @@
 #include "GameManager.h"
 
 
-// Initialise SDL in this constructer
+// Initialise SDL in this constructor
 GameManager::GameManager()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -47,43 +47,19 @@ GameManager::GameManager()
 	}
 	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
 
-	session = std::unique_ptr<GameSession>(new GameSession());
+	pSession = std::make_unique<GameSession>();
 	running = true;
 }
 
-GameManager::~GameManager()
-{
-	GameWindow::CloseGame();
-}
-
-void GameManager::Update() const
-{
-	session->Update(Time::GetDeltaTime());
-}
-
-// Gets called in a while loop in the main function
-void GameManager::FixedUpdate() const
-{
-	// Update all the things that need to be updated for the current session.
-	session->FixedUpdate(Time::GetDeltaTime());
-}
 
 void GameManager::Draw() const
 {
-	SDL_SetRenderDrawColor(GameWindow::GetRenderer(), 0, 15, 10, 255);
-	SDL_RenderFillRect(GameWindow::GetRenderer(), nullptr);
-
 	// Clear the screen before rendering something new
 	SDL_RenderClear(GameWindow::GetRenderer());
 
 	// Render everything that needs to be rendered in the current session
-	session->Draw();
+	pSession->Draw();
 
 	// Actually display the new things
 	SDL_RenderPresent(GameWindow::GetRenderer());
-}
-
-bool GameManager::IsRunning() const
-{
-	return running;
 }
