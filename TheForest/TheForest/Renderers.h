@@ -189,6 +189,8 @@ public:
     void SetFontSize(const short newSize) { fontSize = newSize; }
 
 private:
+    std::string fontPath;
+
     std::string text;
     short fontSize;
 };

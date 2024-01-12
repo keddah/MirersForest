@@ -11,7 +11,7 @@
 
 TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short fontsize, Vector2 pos) : text(std::move(displayText))
 {
-    imagePath = filePath;
+    fontPath = filePath;
     fontSize = fontsize;
 
     ManualRenderer::SetPosition(pos);
@@ -26,7 +26,7 @@ void TextRenderer::SetText(const std::string& displayText)
     // If there's already a texture, destroy it so that a new one can replace it.
     if(!thingsToRender.empty()) if(thingsToRender.front()) SDL_DestroyTexture(thingsToRender.front());
     
-    TTF_Font* font = TTF_OpenFont(imagePath.c_str(), fontSize);
+    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
 
     if(!font)
     {
@@ -61,36 +61,24 @@ void TextRenderer::SetText(const std::string& displayText)
 *
 * Created by Dean Atkinson-Walker 2023
 ***************************************************************************************************************/
-//
+
+// #include "GameSingletons.h"
 // #include "Renderers.h"
 //
 // TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short _fontSize, Vector2 pos) : text(std::move(displayText))
 // {
-//     imagePath = filePath;
+//     fontPath = filePath;
 //     fontSize = _fontSize;
 //     
 //     ManualRenderer::SetPosition(pos);
 //
-//     TTF_Font* font = TTF_OpenFont(imagePath.c_str(), fontSize);
-//     
-//     if(!font)
-//     {
-//         print("invalid font")
-//         return;
-//     }
+//     font = TTF_OpenFont(fontPath.c_str(), fontSize);
 //     
 //     // Render text to surface
 //     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), drawColour);
-//     TTF_CloseFont(font);
-//
-//     if(!textSurface)
-//     {
-//         print("invalid surface")
-//         return;
-//     }
 //     
 //     // Create texture from surface
-//     thingsToRender.emplace_back(SDL_CreateTextureFromSurface(renderer, textSurface));
+//     thingsToRender.emplace_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), textSurface));
 //     
 //     size = Vector2(textSurface->w, textSurface->h);
 //     SDL_FreeSurface(textSurface);
@@ -103,8 +91,6 @@ void TextRenderer::SetText(const std::string& displayText)
 // {
 //     text = displayText;
 //
-//     TTF_Font* font = TTF_OpenFont(imagePath.c_str(), fontSize);
-//     
 //     if(!font)
 //     {
 //         print("invalid font")
@@ -113,20 +99,13 @@ void TextRenderer::SetText(const std::string& displayText)
 //     
 //     // Update the existing texture with the new surface
 //     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), drawColour);
-//     TTF_CloseFont(font);
 //
-//     if(!textSurface)
-//     {
-//         print("invalid surface")
-//         return;
-//     }
-//     
-//     SDL_UpdateTexture(thingsToRender[renderIndex], NULL, textSurface->pixels, textSurface->pitch);
-//     print(SDL_GetError())
+//     SDL_UpdateTexture(thingsToRender.front(), NULL, textSurface->pixels, textSurface->pitch);
 //
 //     size = Vector2(textSurface->w, textSurface->h);
 //     SDL_FreeSurface(textSurface);
-//     
+//
 //     sourceRect.w = size.x;
 //     sourceRect.h = size.y;
+//     
 // }
