@@ -19,24 +19,25 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
     imagePath = spritePath;
     isAnimated = animated;
 
-    SDL_Surface* image = SetSprite(imagePath);
+    SDL_Surface* image = ManualRenderer::SetSprite(imagePath);
 
-    if (!GameWindow::GetRenderer())
+    if (!renderer)
     {
         print("COuldn't get renderer.")
         return;
     }
 
-    thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
-
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
+    thingsToRender.emplace_back(tex);
+    
     if (!thingsToRender[renderIndex])
     {
         print("nothing to render.")
         return;
     }
 
-    size.x = isAnimated? image->w / frameCount: image->w;
-    size.y = image->h;
+    size.x = isAnimated? static_cast<float>(image->w / frameCount): static_cast<float>(image->w);
+    size.y = static_cast<float>(image->h);
 
     // It's position will be set by the owner of this object
     drawRect.w = size.x;
@@ -44,8 +45,8 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
 
     sourceRect.x = 0;
     sourceRect.y = 0;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 
     SDL_FreeSurface(image);
 
@@ -65,16 +66,17 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
     {
         SDL_Surface* image = ManualRenderer::SetSprite(path);
         
-        if (!GameWindow::GetRenderer())
+        if (!renderer)
         {
             print("COuldn't get renderer.")
             return;
         }
         
-        thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+        SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
+        thingsToRender.emplace_back(tex);
 
-        size.x = isAnimated? image->w / frameCount: image->w;
-        size.y = image->h;
+        size.x = isAnimated? static_cast<float>(image->w / frameCount): static_cast<float>(image->w);
+        size.y = static_cast<float>(image->h);
         SDL_FreeSurface(image);
 
         // It's position will be set by the owner of this object
@@ -83,8 +85,8 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
 
         sourceRect.x = 0;
         sourceRect.y = 0;
-        sourceRect.w = size.x;
-        sourceRect.h = size.y;
+        sourceRect.w = static_cast<int>(size.x);
+        sourceRect.h = static_cast<int>(size.y);
 
 
         // Start on a random frame so that the animations aren't synced up
@@ -134,7 +136,7 @@ void SpriteRenderer::PlayAnimation(bool referenced)
     sourceRect.w = size.x;
     sourceRect.h = size.y;
     
-    SDL_RenderCopyF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect);
+    SDL_RenderCopyF(renderer, thingsToRender[renderIndex], &sourceRect, &drawRect);
     
     Animate();
 }
@@ -143,10 +145,10 @@ void SpriteRenderer::Animate()
 {
     if(!isAnimated || !thingsToRender[renderIndex]) return;
 
-    sourceRect.x = size.x * currentFrame;
+    sourceRect.x = static_cast<int>(size.x * currentFrame);
     sourceRect.y = 0; 
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 
     // A timer that goes to the next frame in the animation once it elapses.
     frameTimer += Time::GetDeltaTime();

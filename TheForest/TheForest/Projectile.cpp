@@ -10,6 +10,8 @@
 
 #include "Projectile.h"
 
+#include <random>
+
 #include "Player.h"
 
 Projectile::Projectile(const std::tuple<EWeaponTypes, float, float, short, float, float>& weapon,
@@ -151,12 +153,9 @@ void Projectile::Collisions()
 	for (auto& tile : tiles)
 	{
 		// Getting the rect of the tile doesn't work since its position is a reference (?) have to get it's size and position separately.
-		const auto tileRect = SDL_FRect{ tile.GetRenderer().GetPosition().x, tile.GetRenderer().GetPosition().y, tile.GetRenderer().GetDrawSize().x, tile.GetRenderer().GetDrawSize().y};
+		const auto tileRect = tile.GetRect();
 
-		if(SDL_HasIntersectionF(&tileRect, &rect))
-		{
-			collision = true;
-		}
+		if(SDL_HasIntersectionF(&tileRect, &rect)) collision = true;
 	}
 
 	switch (type)

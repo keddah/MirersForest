@@ -7,13 +7,12 @@
 // * Created by Dean Atkinson-Walker 2023
 // ***************************************************************************************************************/
 
-#include "GameSingletons.h"
 #include "Renderers.h"
 
-TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short size, Vector2 pos) : text(std::move(displayText))
+TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short fontsize, Vector2 pos) : text(std::move(displayText))
 {
     fontPath = filePath;
-    fontSize = size;
+    fontSize = fontsize;
 
     ManualRenderer::SetPosition(pos);
     
@@ -23,9 +22,11 @@ TextRenderer::TextRenderer(const std::string& filePath, std::string displayText,
 void TextRenderer::SetText(const std::string& displayText)
 {
     text = displayText;
+
+    // If there's already a texture, destroy it so that a new one can replace it.
     if(!thingsToRender.empty()) if(thingsToRender.front()) SDL_DestroyTexture(thingsToRender.front());
     
-    font = TTF_OpenFont(fontPath.c_str(), fontSize);
+    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
 
     if(!font)
     {
@@ -35,16 +36,19 @@ void TextRenderer::SetText(const std::string& displayText)
 
     // The following creates an image representing the text that we input
     SDL_Surface* textImage = TTF_RenderText_Solid(font, text.c_str(), drawColour);
-
+    TTF_CloseFont(font);
+    
     // If this isn't the first time setting the text...
-    if(!thingsToRender.empty()) thingsToRender[0] = SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), textImage);
-    else thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), textImage));
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, textImage);
+    
+    if (!thingsToRender.empty()) thingsToRender[0] = tex;
+    else thingsToRender.emplace_back(tex);
 
-    size = Vector2(textImage->w, textImage->h);
+    size = Vector2(static_cast<float>(textImage->w), static_cast<float>(textImage->h));
     SDL_FreeSurface(textImage);
 
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
     
 }
 

@@ -65,6 +65,7 @@ public:
 	{ 
 		if (dead)
 		{
+			// Free up the memory the renderer was using when the projectile dies.
 			renderer.DestroyAllTextures(); 
 			impactVfx.DestroyAllTextures();
 		}

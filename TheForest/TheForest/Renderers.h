@@ -12,14 +12,13 @@
 
 #pragma once
 #include <iostream>
-#include <random>
 
-#include <SDL_rect.h>
 #include <SDL_render.h>
 
 #include "SDL_ttf.h"
 #include <vector>
 
+#include "GameSingletons.h"
 #include "Vector2.h"
 
 // Manual meaning the position is set manually (without using a reference)
@@ -33,7 +32,11 @@ public:
     virtual ~ManualRenderer() { thingsToRender.clear(); }
 
     // Delete all the textures then empty the vector.
-    virtual void DestroyAllTextures() { for (const auto& texture : thingsToRender) SDL_DestroyTexture(texture); thingsToRender.clear(); }
+    virtual void DestroyAllTextures()
+    {
+        for(const auto& tex: thingsToRender) { SDL_DestroyTexture(tex); }
+        thingsToRender.clear();
+    }
 
     // Overriden means use the position reference
     virtual void Draw(bool referenced = false);
@@ -78,7 +81,7 @@ protected:
     Vector2 size;
     SDL_FRect drawRect = SDL_FRect();
     SDL_Rect sourceRect = SDL_Rect();
-    float renderAngle;
+    float renderAngle = 0;
     Vector2 spritePivot;
 
     // The raw position that was assigned in the constructor
@@ -86,10 +89,12 @@ protected:
 
     SDL_Colour drawColour = {0, 125, 125, 255};
 
-    bool flip;
+    bool flip = false;
+
+    SDL_Renderer* renderer = GameWindow::GetRenderer(); 
     
 private:
-    bool customPivot;
+    bool customPivot = false;
 };
 
 
@@ -152,8 +157,8 @@ private:
 
         drawRect.w = size.x;
         drawRect.h = size.y;
-        sourceRect.w = size.x;
-        sourceRect.h = size.y;
+        sourceRect.w = static_cast<int>(size.x);
+        sourceRect.h = static_cast<int>(size.y);
     }
     
     // Animations
@@ -175,9 +180,8 @@ public:
     TextRenderer(const std::string& filePath, std::string displayText, short _fontSize, Vector2 pos);
     ~TextRenderer() override
     {
-        for(SDL_Texture* texture : thingsToRender) SDL_DestroyTexture(texture);
+        for(const auto& texture : thingsToRender) SDL_DestroyTexture(texture);
         ManualRenderer::~ManualRenderer();
-        TTF_CloseFont(font);
         TTF_Quit();
     }
 
@@ -186,7 +190,6 @@ public:
 
 private:
     std::string fontPath;
-    TTF_Font* font;
 
     std::string text;
     short fontSize;

@@ -1,122 +1,163 @@
 ﻿  FlowerManager.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(75,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(76,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(87,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(90,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(96,87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(102,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(108,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(105,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(106,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(118,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(121,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(127,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(133,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\FlowerManager.cpp(139,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   GameManager.cpp
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(20,1): warning C4005: 'print': macro redefinition
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
   Level.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ManualRenderer.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Player.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(208,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(345,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(346,45): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(211,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(348,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Player.cpp(349,45): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Projectile.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Projectile.cpp(47,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Projectile.cpp(134,56): warning C4244: '=': conversion from 'long double' to 'float', possible loss of data
   Slime.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   SlimeManager.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(124,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(125,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(128,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(129,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(130,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(131,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(134,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(186,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(193,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(198,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(202,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(132,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(135,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(136,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(137,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(138,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(141,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(193,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(200,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(205,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(209,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(213,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(218,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(216,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(220,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(225,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(231,58): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(231,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(245,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(249,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(253,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(257,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(232,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(238,58): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(238,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(252,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(256,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(260,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SlimeManager.cpp(264,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SpriteRenderer.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(39,14): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(40,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(48,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(49,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(78,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(79,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(88,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(89,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(136,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(137,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(148,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(150,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\SpriteRenderer.cpp(151,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  TextRenderer.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TextRenderer.cpp(47,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TextRenderer.cpp(47,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TextRenderer.cpp(50,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TextRenderer.cpp(51,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   TheForest.cpp
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(20,1): warning C4005: 'print': macro redefinition
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
   Tile.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   TileManager.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp(186,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp(202,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp(218,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
@@ -212,12 +253,12 @@ C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp(1327,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\TileManager.cpp(1338,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   UserInterface.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(38,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(39,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -243,12 +284,12 @@ C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.c
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.cpp(443,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.cpp(443,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   WeaponController.cpp
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(150,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(151,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(155,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(156,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Controllers.h(17,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(153,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(158,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(159,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\tuple(640,76): warning C4244: '=': conversion from '_Ty' to '_Ty', possible loss of data
           with
           [
@@ -263,4 +304,5 @@ C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponControlle
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\WeaponController.cpp(256,16): message : see the first reference to 'std::tuple<Projectile::EWeaponTypes,float,float,short,float,float>::operator =' in 'Player::WeaponController::Shotgun'
   Generating Code...
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(41): warning C4172: returning address of local variable or temporary
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Tile.h(22): warning C4172: returning address of local variable or temporary
   TheForest.vcxproj -> C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\x64\Debug\TheForest.exe

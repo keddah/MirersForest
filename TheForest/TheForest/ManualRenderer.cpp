@@ -8,22 +8,21 @@
 ***************************************************************************************************************/
 
 #include "Renderers.h"
-#include "GameSingletons.h"
 
 #include <SDL_image.h>
 
 
 ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : position(pos)
 {
-    SDL_Surface* image = SetSprite(spritePath);
+    SDL_Surface* image = ManualRenderer::SetSprite(spritePath);
 
-    if (!GameWindow::GetRenderer())
+    if (!renderer)
     {
         print("COuldn't get renderer.")
         return;
     }
-    
-    thingsToRender.push_back(SDL_CreateTextureFromSurface(GameWindow::GetRenderer(), image));
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
+    thingsToRender.emplace_back(tex);
     SDL_FreeSurface(image);
 
     if (!thingsToRender[renderIndex])
@@ -40,8 +39,8 @@ ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : pos
 
     sourceRect.x = 0;
     sourceRect.y = 0;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 }
 
 ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
@@ -55,8 +54,8 @@ ManualRenderer::ManualRenderer(const Vector2& pos, Vector2 drawSize)
 
     sourceRect.x = 0;
     sourceRect.y = 0;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 }
 
 // Overriden means use the position reference
@@ -91,14 +90,14 @@ void ManualRenderer::Draw(bool referenced)
     if(!thingsToRender[renderIndex]) print("Can't render from this index")
     
     // Responsible for drawing the texture
-    SDL_RenderCopyExF(GameWindow::GetRenderer(), thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &pivot, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+    SDL_RenderCopyExF(renderer, thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &pivot, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
 
 void ManualRenderer::DrawRectangle() const
 {
-    SDL_SetRenderDrawBlendMode(GameWindow::GetRenderer(), SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(GameWindow::GetRenderer(), drawColour.r, drawColour.g, drawColour.b, drawColour.a);
-    SDL_RenderFillRectF(GameWindow::GetRenderer(), &drawRect);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, drawColour.r, drawColour.g, drawColour.b, drawColour.a);
+    SDL_RenderFillRectF(renderer, &drawRect);
 }
 
 SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
@@ -115,8 +114,8 @@ SDL_Surface* ManualRenderer::SetSprite(const std::string& path)
 
     // Doesn't consider if the image is a spritesheet or a single image...
     // SpriteRenderer amends this.
-    size.x = image->w;
-    size.y = image->h;
+    size.x = static_cast<float>(image->w);
+    size.y = static_cast<float>(image->h);
 
     // It's position will be set by the owner of this object
     drawRect.w = size.x;
@@ -130,8 +129,8 @@ void ManualRenderer::SetDrawSize(const Vector2 newSize)
     size = newSize;
     drawRect.w = size.x;
     drawRect.h = size.y;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 }
 
 void ManualRenderer::SetDrawSize(float w, float h)
@@ -139,14 +138,14 @@ void ManualRenderer::SetDrawSize(float w, float h)
     size = {w, h};
     drawRect.w = size.x;
     drawRect.h = size.y;
-    sourceRect.w = size.x;
-    sourceRect.h = size.y;
+    sourceRect.w = static_cast<int>(size.x);
+    sourceRect.h = static_cast<int>(size.y);
 }
 
 void ManualRenderer::FromTileSheet(const SDL_Rect sourceRectangle, int tileSize)
 {
     sourceRect = sourceRectangle;
-    size = Vector2(tileSize, tileSize);
-    drawRect.w = tileSize;
-    drawRect.h = tileSize;
+    size = Vector2(static_cast<float>(tileSize), static_cast<float>(tileSize));
+    drawRect.w = static_cast<float>(tileSize);
+    drawRect.h = static_cast<float>(tileSize);
 }

@@ -19,6 +19,8 @@ public:
     void Draw() { renderer.Draw(); }
     void Destroy() { renderer.DestroyAllTextures(); }
     
+    const SDL_FRect& GetRect() const { return { position.x, position.y, renderer.GetRect().w, renderer.GetRect().h }; }
+    
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2 pos) { position = pos; renderer.SetPosition(pos); }
     bool IsFinishLine() const { return finishLine; }
@@ -27,8 +29,6 @@ public:
     void SetSlide(const short slide) { levelSlide = slide; }
     
 private:
-    const std::string tileSheet = "TileSets/Textures-16.png"; 
-
     Vector2 position;
     ManualRenderer renderer = ManualRenderer("TileSets/Textures-16.png", position);
     
