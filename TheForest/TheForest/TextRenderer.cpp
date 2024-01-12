@@ -11,7 +11,7 @@
 
 TextRenderer::TextRenderer(const std::string& filePath, std::string displayText, const short fontsize, Vector2 pos) : text(std::move(displayText))
 {
-    fontPath = filePath;
+    imagePath = filePath;
     fontSize = fontsize;
 
     ManualRenderer::SetPosition(pos);
@@ -26,7 +26,7 @@ void TextRenderer::SetText(const std::string& displayText)
     // If there's already a texture, destroy it so that a new one can replace it.
     if(!thingsToRender.empty()) if(thingsToRender.front()) SDL_DestroyTexture(thingsToRender.front());
     
-    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
+    TTF_Font* font = TTF_OpenFont(imagePath.c_str(), fontSize);
 
     if(!font)
     {
