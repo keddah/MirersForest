@@ -60,8 +60,8 @@ void UserInterface::Update(float deltaTime)
 void UserInterface::Draw()
 {
     for (auto& renderer : renderers) renderer.Draw();
-    for (auto& button : buttons) button.Draw();
     for (const auto& renderer : txtRenderers) renderer->Draw();
+    for (auto& button : buttons) button.Draw();
     
     pauseScreen.Draw();
     deathScreen.Draw();
