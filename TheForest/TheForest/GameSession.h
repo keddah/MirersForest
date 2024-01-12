@@ -20,5 +20,5 @@ public:
     void Draw() { level.Draw(); }
     
 private:
-    Level level {0};
+    Level level;
 };

@@ -18,7 +18,7 @@
 class Level
 {
 public:
-    Level(short lvlNum);
+    Level(short lvlNum = 0);
     
     void FixedUpdate(float deltaTime);
     void Update(float deltaTime);

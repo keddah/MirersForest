@@ -64,6 +64,7 @@ void FlowerManager::Reset()
         {
             // Move every tile left/right (keeping their Y value)
             flower.SetPosition({flower.GetPosition().x + screenWidth, flower.GetPosition().y});
+            flower.Reset();
         }
         levelSlide--;
     }
@@ -130,14 +131,17 @@ void FlowerManager::Level2Flowers()
 
     //\\//\\//\\//\\// 5th Slide //\\//\\//\\//\\// 
 
-    const FlowerUp four = FlowerUp(rPlayer, Vector2(screenWidth * 4 + 1700, 420));
+    const FlowerUp four = FlowerUp(rPlayer, Vector2(screenWidth * 4 + 200, 970));
     flowers.push_back(four);
+
+    const FlowerUp five = FlowerUp(rPlayer, Vector2(screenWidth * 4 + 1700, 420));
+    flowers.push_back(five);
 
     
     //\\//\\//\\//\\// 7th Slide //\\//\\//\\//\\// 
 
-    const FlowerUp five = FlowerUp(rPlayer, Vector2(screenWidth * 6 + 500, 870));
-    flowers.push_back(five);
+    const FlowerUp six = FlowerUp(rPlayer, Vector2(screenWidth * 6 + 500, 870));
+    flowers.push_back(six);
 }
 
 

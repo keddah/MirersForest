@@ -9,7 +9,7 @@
 
 #include "Level.h"
 
-Level::Level(short lvlNum) : currentLevel(lvlNum)
+Level::Level(const short lvlNum) : currentLevel(lvlNum)
 {
     bkg.ChangeSpriteSheet(currentLevel);
     tileManager.MakeTiles(currentLevel);

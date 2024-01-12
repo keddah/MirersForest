@@ -107,6 +107,7 @@ void Player::Reset()
     Float();
     
     rCurrentSlide = 0;
+    coyoteTimer = 0;
     velocity = {};
     position = {50, 400};
     finished = false;
