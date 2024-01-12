@@ -23,7 +23,12 @@ class GameManager
 {
 public:
 	GameManager();
-	~GameManager() { GameWindow::CloseGame(); }
+	~GameManager()
+	{
+		running = false;
+		delete &renderer;
+		GameWindow::CloseGame();
+	}
 
 	// These get called in a while loop in the main function
 	void Update() const { pSession->Update(Time::GetDeltaTime()); }
@@ -39,4 +44,6 @@ private:
 	
 	static constexpr int screenWidth = 1920;
 	static constexpr int screenHeight = 1080;
+
+	SDL_Renderer* renderer;
 };

@@ -29,6 +29,7 @@ GameManager::GameManager()
 		SDL_WINDOW_SHOWN
 		)
 	);
+	
 	if (!GameWindow::GetWindow())
 	{
 		std::cout << "could not initialise window!" << std::endl;
@@ -45,7 +46,8 @@ GameManager::GameManager()
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
-	SDL_RenderSetVSync(GameWindow::GetRenderer(), 1);
+	renderer = GameWindow::GetRenderer();
+	SDL_RenderSetVSync(renderer, 1);
 
 	pSession = std::make_unique<GameSession>();
 	running = true;
@@ -55,11 +57,11 @@ GameManager::GameManager()
 void GameManager::Draw() const
 {
 	// Clear the screen before rendering something new
-	SDL_RenderClear(GameWindow::GetRenderer());
+	SDL_RenderClear(renderer);
 
 	// Render everything that needs to be rendered in the current session
 	pSession->Draw();
 
 	// Actually display the new things
-	SDL_RenderPresent(GameWindow::GetRenderer());
+	SDL_RenderPresent(renderer);
 }
