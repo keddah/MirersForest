@@ -26,7 +26,6 @@ public:
 	~GameManager()
 	{
 		running = false;
-		delete &renderer;
 		GameWindow::CloseGame();
 	}
 

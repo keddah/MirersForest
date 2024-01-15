@@ -13,7 +13,6 @@ class GameSession
 {
 public:
     GameSession() = default;
-    ~GameSession() { delete &level; }
 
     void Update(float deltaTime) { level.Update(deltaTime); }
     void FixedUpdate(float deltaTime) { level.FixedUpdate(deltaTime); }

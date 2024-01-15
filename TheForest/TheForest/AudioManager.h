@@ -18,7 +18,11 @@ class AudioManager
 {
 public:
     AudioManager();
-    ~AudioManager();
+    ~AudioManager()
+    {
+        for(const auto& sfx : sounds) Mix_FreeChunk(sfx);
+        Mix_FreeMusic(soundPlayer);
+    }
 
     enum class Esounds
     {

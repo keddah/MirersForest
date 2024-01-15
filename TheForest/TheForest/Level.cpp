@@ -89,6 +89,7 @@ void Level::NextLevel()
 
     // Reset everything
     player.Reset();
+    ui.Reset();
     completed = false;
     tileManager.MakeTiles(currentLevel, true);
     slimeManger.Reset(currentLevel);

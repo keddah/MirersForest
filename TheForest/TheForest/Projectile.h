@@ -31,7 +31,8 @@ public:
 
 	void Update(float deltaTime);
 	void FixedUpdate();
-
+	void Destroy() { renderer.DestroyAllTextures(); impactVfx.DestroyAllTextures(); }
+	
 	void Draw();
 	void DeathAnimation(bool referenced = true);
 

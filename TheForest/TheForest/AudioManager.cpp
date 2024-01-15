@@ -30,13 +30,6 @@ AudioManager::AudioManager()
     Mix_Volume(musicChannel, 30);
 }
 
-AudioManager::~AudioManager()
-{
-    for (const auto& sfx : sounds) Mix_FreeChunk(sfx);
-
-    Mix_FreeMusic(soundPlayer);
-}
-
 void AudioManager::PlaySound(Esounds sound, bool overlap) const
 {
     // Stop the other sounds first if not allowed to overlap

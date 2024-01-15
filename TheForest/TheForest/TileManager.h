@@ -17,6 +17,12 @@ class TileManager
 {
 public:
     TileManager() = default;
+    ~TileManager()
+    {
+        for(auto& tile : tiles) tile.Destroy();
+        tiles.clear();
+    }
+    
     void Draw();
     
     std::vector<Tile>& GetTiles() { return tiles; }

@@ -81,7 +81,12 @@ private:
     {
     public:
         WeaponController(Player* pP);
-        ~WeaponController() { arrow.DestroyAllTextures(); activeBullets.clear(); }
+        ~WeaponController()
+        {
+            arrow.DestroyAllTextures();
+            for(auto& bullet : activeBullets) bullet.Destroy();
+            activeBullets.clear();
+        }
 
         void Update(float deltaTime);
         void FixedUpdate(float deltaTime);

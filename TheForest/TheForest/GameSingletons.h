@@ -35,13 +35,13 @@ public:
     {
         if (renderer)
         {
-            SDL_DestroyRenderer(GetRenderer());
+            SDL_DestroyRenderer(renderer);
             renderer = nullptr;
         }
 
         if (window)
         {
-            SDL_DestroyWindow(GetWindow());
+            SDL_DestroyWindow(window);
             window = nullptr;
         }
 

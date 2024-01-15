@@ -77,7 +77,9 @@ void SlimeManager::SetLevelSlide(const short slide)
 
 void SlimeManager::Reset(short lvlIndex)
 {
+    for (const auto& slime : slimes) slime->Destroy();
     slimes.clear();
+
     SpawnSlimes(lvlIndex);
     resetting = true;
 }

@@ -15,7 +15,11 @@ class FlowerManager
 {
 public:
     FlowerManager(Player& player);
-    ~FlowerManager() { flowers.clear(); }
+    ~FlowerManager()
+    {
+        for(auto& flower: flowers) flower.Destroy();
+        flowers.clear();
+    }
 
     void FixedUpdate(float deltaTime);
     void Draw();
@@ -30,10 +34,10 @@ private:
     public:
         FlowerUp() = default;
         FlowerUp(Player& player, Vector2 pos);
-        // ~FlowerUp() { renderer.DestroyAllTextures(); }
         
         void Update(float deltaTime);
         void Draw() { if(!used) renderer.Draw(); }
+        void Destroy() { renderer.DestroyAllTextures(); }
 
         
         void SetPosition(Vector2 pos) { position = pos; renderer.SetPosition(position); }

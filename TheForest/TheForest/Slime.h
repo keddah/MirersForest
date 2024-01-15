@@ -14,11 +14,12 @@ class Slime: public Physics
 {
 public:
     Slime(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound);
-    ~Slime() { renderer.DestroyAllTextures(); deathRenderer.DestroyAllTextures(); }
+    ~Slime() { Destroy(); }
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
     void Draw() { if(!dying) renderer.Draw(); }
+    void Destroy() { renderer.DestroyAllTextures(); deathRenderer.DestroyAllTextures(); }
 
     void DeathAnimation();
     
