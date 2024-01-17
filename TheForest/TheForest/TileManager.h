@@ -53,6 +53,7 @@ private:
 
     short levelSlide = 0;
     std::vector<Tile> tiles;
+    ManualRenderer renderer = ManualRenderer("TileSets/Textures-16.png", {});
 
     void Level1Tiles();
     void Level2Tiles();
