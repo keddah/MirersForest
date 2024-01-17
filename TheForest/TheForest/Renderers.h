@@ -70,7 +70,9 @@ public:
     
     void FromTileSheet(SDL_Rect sourceRectangle, int tileSize = 16);    
 
+    void SetTexture(const std::string spritePath);
     SDL_Texture* GetTexture() { return thingsToRender[0]; }
+    std::string GetImagePath() { return imagePath; }
 
 protected:
     virtual SDL_Surface* SetSprite(const std::string& path);

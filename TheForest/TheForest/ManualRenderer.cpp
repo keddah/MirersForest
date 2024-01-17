@@ -23,13 +23,14 @@ ManualRenderer::ManualRenderer(SDL_Texture* texture, Vector2 pos, SDL_Rect sourc
 
 ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : position(pos)
 {
-    SDL_Surface* image = ManualRenderer::SetSprite(spritePath);
-
     if (!renderer)
     {
         print("COuldn't get renderer.")
         return;
     }
+
+    SDL_Surface* image = ManualRenderer::SetSprite(spritePath);
+
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
     thingsToRender.emplace_back(tex);
     SDL_FreeSurface(image);
@@ -157,4 +158,12 @@ void ManualRenderer::FromTileSheet(const SDL_Rect sourceRectangle, int tileSize)
     size = Vector2(static_cast<float>(tileSize), static_cast<float>(tileSize));
     drawRect.w = static_cast<float>(tileSize);
     drawRect.h = static_cast<float>(tileSize);
+}
+
+void ManualRenderer::SetTexture(const std::string spritePath)
+{
+    SDL_Surface* image = ManualRenderer::SetSprite(spritePath);
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
+    thingsToRender.emplace_back(tex);
+    SDL_FreeSurface(image);
 }

@@ -28,6 +28,10 @@ void TileManager::MakeTiles(short lvlIndex, const bool reset)
         levelSlide = 0;
         for(auto& tile : tiles) tile.Destroy();
         tiles.clear();
+
+        // Reset the renderer (otherwise the tiles will be invisible)
+        renderer.DestroyAllTextures();
+        renderer.SetTexture(renderer.GetImagePath());
     }
     
     switch (lvlIndex)

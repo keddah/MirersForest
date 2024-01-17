@@ -211,7 +211,7 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	drag = 6;
 
 	// Changin this also affects the range (falling faster means less time to change direction)
-	gravMultiplier = 2.25f;
+	gravMultiplier = 3.25f;
 
 	AddForce(Vector2(cos(rot), sin(rot)), force);
 

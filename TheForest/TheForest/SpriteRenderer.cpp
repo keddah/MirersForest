@@ -19,13 +19,13 @@ SpriteRenderer::SpriteRenderer(const std::string& spritePath, const Vector2& pos
     imagePath = spritePath;
     isAnimated = animated;
 
-    SDL_Surface* image = ManualRenderer::SetSprite(imagePath);
-
     if (!renderer)
     {
         print("COuldn't get renderer.")
         return;
     }
+
+    SDL_Surface* image = ManualRenderer::SetSprite(imagePath);
 
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
     thingsToRender.emplace_back(tex);
@@ -62,15 +62,16 @@ SpriteRenderer::SpriteRenderer(const std::vector<std::string>& spritePaths, cons
     imagePath = spritePaths[0];
     isAnimated = animated;
 
+    if (!renderer)
+    {
+        print("COuldn't get renderer.")
+        return;
+    }
+
     for (const auto& path : spritePaths)
     {
         SDL_Surface* image = ManualRenderer::SetSprite(path);
         
-        if (!renderer)
-        {
-            print("COuldn't get renderer.")
-            return;
-        }
         
         SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, image);
         thingsToRender.emplace_back(tex);
