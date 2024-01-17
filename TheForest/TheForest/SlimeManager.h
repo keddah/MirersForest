@@ -16,6 +16,7 @@ class SlimeManager
 {
 public:
     SlimeManager(Player& plyr, std::vector<Tile>& floorRef, const AudioManager& sound);
+    ~SlimeManager() { for (const auto& slime : slimes) delete slime; slimes.clear(); }
     const std::vector<Slime*>& GetSlimes() { return slimes; }
     
     void Update(float deltaTime) const;

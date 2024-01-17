@@ -15,6 +15,14 @@ class UserInterface
 {
 public:
     UserInterface(Player& player);
+    ~UserInterface() 
+    { 
+        for (const auto& renderer : txtRenderers)
+        {
+            renderer->DestroyAllTextures();
+            delete renderer;
+        }
+    }
     
     void Update(float deltaTime);
     void Draw();

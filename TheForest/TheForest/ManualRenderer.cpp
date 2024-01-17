@@ -12,6 +12,15 @@
 #include <SDL_image.h>
 
 
+// This constructor is used when making tiles
+ManualRenderer::ManualRenderer(SDL_Texture* texture, Vector2 pos, SDL_Rect source)
+{
+    // Each tile shares the texture.
+    thingsToRender.push_back(texture);
+    SetPosition(pos);
+    FromTileSheet(source);
+}
+
 ManualRenderer::ManualRenderer(const std::string& spritePath, Vector2 pos) : position(pos)
 {
     SDL_Surface* image = ManualRenderer::SetSprite(spritePath);

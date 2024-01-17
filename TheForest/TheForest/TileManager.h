@@ -19,6 +19,7 @@ public:
     TileManager() = default;
     ~TileManager()
     {
+        renderer.DestroyAllTextures();
         for(auto& tile : tiles) tile.Destroy();
         tiles.clear();
     }
@@ -59,6 +60,7 @@ private:
 
     short levelSlide = 0;
     std::vector<Tile> tiles;
+    ManualRenderer renderer = ManualRenderer("TileSets/Textures-16.png", {});
 
     void Level1Tiles();
     void Level2Tiles();

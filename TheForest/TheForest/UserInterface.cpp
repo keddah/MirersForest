@@ -419,6 +419,7 @@ void UserInterface::PressRestart()
 
 void UserInterface::PressQuit()
 {
+
     GameWindow::CloseGame();
 }
 

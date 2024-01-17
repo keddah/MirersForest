@@ -26,6 +26,7 @@ class ManualRenderer
 {
 public:
     ManualRenderer() = default;
+    ManualRenderer(SDL_Texture* texture, Vector2 pos, SDL_Rect source);
     ManualRenderer(const std::string& spritePath, Vector2 pos);
     ManualRenderer(const Vector2& pos, Vector2 drawSize);
 
@@ -42,6 +43,7 @@ public:
     virtual void Draw(bool referenced = false);
 
     virtual const SDL_FRect& GetRect() const { return drawRect; }
+    virtual const SDL_Rect& GetSourceRect() const { return sourceRect; }
     virtual const Vector2& GetPosition() const { return position; }
     float GetRenderAngle() const { return renderAngle; }
     virtual const Vector2& GetDrawSize() const { return size; }
@@ -66,7 +68,9 @@ public:
 
     virtual void ChangeSpriteSheet(short index) { renderIndex = index; }
     
-    void FromTileSheet(SDL_Rect sourceRectangle, int tileSize);    
+    void FromTileSheet(SDL_Rect sourceRectangle, int tileSize = 16);    
+
+    SDL_Texture* GetTexture() { return thingsToRender[0]; }
 
 protected:
     virtual SDL_Surface* SetSprite(const std::string& path);

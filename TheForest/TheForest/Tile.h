@@ -13,7 +13,7 @@
 class Tile
 {
 public:
-    Tile(Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
+    Tile(SDL_Texture* tex, Vector2 pos, SDL_Rect source, int tileSize, bool isFinish = false);
     
     const ManualRenderer& GetRenderer() const { return renderer; }
     void Draw() { renderer.Draw(); }
@@ -30,7 +30,7 @@ public:
     
 private:
     Vector2 position;
-    ManualRenderer renderer = ManualRenderer("TileSets/Textures-16.png", position);
+    ManualRenderer renderer;
     
     short levelSlide = 0;
     bool finishLine;

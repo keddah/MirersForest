@@ -9,9 +9,7 @@
 
 #include "Tile.h"
 
-Tile::Tile(Vector2 pos, SDL_Rect source, int tileSize, const bool isFinish): position(pos)
+Tile::Tile(SDL_Texture* tex, Vector2 pos, SDL_Rect source, int tileSize, bool isFinish): position(pos), renderer(tex, position, source)
 {
-    renderer.FromTileSheet(source, tileSize);
-
     finishLine = isFinish;
 }
