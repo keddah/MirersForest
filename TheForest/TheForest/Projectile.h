@@ -135,7 +135,7 @@ private:
 	bool special;
 	
 	float flipTimer;
-	const float beamFlipDelay = .7f; 
+	const float beamFlipDelay = 1; 
 	
 	float shootDelay = .8f;
 	short ammoCost = 1;

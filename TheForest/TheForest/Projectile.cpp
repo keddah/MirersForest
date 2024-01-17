@@ -166,7 +166,6 @@ void Projectile::Collisions()
 			break;
 			
 		case EWeaponTypes::Petal:
-			// dead = collision;
 			dying = collision; 
 			break;
 			
@@ -206,10 +205,14 @@ void Projectile::Beam(float deltaTime, Vector2 mousePos)
 	// Follow the mouse position
 	const Vector2 difference = mousePos - Vector2(position.x + renderer.GetDrawSize().x / 2, position.y + renderer.GetDrawSize().y / 2);
 	const float rot = atan2(difference.y, difference.x);
-	AddForce(Vector2(cos(rot), sin(rot)), force);
 
 	// Allow the projectile to move faster
 	maxFallSpeed = 1000;
 	drag = 6;
-	gravMultiplier = 3;
+
+	// Changin this also affects the range (falling faster means less time to change direction)
+	gravMultiplier = 2.25f;
+
+	AddForce(Vector2(cos(rot), sin(rot)), force);
+
 }

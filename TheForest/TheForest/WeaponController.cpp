@@ -18,16 +18,6 @@ Player::WeaponController::WeaponController(Player* pP) : rP(*pP)
     arrow.SetSpritePivot({arrow.GetRect().w/2, arrow.GetRect().h - 5});
 }
 
-void Player::WeaponController::FixedUpdate(float deltaTime)
-{
-    // Everything movement related
-    for(auto& bullet : activeBullets)
-    {
-        bullet.FixedUpdate();
-        bullet.Beam(deltaTime, rP.controller.GetMousePosition());
-    }
-}
-
 void Player::WeaponController::Update(float deltaTime)
 {
     arrowPos = {(rP.rect.x + rP.rect.w / 2) - arrow.GetRect().w / 2, rP.rect.y - rP.rect.h };
@@ -42,12 +32,36 @@ void Player::WeaponController::Update(float deltaTime)
     Shooting(deltaTime);
 }
 
+void Player::WeaponController::FixedUpdate(float deltaTime)
+{
+    // Everything movement related
+    for (auto& bullet : activeBullets)
+    {
+        bullet.FixedUpdate();
+    }
+}
+
+void Player::WeaponController::Draw()
+{
+    // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
+    if (!rP.IsPaused()) arrow.SetRenderAngle(static_cast<float>((GetShootAngle() * 180 / std::_Pi) + arrowOffset));
+    arrow.Draw();
+    for (auto& bullet : activeBullets)
+    {
+        bullet.Draw();
+        bullet.DeathAnimation(false);
+    }
+}
+
+
 void Player::WeaponController::UpdateBullets(float deltaTime)
 {
     for(int i = 0; i < activeBullets.size(); i++)
     {
         activeBullets[i].Update(deltaTime);
         activeBullets[i].Expire(deltaTime);
+        activeBullets[i].Beam(deltaTime, rP.controller.GetMousePosition());
+
 
         // Sound that plays on projectile impacts
         if((activeBullets.end() - 1)->IsDying())
@@ -330,17 +344,5 @@ void Player::WeaponController::PreviousWeapon()
     // case Projectile::EWeaponTypes::Thorn:
     //     selectedWeapon = Projectile::EWeaponTypes::Sun;
     //     break;
-    }
-}
-
-void Player::WeaponController::Draw()
-{
-    // Have to convert from radians to degrees .... + (whatever number because the arrow is off)
-    if(!rP.IsPaused()) arrow.SetRenderAngle(static_cast<float>((GetShootAngle() * 180/std::_Pi) + arrowOffset));
-    arrow.Draw();
-    for(auto& bullet : activeBullets)
-    {
-        bullet.Draw();
-        bullet.DeathAnimation(false);
     }
 }

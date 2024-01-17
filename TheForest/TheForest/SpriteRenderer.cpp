@@ -105,11 +105,7 @@ void SpriteRenderer::Draw(bool referenced)
     drawRect.y = posRef.y;
 
     
-    // print("reference: " << posRef.x << ", " << posRef.y)
     ManualRenderer::Draw(referenced);
-
-    // print("renderer: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
-    // print("renderer: " << drawRect.x << ", " << drawRect.y)
 
     // Goes to the next frame 
     Animate();
@@ -118,7 +114,11 @@ void SpriteRenderer::Draw(bool referenced)
 void SpriteRenderer::PlayAnimation(bool referenced)
 {
     if(!visible) return;
-    if(!thingsToRender[renderIndex]) print("Can't render from this index")
+    if (!thingsToRender[renderIndex])
+    {
+        print("Can't render from this index")
+        return;
+    }
 
     if(referenced)
     {

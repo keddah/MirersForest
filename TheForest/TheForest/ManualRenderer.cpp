@@ -73,10 +73,6 @@ void ManualRenderer::Draw(bool referenced)
     drawRect.h = size.y;
 
     
-    //print("source: " << sourceRect.x << ", " << sourceRect.y << ", " << sourceRect.w << ", " << sourceRect.h)
-    //print("dest: " << drawRect.x << ", " << drawRect.y << ", " << drawRect.w << ", " << drawRect.h)
-    // print("renderer: " << drawRect.x << ", " << drawRect.y)
-
     if(!customPivot) spritePivot = { drawRect.w/2,drawRect.h/2};
     const SDL_FPoint pivot {spritePivot.x, spritePivot.y};
 
@@ -87,7 +83,11 @@ void ManualRenderer::Draw(bool referenced)
         return;
     }
     
-    if(!thingsToRender[renderIndex]) print("Can't render from this index")
+    if (!thingsToRender[renderIndex])
+    {
+        print("Can't render from this index")
+        return;
+    }
     
     // Responsible for drawing the texture
     SDL_RenderCopyExF(renderer, thingsToRender[renderIndex], &sourceRect, &drawRect, renderAngle, &pivot, flip? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
