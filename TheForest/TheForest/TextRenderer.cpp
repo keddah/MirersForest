@@ -38,9 +38,9 @@ void TextRenderer::SetText(const std::string& displayText)
     SDL_Surface* textImage = TTF_RenderText_Solid(font, text.c_str(), drawColour);
     TTF_CloseFont(font);
     
-    // If this isn't the first time setting the text...
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, textImage);
     
+    // If this isn't the first time setting the text add it to the array ... otherwise edit the first (only element)
     if (!thingsToRender.empty()) thingsToRender[0] = tex;
     else thingsToRender.emplace_back(tex);
 

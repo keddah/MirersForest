@@ -11,6 +11,8 @@
 #pragma once
 #define print(x) { std::cout<< x << std::endl; }
 #include <SDL.h>
+#include <chrono>
+#include <thread>
 
 class GameWindow
 {
@@ -46,6 +48,10 @@ public:
         }
 
         SDL_Quit();
+
+        // Completely close the program after 10 seconds.
+        std::this_thread::sleep_for(std::chrono::seconds(10));
+        exit(0);
     }
 
     static SDL_Renderer* GetRenderer() { return renderer; }

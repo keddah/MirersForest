@@ -23,22 +23,15 @@ class GameManager
 {
 public:
 	GameManager();
-	~GameManager()
-	{
-		running = false;
-		GameWindow::CloseGame();
-	}
+	~GameManager() { GameWindow::CloseGame(); };
 
 	// These get called in a while loop in the main function
 	void Update() const { pSession->Update(Time::GetDeltaTime()); }
 	void FixedUpdate() const { pSession->FixedUpdate(Time::GetDeltaTime()); }
 	void Draw() const;
 
-	bool IsRunning() const { return running; }
-
 
 private:
-	bool running;
 	std::unique_ptr<GameSession> pSession;
 	
 	static constexpr int screenWidth = 1920;

@@ -1,9 +1,26 @@
-﻿  Projectile.cpp
+﻿  GameManager.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(161,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(162,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Projectile.cpp(49,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Projectile.cpp(136,56): warning C4244: '=': conversion from 'long double' to 'float', possible loss of data
-C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Tile.h(22): warning C4172: returning address of local variable or temporary
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(47,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(47,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(48,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(48,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(20,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+  TheForest.cpp
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\CustomTimer.h(33,39): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Vector2.h(8,1): message : see previous definition of 'print'
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(161,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\Renderers.h(162,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(47,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(47,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(48,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\UserInterface.h(48,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameManager.h(20,1): warning C4005: 'print': macro redefinition
+C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\TheForest\GameSingletons.h(12,1): message : see previous definition of 'print'
+  Generating Code...
   TheForest.vcxproj -> C:\Users\Deany\Documents\GitHub\MirersForest\TheForest\x64\Debug\TheForest.exe

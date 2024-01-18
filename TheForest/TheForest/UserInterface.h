@@ -50,7 +50,7 @@ private:
         const SDL_Rect& GetRect() const { return { static_cast<int>(renderer.GetRect().x), static_cast<int>(renderer.GetRect().y), static_cast<int>(renderer.GetRect().w), static_cast<int>(renderer.GetRect().h) }; }
 
     private:
-        ManualRenderer renderer = ManualRenderer(Vector2(), Vector2());
+        ManualRenderer renderer = ManualRenderer({Vector2()}, Vector2());
     };
 
 

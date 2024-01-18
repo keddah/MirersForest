@@ -1,7 +1,7 @@
 /**************************************************************************************************************
 * Tile - Header
 *
-* The header file for the Tile class. Responsible for providing its own file path for the tile sheet and supplying functions
+* The header file for the Tile class. Its renderer is given its texture from its manager so that there isn't a need for a unique texture for each tile. Supplies functions
 * that the tile manager will need to maintain each tile in the level.
 *
 * Created by Dean Atkinson-Walker 2023

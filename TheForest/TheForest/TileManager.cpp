@@ -12,17 +12,13 @@
 
 void TileManager::Draw()
 {
-    for (auto& tile : tiles)
-    {
-        // Draw the tile if its on the correct slide
-        if(tile.GetLevelSlide() == levelSlide) tile.Draw(); 
-    }
+    // Draw the tile if its on the correct slide
+    for (auto& tile : tiles) if(tile.GetLevelSlide() == levelSlide) tile.Draw(); 
 }
-
-// Make a tile Renderer so that the position doesn't have to be a reference
 
 void TileManager::MakeTiles(short lvlIndex, const bool reset)
 {
+    // Reset = when going to a new level
     if(reset)
     {
         levelSlide = 0;

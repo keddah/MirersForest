@@ -31,7 +31,7 @@ int main()
 	// Used for fixed update;
 	float tickTimer = 0;
 
-	while (game.IsRunning())
+	while (true)
 	{
 		// The time that has to elapse in order for fixed update to tick.
 		constexpr float timeStep = .0125f;
@@ -52,9 +52,8 @@ int main()
 		Time::SetLastFrameTime();
 	}
 
-	SDL_DestroyWindow(GameWindow::GetWindow());
-	SDL_Quit();
-	
+	GameWindow::CloseGame();
+
 	return 0;
 }
 

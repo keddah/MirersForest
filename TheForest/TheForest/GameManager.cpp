@@ -50,7 +50,6 @@ GameManager::GameManager()
 	SDL_RenderSetVSync(renderer, 1);
 
 	pSession = std::make_unique<GameSession>();
-	running = true;
 }
 
 
